@@ -1,0 +1,9 @@
+E:\2018Project\ERP项目\FytErp\FytErp.Services\bin\Debug\netstandard2.0\FytErp.Services.deps.json
+E:\2018Project\ERP项目\FytErp\FytErp.Services\bin\Debug\netstandard2.0\FytErp.Services.dll
+E:\2018Project\ERP项目\FytErp\FytErp.Services\bin\Debug\netstandard2.0\FytErp.Services.pdb
+E:\2018Project\ERP项目\FytErp\FytErp.Services\obj\Debug\netstandard2.0\FytErp.Services.csproj.CoreCompileInputs.cache
+E:\2018Project\ERP项目\FytErp\FytErp.Services\obj\Debug\netstandard2.0\FytErp.Services.AssemblyInfoInputs.cache
+E:\2018Project\ERP项目\FytErp\FytErp.Services\obj\Debug\netstandard2.0\FytErp.Services.AssemblyInfo.cs
+E:\2018Project\ERP项目\FytErp\FytErp.Services\obj\Debug\netstandard2.0\FytErp.Services.dll
+E:\2018Project\ERP项目\FytErp\FytErp.Services\obj\Debug\netstandard2.0\FytErp.Services.pdb
+E:\2018Project\ERP项目\FytErp\FytErp.Services\obj\Debug\netstandard2.0\FytErp.Services.csprojResolveAssemblyReference.cache

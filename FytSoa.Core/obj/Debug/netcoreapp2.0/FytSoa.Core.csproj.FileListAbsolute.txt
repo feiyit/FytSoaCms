@@ -1,0 +1,9 @@
+E:\2018Project\ERP项目\FytSoa.Core\bin\Debug\netcoreapp2.0\FytSoa.Core.deps.json
+E:\2018Project\ERP项目\FytSoa.Core\bin\Debug\netcoreapp2.0\FytSoa.Core.dll
+E:\2018Project\ERP项目\FytSoa.Core\bin\Debug\netcoreapp2.0\FytSoa.Core.pdb
+E:\2018Project\ERP项目\FytSoa.Core\obj\Debug\netcoreapp2.0\FytSoa.Core.csprojResolveAssemblyReference.cache
+E:\2018Project\ERP项目\FytSoa.Core\obj\Debug\netcoreapp2.0\FytSoa.Core.csproj.CoreCompileInputs.cache
+E:\2018Project\ERP项目\FytSoa.Core\obj\Debug\netcoreapp2.0\FytSoa.Core.AssemblyInfoInputs.cache
+E:\2018Project\ERP项目\FytSoa.Core\obj\Debug\netcoreapp2.0\FytSoa.Core.AssemblyInfo.cs
+E:\2018Project\ERP项目\FytSoa.Core\obj\Debug\netcoreapp2.0\FytSoa.Core.dll
+E:\2018Project\ERP项目\FytSoa.Core\obj\Debug\netcoreapp2.0\FytSoa.Core.pdb
