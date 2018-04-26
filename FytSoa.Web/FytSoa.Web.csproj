@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FytSoa.Api\FytSoa.Api.csproj" />
+    <ProjectReference Include="..\FytSoa.Common\FytSoa.Common.csproj" />
+    <ProjectReference Include="..\FytSoa.Core\FytSoa.Core.csproj" />
+    <ProjectReference Include="..\FytSoa.Service\FytSoa.Service.csproj" />
+  </ItemGroup>
+</Project>
