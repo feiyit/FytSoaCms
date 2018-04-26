@@ -673,11 +673,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "E:\\2018Project\\ERP项目\\FytSoa.Common\\FytSoa.Common.csproj",
+      "projectUniqueName": "E:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Common\\FytSoa.Common.csproj",
       "projectName": "FytSoa.Common",
-      "projectPath": "E:\\2018Project\\ERP项目\\FytSoa.Common\\FytSoa.Common.csproj",
+      "projectPath": "E:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Common\\FytSoa.Common.csproj",
       "packagesPath": "C:\\Users\\71551\\.nuget\\packages\\",
-      "outputPath": "E:\\2018Project\\ERP项目\\FytSoa.Common\\obj\\",
+      "outputPath": "E:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Common\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FytSoa.Core.Model.ConfigModel;
+using FytSoa.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace FytSoa.Api.Controllers
 {
@@ -13,6 +16,9 @@ namespace FytSoa.Api.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            var abc = ConfigExtensions.Configuration.GetSection("DbConnection").Get<DbConnection>()
+                .MySqlConnectionString;
+            var a = ConfigExtensions.Configuration["DbConnection:MySqlConnectionString"];
             return new string[] { "value1", "value2" };
         }
 
