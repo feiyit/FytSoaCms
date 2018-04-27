@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using FytSoa.Service.Implements;
 using FytSoa.Service.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,8 +24,16 @@ namespace FytSoa.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ISysAdminService, SysAdminService>();
             services.AddTransient<ISysCodeService, SysCodeService>();
             services.AddTransient<ISysCodeTypeService, SysCodeTypeService>();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
+            {
+                o.LoginPath = new PathString("/fytadmin/login");
+                o.AccessDeniedPath = new PathString("/error");
+            });
 
             //øÁ”Ú…Ë÷√
             services.AddCors();
@@ -45,6 +55,7 @@ namespace FytSoa.Web
             {
                 app.UseExceptionHandler("/Error");
             }
+            app.UseAuthentication();
 
             app.UseStaticFiles();
             app.UseCors("AllowAll");

@@ -18,5 +18,3 @@ E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Debug\netcoreapp2.0\FytSoa.C
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Debug\netcoreapp2.0\FytSoa.Core.pdb
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\bin\Debug\netcoreapp2.0\FytSoa.Extensions.dll
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\bin\Debug\netcoreapp2.0\FytSoa.Extensions.pdb
-E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\bin\Debug\netcoreapp2.0\Microsoft.Extensions.DependencyInjection.dll
-E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\bin\Debug\netcoreapp2.0\Microsoft.Extensions.DependencyInjection.xml

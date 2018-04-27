@@ -24,6 +24,4 @@ E:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\obj\Debug\netcoreapp2.0\Fy
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\obj\Debug\netcoreapp2.0\FytSoa.Extensions.AssemblyInfo.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\obj\Debug\netcoreapp2.0\FytSoa.Extensions.dll
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\obj\Debug\netcoreapp2.0\FytSoa.Extensions.pdb
-E:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\bin\Debug\netcoreapp2.0\Microsoft.Extensions.DependencyInjection.dll
-E:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\bin\Debug\netcoreapp2.0\Microsoft.Extensions.DependencyInjection.xml
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\obj\Debug\netcoreapp2.0\FytSoa.Extensions.csprojResolveAssemblyReference.cache

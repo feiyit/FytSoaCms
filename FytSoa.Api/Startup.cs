@@ -24,6 +24,7 @@ namespace FytSoa.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ISysAdminService, SysAdminService>();
             services.AddTransient<ISysCodeService, SysCodeService>();
             services.AddTransient<ISysCodeTypeService, SysCodeTypeService>();
 
