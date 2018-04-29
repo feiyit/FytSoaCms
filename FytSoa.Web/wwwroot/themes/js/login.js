@@ -9,7 +9,7 @@ layui.use(['element', 'jquery', 'form'], function () {
             url: "/fytadmin/login?handler=login",
             data: data.field,
             success: function (res) {
-                if (res.statusCode == 200) {
+                if (res.statusCode === 200) {
                     window.location.href = '/fytadmin/index';
                 } else {
                     alert(res.message);
