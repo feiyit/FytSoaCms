@@ -8,8 +8,11 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="~/themes/layui/css/layui.css">
+    <link rel="stylesheet" href="~/themes/css/toastr.css">
     <link rel="stylesheet" href="~/themes/css/login.css">
     <title>@ViewBag.Title</title>
 </head>
@@ -20,15 +23,16 @@
             <div class="login-left-bg"></div>
         </div>
         <div class="login-right">
-            <form action="/fytadmin/login" method="post" class="layui-form">
+            <form action="/fytadmin/login" id="forms" method="post" class="layui-form">
                 @Html.AntiForgeryToken()
                 <h1>用户登录</h1>
                 <div class="cell"><span class="icon-user"></span><input type="text" name="loginname" id="loginname" lay-verify="required" lay-verType="tips" placeholder="登录账号" autocomplete="off"></div>
                 <div class="cell"><span class="icon-pwd"></span><input type="password" name="password" id="password" lay-verify="required" lay-verType="tips" placeholder="登录密码" autocomplete="off"></div>
+                <div class="login-tip"><span>账号密码错误！</span></div>
                 <div class="wjpwd"><a href="http://www.feiyit.com" target="_blank">忘记密码？</a></div>
                 <div class="login-btn">
                     <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="loginsub">登录</button>
-                    <button class="layui-btn layui-btn-danger">重置</button>
+                    <button type="button" class="layui-btn layui-btn-danger">重置</button>
                 </div>
             </form>
         </div>

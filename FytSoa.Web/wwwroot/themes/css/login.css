@@ -16,3 +16,5 @@ body{overflow: hidden;background:url(../img/login/bg.png) no-repeat center cente
 .login-right .wjpwd a{color: #1f7eff; font-size: 12px;}
 .login-btn{text-align: center; margin-top: 30px; margin-bottom: 50px;}
 .login-btn button{ padding: 0 38px; border-radius: 5px;}
+.login-tip{text-align:center; background-color:#FF5722; border-radius:5px; height:0px;}
+.login-tip span{color:#ffffff; display:block;padding:5px 10px; margin-bottom:5px;}
