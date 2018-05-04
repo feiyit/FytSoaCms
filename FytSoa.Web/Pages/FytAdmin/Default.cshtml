@@ -1,0 +1,33 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.DefaultModel
+@{
+    ViewData["Title"] = "默认页";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<div class="layui-row">
+    <div class="layui-col-md9">
+        <div class="layui-row">
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">快捷方式</div>
+                    <div class="layui-card-body">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                你的内容 3/12
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md3">
+        你的内容 3/12
+    </div>
+</div>
+@section Scripts{
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+    </script>
+}
