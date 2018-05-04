@@ -1,7 +1,7 @@
 ﻿@page
 @model FytSoa.Web.Pages.FytAdmin.IndexModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "管理平台";
     Layout = "~/Pages/FytAdmin/_Layout.cshtml";
 }
 <div class="layui-layout layui-layout-admin">
@@ -44,51 +44,69 @@
                         <dd><a href="">管理员管理</a></dd>
                         <dd><a href="javascript:;">系统日志</a></dd>
                         <dd><a href="javascript:;">信息推送</a></dd>
-                        <dd><a href="/oa/sys/codes/" target="iframes">字典管理</a></dd>
+                        <dd><a href="/oa/sys/codes/" target="iframes">条形码管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="" href="javascript:;"><i class="layui-icon"></i>人事管理</a>
+                    <a class="" href="javascript:;"><i class="layui-icon"></i>采购管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="/oa/person/index" target="iframes">基本信息</a></dd>
-                        <dd><a href="javascript:;">职务管理</a></dd>
-                        <dd><a href="javascript:;">薪资管理</a></dd>
-                        <dd><a href="javascript:;">外部人员</a></dd>
-                        <dd><a href="javascript:;">生日提醒</a></dd>
+                        <dd><a href="/oa/person/index" target="iframes">未完成入库</a></dd>
+                        <dd><a href="javascript:;">已完成付款</a></dd>
+                        <dd><a href="javascript:;">未完成到票</a></dd>
+                        <dd><a href="javascript:;">全部采购</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="" href="javascript:;"><i class="layui-icon"></i>行政管理</a>
+                    <a class="" href="javascript:;"><i class="layui-icon"></i>加盟商管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">办公用品</a></dd>
-                        <dd><a href="javascript:;">印章管理</a></dd>
-                        <dd><a href="javascript:;">列表三</a></dd>
-                        <dd><a href="">超链接</a></dd>
+                        <dd><a href="javascript:;">加盟商列表</a></dd>
+                        <dd><a href="javascript:;">店员管理</a></dd>
+                        <dd><a href="javascript:;">消息通知</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="" href="javascript:;"><i class="layui-icon"></i>资产管理</a>
+                    <a class="" href="javascript:;"><i class="layui-icon"></i>库存管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">车辆管理</a></dd>
-                        <dd><a href="javascript:;">房产信息</a></dd>
-                        <dd><a href="javascript:;">办公用品</a></dd>
-                        <dd><a href="">低值易耗品</a></dd>
+                        <dd><a href="javascript:;">入库管理</a></dd>
+                        <dd><a href="javascript:;">出库管理</a></dd>
+                        <dd><a href="javascript:;">调拨管理</a></dd>
+                        <dd><a href="">出库日志</a></dd>
+                        <dd><a href="">商品管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="layui-icon"></i>财务管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
+                        <dd><a href="javascript:;">总账</a></dd>
+                        <dd><a href="javascript:;">应收应付</a></dd>
+                        <dd><a href="">付款核销</a></dd>
+                        <dd><a href="">报表中心</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="layui-icon"></i>项目管理</a>
+                    <a href="javascript:;"><i class="layui-icon"></i>会员管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
+                        <dd><a href="javascript:;">会员列表</a></dd>
+                        <dd><a href="javascript:;">会员积分</a></dd>
+                        <dd><a href="">消费日志</a></dd>
+                        <dd><a href="">生日祝福</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="layui-icon"></i>销售管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">销售明细</a></dd>
+                        <dd><a href="javascript:;">退货管理</a></dd>
+                        <dd><a href="">返货管理</a></dd>
+                        <dd><a href="">折扣管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="layui-icon"></i>报表管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">采购报表</a></dd>
+                        <dd><a href="javascript:;">出入库报表</a></dd>
+                        <dd><a href="">销售报表</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -97,7 +115,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <iframe id="iframes" name="iframes" class="tab-pane" frameborder="0" src="/oa/person"></iframe>
+        <iframe id="iframes" name="iframes" class="tab-pane" frameborder="0" src="/fytadmin/default"></iframe>
     </div>
 </div>
 @section Scripts{
