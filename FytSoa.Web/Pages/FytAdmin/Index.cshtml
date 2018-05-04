@@ -4,6 +4,107 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/FytAdmin/_Layout.cshtml";
 }
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">FytErp-进销存管理平台</div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item pr50"><img src="~/themes/img/logo.jpg" class="nav-logo" /></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="/demo/"><i class="layui-icon"></i></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="/demo/"><i class="layui-icon"></i><span class="layui-badge-dot"></span></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <span class="username">孙斌 <i class="layui-icon"></i></span>
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">个人中心</a></dd>
+                    <hr />
+                    <dd><a href="">退出登录</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
 
-<h2>Index</h2>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="layui-icon"></i>系统管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">公司管理</a></dd>
+                        <dd><a href="javascript:;">部门管理</a></dd>
+                        <dd><a href="javascript:;">角色管理</a></dd>
+                        <dd><a href="">管理员管理</a></dd>
+                        <dd><a href="javascript:;">系统日志</a></dd>
+                        <dd><a href="javascript:;">信息推送</a></dd>
+                        <dd><a href="/oa/sys/codes/" target="iframes">字典管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;"><i class="layui-icon"></i>人事管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/oa/person/index" target="iframes">基本信息</a></dd>
+                        <dd><a href="javascript:;">职务管理</a></dd>
+                        <dd><a href="javascript:;">薪资管理</a></dd>
+                        <dd><a href="javascript:;">外部人员</a></dd>
+                        <dd><a href="javascript:;">生日提醒</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;"><i class="layui-icon"></i>行政管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">办公用品</a></dd>
+                        <dd><a href="javascript:;">印章管理</a></dd>
+                        <dd><a href="javascript:;">列表三</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;"><i class="layui-icon"></i>资产管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">车辆管理</a></dd>
+                        <dd><a href="javascript:;">房产信息</a></dd>
+                        <dd><a href="javascript:;">办公用品</a></dd>
+                        <dd><a href="">低值易耗品</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="layui-icon"></i>财务管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="layui-icon"></i>项目管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <iframe id="iframes" name="iframes" class="tab-pane" frameborder="0" src="/oa/person"></iframe>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+    </script>
+}
 

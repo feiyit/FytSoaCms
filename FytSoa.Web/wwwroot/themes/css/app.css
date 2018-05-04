@@ -1,0 +1,98 @@
+﻿body{font: 400 13.3333px Arial;}
+.layui-layout-admin .layui-body{bottom:0px;}
+.layui-bg-black{background: #324157 !important;}
+.layui-nav{background: #324157;}
+.layui-layout-admin .layui-logo{background: #324157;}
+.layui-layout-admin .layui-header{ background-color:#ffffff;box-shadow: 0 2px 1px 1px rgba(100, 100, 100, 0.1);}
+.layui-header .layui-nav{color:#495060}
+.layui-header .layui-nav .layui-nav-item a{color:#495060}
+.layui-nav-tree .layui-nav-item > a:hover{ background-color: #48576a;}
+.pr50{margin-right:50px;}
+.layui-nav-item .username{display:inline-block; margin-right:15px;}
+.layui-nav-item .layui-icon{font-size:20px;}
+.layui-nav-item .username .layui-icon {font-size: 12px;}
+.layui-header .layui-nav .layui-nav-item a{font-size:12px;}
+.layui-nav-tree .layui-nav-child a{color: #9ea7b4;}
+.layui-layout-admin .layui-side .layui-nav-child dd{padding-left:28px;}
+.layui-nav-tree .layui-nav-item a i{margin-right:4px;font-size: 16px;}
+.tab-pane{width:100%; height:99.6%;}
+.list-wall{padding:12px 12px 0px 12px;}
+.list-search{ background-color:#f2f2f2; padding:12px 15px;}
+.list-search .layui-form-label{width:auto; padding: 5px 15px;}
+.list-search .layui-input, .list-search .layui-input.layui-input-sm {height: 34px;line-height: 34px;padding: 0 10px; }
+.list-search .layui-form-select dl{top:33px;}
+.list-search .layui-btn-sm{font-size:14px;padding: 0 15px;height: 32px;line-height: 32px;}
+.layui-nav-tree .layui-nav-item>a,.layui-nav-tree .layui-nav-child a{font-size:13.3333px;}
+.layui-btn,.layui-input,.layui-table td, .layui-table th,.layui-nav{border-radius:4px;font: 400 13.3333px Arial;}
+.layui-header .layui-nav-bar{top:0px !important; height:2px;}
+
+.layui-col-220 {width: 220px;position: absolute;top: 0px;bottom: 0px;-webkit-transition: position,.2s,linear;-moz-transition: position,.2s,linear;
+                background-color:#eaedf1
+}
+.layui-col-220 .layui-nav-title{width: 100%; height: 70px; line-height: 70px; background: #D9DEE4; overflow: hidden;
+    text-overflow: ellipsis; white-space: nowrap;font-weight: bold;text-indent: 20px;}
+.right-col-body{left:220px;position: absolute;width: auto;top: 0px;bottom: 0px;right: 0px;overflow: hidden;overflow-y: auto;
+                    -o-transition: all 0.2s ease;-ms-transition: all 0.2s ease;-moz-transition: all 0.2s ease;-webkit-transition: all 0.2s ease;
+}
+.layui-tree-cus li{padding:4px 0;}
+
+/* 弹框优化 */
+.layui-layer{box-shadow: 0 1px 3px rgba(0,0,0,.3) !important;}
+.layui-layer-title{background-color:transparent !important; border-bottom:none !important;}
+
+/* 表单样式调整 */
+.form-cus{padding:15px 35px 0 0;}
+.form-cus.form-tab{ padding: 0px 20px 0 15px;}
+.form-cus.form-tab .layui-tab-item{ padding-top: 10px;}
+.form-cus.form-tab .add-icons{ text-align: center; cursor: pointer;}
+.form-cus.form-tab .add-icons i{ vertical-align: middle; margin-right: 5px;}
+
+/* tree */
+.ztree *{ font-size: 13.3333px !important;}
+.ztree li a{ height: 28px !important;}
+.tree-footer{ position: absolute; width: 100%; text-align: center; padding: 10px 0; border-top: 1px solid #f2f2f2; bottom: 0px;
+    -o-transition: all 0.2s ease;-webkit-transition: all 0.2s ease; display: none;
+}
+.tree-footer.active{ bottom: 0px; display: block;}
+
+/*地区下拉优化*/
+.city-picker-span > .placeholder{padding-left:10px; color:#777;}
+.city-picker-dropdown{width:450px !important; left:1px !important;}
+.city-picker-span{overflow:hidden;}
+
+.nav-logo{height:50px;}
+
+
+::-webkit-scrollbar-track-piece {
+	background-color: #f5f5f5;
+	border-left: 1px solid #d2d2d2;
+}
+
+::-webkit-scrollbar {
+	width: 10px;  
+    height: 10px;  
+    background-color: #F5F5F5;  
+}
+::-webkit-scrollbar-track  
+{  
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5; 
+}  
+::-webkit-scrollbar-thumb {
+	background-clip: padding-box;
+	min-height: 28px;
+    background-color: #5a6774;	
+	background-image: -webkit-linear-gradient(45deg,
+	                                          rgba(255, 255, 255, .2) 25%,
+											  transparent 25%,
+											  transparent 50%,
+											  rgba(255, 255, 255, .2) 50%,
+											  rgba(255, 255, 255, .2) 75%,
+											  transparent 75%,
+											  transparent) 
+}
+
+::-webkit-scrollbar-thumb:hover {
+	border: 1px solid #636363;
+	background-color: #929292;
+}
