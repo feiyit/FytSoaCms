@@ -1,8 +1,9 @@
-﻿layui.define(['layer','toastr'], function (exports) {
+﻿layui.define(['layer','toastr','ztree'], function (exports) {
     "use strict";
 
     var $ = layui.jquery,
         layer = layui.layer,
+        ztree = layui.ztree,
         toastr=layui.toastr;
     var tool = {
         error: function (msg) {

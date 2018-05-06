@@ -1,8 +1,8 @@
-﻿body{font: 400 13.3333px Arial; background-color:#f1f4f5;}
+﻿body{font: 400 13.3333px Arial;}
 .layui-layout-admin .layui-body{bottom:0px;}
 .layui-bg-black{background: #324157 !important;}
 .layui-nav{background: #324157;}
-.layui-layout-admin .layui-logo{background: #324157;}
+.layui-layout-admin .layui-logo{background: #324157; color:#ffffff;}
 .layui-layout-admin .layui-header{ background-color:#ffffff;box-shadow: 0 2px 1px 1px rgba(100, 100, 100, 0.1);}
 .layui-header .layui-nav{color:#495060}
 .layui-header .layui-nav .layui-nav-item a{color:#495060}
@@ -35,6 +35,16 @@
                     -o-transition: all 0.2s ease;-ms-transition: all 0.2s ease;-moz-transition: all 0.2s ease;-webkit-transition: all 0.2s ease;
 }
 .layui-tree-cus li{padding:4px 0;}
+.layui-nav-tree .layui-nav-bar{background-color:#409eff}
+.fyt-nav-tree .layui-nav-child dd.layui-this,.fyt-nav-tree .layui-nav-child dd.layui-this a{background-color:transparent; color:#409eff}
+
+/* layui 按钮默认颜色修改 */
+.layui-btn {background-color: #409eff; border-color: #409eff; color:#ffffff; height:33px;}
+.layui-btn:hover{ color:#ffffff;border-color: #409eff;background-color: #409eff;}
+.layui-laypage .layui-laypage-curr .layui-laypage-em,.layui-form-checked[lay-skin=primary] i{background-color: #409eff; border-color: #409eff;}
+.layui-form-onswitch {border-color: rgb(19, 206, 102); background-color: rgb(19, 206, 102);}
+.layui-btn.layui-btn-primary{ background-color:#ffffff;border-color: #dcdfe6; color:#606266}
+.layui-btn.layui-btn-primary:hover{ background-color:#ecf5ff;border-color: #5faeff; color:#5faeff}
 
 /* 弹框优化 */
 .layui-layer{box-shadow: 0 1px 3px rgba(0,0,0,.3) !important;}

@@ -1,0 +1,64 @@
+﻿@page
+@model FytAdmin.Sys.CodesModifyModel
+@{
+    ViewData["Title"] = "编辑修改字典栏目";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<form class="layui-form form-cus" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">等级</label>
+        <div class="layui-input-block">
+            <select name="parent" lay-search="">
+                <option value="">父级</option>
+                @foreach (var item in Model.SelectList.Where(m=>string.IsNullOrEmpty(m.ParentGuid)))
+                {
+                    if (Model.CodeType.parent == item.Guid)
+                    {
+                        <option value="@item.Guid" selected="selected">@item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Guid">@item.Name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">栏目名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" value="@Model.CodeType.name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="guid" id="guid" value=@Model.CodeType.guid />
+    <input type="hidden" name="sort" value=@Model.CodeType.sort />
+</form>
+@section Scripts{
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form, $ = layui.$;
+            var index = parent.layer.getFrameIndex(window.name);
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                var urls = "api/codetype/add";
+                if ($("#guid").val()) {
+                    urls = "api/codetype/edit";
+                }
+                os.ajax(urls, data.field, function(res) {
+                    parent.layer.close(index);
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+
+        });
+    </script>
+}
