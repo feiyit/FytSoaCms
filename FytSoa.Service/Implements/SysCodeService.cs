@@ -26,7 +26,7 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<SysCode>
             {
                 statusCode = 200,
-                data = model != null ? new SysCode(){} : null
+                data = model != null ? model : new SysCode() { }
             };
             if (model == null)
             {

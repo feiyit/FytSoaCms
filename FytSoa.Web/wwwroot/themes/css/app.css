@@ -45,6 +45,7 @@
 .layui-form-onswitch {border-color: rgb(19, 206, 102); background-color: rgb(19, 206, 102);}
 .layui-btn.layui-btn-primary{ background-color:#ffffff;border-color: #dcdfe6; color:#606266}
 .layui-btn.layui-btn-primary:hover{ background-color:#ecf5ff;border-color: #5faeff; color:#5faeff}
+.layui-btn-xs{height:22px !important;}
 
 /* 弹框优化 */
 .layui-layer{box-shadow: 0 1px 3px rgba(0,0,0,.3) !important;}

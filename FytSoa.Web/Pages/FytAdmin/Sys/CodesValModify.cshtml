@@ -8,19 +8,19 @@
     <div class="layui-form-item">
         <label class="layui-form-label">字典名称</label>
         <div class="layui-input-block">
-            <input type="text" name="name" value="@Model.CodeModel.Name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入字典名称" class="layui-input">
+            <input type="text" name="Name" value="@Model.CodeModel.Name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入字典名称" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">阈值</label>
         <div class="layui-input-block">
-            <input type="text" name="type" value="@Model.CodeModel.CodeType" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入阈值" class="layui-input">
+            <input type="text" name="CodeType" value="@Model.CodeModel.CodeType" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入阈值" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">备注</label>
         <div class="layui-input-block">
-            <textarea name="summary" class="layui-textarea" style="min-height: 60px;" placeholder="（非必填）可以描述字典的说明">@Model.CodeModel.Summary</textarea>
+            <textarea name="Summary" class="layui-textarea" style="min-height: 60px;" placeholder="（非必填）可以描述字典的说明">@Model.CodeModel.Summary</textarea>
         </div>
     </div>
     <div class="layui-form-item">
@@ -41,8 +41,10 @@
 </form>
 @section Scripts{
     <script>
-        layui.use(['form'], function () {
-            var form = layui.form, $ = layui.$;
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form'], function () {
+            var form = layui.form, $ = layui.$, os = layui.common;
             var index = parent.layer.getFrameIndex(window.name);
             //监听提交
             form.on('submit(submit)', function (data) {

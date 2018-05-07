@@ -24,9 +24,9 @@ namespace FytSoa.Web.Pages.FytAdmin.Sys
         [BindProperty]
         public List<SysCodeType> SelectList { get; private set; }
 
-        public void OnGet(string parm)
+        public void OnGet(string guid)
         {
-            CodeType = _sysCodeTypeService.GetByGuidAsync(parm).Result.data;
+            CodeType = _sysCodeTypeService.GetByGuidAsync(guid).Result.data;
             //获得列表
             SelectList = _sysCodeTypeService.GetListAsync().Result.data;
         }

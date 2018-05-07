@@ -19,12 +19,12 @@ namespace FytSoa.Web.Pages.FytAdmin.Sys
 
         [BindProperty]
         public SysCode CodeModel { get; set; }
-        public void OnGet(string parm)
+        public void OnGet(string guid)
         {
-            CodeModel = _sysCodeService.GetByGuidAsync(parm).Result.data;
+            CodeModel = _sysCodeService.GetByGuidAsync(guid).Result.data;
             if (string.IsNullOrEmpty(CodeModel.Guid))
             {
-                CodeModel.ParentGuid = parm;
+                CodeModel.ParentGuid = guid;
             }
         }
     }

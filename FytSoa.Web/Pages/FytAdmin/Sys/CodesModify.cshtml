@@ -41,8 +41,10 @@
 </form>
 @section Scripts{
     <script>
-        layui.use(['form'], function () {
-            var form = layui.form, $ = layui.$;
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common','form'], function () {
+            var form = layui.form, $ = layui.$, os = layui.common;
             var index = parent.layer.getFrameIndex(window.name);
             //监听提交
             form.on('submit(submit)', function (data) {

@@ -24,8 +24,7 @@ namespace FytSoa.Core
         //系统权限设置
         public DbSet<SysCode> SysCodeDb => new DbSet<SysCode>(Db);
         public DbSet<SysCodeType> SysCodeTypeDb => new DbSet<SysCodeType>(Db);
-        public DbSet<SysCompany> SysCompanyDb => new DbSet<SysCompany>(Db);
-        public DbSet<SysDepartment> SysDepartmentDb => new DbSet<SysDepartment>(Db);
+        public DbSet<SysOrganize> SysOrganizeDb => new DbSet<SysOrganize>(Db);
         public DbSet<SysImage> SysImageDb => new DbSet<SysImage>(Db);
         public DbSet<SysLog> SysLogDb => new DbSet<SysLog>(Db);
         public DbSet<SysMenu> SysMenuDb => new DbSet<SysMenu>(Db);
