@@ -27,6 +27,7 @@ namespace FytSoa.Web
             services.AddTransient<ISysAdminService, SysAdminService>();
             services.AddTransient<ISysCodeService, SysCodeService>();
             services.AddTransient<ISysCodeTypeService, SysCodeTypeService>();
+            services.AddTransient<ISysOrganizeService, SysOrganizeService>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>

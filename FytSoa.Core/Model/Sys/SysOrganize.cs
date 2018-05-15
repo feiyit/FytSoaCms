@@ -15,7 +15,7 @@ namespace FytSoa.Core.Model.Sys
 
         }
         /// <summary>
-        /// Desc:
+        /// Desc:唯一编号
         /// Default:
         /// Nullable:False
         /// </summary>           
@@ -39,6 +39,13 @@ namespace FytSoa.Core.Model.Sys
         /// Nullable:False
         /// </summary>           
         public string Name { get; set; }
+
+        /// <summary>
+        /// Desc:父节名称
+        /// Default:
+        /// Nullable:True
+        /// </summary>           
+        public string ParentName { get; set; }
 
         /// <summary>
         /// Desc:层级
