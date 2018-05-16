@@ -36,6 +36,11 @@ namespace FytSoa.Core.Model.Sys
         public string ParentGuid { get; set; }
 
         /// <summary>
+        /// 父级名称
+        /// </summary>
+        public string ParentName { get; set; }
+
+        /// <summary>
         /// Desc:菜单名称
         /// Default:
         /// Nullable:False

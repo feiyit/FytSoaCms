@@ -1,7 +1,7 @@
 ﻿@page
-@model FytSoa.Web.Pages.FytAdmin.Sys.OrganizeModifyModel
+@model FytSoa.Web.Pages.FytAdmin.Sys.MenuModifyModel
 @{
-    ViewData["Title"] = "OrganizeModify";
+    ViewData["Title"] = "菜单修改";
     Layout = "~/Pages/FytAdmin/_Layout.cshtml";
 }
 <style>
@@ -14,44 +14,48 @@
         border-radius: 4px;
         opacity: 0;
         height: 0;
-        display:none;
+        display: none;
     }
+
         .organize-tree.active {
-            display:block;
+            display: block;
             opacity: 1;
             height: auto;
-            max-height:500px;
-            overflow:auto;
+            max-height: 500px;
+            overflow: auto;
             transition: all .5s;
         }
-    .organize-tree .ztree li a{height:22px !important;}
+
+        .organize-tree .ztree li a {
+            height: 22px !important;
+        }
 </style>
 <form class="layui-form form-cus" action="">
     <div class="layui-form-item">
-        <label class="layui-form-label">所属部门</label>
+        <label class="layui-form-label">所属父级</label>
         <div class="layui-input-block">
-            <input type="text" name="ParentName" id="ParentName" value="@Model.OrganizeModel.ParentName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请选择所属部门" class="layui-input">
+            <input type="text" name="ParentName" id="ParentName" value="@Model.MenuModel.ParentName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请选择所属父级" class="layui-input">
             <div class="organize-tree">
                 <ul id="tree" class="ztree layui-tree-cus"></ul>
             </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">部门名称</label>
+        <label class="layui-form-label">菜单名称</label>
         <div class="layui-input-block">
-            <input type="text" name="Name" value="@Model.OrganizeModel.Name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入部门名称" class="layui-input">
+            <input type="text" name="Name" value="@Model.MenuModel.Name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入部门名称" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">排序</label>
         <div class="layui-input-block">
-            <input type="text" name="Sort" value="@Model.OrganizeModel.Sort" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入排序" class="layui-input">
+            <input type="text" name="Sort" value="@Model.MenuModel.Sort" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入排序" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">是否有效</label>
+        <label class="layui-form-label">是否显示</label>
         <div class="layui-input-block">
-            <input type="checkbox" name="Status" lay-skin="switch" lay-text="ON|OFF" value="true" @(Model.OrganizeModel.Status ? "checked" : "")>
+            <input type="checkbox" name="Status" lay-skin="switch" lay-text="ON|OFF" value="true" @(Model.MenuModel.Status ? "checked" : "")>
         </div>
     </div>
     <div class="layui-form-item">
@@ -60,8 +64,8 @@
             <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
         </div>
     </div>
-    <input type="hidden" name="Guid" id="Guid" value=@Model.OrganizeModel.Guid />
-    <input type="hidden" name="ParentGuid" id="ParentGuid" value=@Model.OrganizeModel.ParentGuid />
+    <input type="hidden" name="Guid" id="Guid" value=@Model.MenuModel.Guid />
+    <input type="hidden" name="ParentGuid" id="ParentGuid" value=@Model.MenuModel.ParentGuid />
 </form>
 <link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
 @section Scripts{
@@ -73,10 +77,10 @@
             var index = parent.layer.getFrameIndex(window.name);
             //监听提交
             form.on('submit(submit)', function (data) {
-                var urls = "api/organize/add";
+                var urls = "api/menu/add";
                 if ($("#Guid").val()) {
-                    urls = "api/organize/edit";
-                }                
+                    urls = "api/menu/edit";
+                }
                 os.ajax(urls, data.field, function(res) {
                     parent.layer.close(index);
                 });
@@ -89,13 +93,13 @@
             var setting = {
                 async: {
                     enable: true,
-                    url: "/api/organize/gettree"
+                    url: "/api/menu/gettree"
                 },
                 callback: {
                     onClick: onClick
                 }
             };
-            $("#ParentName").click(function () { 
+            $("#ParentName").click(function () {
                 $(".organize-tree").addClass('active');
             });
             $(".organize-tree").mouseleave(function () {
@@ -110,4 +114,5 @@
         });
     </script>
 }
+
 

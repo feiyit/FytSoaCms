@@ -12,13 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace FytSoa.Api.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Organize")]
-    public class OrganizeController : Controller
+    [Route("api/Menu")]
+    public class MenuController : Controller
     {
-        private readonly ISysOrganizeService _sysOrganizeService;
-        public OrganizeController(ISysOrganizeService sysOrganizeService)
+        private readonly ISysMenuService _sysMenuService;
+        public MenuController(ISysMenuService sysMenuService)
         {
-            _sysOrganizeService = sysOrganizeService;
+            _sysMenuService = sysMenuService;
         }
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("gettree")]
-        public List<SysOrganizeTree> GetListPage()
+        public List<SysMenuTree> GetListPage()
         {
-            return _sysOrganizeService.GetListTreeAsync().Result.data;
+            return _sysMenuService.GetListTreeAsync().Result.data;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace FytSoa.Api.Controllers
         [HttpGet("getpages")]
         public async Task<JsonResult> GetPages(string key)
         {
-            var res = await _sysOrganizeService.GetPagesAsync(key);
+            var res = await _sysMenuService.GetPagesAsync(key);
             return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
@@ -48,9 +48,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add")]
-        public async Task<ApiResult<string>> AddCodeType(SysOrganize parm)
+        public async Task<ApiResult<string>> AddCodeType(SysMenu parm)
         {
-            return await _sysOrganizeService.AddAsync(parm);
+            return await _sysMenuService.AddAsync(parm);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace FytSoa.Api.Controllers
         [HttpPost("delete")]
         public async Task<ApiResult<string>> DeleteCode(string parm)
         {
-            return await _sysOrganizeService.DeleteAsync(parm);
+            return await _sysMenuService.DeleteAsync(parm);
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit")]
-        public async Task<ApiResult<string>> EditCode(SysOrganize parm)
+        public async Task<ApiResult<string>> EditCode(SysMenu parm)
         {
-            return await _sysOrganizeService.ModifyAsync(parm);
+            return await _sysMenuService.ModifyAsync(parm);
         }
     }
 }

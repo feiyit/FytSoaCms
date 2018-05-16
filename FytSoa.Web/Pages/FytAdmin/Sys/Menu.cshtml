@@ -1,11 +1,11 @@
 ﻿@page
-@model FytSoa.Web.Pages.FytAdmin.Sys.OrganizeModel
+@model FytSoa.Web.Pages.FytAdmin.Sys.MenuModel
 @{
-    ViewData["Title"] = "部门管理";
+    ViewData["Title"] = "Menu";
     Layout = "~/Pages/FytAdmin/_Layout.cshtml";
 }
 <div class="layui-col-220">
-    <div class="layui-nav-title">组织架构</div>
+    <div class="layui-nav-title">角色管理</div>
     <ul id="tree" class="ztree layui-tree-cus"></ul>
 </div>
 <div class="right-col-body">
@@ -18,10 +18,6 @@
     </div>
 </div>
 <link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
-<script type="text/html" id="switchTpl">
-    <!-- 这里的 checked 的状态只是演示 -->
-    <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="ON|OFF" lay-filter="statusedit" {{ d.status?'checked':''}}>
-</script>
 @section Scripts{
     <script>
         layui.config({
@@ -36,24 +32,25 @@
                     form = layui.form;
                 table.render({
                     elem: '#tablist',
-                    url: '/api/organize/getpages',
+                    url: '/api/menu/getpages',
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'name', title: '组织名称', sort: true, fixed: 'left' },
-                            { field: 'parentName', title: '父节点名称' },
+                            { field: 'name', title: '菜单名称', sort: true, fixed: 'left' },
+                            { field: 'nameCode', title: '编号' },
+                            { field: 'urls', title: 'Url' },
                             { field: 'sort', width: 150, title: '排序', sort: true },
-                            { field: 'status', width: 150, title: '状态', templet: '#switchTpl' },
+                            { field: 'layer', width: 150, title: '层级' },
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
                     page: true,
                     id: 'tables'
-                });                
+                });
                 var setting = {
                     async: {
                         enable: true,
-                        url: "/api/organize/gettree"
+                        url: "/api/menu/gettree"
                     },
                     callback: {
                         onClick: onClick
@@ -70,9 +67,9 @@
                                     key: guid
                                 }
                             });
-                    },                    
-                    organizeAdd: function () {                        
-                        os.Open('添加部门', '/fytadmin/sys/organizemodify', '620px', '370px', function () {
+                    },
+                    organizeAdd: function () {
+                        os.Open('添加部门', '/fytadmin/sys/menumodify', '620px', '370px', function () {
                             active.reload();
                             var tree = $.fn.zTree.getZTreeObj("tree");
                             tree.reAsyncChildNodes(null, "refresh");
@@ -94,7 +91,7 @@
                             var loadindex = layer.load(1, {
                                 shade: [0.1, '#000']
                             });
-                            os.ajax('api/organize/delete/', { parm: str }, function (res) {
+                            os.ajax('api/menu/delete/', { parm: str }, function (res) {
                                 layer.close(loadindex);
                                 if (res.statusCode === 200) {
                                     active.reload();
@@ -108,7 +105,7 @@
                         });
 
                     }
-                };                
+                };
                 $.fn.zTree.init($("#tree"), setting);
                 $('.list-search .layui-btn').on('click', function () {
                     var type = $(this).data('type');
@@ -122,7 +119,7 @@
                 table.on('tool(tool)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'edit') {
-                        os.Open('编辑部门', '/fytadmin/sys/organizemodify/?guid=' + data.guid, '620px', '370px', function () {
+                        os.Open('编辑菜单', '/fytadmin/sys/menumodify/?guid=' + data.guid, '620px', '370px', function () {
                             var tree = $.fn.zTree.getZTreeObj("tree");
                             tree.reAsyncChildNodes(null, "refresh");
                             active.reload();

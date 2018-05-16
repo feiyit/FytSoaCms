@@ -12,34 +12,31 @@ using SqlSugar;
 
 namespace FytSoa.Service.Implements
 {
-    /// <summary>
-    /// 部门实现
-    /// </summary>
-    public class SysOrganizeService : DbContext, ISysOrganizeService
+    public class SysMenuService : DbContext, ISysMenuService
     {
         /// <summary>
         /// 添加部门信息
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        public async Task<ApiResult<string>> AddAsync(SysOrganize parm)
+        public async Task<ApiResult<string>> AddAsync(SysMenu parm)
         {
             parm.Guid = Guid.NewGuid().ToString();
             parm.EditTime = DateTime.Now;
-            SysOrganizeDb.Insert(parm);
+            SysMenuDb.Insert(parm);
             if (!string.IsNullOrEmpty(parm.ParentGuid))
             {
                 // 说明有父级  根据父级，查询对应的模型
-                var model = SysOrganizeDb.GetById(parm.ParentGuid);
+                var model = SysMenuDb.GetById(parm.ParentGuid);
                 parm.ParentGuidList = model.ParentGuidList + parm.Guid + ",";
                 parm.Layer = model.Layer + 1;
             }
             else
             {
-                parm.ParentGuidList= "," + parm.Guid + ",";
+                parm.ParentGuidList = "," + parm.Guid + ",";
             }
             //更新  新的对象
-            SysOrganizeDb.Update(parm);
+            SysMenuDb.Update(parm);
             var res = new ApiResult<string>
             {
                 statusCode = 200,
@@ -56,7 +53,7 @@ namespace FytSoa.Service.Implements
         public async Task<ApiResult<string>> DeleteAsync(string parm)
         {
             var list = Utils.StrToListString(parm);
-            var isok = SysOrganizeDb.Delete(m => list.Contains(m.Guid));
+            var isok = SysMenuDb.Delete(m => list.Contains(m.Guid));
             var res = new ApiResult<string>
             {
                 statusCode = isok ? 200 : 500,
@@ -71,15 +68,15 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        public async Task<ApiResult<SysOrganize>> GetByGuidAsync(string parm)
+        public async Task<ApiResult<SysMenu>> GetByGuidAsync(string parm)
         {
-            var model = SysOrganizeDb.GetById(parm);
-            var res = new ApiResult<SysOrganize>
+            var model = SysMenuDb.GetById(parm);
+            var res = new ApiResult<SysMenu>
             {
                 statusCode = 200
             };
-            var pmdel = Db.Queryable<SysOrganize>().OrderBy(m => m.Sort, OrderByType.Desc).First();
-            res.data = model ?? new SysOrganize() { Sort = pmdel?.Sort + 1 ?? 1,Status=true };
+            var pmdel = Db.Queryable<SysMenu>().OrderBy(m => m.Sort, OrderByType.Desc).First();
+            res.data = model ?? new SysMenu() { Sort = pmdel?.Sort + 1 ?? 1, Status = true };
             return await Task.Run(() => res);
         }
 
@@ -87,23 +84,23 @@ namespace FytSoa.Service.Implements
         /// 查询Tree
         /// </summary>
         /// <returns></returns>
-        public async Task<ApiResult<List<SysOrganizeTree>>> GetListTreeAsync()
+        public async Task<ApiResult<List<SysMenuTree>>> GetListTreeAsync()
         {
-            var list = SysOrganizeDb.GetList();
-            var treeList = new List<SysOrganizeTree>();
+            var list = SysMenuDb.GetList();
+            var treeList = new List<SysMenuTree>();
             foreach (var item in list.Where(m => m.Layer == 0).OrderBy(m => m.Sort))
             {
                 //获得子级
-                var children = RecursionOrganize(list,new List<SysOrganizeTree>(),item.Guid);
-                treeList.Add(new SysOrganizeTree()
+                var children = RecursionOrganize(list, new List<SysMenuTree>(), item.Guid);
+                treeList.Add(new SysMenuTree()
                 {
                     guid = item.Guid,
                     name = item.Name,
-                    open= children.Count>0,
-                    children = children.Count==0?null:children
+                    open = children.Count > 0,
+                    children = children.Count == 0 ? null : children
                 });
             }
-            var res = new ApiResult<List<SysOrganizeTree>>
+            var res = new ApiResult<List<SysMenuTree>>
             {
                 statusCode = 200,
                 data = treeList
@@ -118,17 +115,17 @@ namespace FytSoa.Service.Implements
         /// <param name="list">新集合</param>
         /// <param name="guid">父节点</param>
         /// <returns></returns>
-        List<SysOrganizeTree> RecursionOrganize(List<SysOrganize> sourceList,List<SysOrganizeTree> list,string guid)
+        List<SysMenuTree> RecursionOrganize(List<SysMenu> sourceList, List<SysMenuTree> list, string guid)
         {
             foreach (var row in sourceList.Where(m => m.ParentGuid == guid).OrderBy(m => m.Sort))
             {
-                var res = RecursionOrganize(sourceList, new List<SysOrganizeTree>(), row.Guid);
-                list.Add(new SysOrganizeTree()
+                var res = RecursionOrganize(sourceList, new List<SysMenuTree>(), row.Guid);
+                list.Add(new SysMenuTree()
                 {
                     guid = row.Guid,
                     name = row.Name,
-                    open=res.Count>0,
-                    children = res.Count>0?res:null
+                    open = res.Count > 0,
+                    children = res.Count > 0 ? res : null
                 });
             }
             return list;
@@ -138,15 +135,15 @@ namespace FytSoa.Service.Implements
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        public async Task<ApiResult<Page<SysOrganize>>> GetPagesAsync(string key)
+        public async Task<ApiResult<Page<SysMenu>>> GetPagesAsync(string key)
         {
-            var res = new ApiResult<Page<SysOrganize>>();
+            var res = new ApiResult<Page<SysMenu>>();
             try
             {
                 using (Db)
                 {
-                    var query = Db.Queryable<SysOrganize>()
-                        .WhereIF(!string.IsNullOrEmpty(key),m=>m.ParentGuidList.Contains(key))
+                    var query = Db.Queryable<SysMenu>()
+                        .WhereIF(!string.IsNullOrEmpty(key), m => m.ParentGuidList.Contains(key))
                         .OrderBy(m => m.Sort).ToPageAsync(1, 1000);
                     res.success = true;
                     res.message = "获取成功！";
@@ -161,13 +158,18 @@ namespace FytSoa.Service.Implements
             return await Task.Run(() => res);
         }
 
-        public async Task<ApiResult<string>> ModifyAsync(SysOrganize parm)
+        /// <summary>
+        /// 修改菜单
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        public async Task<ApiResult<string>> ModifyAsync(SysMenu parm)
         {
             parm.EditTime = DateTime.Now;
             if (!string.IsNullOrEmpty(parm.ParentGuid))
             {
                 // 说明有父级  根据父级，查询对应的模型
-                var model = SysOrganizeDb.GetById(parm.ParentGuid);
+                var model = SysMenuDb.GetById(parm.ParentGuid);
                 parm.ParentGuidList = model.ParentGuidList + parm.Guid + ",";
                 parm.Layer = model.Layer + 1;
             }
@@ -178,7 +180,7 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<string>
             {
                 statusCode = 200,
-                data = SysOrganizeDb.Update(parm) ? "1" : "0"
+                data = SysMenuDb.Update(parm) ? "1" : "0"
             };
             return await Task.Run(() => res);
         }
