@@ -76,20 +76,6 @@ namespace FytSoa.Core.Model.Sys
         public string Urls { get; set; }
 
         /// <summary>
-        /// Desc:菜单控制器名称
-        /// Default:
-        /// Nullable:True
-        /// </summary>           
-        public string Controller { get; set; }
-
-        /// <summary>
-        /// Desc:菜单方法名称
-        /// Default:
-        /// Nullable:True
-        /// </summary>           
-        public string Action { get; set; }
-
-        /// <summary>
         /// Desc:菜单图标Class
         /// Default:
         /// Nullable:True

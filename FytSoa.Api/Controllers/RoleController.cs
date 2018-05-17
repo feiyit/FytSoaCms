@@ -12,23 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace FytSoa.Api.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Organize")]
-    public class OrganizeController : Controller
+    [Route("api/Role")]
+    public class RoleController : Controller
     {
-        private readonly ISysOrganizeService _sysOrganizeService;
-        public OrganizeController(ISysOrganizeService sysOrganizeService)
+        private readonly ISysRoleService _roleService;
+        public RoleController(ISysRoleService roleService)
         {
-            _sysOrganizeService = sysOrganizeService;
-        }
-
-        /// <summary>
-        /// 获得组织结构Tree列表
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("gettree")]
-        public List<SysOrganizeTree> GetListPage()
-        {
-            return _sysOrganizeService.GetListTreeAsync().Result.data;
+            _roleService = roleService;
         }
 
         /// <summary>
@@ -39,7 +29,7 @@ namespace FytSoa.Api.Controllers
         [HttpGet("getpages")]
         public async Task<JsonResult> GetPages(string key)
         {
-            var res = await _sysOrganizeService.GetPagesAsync(key);
+            var res = await _roleService.GetPagesAsync(key);
             return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
@@ -48,9 +38,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add")]
-        public async Task<ApiResult<string>> AddOrganize(SysOrganize parm)
+        public async Task<ApiResult<string>> AddRole(SysRole parm)
         {
-            return await _sysOrganizeService.AddAsync(parm);
+            return await _roleService.AddAsync(parm);
         }
 
         /// <summary>
@@ -58,9 +48,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<ApiResult<string>> DeleteOrganize(string parm)
+        public async Task<ApiResult<string>> DeleteRole(string parm)
         {
-            return await _sysOrganizeService.DeleteAsync(parm);
+            return await _roleService.DeleteAsync(parm);
         }
 
         /// <summary>
@@ -68,9 +58,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit")]
-        public async Task<ApiResult<string>> EditOrganize(SysOrganize parm)
+        public async Task<ApiResult<string>> EditRole(SysRole parm)
         {
-            return await _sysOrganizeService.ModifyAsync(parm);
+            return await _roleService.ModifyAsync(parm);
         }
     }
 }

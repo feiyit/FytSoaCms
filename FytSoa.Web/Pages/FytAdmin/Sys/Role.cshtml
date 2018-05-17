@@ -1,11 +1,11 @@
 ﻿@page
-@model FytSoa.Web.Pages.FytAdmin.Sys.MenuModel
+@model FytSoa.Web.Pages.FytAdmin.Sys.RoleModel
 @{
-    ViewData["Title"] = "菜单管理";
+    ViewData["Title"] = "角色管理";
     Layout = "~/Pages/FytAdmin/_Layout.cshtml";
 }
 <div class="layui-col-220">
-    <div class="layui-nav-title">菜单管理</div>
+    <div class="layui-nav-title">角色管理</div>
     <ul id="tree" class="ztree layui-tree-cus"></ul>
 </div>
 <div class="right-col-body">
@@ -13,6 +13,7 @@
         <div class="layui-form list-search">
             <button type="button" class="layui-btn layui-btn-sm" data-type="organizeAdd"><i class="layui-icon"></i> 新增</button>
             <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i> 删除</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon layui-icon-template"></i> 角色分配模块</button>
         </div>
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
@@ -32,15 +33,13 @@
                     form = layui.form;
                 table.render({
                     elem: '#tablist',
-                    url: '/api/menu/getpages',
+                    url: '/api/role/getpages',
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'name', title: '菜单名称', sort: true, fixed: 'left' },
-                            { field: 'nameCode', title: '编号' },
-                            { field: 'urls', title: 'Url' },
-                            { field: 'sort', width: 150, title: '排序', sort: true },
-                            { field: 'layer', width: 150, title: '层级' },
+                            { field: 'name', title: '角色名称', sort: true, fixed: 'left' },
+                            { field: 'codes', title: '编号' },
+                            { field: 'summary', title: '描述' },
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
@@ -50,7 +49,7 @@
                 var setting = {
                     async: {
                         enable: true,
-                        url: "/api/menu/gettree"
+                        url: "/api/organize/gettree"
                     },
                     callback: {
                         onClick: onClick
@@ -69,7 +68,7 @@
                             });
                     },
                     organizeAdd: function () {
-                        os.Open('添加菜单', '/fytadmin/sys/menumodify', '620px', '450px', function () {
+                        os.Open('添加角色', '/fytadmin/sys/rolemodify', '620px', '400px', function () {
                             active.reload();
                             var tree = $.fn.zTree.getZTreeObj("tree");
                             tree.reAsyncChildNodes(null, "refresh");
@@ -79,7 +78,7 @@
                         var checkStatus = table.checkStatus('tables')
                             , data = checkStatus.data;
                         if (data.length === 0) {
-                            os.warning("请选择要删除的项目~");
+                            os.error("请选择要删除的项目~");
                             return;
                         }
                         var str = '';
@@ -91,7 +90,7 @@
                             var loadindex = layer.load(1, {
                                 shade: [0.1, '#000']
                             });
-                            os.ajax('api/menu/delete/', { parm: str }, function (res) {
+                            os.ajax('api/role/delete/', { parm: str }, function (res) {
                                 layer.close(loadindex);
                                 if (res.statusCode === 200) {
                                     active.reload();
@@ -117,9 +116,9 @@
                 }
                 //监听工具条
                 table.on('tool(tool)', function (obj) {
-                    var data = obj.data;
+                    var data = obj.data; 
                     if (obj.event === 'edit') {
-                        os.Open('编辑菜单', '/fytadmin/sys/menumodify/?guid=' + data.guid, '620px', '450px', function () {
+                        os.Open('编辑角色', '/fytadmin/sys/rolemodify/?guid=' + data.guid, '620px', '400px', function () {
                             var tree = $.fn.zTree.getZTreeObj("tree");
                             tree.reAsyncChildNodes(null, "refresh");
                             active.reload();
@@ -132,4 +131,3 @@
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
     </script>
 }
-

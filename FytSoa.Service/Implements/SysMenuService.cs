@@ -23,6 +23,7 @@ namespace FytSoa.Service.Implements
         {
             parm.Guid = Guid.NewGuid().ToString();
             parm.EditTime = DateTime.Now;
+            parm.AddTIme = DateTime.Now;
             SysMenuDb.Insert(parm);
             if (!string.IsNullOrEmpty(parm.ParentGuid))
             {
@@ -34,6 +35,7 @@ namespace FytSoa.Service.Implements
             else
             {
                 parm.ParentGuidList = "," + parm.Guid + ",";
+                parm.Layer = 1;
             }
             //更新  新的对象
             SysMenuDb.Update(parm);
@@ -88,7 +90,7 @@ namespace FytSoa.Service.Implements
         {
             var list = SysMenuDb.GetList();
             var treeList = new List<SysMenuTree>();
-            foreach (var item in list.Where(m => m.Layer == 0).OrderBy(m => m.Sort))
+            foreach (var item in list.Where(m => m.Layer == 1).OrderBy(m => m.Sort))
             {
                 //获得子级
                 var children = RecursionOrganize(list, new List<SysMenuTree>(), item.Guid);

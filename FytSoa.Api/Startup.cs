@@ -29,6 +29,7 @@ namespace FytSoa.Api
             services.AddTransient<ISysCodeTypeService, SysCodeTypeService>();
             services.AddTransient<ISysOrganizeService, SysOrganizeService>();
             services.AddTransient<ISysMenuService, SysMenuService>();
+            services.AddTransient<ISysRoleService, SysRoleService>();
 
             //跨域设置
             services.AddCors();

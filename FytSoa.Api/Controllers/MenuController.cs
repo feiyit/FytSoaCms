@@ -48,7 +48,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add")]
-        public async Task<ApiResult<string>> AddCodeType(SysMenu parm)
+        public async Task<ApiResult<string>> AddMenu(SysMenu parm)
         {
             return await _sysMenuService.AddAsync(parm);
         }
@@ -58,7 +58,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<ApiResult<string>> DeleteCode(string parm)
+        public async Task<ApiResult<string>> DeleteMenu(string parm)
         {
             return await _sysMenuService.DeleteAsync(parm);
         }
@@ -68,7 +68,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit")]
-        public async Task<ApiResult<string>> EditCode(SysMenu parm)
+        public async Task<ApiResult<string>> EditMenu(SysMenu parm)
         {
             return await _sysMenuService.ModifyAsync(parm);
         }

@@ -4,7 +4,10 @@
     var $ = layui.jquery,
         layer = layui.layer,
         ztree = layui.ztree,
-        toastr=layui.toastr;
+        toastr = layui.toastr;
+    toastr.options = {
+        "positionClass": "toast-top-center"
+    };
     var tool = {
         error: function (msg) {
             toastr.error(msg);

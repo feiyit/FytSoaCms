@@ -29,6 +29,16 @@ namespace FytSoa.Core.Model.Sys
         public string DepartmentGuid { get; set; }
 
         /// <summary>
+        /// 部门名称
+        /// </summary>
+        public string DepartmentName { get; set; }
+
+        /// <summary>
+        /// 归属于角色组
+        /// </summary>
+        public string DepartmentGroup { get; set; }
+
+        /// <summary>
         /// Desc:部门名称
         /// Default:
         /// Nullable:False
