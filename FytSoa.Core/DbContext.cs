@@ -30,6 +30,7 @@ namespace FytSoa.Core
         public DbSet<SysMenu> SysMenuDb => new DbSet<SysMenu>(Db);
         public DbSet<SysPermissions> SysPermissionsDb => new DbSet<SysPermissions>(Db);
         public DbSet<SysRole> SysRoleDb => new DbSet<SysRole>(Db);
+        public DbSet<SysAdmin> SysAdminDb => new DbSet<SysAdmin>(Db);
         public DbSet<SysRoleMenu> SysRoleMenuDb => new DbSet<SysRoleMenu>(Db);
     }
 }

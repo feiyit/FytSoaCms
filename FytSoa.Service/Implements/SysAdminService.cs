@@ -1,8 +1,10 @@
-﻿using FytSoa.Common;
+﻿using FytIms.Service.Extensions;
+using FytSoa.Common;
 using FytSoa.Core;
 using FytSoa.Core.Model.Sys;
 using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -52,6 +54,113 @@ namespace FytSoa.Service.Implements
                 res.message = ApiEnum.Error.GetEnumText() + ex.Message;
                 res.statusCode = (int)ApiEnum.Error;
             }
+            return await Task.Run(() => res);
+        }
+
+
+        /// <summary>
+        /// 添加部门信息
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        public async Task<ApiResult<string>> AddAsync(SysAdmin parm)
+        {
+            parm.Guid = Guid.NewGuid().ToString();
+            parm.AddDate = DateTime.Now;
+            if (!string.IsNullOrEmpty(parm.DepartmentGuid))
+            {
+                // 说明有父级  根据父级，查询对应的模型
+                var model = SysOrganizeDb.GetById(parm.DepartmentGuid);
+                parm.DepartmentGuidList = model.ParentGuidList;
+            }
+            SysAdminDb.Insert(parm);
+            var res = new ApiResult<string>
+            {
+                statusCode = 200,
+                data = "1"
+            };
+            return await Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 删除部门
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        public async Task<ApiResult<string>> DeleteAsync(string parm)
+        {
+            var list = Utils.StrToListString(parm);
+            var isok = SysAdminDb.Delete(m => list.Contains(m.Guid));
+            var res = new ApiResult<string>
+            {
+                statusCode = isok ? 200 : 500,
+                data = isok ? "1" : "0",
+                message = isok ? "删除成功~" : "删除失败~"
+            };
+            return await Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 根据唯一编号查询一条部门信息
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        public async Task<ApiResult<SysAdmin>> GetByGuidAsync(string parm)
+        {
+            var model = SysAdminDb.GetById(parm);
+            var res = new ApiResult<SysAdmin>
+            {
+                statusCode = 200
+            };
+            res.data = model ?? new SysAdmin() {  };
+            return await Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 获得列表
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ApiResult<Page<SysAdmin>>> GetPagesAsync(string key)
+        {
+            var res = new ApiResult<Page<SysAdmin>>();
+            try
+            {
+                using (Db)
+                {
+                    var query = Db.Queryable<SysAdmin>()
+                        .WhereIF(!string.IsNullOrEmpty(key), m => m.DepartmentGuidList.Contains(key))
+                        .OrderBy(m => m.AddDate).ToPageAsync(1, 1000);
+                    res.success = true;
+                    res.message = "获取成功！";
+                    res.data = await query;
+                }
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return await Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 修改菜单
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        public async Task<ApiResult<string>> ModifyAsync(SysAdmin parm)
+        {
+            if (!string.IsNullOrEmpty(parm.DepartmentGuid))
+            {
+                // 说明有父级  根据父级，查询对应的模型
+                var model = SysOrganizeDb.GetById(parm.DepartmentGuid);
+                parm.DepartmentGuidList = model.ParentGuidList;
+            }
+            var res = new ApiResult<string>
+            {
+                statusCode = 200,
+                data = SysAdminDb.Update(parm) ? "1" : "0"
+            };
             return await Task.Run(() => res);
         }
     }

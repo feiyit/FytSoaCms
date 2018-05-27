@@ -96,6 +96,8 @@
 .layadmin-takerates .layui-progress h3{position:absolute;right:0;top:-35px;color:#999;font-size:14px}
 .layadmin-takerates .layui-progress-bar{text-align:left}
 .layadmin-takerates .layui-progress-text{top:-35px;line-height:26px;font-size:22px}
+.layui-form-item .layui-inline{margin-right:0px;}
+.layui-form-item .layui-input-inline{margin-right:0px; width:230px;}
 
 
 ::-webkit-scrollbar-track-piece {

@@ -22,6 +22,11 @@ namespace FytSoa.Core.Model.Sys
         public string DepartmentGuid { get; set; }
 
         /// <summary>
+        /// 部门集合
+        /// </summary>
+        public string DepartmentGuidList { get; set; }
+
+        /// <summary>
         /// 登录账号
         /// </summary>
         public string LoginName { get; set; }
