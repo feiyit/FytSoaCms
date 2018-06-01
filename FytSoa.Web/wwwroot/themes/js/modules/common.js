@@ -1,10 +1,11 @@
-﻿layui.define(['layer','toastr','ztree'], function (exports) {
+﻿layui.define(['layer', 'toastr', 'ztree','pjax'], function (exports) {
     "use strict";
 
     var $ = layui.jquery,
         layer = layui.layer,
         ztree = layui.ztree,
-        toastr = layui.toastr;
+        toastr = layui.toastr,
+        pjax = layui.pjax;
     toastr.options = {
         "positionClass": "toast-top-center"
     };
@@ -43,11 +44,11 @@
                 type: 2,
                 title: title,
                 shadeClose: true,
-                shade: 0.3,
+                shade: 0.2,
                 maxmin: false, //开启最大化最小化按钮
                 area: [width, height],
                 content: url,
-                zIndex: "10",
+                zIndex: "10000",
                 end: function () {
                     if (fun) fun();
                 }

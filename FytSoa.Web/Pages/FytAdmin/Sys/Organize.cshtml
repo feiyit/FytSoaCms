@@ -4,25 +4,26 @@
     ViewData["Title"] = "部门管理";
     Layout = "~/Pages/FytAdmin/_Layout.cshtml";
 }
-<div class="layui-col-220">
-    <div class="layui-nav-title">组织架构</div>
-    <ul id="tree" class="ztree layui-tree-cus"></ul>
-</div>
-<div class="right-col-body">
-    <div class="list-wall">
-        <div class="layui-form list-search">
-            <button type="button" class="layui-btn layui-btn-sm" data-type="organizeAdd"><i class="layui-icon"></i> 新增</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i> 删除</button>
-        </div>
-        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+<div id="container">
+    <div class="layui-col-220">
+        <div class="layui-nav-title">组织架构</div>
+        <ul id="tree" class="ztree layui-tree-cus"></ul>
     </div>
-</div>
-<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
-<script type="text/html" id="switchTpl">
-    <!-- 这里的 checked 的状态只是演示 -->
-    <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="ON|OFF" lay-filter="statusedit" {{ d.status?'checked':''}}>
-</script>
-@section Scripts{
+    <div class="right-col-body">
+        <div class="list-wall">
+            <div class="layui-form list-search">
+                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeAdd"><i class="layui-icon"></i> 新增</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i> 删除</button>
+            </div>
+            <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+        </div>
+    </div>
+    <link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
+    <script type="text/html" id="switchTpl">
+        <!-- 这里的 checked 的状态只是演示 -->
+        <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="ON|OFF" lay-filter="statusedit" {{ d.status?'checked':''}}>
+    </script>
+
     <script>
         layui.config({
             base: '/themes/js/modules/'
@@ -49,7 +50,7 @@
                     ],
                     page: true,
                     id: 'tables'
-                });                
+                });
                 var setting = {
                     async: {
                         enable: true,
@@ -70,8 +71,8 @@
                                     key: guid
                                 }
                             });
-                    },                    
-                    organizeAdd: function () {                        
+                    },
+                    organizeAdd: function () {
                         os.Open('添加部门', '/fytadmin/sys/organizemodify', '620px', '370px', function () {
                             active.reload();
                             var tree = $.fn.zTree.getZTreeObj("tree");
@@ -108,7 +109,7 @@
                         });
 
                     }
-                };                
+                };
                 $.fn.zTree.init($("#tree"), setting);
                 $('.list-search .layui-btn').on('click', function () {
                     var type = $(this).data('type');
@@ -134,5 +135,5 @@
     <script type="text/html" id="tool">
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
     </script>
-}
+</div>
 
