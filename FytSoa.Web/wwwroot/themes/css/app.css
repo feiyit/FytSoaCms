@@ -39,7 +39,7 @@
 .fyt-nav-tree .layui-nav-child dd.layui-this,.fyt-nav-tree .layui-nav-child dd.layui-this a{background-color:transparent; color:#409eff}
 
 /* layui 按钮默认颜色修改 */
-.layui-btn {background-color: #409eff; border-color: #409eff; color:#ffffff; height:33px;}
+.layui-btn {background-color: #409eff; border-color: #409eff; color:#ffffff; height:33px; border-radius:100px !important;}
 .layui-btn:hover{ color:#ffffff;border-color: #409eff;background-color: #409eff;}
 .layui-laypage .layui-laypage-curr .layui-laypage-em,.layui-form-checked[lay-skin=primary] i{background-color: #409eff; border-color: #409eff;}
 .layui-form-onswitch {border-color: rgb(19, 206, 102); background-color: rgb(19, 206, 102);}
@@ -47,8 +47,15 @@
 .layui-btn.layui-btn-primary:hover{ background-color:#ecf5ff;border-color: #5faeff; color:#5faeff}
 .layui-btn-xs{height:22px !important;}
 
+.layui-input, .layui-select, .layui-textarea{border-radius:3px !important;}
+.layui-input:hover, .layui-select:hover, .layui-textarea:hover,
+.layui-input:focus, .layui-select:focus, .layui-textarea:focus {
+    border: 1px solid #409eff !important;
+}
 /* 弹框优化 */
-.layui-layer{box-shadow: 0 1px 3px rgba(0,0,0,.3) !important;}
+.layui-layer {
+    box-shadow: 0 1px 3px rgba(0,0,0,.3) !important;
+}
 .layui-layer-title{background-color:transparent !important; border-bottom:none !important;}
 
 /* 表单样式调整 */
