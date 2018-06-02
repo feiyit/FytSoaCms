@@ -2,7 +2,7 @@
 @model FytSoa.Web.Pages.FytAdmin.Sys.AdminModel
 @{
     ViewData["Title"] = "管理员管理";
-    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+    Layout = AdminLayout.Pjax(HttpContext);
 }
 <div id="container">
     <div class="layui-col-220">

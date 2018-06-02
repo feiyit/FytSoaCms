@@ -2,7 +2,7 @@
 @model FytSoa.Web.Pages.FytAdmin.DefaultModel
 @{
     ViewData["Title"] = "默认页";
-    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+    Layout = AdminLayout.Pjax(HttpContext);
 }
 <div id="container">
     <style>
@@ -345,7 +345,6 @@
             </div>
         </div>
     </div>
-
     <script type="text/javascript" src="~/themes/js/echarts.min.js"></script>
     <script type="text/javascript" src="~/themes/js/macarons.js"></script>
     <script>

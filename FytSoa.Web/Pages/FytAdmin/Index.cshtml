@@ -12,7 +12,7 @@
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="/demo/"><i class="layui-icon"></i></a>
+                <a data-pjax href="/fytadmin/default"><i class="layui-icon"></i></a>
             </li>
             <li class="layui-nav-item">
                 <a href="/demo/"><i class="layui-icon"></i><span class="layui-badge-dot"></span></a>
@@ -114,21 +114,24 @@
     </div>
 
     <div class="layui-body" id="container">
-        
+
     </div>
 </div>
+<script type="text/javascript" src="~/themes/js/echarts.min.js"></script>
+<script type="text/javascript" src="~/themes/js/macarons.js"></script>
 <script type="text/javascript" src="~/themes/js/nprogress.js"></script>
 <script>
     layui.config({
         base: '/themes/js/modules/'
-    }).use(['layer', 'jquery', 'common', 'pjax'], function () {
+    }).use(['element','layer', 'jquery', 'common', 'pjax'], function () {
         var os = layui.common
+            , element = layui.element
             , $ = layui.$;
         $.pjax({
             url: '/fytadmin/default',
             container: '#container',
-            fragment:'#container'
-        }); 
+            fragment: '#container'
+        });
         $(document).pjax('a', '#container',
             {
                 fragment: "#container",

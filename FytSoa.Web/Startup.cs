@@ -31,6 +31,7 @@ namespace FytSoa.Web
             services.AddTransient<ISysMenuService, SysMenuService>();
             services.AddTransient<ISysRoleService, SysRoleService>();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
             {
