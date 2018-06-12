@@ -65,20 +65,41 @@ namespace FytSoa.Service.Implements
         /// <returns></returns>
         public async Task<ApiResult<string>> AddAsync(SysAdmin parm)
         {
-            parm.Guid = Guid.NewGuid().ToString();
-            parm.AddDate = DateTime.Now;
-            if (!string.IsNullOrEmpty(parm.DepartmentGuid))
-            {
-                // 说明有父级  根据父级，查询对应的模型
-                var model = SysOrganizeDb.GetById(parm.DepartmentGuid);
-                parm.DepartmentGuidList = model.ParentGuidList;
-            }
-            SysAdminDb.Insert(parm);
             var res = new ApiResult<string>
             {
                 statusCode = 200,
                 data = "1"
             };
+            try
+            {
+                //判断用吗是否存在
+                var isExisteName = SysAdminDb.IsAny(m => m.LoginName == parm.LoginName);
+                if (isExisteName)
+                {
+                    res.message = "用户名已存在，请更换~";
+                    res.statusCode = (int)ApiEnum.ParameterError;
+                    return await Task.Run(() => res);
+                }
+                parm.LoginPwd = DES3Encrypt.EncryptString(parm.LoginPwd);
+                if (string.IsNullOrEmpty(parm.HeadPic))
+                {
+                    parm.HeadPic = "/themes/img/avatar.jpg";
+                }
+                parm.Guid = Guid.NewGuid().ToString();
+                parm.AddDate = DateTime.Now;
+                if (!string.IsNullOrEmpty(parm.DepartmentGuid))
+                {
+                    // 说明有父级  根据父级，查询对应的模型
+                    var model = SysOrganizeDb.GetById(parm.DepartmentGuid);
+                    parm.DepartmentGuidList = model.ParentGuidList;
+                }
+                SysAdminDb.Insert(parm);
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }     
             return await Task.Run(() => res);
         }
 

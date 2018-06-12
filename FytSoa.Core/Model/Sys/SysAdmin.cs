@@ -19,6 +19,11 @@ namespace FytSoa.Core.Model.Sys
         /// <summary>
         /// 归属部门
         /// </summary>
+        public string DepartmentName { get; set; }
+
+        /// <summary>
+        /// 归属部门
+        /// </summary>
         public string DepartmentGuid { get; set; }
 
         /// <summary>

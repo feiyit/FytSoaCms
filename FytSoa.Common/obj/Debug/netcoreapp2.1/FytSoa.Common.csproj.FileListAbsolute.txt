@@ -1,0 +1,10 @@
+E:\2018Project\ERP项目\2018Soa\SoaProJect\FytSoa.Common\bin\Debug\netcoreapp2.1\FytSoa.Common.deps.json
+E:\2018Project\ERP项目\2018Soa\SoaProJect\FytSoa.Common\bin\Debug\netcoreapp2.1\FytSoa.Common.dll
+E:\2018Project\ERP项目\2018Soa\SoaProJect\FytSoa.Common\obj\Debug\netcoreapp2.1\FytSoa.Common.csproj.CoreCompileInputs.cache
+E:\2018Project\ERP项目\2018Soa\SoaProJect\FytSoa.Common\obj\Debug\netcoreapp2.1\FytSoa.Common.AssemblyInfoInputs.cache
+E:\2018Project\ERP项目\2018Soa\SoaProJect\FytSoa.Common\obj\Debug\netcoreapp2.1\FytSoa.Common.AssemblyInfo.cs
+E:\2018Project\ERP项目\2018Soa\SoaProJect\FytSoa.Common\bin\Debug\netcoreapp2.1\FytSoa.Common.runtimeconfig.json
+E:\2018Project\ERP项目\2018Soa\SoaProJect\FytSoa.Common\bin\Debug\netcoreapp2.1\FytSoa.Common.runtimeconfig.dev.json
+E:\2018Project\ERP项目\2018Soa\SoaProJect\FytSoa.Common\bin\Debug\netcoreapp2.1\FytSoa.Common.pdb
+E:\2018Project\ERP项目\2018Soa\SoaProJect\FytSoa.Common\obj\Debug\netcoreapp2.1\FytSoa.Common.dll
+E:\2018Project\ERP项目\2018Soa\SoaProJect\FytSoa.Common\obj\Debug\netcoreapp2.1\FytSoa.Common.pdb

@@ -33,13 +33,14 @@
                         form = layui.form;
                     table.render({
                         elem: '#tablist',
-                        url: '/api/role/getpages',
+                        url: '/api/admin/getpages',
                         cols: [
                             [
                                 { type: 'checkbox', fixed: 'left' },
-                                { field: 'name', title: '角色名称', sort: true, fixed: 'left' },
-                                { field: 'codes', title: '编号' },
-                                { field: 'summary', title: '描述' },
+                                { field: 'loginName', title: '登录账号', sort: true, fixed: 'left' },
+                                { field: 'trueName', title: '真是姓名' },
+                                { field: 'sex', title: '性别' },
+                                { field: 'loginDate', title: '最后登录时间' },
                                 { width: 100, title: '操作', templet: '#tool' }
                             ]
                         ],
