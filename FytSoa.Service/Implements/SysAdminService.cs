@@ -24,7 +24,7 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<SysAdmin>();
             try
             {
-                parm.password = DES3Encrypt.EncryptString(parm.password);
+                //parm.password = DES3Encrypt.EncryptString(parm.password);
                 var model = Db.Queryable<SysAdmin>()
                         .Where(m => m.LoginName == parm.loginname).First();
                 if (model != null)
@@ -171,17 +171,40 @@ namespace FytSoa.Service.Implements
         /// <returns></returns>
         public async Task<ApiResult<string>> ModifyAsync(SysAdmin parm)
         {
-            if (!string.IsNullOrEmpty(parm.DepartmentGuid))
-            {
-                // 说明有父级  根据父级，查询对应的模型
-                var model = SysOrganizeDb.GetById(parm.DepartmentGuid);
-                parm.DepartmentGuidList = model.ParentGuidList;
-            }
             var res = new ApiResult<string>
             {
-                statusCode = 200,
-                data = SysAdminDb.Update(parm) ? "1" : "0"
+                statusCode = 200                
             };
+            try
+            {
+                //修改，判断用户是否和其它的重复
+                var isExisteName = SysAdminDb.IsAny(m => m.LoginName == parm.LoginName && m.Guid!=parm.Guid);
+                if (isExisteName)
+                {
+                    res.message = "用户名已存在，请更换~";
+                    res.statusCode = (int)ApiEnum.ParameterError;
+                    return await Task.Run(() => res);
+                }
+
+                parm.LoginPwd = DES3Encrypt.EncryptString(parm.LoginPwd);
+                if (!string.IsNullOrEmpty(parm.DepartmentGuid))
+                {
+                    // 说明有父级  根据父级，查询对应的模型
+                    var model = SysOrganizeDb.GetById(parm.DepartmentGuid);
+                    parm.DepartmentGuidList = model.ParentGuidList;
+                }
+                var dbres = SysAdminDb.Update(parm);
+                if (!dbres)
+                {
+                    res.statusCode = (int)ApiEnum.Error;
+                    res.message = "更新失败！";
+                }
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
             return await Task.Run(() => res);
         }
     }
