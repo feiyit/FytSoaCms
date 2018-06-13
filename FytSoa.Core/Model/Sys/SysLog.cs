@@ -26,21 +26,14 @@ namespace FytSoa.Core.Model.Sys
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public string UserGuid { get; set; }
+        public string LoginName { get; set; }
 
         /// <summary>
         /// Desc:日志操作人所属部门Guid
         /// Default:
         /// Nullable:True
         /// </summary>           
-        public string DepartGuid { get; set; }
-
-        /// <summary>
-        /// Desc:日志操作人所属公司Guid
-        /// Default:
-        /// Nullable:True
-        /// </summary>           
-        public string CompanyGuid { get; set; }
+        public string DepartName { get; set; }
 
         /// <summary>
         /// Desc:操作表名
@@ -89,7 +82,7 @@ namespace FytSoa.Core.Model.Sys
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime AddTIme { get; set; }
+        public DateTime AddTime { get; set; }
 
     }
 }

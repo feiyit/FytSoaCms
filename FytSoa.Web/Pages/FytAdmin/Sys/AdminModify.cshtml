@@ -43,13 +43,13 @@
         <div class="layui-inline">
             <label class="layui-form-label">登录账号</label>
             <div class="layui-input-inline">
-                <input type="text" name="LoginName" value="@Model.adminModel.LoginName" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                <input type="text" name="LoginName" value="@Model.adminModel.LoginName" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">登录密码</label>
             <div class="layui-input-inline">
-                <input type="password" name="LoginPwd" value="@Model.adminModel.LoginPwd" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                <input type="password" name="LoginPwd" value="@Model.adminModel.LoginPwd" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -57,13 +57,13 @@
         <div class="layui-inline">
             <label class="layui-form-label">姓名</label>
             <div class="layui-input-inline">
-                <input type="text" name="TrueName" value="@Model.adminModel.TrueName" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                <input type="text" name="TrueName" value="@Model.adminModel.TrueName" maxlength="10" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">编号</label>
             <div class="layui-input-inline">
-                <input type="text" name="Number" value="@Model.adminModel.Number" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                <input type="text" name="Number" value="@Model.adminModel.Number" maxlength="6" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -71,14 +71,14 @@
         <div class="layui-inline">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-inline">
-                <input type="radio" name="Sex" value="男" title="男" @(Model.adminModel.Sex=="男"?"checked":"")>
-                <input type="radio" name="Sex" value="女" title="女" @(Model.adminModel.Sex=="女"?"checked":"")>
+                <input type="radio" name="Sex" value="男" title="男" @(Model.adminModel.Sex == "男" ? "checked" : "")>
+                <input type="radio" name="Sex" value="女" title="女" @(Model.adminModel.Sex == "女" ? "checked" : "")>
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">状态</label>
             <div class="layui-input-inline">
-                <input type="checkbox" checked="" name="Status" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+                <input type="checkbox" @(Model.adminModel.Status ? "checked" : "") name="Status" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
             </div>
         </div>
     </div>
@@ -101,7 +101,7 @@
             <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
             <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
         </div>
-    </div>
+    </div>    
     <input type="hidden" name="Guid" id="Guid" value=@Model.adminModel.Guid />
     <input type="hidden" name="DepartmentGuid" id="DepartmentGuid" value=@Model.adminModel.DepartmentGuid />
 </form>
@@ -118,7 +118,8 @@
                 var urls = "api/admin/add";
                 if ($("#Guid").val()) {
                     urls = "api/admin/edit";
-                }
+                }                
+                data.field.Status = data.field.Status === 'on' ? true : false;
                 os.ajax(urls, data.field, function (res) {
                     if (res.statusCode == 200) {
                         parent.layer.close(index);

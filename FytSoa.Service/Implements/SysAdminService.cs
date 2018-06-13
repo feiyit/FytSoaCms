@@ -24,13 +24,33 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<SysAdmin>();
             try
             {
-                //parm.password = DES3Encrypt.EncryptString(parm.password);
+                parm.password = DES3Encrypt.EncryptString(parm.password);
                 var model = Db.Queryable<SysAdmin>()
                         .Where(m => m.LoginName == parm.loginname).First();
                 if (model != null)
                 {
                     if (model.LoginPwd.Equals(parm.password))
                     {
+                        //修改登录时间
+                        model.LoginDate = DateTime.Now;
+                        model.UpLoginDate = model.LoginDate;
+                        SysAdminDb.Update(model);
+
+                        #region 保存操作日志
+                        var logModel = new SysLog() {
+                            Guid=Guid.NewGuid().ToString(),
+                            LoginName = model.LoginName,
+                            DepartName = model.DepartmentName,
+                            OptionTable = "SysAdmin",
+                            Summary="登录操作",
+                            IP=Utils.GetIp(),
+                            LogType= (int)LogEnum.Login,
+                            Urls= Utils.GetUrl(),
+                            AddTime=DateTime.Now
+                        };
+                        SysLogDb.Insert(logModel);
+                        #endregion
+
                         res.success = true;
                         res.message = "获取成功！";
                         res.data = model;
@@ -193,8 +213,21 @@ namespace FytSoa.Service.Implements
                     var model = SysOrganizeDb.GetById(parm.DepartmentGuid);
                     parm.DepartmentGuidList = model.ParentGuidList;
                 }
-                var dbres = SysAdminDb.Update(parm);
-                if (!dbres)
+                var dbres = Db.Updateable<SysAdmin>().UpdateColumns(m => new SysAdmin()
+                {
+                    LoginName = parm.LoginName,
+                    LoginPwd = parm.LoginPwd,
+                    DepartmentName = parm.DepartmentName,
+                    DepartmentGuid=parm.DepartmentGuid,
+                    DepartmentGuidList=parm.DepartmentGuidList,
+                    TrueName=parm.TrueName,
+                    Number=parm.Number,
+                    Sex=parm.Sex,
+                    Mobile=parm.Mobile,
+                    Email=parm.Email,
+                    Status=parm.Status
+                }).Where(m=>m.Guid==parm.Guid).ExecuteCommand();
+                if (dbres>1)
                 {
                     res.statusCode = (int)ApiEnum.Error;
                     res.message = "更新失败！";

@@ -7,6 +7,7 @@ using FytSoa.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using FytSoa.Common;
 
 namespace FytSoa.Web.Pages.FytAdmin.Sys
 {
@@ -24,6 +25,8 @@ namespace FytSoa.Web.Pages.FytAdmin.Sys
         public void OnGet(string guid)
         {
             adminModel = _adminService.GetByGuidAsync(guid).Result.data;
+            //密码解密
+            adminModel.LoginPwd = DES3Encrypt.DecryptString(adminModel.LoginPwd);
         }
     }
 }

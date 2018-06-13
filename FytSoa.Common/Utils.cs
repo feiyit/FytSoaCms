@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -6,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace FytSoa.Common
 {
     public class Utils
-    {
+    {       
         /// <summary>
         /// 生成随机字母字符串(数字字母混和)
         /// </summary>
@@ -352,6 +353,55 @@ namespace FytSoa.Common
         }
         #endregion
 
-        
+        #region 获得IP地址
+        /// <summary>
+        /// 获得IP地址
+        /// </summary>
+        /// <returns>字符串数组</returns>
+        public static string GetIp()
+        {
+            return "127.0.0.1";
+        }
+        #endregion
+
+        #region 获得当前访问的URL地址
+        /// <summary>
+        /// 获得当前访问的URL地址
+        /// </summary>
+        /// <returns>字符串数组</returns>
+        public static string GetUrl()
+        {
+            return "";
+        }
+        #endregion
+
+        #region 分割字符串
+        public static string[] SplitString(string strContent, char strSplit)
+        {
+            if (!string.IsNullOrEmpty(strContent))
+            {
+                return strContent.Split(new char[] { strSplit }, StringSplitOptions.RemoveEmptyEntries);
+            }
+            else
+            {
+                return new string[0] { };
+            }
+        }
+        /// <summary>
+        /// 分割字符串
+        /// </summary>
+        public static string[] SplitString(string strContent, string strSplit)
+        {
+            if (!string.IsNullOrEmpty(strContent))
+            {
+                if (strContent.IndexOf(strSplit, StringComparison.Ordinal) < 0)
+                    return new string[] { strContent };
+
+                return Regex.Split(strContent, Regex.Escape(strSplit), RegexOptions.IgnoreCase);
+            }
+            else
+                return new string[0] { };
+        }
+        #endregion
     }
 }

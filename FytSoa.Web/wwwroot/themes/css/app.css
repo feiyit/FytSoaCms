@@ -52,12 +52,14 @@
 .layui-input:focus, .layui-select:focus, .layui-textarea:focus {
     border: 1px solid #409eff !important;
 }
+
 /* 弹框优化 */
 .layui-body{z-index:60 !important;}
 .layui-layer {
     box-shadow: 0 1px 3px rgba(0,0,0,.3) !important;
 }
 .layui-layer-title{background-color:transparent !important; border-bottom:none !important;}
+.lay-time-icon .layui-icon{position:absolute; right:10px; top:9px;}
 
 /* 表单样式调整 */
 .form-cus{padding:15px 35px 0 0;}
