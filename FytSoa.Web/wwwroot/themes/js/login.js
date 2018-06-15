@@ -16,7 +16,13 @@ layui.use(['element', 'jquery', 'form', 'common'], function () {
         os.ajax('fytadmin/login?handler=login', data.field, function (res) {                    
             if (res.statusCode === 200) {
                 setTimeout(function () {
-                    window.location.href = '/fytadmin/index';
+                    var rurl = os.getUrlParam('ReturnUrl');
+                    if (!rurl) {
+                        window.location.href = '/fytadmin/index';
+                    }
+                    else {
+                        window.location.href = rurl;
+                    }
                 },1000)                
             } else {
                 $(".login-tip span").html(res.message);

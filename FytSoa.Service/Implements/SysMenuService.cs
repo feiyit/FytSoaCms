@@ -149,6 +149,9 @@ namespace FytSoa.Service.Implements
                         .OrderBy(m => m.Sort).ToPageAsync(1, 1000);
                     res.success = true;
                     res.message = "获取成功！";
+                    var result = new List<SysMenu>();
+                    ChildModule(query.Result.Items, result, null);
+                    query.Result.Items = result;
                     res.data = await query;
                 }
             }
@@ -158,6 +161,20 @@ namespace FytSoa.Service.Implements
                 res.statusCode = (int)ApiEnum.Error;
             }
             return await Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 递归模块列表
+        /// </summary>
+        private void ChildModule(List<SysMenu> list, List<SysMenu> newlist, string parentId)
+        {
+            var result = list.Where(p => p.ParentGuid == parentId).OrderBy(p => p.Layer).ThenBy(p => p.Sort).ToList();
+            if (!result.Any()) return;
+            for (int i = 0; i < result.Count(); i++)
+            {
+                newlist.Add(result[i]);
+                ChildModule(list, newlist, result[i].Guid);
+            }
         }
 
         /// <summary>

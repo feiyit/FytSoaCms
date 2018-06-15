@@ -360,7 +360,8 @@ namespace FytSoa.Common
         /// <returns>字符串数组</returns>
         public static string GetIp()
         {
-            return "127.0.0.1";
+            HttpContextAccessor _context = new HttpContextAccessor();
+            return _context.HttpContext.Connection.LocalIpAddress.ToString();
         }
         #endregion
 
@@ -371,7 +372,8 @@ namespace FytSoa.Common
         /// <returns>字符串数组</returns>
         public static string GetUrl()
         {
-            return "";
+            HttpContextAccessor _context = new HttpContextAccessor();
+            return _context.HttpContext.Request.Path.ToString();
         }
         #endregion
 
@@ -401,6 +403,25 @@ namespace FytSoa.Common
             }
             else
                 return new string[0] { };
+        }
+        #endregion
+
+        #region 显示错层方法
+        /// <summary>
+        /// 显示错层方法
+        /// </summary>
+        public static string LevelName(string name, decimal? level)
+        {
+            if (level > 1)
+            {
+                string nbsp = " ";
+                for (int i = 1; i < level; i++)
+                {
+                    nbsp += "　";
+                }
+                name = nbsp + "  |--" + name;
+            }
+            return name;
         }
         #endregion
     }

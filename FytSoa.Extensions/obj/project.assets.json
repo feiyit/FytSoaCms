@@ -11506,23 +11506,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\71551\\.nuget\\packages\\": {},
+    "C:\\Users\\fuyu\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Extensions\\FytSoa.Extensions.csproj",
+      "projectUniqueName": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Extensions\\FytSoa.Extensions.csproj",
       "projectName": "FytSoa.Extensions",
-      "projectPath": "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Extensions\\FytSoa.Extensions.csproj",
-      "packagesPath": "C:\\Users\\71551\\.nuget\\packages\\",
-      "outputPath": "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Extensions\\obj\\",
+      "projectPath": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Extensions\\FytSoa.Extensions.csproj",
+      "packagesPath": "C:\\Users\\fuyu\\.nuget\\packages\\",
+      "outputPath": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Extensions\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\71551\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\fuyu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 namespace FytSoa.Web
 {
@@ -49,7 +52,7 @@ namespace FytSoa.Web
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -61,6 +64,9 @@ namespace FytSoa.Web
                 app.UseExceptionHandler("/Error");
             }
             app.UseAuthentication();
+
+            loggerFactory.AddNLog();//添加NLog  
+            env.ConfigureNLog("nlog.config");//读取Nlog配置文件 
 
             app.UseStaticFiles();
             app.UseCors("AllowAll");

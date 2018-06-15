@@ -2684,6 +2684,44 @@
           "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
         }
       },
+      "NLog/4.5.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/NLog.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {}
+        }
+      },
+      "NLog.Extensions.Logging/1.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging": "2.0.1",
+          "NLog": "[4.5.4, 5.0.0-beta01)"
+        },
+        "compile": {
+          "lib/netstandard2.0/NLog.Extensions.Logging.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/NLog.Extensions.Logging.dll": {}
+        }
+      },
+      "NLog.Web.AspNetCore/4.5.4": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "2.0.0",
+          "Microsoft.AspNetCore.Http": "2.0.0",
+          "Microsoft.AspNetCore.Http.Extensions": "2.0.0",
+          "Microsoft.AspNetCore.Routing.Abstractions": "2.0.0",
+          "NLog.Extensions.Logging": "1.0.2"
+        },
+        "compile": {
+          "lib/netstandard2.0/NLog.Web.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/NLog.Web.AspNetCore.dll": {}
+        }
+      },
       "Remotion.Linq/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -4543,7 +4581,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
-          "Microsoft.AspNetCore.App": "2.1.0"
+          "Microsoft.AspNetCore.App": "2.1.0",
+          "NLog.Web.AspNetCore": "4.5.4"
         },
         "compile": {
           "bin/placeholder/FytSoa.Common.dll": {}
@@ -7245,6 +7284,73 @@
         "lib/netstandard1.3/Newtonsoft.Json.Bson.xml",
         "newtonsoft.json.bson.1.0.1.nupkg.sha512",
         "newtonsoft.json.bson.nuspec"
+      ]
+    },
+    "NLog/4.5.4": {
+      "sha512": "sYOzep0pdVat2zkOREy6FQwcH4zRCTimGr4c1Esqc0+t9QYvQ5JXDnW/sdqOsVxbxJ28sa/3MRUGSAfXz7eIGw==",
+      "type": "package",
+      "path": "nlog/4.5.4",
+      "files": [
+        "lib/monoandroid44/NLog.dll",
+        "lib/monoandroid44/NLog.xml",
+        "lib/net35/NLog.dll",
+        "lib/net35/NLog.xml",
+        "lib/net40-client/NLog.dll",
+        "lib/net40-client/NLog.xml",
+        "lib/net45/NLog.dll",
+        "lib/net45/NLog.xml",
+        "lib/netstandard1.3/NLog.dll",
+        "lib/netstandard1.3/NLog.xml",
+        "lib/netstandard1.5/NLog.dll",
+        "lib/netstandard1.5/NLog.xml",
+        "lib/netstandard2.0/NLog.dll",
+        "lib/netstandard2.0/NLog.xml",
+        "lib/sl4/NLog.dll",
+        "lib/sl4/NLog.xml",
+        "lib/sl5/NLog.dll",
+        "lib/sl5/NLog.xml",
+        "lib/wp8/NLog.dll",
+        "lib/wp8/NLog.xml",
+        "lib/xamarinios10/NLog.dll",
+        "lib/xamarinios10/NLog.xml",
+        "nlog.4.5.4.nupkg.sha512",
+        "nlog.nuspec"
+      ]
+    },
+    "NLog.Extensions.Logging/1.0.2": {
+      "sha512": "i5iGN3TUEGtRMO1m0xjDwFugVZz4FITJ/JNMyC4HtzBLipUJSApXiTaCR8fWkTkkyqb5fYkvgLMV4XBmwxxEqQ==",
+      "type": "package",
+      "path": "nlog.extensions.logging/1.0.2",
+      "files": [
+        "lib/net451/NLog.Extensions.Logging.dll",
+        "lib/net451/NLog.Extensions.Logging.xml",
+        "lib/net461/NLog.Extensions.Logging.dll",
+        "lib/net461/NLog.Extensions.Logging.xml",
+        "lib/netstandard1.3/NLog.Extensions.Logging.dll",
+        "lib/netstandard1.3/NLog.Extensions.Logging.xml",
+        "lib/netstandard1.5/NLog.Extensions.Logging.dll",
+        "lib/netstandard1.5/NLog.Extensions.Logging.xml",
+        "lib/netstandard2.0/NLog.Extensions.Logging.dll",
+        "lib/netstandard2.0/NLog.Extensions.Logging.xml",
+        "nlog.extensions.logging.1.0.2.nupkg.sha512",
+        "nlog.extensions.logging.nuspec"
+      ]
+    },
+    "NLog.Web.AspNetCore/4.5.4": {
+      "sha512": "dTCjiiUAccDD2XRTg3L74bamYmjFozaA/mXEeV08bOZ0bIez1jM0pXfQTb2awFsiibrgDuCf3JJQ/xf2OJB4fA==",
+      "type": "package",
+      "path": "nlog.web.aspnetcore/4.5.4",
+      "files": [
+        "lib/net451/NLog.Web.AspNetCore.dll",
+        "lib/net451/NLog.Web.AspNetCore.xml",
+        "lib/net461/NLog.Web.AspNetCore.dll",
+        "lib/net461/NLog.Web.AspNetCore.xml",
+        "lib/netstandard1.5/NLog.Web.AspNetCore.dll",
+        "lib/netstandard1.5/NLog.Web.AspNetCore.xml",
+        "lib/netstandard2.0/NLog.Web.AspNetCore.dll",
+        "lib/netstandard2.0/NLog.Web.AspNetCore.xml",
+        "nlog.web.aspnetcore.4.5.4.nupkg.sha512",
+        "nlog.web.aspnetcore.nuspec"
       ]
     },
     "Remotion.Linq/2.2.0": {
@@ -12084,23 +12190,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\71551\\.nuget\\packages\\": {},
+    "C:\\Users\\fuyu\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Api\\FytSoa.Api.csproj",
+      "projectUniqueName": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Api\\FytSoa.Api.csproj",
       "projectName": "FytSoa.Api",
-      "projectPath": "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Api\\FytSoa.Api.csproj",
-      "packagesPath": "C:\\Users\\71551\\.nuget\\packages\\",
-      "outputPath": "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Api\\obj\\",
+      "projectPath": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Api\\FytSoa.Api.csproj",
+      "packagesPath": "C:\\Users\\fuyu\\.nuget\\packages\\",
+      "outputPath": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\71551\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\fuyu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12113,17 +12219,17 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Common\\FytSoa.Common.csproj": {
-              "projectPath": "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Common\\FytSoa.Common.csproj"
+            "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Common\\FytSoa.Common.csproj": {
+              "projectPath": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Common\\FytSoa.Common.csproj"
             },
-            "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Core\\FytSoa.Core.csproj": {
-              "projectPath": "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Core\\FytSoa.Core.csproj"
+            "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Core\\FytSoa.Core.csproj": {
+              "projectPath": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Core\\FytSoa.Core.csproj"
             },
-            "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Extensions\\FytSoa.Extensions.csproj": {
-              "projectPath": "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Extensions\\FytSoa.Extensions.csproj"
+            "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Extensions\\FytSoa.Extensions.csproj": {
+              "projectPath": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Extensions\\FytSoa.Extensions.csproj"
             },
-            "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Service\\FytSoa.Service.csproj": {
-              "projectPath": "E:\\2018Project\\ERP项目\\2018Soa\\SoaProJect\\FytSoa.Service\\FytSoa.Service.csproj"
+            "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Service\\FytSoa.Service.csproj": {
+              "projectPath": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Service\\FytSoa.Service.csproj"
             }
           }
         }

@@ -14,7 +14,7 @@
             <div class="layui-form list-search">
                 <button type="button" class="layui-btn layui-btn-sm" data-type="organizeAdd"><i class="layui-icon"></i> 新增</button>
                 <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i> 删除</button>
-                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon layui-icon-template"></i> 角色分配模块</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="toolMenu"><i class="layui-icon layui-icon-template"></i> 角色分配功能模块</button>
             </div>
             <table class="layui-hide" id="tablist" lay-filter="tool"></table>
         </div>
@@ -66,6 +66,11 @@
                                     key: guid
                                 }
                             });
+                    },
+                    toolMenu: function () {
+                        os.Open('角色分配功能模块', '/fytadmin/sys/rolemenu', '650px', '450px', function () {
+                            os.success("分配成功~");
+                        });
                     },
                     organizeAdd: function () {
                         os.Open('添加角色', '/fytadmin/sys/rolemodify', '620px', '400px', function () {

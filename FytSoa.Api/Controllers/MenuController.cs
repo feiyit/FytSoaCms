@@ -40,6 +40,13 @@ namespace FytSoa.Api.Controllers
         public async Task<JsonResult> GetPages(string key)
         {
             var res = await _sysMenuService.GetPagesAsync(key);
+            if (res.data.Items.Count > 0)
+            {
+                foreach (var item in res.data.Items)
+                {
+                    item.Name = Utils.LevelName(item.Name, item.Layer);
+                }
+            }
             return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
