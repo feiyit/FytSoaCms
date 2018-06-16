@@ -20,6 +20,14 @@ namespace FytSoa.Service.Interfaces
         Task<ApiResult<Page<SysRole>>> GetPagesAsync(string key);
 
         /// <summary>
+        /// 查询列表，并获得权限值状态
+        /// </summary>
+        /// <param name="key">父级</param>
+        /// <param name="adminGuid">用户的唯一编号</param>
+        /// <returns></returns>
+        Task<ApiResult<Page<SysRoleDto>>> GetPagesToRoleAsync(string key, string adminGuid);
+
+        /// <summary>
         /// 获得一条数据
         /// </summary>
         /// <returns></returns>

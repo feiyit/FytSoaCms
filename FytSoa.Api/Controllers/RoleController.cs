@@ -34,6 +34,18 @@ namespace FytSoa.Api.Controllers
         }
 
         /// <summary>
+        /// 查询授权列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("torolelist")]
+        public async Task<JsonResult> GetToRolePages(string key,string adminGuid)
+        {
+            var res = await _roleService.GetPagesToRoleAsync(key,adminGuid);
+            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+        }
+
+        /// <summary>
         /// 获得字典栏目Tree列表
         /// </summary>
         /// <returns></returns>

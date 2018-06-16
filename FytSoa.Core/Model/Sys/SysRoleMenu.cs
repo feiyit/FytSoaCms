@@ -28,5 +28,11 @@ namespace FytSoa.Core.Model.Sys
         /// </summary>           
         public string MenuGuid { get; set; }
 
+        /// <summary>
+        /// 授权类型1=角色-菜单 2=用户-角色
+        /// 默认=1
+        /// </summary>
+        public int Types { get; set; } = 1;
+
     }
 }

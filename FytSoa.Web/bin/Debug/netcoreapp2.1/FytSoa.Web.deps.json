@@ -772,7 +772,8 @@
           "FytSoa.Service": "1.0.0",
           "Microsoft.AspNetCore.App": "2.1.0",
           "Microsoft.AspNetCore.Cors": "2.1.0",
-          "Microsoft.NETCore.App": "2.1.0"
+          "Microsoft.NETCore.App": "2.1.0",
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.0"
         },
         "runtime": {
           "FytSoa.Api.dll": {}

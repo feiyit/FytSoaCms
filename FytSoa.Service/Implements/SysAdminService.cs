@@ -132,6 +132,8 @@ namespace FytSoa.Service.Implements
         {
             var list = Utils.StrToListString(parm);
             var isok = SysAdminDb.Delete(m => list.Contains(m.Guid));
+            //删除授权
+            SysRoleMenuDb.Delete(m=> list.Contains(m.MenuGuid) && m.Types==2);
             var res = new ApiResult<string>
             {
                 statusCode = isok ? 200 : 500,

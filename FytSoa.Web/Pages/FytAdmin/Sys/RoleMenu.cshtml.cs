@@ -9,9 +9,11 @@ namespace FytSoa.Web.Pages.FytAdmin.Sys
 {
     public class RoleMenuModel : PageModel
     {
-        public void OnGet()
+        [BindProperty]
+        public string roleGuids { get; set; }
+        public void OnGet(string roid)
         {
-
+            roleGuids = roid;
         }
     }
 }

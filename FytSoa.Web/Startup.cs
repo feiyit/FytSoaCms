@@ -27,6 +27,7 @@ namespace FytSoa.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ISysRoleMenuService, SysRoleMenuService>();
             services.AddTransient<ISysLogService, SysLogService>();
             services.AddTransient<ISysAdminService, SysAdminService>();
             services.AddTransient<ISysCodeService, SysCodeService>();

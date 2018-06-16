@@ -14,7 +14,7 @@
             <div class="layui-form list-search">
                 <button type="button" class="layui-btn layui-btn-sm" data-type="organizeAdd"><i class="layui-icon"></i> 新增</button>
                 <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i> 删除</button>
-                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon layui-icon-template"></i> 角色分配模块</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="toolToRole"><i class="layui-icon layui-icon-template"></i> 用户分配角色</button>
             </div>
             <table class="layui-hide" id="tablist" lay-filter="tool"></table>
         </div>
@@ -68,6 +68,26 @@
                                         key: guid
                                     }
                                 });
+                        },
+                        //为用户分配角色
+                        toolToRole: function () { 
+                            var checkStatus = table.checkStatus('tables')
+                                , data = checkStatus.data;
+                            if (data.length === 0) {
+                                os.error("请选择要分配的用户~");
+                                return;
+                            }
+                            var str = '', strCount = 0,adminName='';
+                            $.each(data, function (i, item) {
+                                str = item.guid;
+                                adminName = item.loginName;
+                                strCount++;
+                            });
+                            if (strCount > 1) {
+                                os.warning('每次只能选址一个用户~');
+                                return;
+                            }
+                            os.Open('为用户' + adminName+'分配角色', '/fytadmin/sys/admintorole?roid='+str, '750px', '450px');
                         },
                         organizeAdd: function () {
                             os.Open('添加用户', '/fytadmin/sys/adminmodify', '750px', '400px', function () {

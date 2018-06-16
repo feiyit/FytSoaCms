@@ -3,6 +3,12 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="logs\**" />
+    <Content Remove="logs\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <None Remove="logs\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="wwwroot\themes\layui\font\iconfont.svg" />
     <None Include="wwwroot\themes\layui\layui.all.js" />
     <None Include="wwwroot\themes\layui\layui.js" />
@@ -43,8 +49,5 @@
     <Content Update="nlog.config">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="logs\" />
   </ItemGroup>
 </Project>

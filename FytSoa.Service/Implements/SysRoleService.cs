@@ -95,7 +95,7 @@ namespace FytSoa.Service.Implements
                 {
                     var query = Db.Queryable<SysRole>()
                         .WhereIF(!string.IsNullOrEmpty(key), m => m.DepartmentGroup.Contains(key))
-                        .OrderBy(m => m.AddTime).ToPageAsync(1, 15);
+                        .OrderBy(m => m.AddTime).ToPageAsync(1, 100);
                     res.success = true;
                     res.message = "获取成功！";
                     res.data = await query;
@@ -107,6 +107,41 @@ namespace FytSoa.Service.Implements
                 res.statusCode = (int)ApiEnum.Error;
             }
             return await Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 获得列表
+        /// </summary>
+        /// <returns></returns>
+        public Task<ApiResult<Page<SysRoleDto>>> GetPagesToRoleAsync(string key,string adminGuid)
+        {
+            var res = new ApiResult<Page<SysRoleDto>>();
+            try
+            {
+                using (Db)
+                {
+                    var query = Db.Queryable<SysRole>()
+                        .WhereIF(!string.IsNullOrEmpty(key), m => m.DepartmentGroup.Contains(key))
+                        .OrderBy(m => m.AddTime)
+                        .Select(it => new SysRoleDto()
+                        {
+                            guid = it.Guid,
+                            name = it.Name,
+                            codes = it.Codes,
+                            status = SqlFunc.Subqueryable<SysRoleMenu>().Where(g => g.RoleGuid == it.Guid && g.Types == 2 && g.MenuGuid == adminGuid).Any()
+                        })
+                        .ToPage(1,100);                    
+                    res.success = true;
+                    res.message = "获取成功！";
+                    res.data = query;
+                }
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return Task.Run(() => res);
         }
 
         /// <summary>
