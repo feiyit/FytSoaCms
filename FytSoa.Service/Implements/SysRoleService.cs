@@ -86,7 +86,7 @@ namespace FytSoa.Service.Implements
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        public async Task<ApiResult<Page<SysRole>>> GetPagesAsync(string key)
+        public async Task<ApiResult<Page<SysRole>>> GetPagesAsync(PageParm parm)
         {
             var res = new ApiResult<Page<SysRole>>();
             try
@@ -94,8 +94,8 @@ namespace FytSoa.Service.Implements
                 using (Db)
                 {
                     var query = Db.Queryable<SysRole>()
-                        .WhereIF(!string.IsNullOrEmpty(key), m => m.DepartmentGroup.Contains(key))
-                        .OrderBy(m => m.AddTime).ToPageAsync(1, 100);
+                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.DepartmentGroup.Contains(parm.key))
+                        .OrderBy(m => m.AddTime).ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";
                     res.data = await query;
@@ -128,7 +128,7 @@ namespace FytSoa.Service.Implements
                             guid = it.Guid,
                             name = it.Name,
                             codes = it.Codes,
-                            status = SqlFunc.Subqueryable<SysRoleMenu>().Where(g => g.RoleGuid == it.Guid && g.Types == 2 && g.MenuGuid == adminGuid).Any()
+                            status = SqlFunc.Subqueryable<SysPermissions>().Where(g => g.RoleGuid == it.Guid && g.AdminGuid == adminGuid && g.Types == 2).Any()
                         })
                         .ToPage(1,100);                    
                     res.success = true;

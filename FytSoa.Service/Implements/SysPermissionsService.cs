@@ -15,14 +15,14 @@ namespace FytSoa.Service.Implements
     /// <summary>
     /// 角色关联菜单的实现
     /// </summary>
-    public class SysRoleMenuService : DbContext, ISysRoleMenuService
+    public class SysPermissionsService : DbContext, ISysPermissionsService
     {
         /// <summary>
         /// 用户授权角色
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        public async Task<ApiResult<string>> AdminToRoleAsync(SysRoleMenu parm,bool status)
+        public async Task<ApiResult<string>> ToRoleAsync(SysPermissions parm,bool status)
         {
             var res = new ApiResult<string>
             {
@@ -34,9 +34,11 @@ namespace FytSoa.Service.Implements
                 if (status)
                 {
                     //授权
-                    var dbres=SysRoleMenuDb.Insert(new SysRoleMenu() {
+                    var dbres= SysPermissionsDb.Insert(new SysPermissions() {
                         RoleGuid=parm.RoleGuid,
+                        AdminGuid=parm.AdminGuid,
                         MenuGuid=parm.MenuGuid,
+                        BtnFunGuid=parm.BtnFunGuid,
                         Types=parm.Types
                     });
                     if (!dbres)
@@ -48,7 +50,15 @@ namespace FytSoa.Service.Implements
                 else
                 {
                     //取消授权
-                    SysRoleMenuDb.Delete(m => m.MenuGuid == parm.MenuGuid && m.RoleGuid == parm.RoleGuid && m.Types == 2);
+                    if (parm.Types==2)
+                    {
+                        SysPermissionsDb.Delete(m => m.AdminGuid == parm.AdminGuid && m.RoleGuid == parm.RoleGuid && m.Types == 2);
+                    }
+                    if (parm.Types==3)
+                    {
+                        //角色-菜单-按钮功能
+                        SysPermissionsDb.Delete(m => m.BtnFunGuid == parm.BtnFunGuid && m.RoleGuid == parm.RoleGuid && m.MenuGuid==parm.MenuGuid && m.Types == 3);
+                    }
                 }                
             }
             catch (Exception ex)
@@ -65,15 +75,15 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="roleGuid"></param>
         /// <returns></returns>
-        public async Task<ApiResult<List<SysRoleMenu>>> GetListAsync(string roleGuid)
+        public async Task<ApiResult<List<SysPermissions>>> GetListAsync(string roleGuid)
         {
-            var res = new ApiResult<List<SysRoleMenu>>
+            var res = new ApiResult<List<SysPermissions>>
             {
                 statusCode = 200
             };
             try
             {
-                var query = Db.Queryable<SysRoleMenu>()
+                var query = Db.Queryable<SysPermissions>()
                         .WhereIF(!string.IsNullOrEmpty(roleGuid), m => m.RoleGuid==roleGuid).ToListAsync();          
                 res.data = await query;
             }
@@ -90,7 +100,7 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        public async Task<ApiResult<string>> SaveAsync(SysRoleMenu parm)
+        public async Task<ApiResult<string>> SaveAsync(SysPermissions parm)
         {
             var res = new ApiResult<string>
             {
@@ -102,12 +112,12 @@ namespace FytSoa.Service.Implements
                 //开启事务
                 Db.Ado.BeginTran();
                 //先根据角色判断是否存在，如果存在，则删除
-                Db.Deleteable<SysRoleMenu>().Where(m => m.RoleGuid == parm.RoleGuid && m.Types==1).ExecuteCommand();
+                Db.Deleteable<SysPermissions>().Where(m => m.RoleGuid == parm.RoleGuid && m.Types==1).ExecuteCommand();
 
-                var list = new List<SysRoleMenu>();
+                var list = new List<SysPermissions>();
                 foreach (var item in Utils.SplitString(parm.MenuGuid,','))
                 {
-                    list.Add(new SysRoleMenu() {RoleGuid=parm.RoleGuid,MenuGuid=item,Types=parm.Types });
+                    list.Add(new SysPermissions() {RoleGuid=parm.RoleGuid,MenuGuid=item,Types=parm.Types });
                 }
                 var dbres=Db.Insertable(list).ExecuteCommand();
                 if (dbres==0)

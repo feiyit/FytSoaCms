@@ -17,7 +17,7 @@ namespace FytSoa.Service.Interfaces
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<Page<SysRole>>> GetPagesAsync(string key);
+        Task<ApiResult<Page<SysRole>>> GetPagesAsync(PageParm parm);
 
         /// <summary>
         /// 查询列表，并获得权限值状态

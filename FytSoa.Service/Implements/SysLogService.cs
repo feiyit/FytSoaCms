@@ -43,7 +43,7 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<ApiResult<Page<SysLog>>> GetPagesAsync(string key,string time)
+        public async Task<ApiResult<Page<SysLog>>> GetPagesAsync(PageParm parm)
         {
             var res = new ApiResult<Page<SysLog>>();
             try
@@ -51,16 +51,16 @@ namespace FytSoa.Service.Implements
                 using (Db)
                 {
                     string beginTime = string.Empty, endTime = string.Empty;
-                    if (!string.IsNullOrEmpty(time))
+                    if (!string.IsNullOrEmpty(parm.time))
                     {
-                        var timeRes = Utils.SplitString(time, '-');
+                        var timeRes = Utils.SplitString(parm.time, '-');
                         beginTime = timeRes[0].Trim();
                         endTime = timeRes[1].Trim();
                     }
                     var query = Db.Queryable<SysLog>()
-                        .WhereIF(!string.IsNullOrEmpty(key), m => m.LoginName.Contains(key))
-                        .WhereIF(!string.IsNullOrEmpty(time), m => m.AddTime>=Convert.ToDateTime(beginTime) && m.AddTime<=Convert.ToDateTime(endTime))
-                        .OrderBy(m => m.AddTime).ToPageAsync(1, 15);
+                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.LoginName.Contains(parm.key))
+                        .WhereIF(!string.IsNullOrEmpty(parm.time), m => m.AddTime>=Convert.ToDateTime(beginTime) && m.AddTime<=Convert.ToDateTime(endTime))
+                        .OrderBy(m => m.AddTime).ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";
                     res.data = await query;

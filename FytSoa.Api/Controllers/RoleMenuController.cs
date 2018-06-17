@@ -14,8 +14,8 @@ namespace FytSoa.Api.Controllers
     [Route("api/[controller]")]
     public class RoleMenuController : Controller
     {
-        private readonly ISysRoleMenuService _roleMenu;
-        public RoleMenuController(ISysRoleMenuService roleMenu)
+        private readonly ISysPermissionsService _roleMenu;
+        public RoleMenuController(ISysPermissionsService roleMenu)
         {
             _roleMenu = roleMenu;
         }
@@ -37,7 +37,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add")]
-        public async Task<ApiResult<string>> SaveRoleMenu(SysRoleMenu parm)
+        public async Task<ApiResult<string>> SaveRoleMenu(SysPermissions parm)
         {
             return await _roleMenu.SaveAsync(parm);
         }
@@ -47,9 +47,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("torole")]
-        public async Task<ApiResult<string>> AdminToRole(SysRoleMenu parm,bool status)
+        public async Task<ApiResult<string>> AdminToRole(SysPermissions parm,bool status)
         {
-            return await _roleMenu.AdminToRoleAsync(parm,status);
+            return await _roleMenu.ToRoleAsync(parm,status);
         }
     }
 }

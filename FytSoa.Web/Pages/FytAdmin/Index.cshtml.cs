@@ -11,6 +11,7 @@ namespace FytSoa.Web.Pages.FytAdmin
     [Authorize]
     public class IndexModel : PageModel
     {
+
         public void OnGet()
         {
 

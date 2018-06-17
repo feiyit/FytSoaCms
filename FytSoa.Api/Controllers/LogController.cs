@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FytSoa.Common;
+using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,9 +26,9 @@ namespace FytSoa.Api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public async Task<JsonResult> GetPages(string key,string time)
+        public async Task<JsonResult> GetPages(PageParm parm)
         {
-            var res = await _logService.GetPagesAsync(key, time);
+            var res = await _logService.GetPagesAsync(parm);
             return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 

@@ -86,19 +86,28 @@ namespace FytSoa.Service.Implements
         /// 查询Tree
         /// </summary>
         /// <returns></returns>
-        public async Task<ApiResult<List<SysMenuTree>>> GetListTreeAsync()
+        public async Task<ApiResult<List<SysMenuTree>>> GetListTreeAsync(string roleGuid)
         {
-            var list = SysMenuDb.GetList();
+            var list = Db.Queryable<SysMenu>().Select(m => new SysMenuTree()
+            {
+                guid = m.Guid,
+                name = m.Name,
+                layer = m.Layer,
+                parentGuid = m.ParentGuid,
+                sort=m.Sort,
+                isChecked= SqlFunc.Subqueryable<SysPermissions>().Where(g => g.RoleGuid == roleGuid && g.MenuGuid==m.Guid && g.Types == 1).Any()
+            }).ToList();
             var treeList = new List<SysMenuTree>();
-            foreach (var item in list.Where(m => m.Layer == 1).OrderBy(m => m.Sort))
+            foreach (var item in list.Where(m => m.layer == 1).OrderBy(m => m.sort))
             {
                 //获得子级
-                var children = RecursionOrganize(list, new List<SysMenuTree>(), item.Guid);
+                var children = RecursionOrganize(list, new List<SysMenuTree>(), item.guid);
                 treeList.Add(new SysMenuTree()
                 {
-                    guid = item.Guid,
-                    name = item.Name,
+                    guid = item.guid,
+                    name = item.name,
                     open = children.Count > 0,
+                    isChecked= item.isChecked,
                     children = children.Count == 0 ? null : children
                 });
             }
@@ -117,15 +126,16 @@ namespace FytSoa.Service.Implements
         /// <param name="list">新集合</param>
         /// <param name="guid">父节点</param>
         /// <returns></returns>
-        List<SysMenuTree> RecursionOrganize(List<SysMenu> sourceList, List<SysMenuTree> list, string guid)
+        List<SysMenuTree> RecursionOrganize(List<SysMenuTree> sourceList, List<SysMenuTree> list, string guid)
         {
-            foreach (var row in sourceList.Where(m => m.ParentGuid == guid).OrderBy(m => m.Sort))
+            foreach (var row in sourceList.Where(m => m.parentGuid == guid).OrderBy(m => m.sort))
             {
-                var res = RecursionOrganize(sourceList, new List<SysMenuTree>(), row.Guid);
+                var res = RecursionOrganize(sourceList, new List<SysMenuTree>(), row.guid);
                 list.Add(new SysMenuTree()
                 {
-                    guid = row.Guid,
-                    name = row.Name,
+                    guid = row.guid,
+                    name = row.name,
+                    isChecked=row.isChecked,
                     open = res.Count > 0,
                     children = res.Count > 0 ? res : null
                 });
@@ -137,7 +147,7 @@ namespace FytSoa.Service.Implements
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        public async Task<ApiResult<Page<SysMenu>>> GetPagesAsync(string key)
+        public async Task<ApiResult<Page<SysMenu>>> GetPagesAsync(PageParm parm)
         {
             var res = new ApiResult<Page<SysMenu>>();
             try
@@ -145,8 +155,8 @@ namespace FytSoa.Service.Implements
                 using (Db)
                 {
                     var query = Db.Queryable<SysMenu>()
-                        .WhereIF(!string.IsNullOrEmpty(key), m => m.ParentGuidList.Contains(key))
-                        .OrderBy(m => m.Sort).ToPageAsync(1, 1000);
+                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.ParentGuidList.Contains(parm.key))
+                        .OrderBy(m => m.Sort).ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";
                     var result = new List<SysMenu>();

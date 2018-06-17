@@ -138,7 +138,7 @@ namespace FytSoa.Service.Implements
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        public async Task<ApiResult<Page<SysOrganize>>> GetPagesAsync(string key)
+        public async Task<ApiResult<Page<SysOrganize>>> GetPagesAsync(PageParm parm)
         {
             var res = new ApiResult<Page<SysOrganize>>();
             try
@@ -146,8 +146,8 @@ namespace FytSoa.Service.Implements
                 using (Db)
                 {
                     var query = Db.Queryable<SysOrganize>()
-                        .WhereIF(!string.IsNullOrEmpty(key),m=>m.ParentGuidList.Contains(key))
-                        .OrderBy(m => m.Sort).ToPageAsync(1, 1000);
+                        .WhereIF(!string.IsNullOrEmpty(parm.key),m=>m.ParentGuidList.Contains(parm.key))
+                        .OrderBy(m => m.Sort).ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";
                     res.data = await query;

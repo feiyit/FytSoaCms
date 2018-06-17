@@ -133,7 +133,7 @@ namespace FytSoa.Service.Implements
             var list = Utils.StrToListString(parm);
             var isok = SysAdminDb.Delete(m => list.Contains(m.Guid));
             //删除授权
-            SysRoleMenuDb.Delete(m=> list.Contains(m.MenuGuid) && m.Types==2);
+            SysPermissionsDb.Delete(m=> list.Contains(m.MenuGuid) && m.Types==2);
             var res = new ApiResult<string>
             {
                 statusCode = isok ? 200 : 500,
@@ -163,7 +163,7 @@ namespace FytSoa.Service.Implements
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        public async Task<ApiResult<Page<SysAdmin>>> GetPagesAsync(string key)
+        public async Task<ApiResult<Page<SysAdmin>>> GetPagesAsync(PageParm parm)
         {
             var res = new ApiResult<Page<SysAdmin>>();
             try
@@ -171,8 +171,8 @@ namespace FytSoa.Service.Implements
                 using (Db)
                 {
                     var query = Db.Queryable<SysAdmin>()
-                        .WhereIF(!string.IsNullOrEmpty(key), m => m.DepartmentGuidList.Contains(key))
-                        .OrderBy(m => m.AddDate).ToPageAsync(1, 1000);
+                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.DepartmentGuidList.Contains(parm.key))
+                        .OrderBy(m => m.AddDate).ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";
                     res.data = await query;

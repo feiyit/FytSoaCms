@@ -12,6 +12,8 @@
     .fyt-center{text-align:center;}
     #tree{height:350px; overflow:auto;}
     .layui-layer-loading{box-shadow: 0 0px 0px rgba(0,0,0,.3) !important;}
+    #open-form{display:none;}
+    .layui-form-select dl{max-height:150px;}
 </style>
 <div class="layui-col-220 fyt-wall">
     <ul id="tree" class="ztree layui-tree-cus"></ul>
@@ -19,8 +21,37 @@
 </div>
 <div class="right-col-body fyt-wall">
     <div class="list-wall">
+        <div class="layui-form list-search">
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
+        </div>
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
+</div>
+<div id="open-form">
+    <form class="layui-form form-cus" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">功能名称</label>
+            <div class="layui-input-block">
+                <select id="FunType" name="FunType" lay-verify="required" lay-search="" lay-verType="tips">
+                    <option></option>
+                    <option value="Add">新增</option>
+                    <option value="Edit">修改</option>
+                    <option value="Delete">删除</option>
+                    <option value="Audit">审核</option>
+                    <option value="Export">导出</option>
+                    <option value="Import">导入</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+            </div>
+        </div>
+        <input type="hidden" id="Guid" name="Guid" value="" />
+
+    </form>
 </div>
 <link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
 <script>
@@ -37,11 +68,12 @@
                     form = layui.form;
                 table.render({
                     elem: '#tablist',
-                    url: '/api/role/getpages',
+                    url: '/api/btnfun/list?key=@Model.roleGuids',
                     cols: [
                         [
+                            { type: 'checkbox', fixed: 'left' },
                             { field: 'name', title: '菜单名称', sort: true, fixed: 'left' },
-                            { field: 'codes', title: '按钮图标' },
+                            { field: 'funType', title: '功能值' },
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
@@ -51,7 +83,8 @@
                 var setting = {
                     async: {
                         enable: true,
-                        url: "/api/menu/gettree"
+                        url: "/api/menu/gettree",
+                        otherParam: {roleGuid:'@Model.roleGuids'}
                     },
                     check: {
                         enable: true,
@@ -59,13 +92,20 @@
                         chkboxType:{ "Y": "ps", "N": "ps" }
                     },
                     callback: {
-                        onClick: onClick
+                        onClick: onClick,
+                        onAsyncSuccess: zTreeOnAsyncSuccess
                     }
                 };
                 $.fn.zTree.init($("#tree"), setting);
-                var guid = '', active = {
+
+                var guid = '', selText = '', layuiIndex='', active = {
                     reload: function () {
-                        table.reload('tables');
+                        table.reload('tables',
+                            {
+                                where: {
+                                    menuGuid: guid
+                                }
+                            });
                     },    
                     saveMenu: function () { 
                         var zTree = $.fn.zTree.getZTreeObj("tree");
@@ -91,10 +131,21 @@
                             }
                         });
                     },
-                    organizeAdd: function () {
-                        
+                    toolAdd: function () {
+                        layuiIndex=layer.open({
+                            title: '添加按钮功能'
+                            , type: 1
+                            , area: ['500px', '260px']
+                            , shade: [0.1, '#ffffff']
+                            , resize :false
+                            , content: $("#open-form").html()
+                        }); 
+                        form.render();
+                        form.on('select', function (data) {
+                            selText = $(data.elem).find("option:selected").text();
+                        }); 
                     },
-                    organizeDel: function () {
+                    toolDel: function () {
                         var checkStatus = table.checkStatus('tables')
                             , data = checkStatus.data;
                         if (data.length === 0) {
@@ -110,11 +161,43 @@
                             var loadindex = layer.load(1, {
                                 shade: [0.1, '#000']
                             });
-                            
+                            os.ajax('api/btnfun/delete/', { parm: str }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    active.reload();
+                                    os.success('删除成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
                         });
 
                     }
-                };                
+                };        
+
+                
+                //监听提交
+                form.on('submit(submit)', function (data) {
+                    var urls = "api/btnfun/add";
+                    if ($("#Guid").val()) {
+                        urls = "api/btnfun/edit";
+                    }
+                    if (!guid) {
+                        os.warning('请选择左侧菜单~'); return false;
+                    }
+                    data.field.Name = selText;
+                    data.field.MenuGuid = guid;
+                    os.ajax(urls, data.field, function (res) {
+                        if (res.statusCode == 200) {
+                            layer.close(layuiIndex);
+                            active.reload();
+                        }
+                        else {
+                            os.error(res.message);
+                        }
+                    });
+                    return false;
+                });
                 
                 $('.fyt-wall .layui-btn').on('click', function () {
                     var type = $(this).data('type');
@@ -124,15 +207,40 @@
                     guid = treeNode.guid;
                     active.reload();
                 }
-                //监听工具条
-                table.on('tool(tool)', function (obj) {
-                    var data = obj.data;
-                    if (obj.event === 'edit') {
-                        
-                    }
+                //设置授权项被选中状态
+                function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
+                    var treeObj = $.fn.zTree.getZTreeObj("tree");
+                    var nodes = treeObj.transformToArray(treeObj.getNodes());
+                    $.each(nodes, function (i, item) {                        
+                        if (item.isChecked) {
+                            item.checked  = true;
+                            treeObj.updateNode(item, false);
+                        }
+                    });
+                }
+                //监听授权操作
+                form.on('switch(torole)', function (obj) {
+                    var strRole = this.value;
+                    //开始提交信息
+                    var index = layer.load(1, {
+                        shade: [0.1, '#fff']
+                    });
+                    os.ajax("api/rolemenu/torole", { BtnFunGuid: strRole, MenuGuid: guid, RoleGuid: "@Model.roleGuids", Types: 3, status: obj.elem.checked }, function (res) {
+                        layer.close(index);
+                        if (res.statusCode === 200) {
+                            if (obj.elem.checked) {
+                                os.success('授权成功~');
+                            }
+                            else {
+                                os.success('取消授权~');
+                            }
+                         } else {
+                             os.error(res.message);
+                         }
+                    });
                 });
             });
 </script>
 <script type="text/html" id="tool">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
+    <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="取消|授权" lay-filter="torole" {{ d.status ? 'checked' : '' }}>
 </script>

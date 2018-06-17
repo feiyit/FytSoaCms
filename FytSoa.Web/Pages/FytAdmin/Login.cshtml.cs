@@ -49,6 +49,7 @@ namespace FytSoa.Web.Pages.FytAdmin
                               new Claim(ClaimTypes.Role,"超级管理员"),
                               new Claim(ClaimTypes.Thumbprint,user.HeadPic),
                               new Claim(ClaimTypes.Name,user.TrueName),
+                              new Claim(ClaimTypes.WindowsAccountName,user.LoginName),
                               new Claim(ClaimTypes.UserData,user.UpLoginDate.ToString()),
                          }, CookieAuthenticationDefaults.AuthenticationScheme)
                     );

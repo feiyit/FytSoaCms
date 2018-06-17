@@ -15,7 +15,7 @@ namespace FytSoa.Service.Interfaces
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<Page<SysLog>>> GetPagesAsync(string key,string time);
+        Task<ApiResult<Page<SysLog>>> GetPagesAsync(PageParm parm);
         
 
         /// <summary>

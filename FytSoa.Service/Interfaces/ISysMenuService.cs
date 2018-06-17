@@ -17,13 +17,13 @@ namespace FytSoa.Service.Interfaces
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<Page<SysMenu>>> GetPagesAsync(string key);
+        Task<ApiResult<Page<SysMenu>>> GetPagesAsync(PageParm parm);
 
         /// <summary>
         /// 获得树列表
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<List<SysMenuTree>>> GetListTreeAsync();
+        Task<ApiResult<List<SysMenuTree>>> GetListTreeAsync(string roleGuid);
 
         /// <summary>
         /// 获得一条数据

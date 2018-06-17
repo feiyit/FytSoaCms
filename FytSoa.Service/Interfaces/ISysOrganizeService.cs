@@ -17,7 +17,7 @@ namespace FytSoa.Service.Interfaces
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<Page<SysOrganize>>> GetPagesAsync(string key);
+        Task<ApiResult<Page<SysOrganize>>> GetPagesAsync(PageParm parm);
 
         /// <summary>
         /// 获得树列表

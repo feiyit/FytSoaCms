@@ -37,9 +37,9 @@ namespace FytSoa.Api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public async Task<JsonResult> GetPages(string key)
+        public async Task<JsonResult> GetPages(PageParm parm)
         {
-            var res = await _sysOrganizeService.GetPagesAsync(key);
+            var res = await _sysOrganizeService.GetPagesAsync(parm);
             return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 

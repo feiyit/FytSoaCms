@@ -21,7 +21,7 @@ namespace FytSoa.Service.Interfaces
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<Page<SysAdmin>>> GetPagesAsync(string key);
+        Task<ApiResult<Page<SysAdmin>>> GetPagesAsync(PageParm parm);
 
         /// <summary>
         /// 获得一条数据

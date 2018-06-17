@@ -26,9 +26,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("gettree")]
-        public List<SysMenuTree> GetListPage()
+        public List<SysMenuTree> GetListPage(string roleGuid)
         {
-            return _sysMenuService.GetListTreeAsync().Result.data;
+            return _sysMenuService.GetListTreeAsync(roleGuid).Result.data;
         }
 
         /// <summary>
@@ -37,9 +37,9 @@ namespace FytSoa.Api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public async Task<JsonResult> GetPages(string key)
+        public async Task<JsonResult> GetPages(PageParm parm)
         {
-            var res = await _sysMenuService.GetPagesAsync(key);
+            var res = await _sysMenuService.GetPagesAsync(parm);
             if (res.data.Items.Count > 0)
             {
                 foreach (var item in res.data.Items)

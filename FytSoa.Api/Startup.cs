@@ -24,7 +24,8 @@ namespace FytSoa.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ISysRoleMenuService, SysRoleMenuService>();
+            services.AddTransient<ISysBtnFunService, SysBtnFunService>();
+            services.AddTransient<ISysPermissionsService, SysPermissionsService>();
             services.AddTransient<ISysLogService, SysLogService>();
             services.AddTransient<ISysAdminService, SysAdminService>();
             services.AddTransient<ISysCodeService, SysCodeService>();

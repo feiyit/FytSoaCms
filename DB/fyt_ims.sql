@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : fyt
-Source Server Version : 50719
+Source Server Version : 50717
 Source Host           : localhost:3306
 Source Database       : fyt_ims
 
 Target Server Type    : MYSQL
-Target Server Version : 50719
+Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-06-16 23:57:43
+Date: 2018-06-17 17:44:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,7 +44,7 @@ CREATE TABLE `sysadmin` (
 -- ----------------------------
 -- Records of sysadmin
 -- ----------------------------
-INSERT INTO `sysadmin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-06-13 21:43:43', '2018-06-16 22:52:52', '2018-06-16 22:52:52');
+INSERT INTO `sysadmin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-06-13 21:43:43', '2018-06-17 17:27:48', '2018-06-17 17:27:48');
 INSERT INTO `sysadmin` VALUES ('30d3da88-bb72-4ace-a303-b3aae0ecb732', null, '事业发展部', '4b6ab27f-c0fa-483d-9b5a-55891ee8d727', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,4b6ab27f-c0fa-483d-9b5a-55891ee8d727,', 'testadmin', 'pPo9vFeTWOCF0oLKKdX9Jw==', '李四', '1002', '/themes/img/avatar.jpg', '男', null, '\0', null, null, '2018-06-16 23:35:36', null, null);
 
 -- ----------------------------
@@ -63,6 +63,9 @@ CREATE TABLE `sysbtnfun` (
 -- ----------------------------
 -- Records of sysbtnfun
 -- ----------------------------
+INSERT INTO `sysbtnfun` VALUES ('6b8d6513-5da7-4f68-a2c4-f0c7cfaf7f61', '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '新增', 'Add', null);
+INSERT INTO `sysbtnfun` VALUES ('931bd729-f160-4fe3-bb7c-7828a2da047a', '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '修改', 'Edit', null);
+INSERT INTO `sysbtnfun` VALUES ('c4261103-dfc7-46e5-ab20-4ca5fc7729f6', '5ce13ead-971b-4ed4-ad5f-acacccd82381', '删除', 'Delete', null);
 
 -- ----------------------------
 -- Table structure for syscode
@@ -206,16 +209,25 @@ CREATE TABLE `syslog` (
 -- ----------------------------
 -- Records of syslog
 -- ----------------------------
+INSERT INTO `syslog` VALUES ('109ab36a-e462-4b4e-a941-005f40683676', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 10:28:52');
+INSERT INTO `syslog` VALUES ('2094e8bb-9bd4-40a6-aaa3-a972114e1528', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 15:20:03');
 INSERT INTO `syslog` VALUES ('3491bb1b-5279-49a6-adec-f1f0dc4bb4bb', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 17:31:48');
+INSERT INTO `syslog` VALUES ('36986ff6-96d7-4f5a-90d7-79e9017e3697', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 17:27:40');
 INSERT INTO `syslog` VALUES ('41cc908d-1db0-4638-a8ca-6da59ac88de8', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '', '2018-06-13 23:24:13');
+INSERT INTO `syslog` VALUES ('504cd3e2-0b6b-455d-9532-2f6f7b19e618', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 11:38:26');
 INSERT INTO `syslog` VALUES ('5ca915b8-5a74-46c5-8bb4-fa436d8b9cf6', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-15 22:40:17');
+INSERT INTO `syslog` VALUES ('7157442c-45f8-49be-921f-ac1f16cf9c46', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 09:23:36');
 INSERT INTO `syslog` VALUES ('735275c1-f72a-4242-8701-c4fe5c3f5cf6', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 15:46:00');
 INSERT INTO `syslog` VALUES ('761487e4-5f18-498a-afc1-4d239462e1c7', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 09:52:36');
 INSERT INTO `syslog` VALUES ('8b776e1d-8e04-41a5-a7a6-d2b4e147ab8c', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 11:18:04');
 INSERT INTO `syslog` VALUES ('8bec1f9f-dbde-4fec-9c52-20225c0b0824', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 22:52:52');
+INSERT INTO `syslog` VALUES ('9ec2c692-7935-4591-bdc1-425155fe99a6', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 13:10:51');
 INSERT INTO `syslog` VALUES ('ba4c5061-bc8e-4efa-93ee-82d935813bdd', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 18:33:02');
 INSERT INTO `syslog` VALUES ('c1ac92d1-4026-4e5e-9a1c-3c8a23529be5', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '', '2018-06-14 00:29:27');
 INSERT INTO `syslog` VALUES ('ceb69199-c8d6-4c0a-8f2c-4964196d32f0', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-15 23:41:25');
+INSERT INTO `syslog` VALUES ('da210a5c-a04a-4d98-ba3b-f963409fd879', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 16:29:42');
+INSERT INTO `syslog` VALUES ('daaf69df-3079-4571-ac7e-046c0f20ee88', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 17:27:48');
+INSERT INTO `syslog` VALUES ('fd1f1412-9fbc-4da0-a1de-f9b9ba5163b2', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 17:26:13');
 
 -- ----------------------------
 -- Table structure for sysmenu
@@ -287,12 +299,39 @@ INSERT INTO `sysorganize` VALUES ('dcf99638-5db6-4dd7-a485-31df1160d45a', null, 
 DROP TABLE IF EXISTS `syspermissions`;
 CREATE TABLE `syspermissions` (
   `RoleGuid` varchar(50) NOT NULL COMMENT '角色Guid',
-  `AuthorizeGuid` varchar(50) NOT NULL COMMENT '认证的标识【CURD】'
+  `AdminGuid` varchar(50) DEFAULT NULL,
+  `MenuGuid` varchar(50) DEFAULT NULL COMMENT '菜单Guid',
+  `BtnFunGuid` varchar(50) DEFAULT NULL,
+  `Types` tinyint(1) NOT NULL DEFAULT '1' COMMENT '授权类型1=角色-菜单 2=用户-角色 3=角色-菜单-按钮功能'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of syspermissions
 -- ----------------------------
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, null, '2');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '6b8d6513-5da7-4f68-a2c4-f0c7cfaf7f61', '3');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', 'c4261103-dfc7-46e5-ab20-4ca5fc7729f6', '3');
+INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '931bd729-f160-4fe3-bb7c-7828a2da047a', '3');
+INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', null, '1');
+INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', null, '1');
+INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', null, '1');
+INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '1fc3d8e8-e3f2-49cf-a652-2341082643df', null, '1');
+INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '404d4b8b-8e3c-42ee-aee5-f29df31308fa', null, '1');
+INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'b354ea64-88b6-4032-a26a-fee198e24d9d', null, '1');
+INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'a280f6e2-3100-445f-871d-77ea443356a9', null, '1');
+INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '51216bb3-d0c7-474a-b565-71cf96db19f4', null, '1');
+INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '6b8d6513-5da7-4f68-a2c4-f0c7cfaf7f61', '3');
+INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', 'c4261103-dfc7-46e5-ab20-4ca5fc7729f6', '3');
+INSERT INTO `syspermissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', null, '1');
+INSERT INTO `syspermissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', null, '1');
+INSERT INTO `syspermissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', null, '1');
+INSERT INTO `syspermissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '6b8d6513-5da7-4f68-a2c4-f0c7cfaf7f61', '3');
+INSERT INTO `syspermissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', 'c4261103-dfc7-46e5-ab20-4ca5fc7729f6', '3');
+INSERT INTO `syspermissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', '30d3da88-bb72-4ace-a303-b3aae0ecb732', null, null, '2');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, null, '2');
+INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, null, '2');
+INSERT INTO `syspermissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, null, '2');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '30d3da88-bb72-4ace-a303-b3aae0ecb732', null, null, '2');
 
 -- ----------------------------
 -- Table structure for sysrole
@@ -318,29 +357,3 @@ CREATE TABLE `sysrole` (
 INSERT INTO `sysrole` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', 'dcf99638-5db6-4dd7-a485-31df1160d45a', '互联网中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,dcf99638-5db6-4dd7-a485-31df1160d45a,', '超级管理员', '1001', '', '超级管理员', '2018-03-29 00:00:00', '2018-05-17 23:36:28');
 INSERT INTO `sysrole` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', '52523a76-52b3-4c25-a1bd-9123a011f2a8', '商务中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', '客服管理员', '1002', '', '只能查看会员相关功能', '2018-05-17 23:37:56', '2018-05-17 23:37:56');
 INSERT INTO `sysrole` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', 'dcf99638-5db6-4dd7-a485-31df1160d45a', '互联网中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,dcf99638-5db6-4dd7-a485-31df1160d45a,', '财务管理员', '1003', '', '只能查看财务相关功能', '2018-05-17 23:39:01', '2018-05-17 23:39:01');
-
--- ----------------------------
--- Table structure for sysrolemenu
--- ----------------------------
-DROP TABLE IF EXISTS `sysrolemenu`;
-CREATE TABLE `sysrolemenu` (
-  `RoleGuid` varchar(50) NOT NULL COMMENT '角色Guid',
-  `MenuGuid` varchar(50) NOT NULL COMMENT '菜单Guid',
-  `Types` tinyint(1) NOT NULL DEFAULT '1' COMMENT '授权类型1=角色-菜单 2=用户-角色'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sysrolemenu
--- ----------------------------
-INSERT INTO `sysrolemenu` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2');
-INSERT INTO `sysrolemenu` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2');
-INSERT INTO `sysrolemenu` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2');
-INSERT INTO `sysrolemenu` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '30d3da88-bb72-4ace-a303-b3aae0ecb732', '2');
-INSERT INTO `sysrolemenu` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '1');
-INSERT INTO `sysrolemenu` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '1');
-INSERT INTO `sysrolemenu` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '5ce13ead-971b-4ed4-ad5f-acacccd82381', '1');
-INSERT INTO `sysrolemenu` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '1fc3d8e8-e3f2-49cf-a652-2341082643df', '1');
-INSERT INTO `sysrolemenu` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '404d4b8b-8e3c-42ee-aee5-f29df31308fa', '1');
-INSERT INTO `sysrolemenu` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', 'b354ea64-88b6-4032-a26a-fee198e24d9d', '1');
-INSERT INTO `sysrolemenu` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', 'a280f6e2-3100-445f-871d-77ea443356a9', '1');
-INSERT INTO `sysrolemenu` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '51216bb3-d0c7-474a-b565-71cf96db19f4', '1');

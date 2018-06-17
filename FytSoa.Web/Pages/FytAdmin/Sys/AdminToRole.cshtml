@@ -106,8 +106,7 @@
                 var index = layer.load(1, {
                     shade: [0.1, '#fff']
                 });
-                console.log(strRole);
-                os.ajax("api/rolemenu/torole", { MenuGuid: "@Model.adminGuids", RoleGuid: strRole, Types: 2, status: obj.elem.checked }, function (res) {
+                os.ajax("api/rolemenu/torole", { AdminGuid: "@Model.adminGuids", RoleGuid: strRole, Types: 2, status: obj.elem.checked }, function (res) {
                     layer.close(index);
                     if (res.statusCode === 200) {
                         if (obj.elem.checked) {

@@ -52,6 +52,7 @@
 .layui-input:focus, .layui-select:focus, .layui-textarea:focus {
     border: 1px solid #409eff !important;
 }
+.layui-form-select dl dd.layui-this{background-color: #409eff;}
 
 /* 弹框优化 */
 .layui-body{z-index:60 !important;}

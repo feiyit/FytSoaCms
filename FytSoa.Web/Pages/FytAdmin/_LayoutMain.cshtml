@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -28,13 +29,13 @@
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">
-                        <span class="username">孙斌 <i class="layui-icon"></i></span>
-                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                        <span class="username">@User.Identities.First(u => u.IsAuthenticated).FindFirst(ClaimTypes.Name).Value <i class="layui-icon"></i></span>
+                        <img src="@User.Identities.First(u => u.IsAuthenticated).FindFirst(ClaimTypes.Thumbprint).Value" class="layui-nav-img">
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a href="">个人中心</a></dd>
+                        <dd><a data-pjax href="/fytadmin/sys/admin/">个人中心</a></dd>
                         <hr />
-                        <dd><a href="">退出登录</a></dd>
+                        <dd><a href="/fytadmin/logout/">退出登录</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -132,7 +133,7 @@
     <script>
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['element','layer', 'jquery', 'common', 'pjax'], function () {
+        }).use(['element', 'layer', 'jquery', 'common', 'pjax'], function () {
             var os = layui.common
                 , element = layui.element
                 , $ = layui.$;
@@ -146,7 +147,7 @@
             $(document).on('pjax:start', function () { NProgress.start(); });
             $(document).on('pjax:end', function () { NProgress.done(); });
         });
-    </script>    
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
