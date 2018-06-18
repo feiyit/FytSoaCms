@@ -8,7 +8,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">等级</label>
         <div class="layui-input-block">
-            <select name="parent" lay-search="">
+            <select name="ParentGuid" lay-search="">
                 <option value="">父级</option>
                 @foreach (var item in Model.SelectList.Where(m=>string.IsNullOrEmpty(m.ParentGuid)))
                 {
@@ -36,8 +36,8 @@
             <button type="reset" class="layui-btn layui-btn-primary btn-open-close">取消</button>
         </div>
     </div>
-    <input type="hidden" name="guid" id="guid" value=@Model.CodeType.guid />
-    <input type="hidden" name="sort" value=@Model.CodeType.sort />
+    <input type="hidden" name="Guid" id="guid" value=@Model.CodeType.guid />
+    <input type="hidden" name="Sort" value=@Model.CodeType.sort />
 </form>
 @section Scripts{
     <script>

@@ -27,6 +27,7 @@ namespace FytSoa.Service.Implements
             parm.Guid = Guid.NewGuid().ToString();
             parm.AddTime = DateTime.Now;
             parm.EditTime= DateTime.Now;
+            parm.Layer = !string.IsNullOrEmpty(parm.ParentGuid) ? 1 : 0;
             var res = new ApiResult<string>
             {
                 statusCode = 200,

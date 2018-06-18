@@ -46,9 +46,9 @@ namespace FytIms.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<ApiResult<string>> DeleteCode(string parm)
+        public async Task<ApiResult<string>> DeleteCode(string guid)
         {
-            return await _sysCodeTypeService.DeleteAsync(parm);
+            return await _sysCodeTypeService.DeleteAsync(guid);
         }
 
         /// <summary>
