@@ -1,4 +1,5 @@
 ﻿using FytIms.Core;
+using FytSoa.Core.Model.Erp;
 using FytSoa.Core.Model.Sys;
 using FytSoa.Extensions;
 using SqlSugar;
@@ -32,5 +33,17 @@ namespace FytSoa.Core
         public DbSet<SysRole> SysRoleDb => new DbSet<SysRole>(Db);
         public DbSet<SysAdmin> SysAdminDb => new DbSet<SysAdmin>(Db);
         public DbSet<SysBtnFun> SysBtnFunDb => new DbSet<SysBtnFun>(Db);
+
+        //ERP表信息
+        public DbSet<ErpBackGoods> ErpBackGoodsDb => new DbSet<ErpBackGoods>(Db);
+        public DbSet<ErpGoods> ErpGoodsDb => new DbSet<ErpGoods>(Db);
+        public DbSet<ErpGoodsSku> ErpGoodsSkuDb => new DbSet<ErpGoodsSku>(Db);
+        public DbSet<ErpInOutLog> ErpInOutLogDb => new DbSet<ErpInOutLog>(Db);
+        public DbSet<ErpPackLog> ErpPackLogDb => new DbSet<ErpPackLog>(Db);
+        public DbSet<ErpReturnGoods> ErpReturnGoodsDb => new DbSet<ErpReturnGoods>(Db);
+        public DbSet<ErpShopActivity> ErpShopActivityDb => new DbSet<ErpShopActivity>(Db);
+        public DbSet<ErpShops> ErpShopsDb => new DbSet<ErpShops>(Db);
+        public DbSet<ErpShopUser> ErpShopUserDb => new DbSet<ErpShopUser>(Db);
+        public DbSet<ErpStaff> ErpStaffDb => new DbSet<ErpStaff>(Db);
     }
 }

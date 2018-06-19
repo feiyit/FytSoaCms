@@ -361,7 +361,7 @@ namespace FytSoa.Common
         public static string GetIp()
         {
             HttpContextAccessor _context = new HttpContextAccessor();
-            return _context.HttpContext.Connection.LocalIpAddress.ToString();
+            return _context.HttpContext.Connection.RemoteIpAddress.ToString();
         }
         #endregion
 

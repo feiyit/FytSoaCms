@@ -24,6 +24,9 @@ namespace FytSoa.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IErpShopsService, ErpShopsService>();
+
+
             services.AddTransient<ISysBtnFunService, SysBtnFunService>();
             services.AddTransient<ISysPermissionsService, SysPermissionsService>();
             services.AddTransient<ISysLogService, SysLogService>();
