@@ -49,7 +49,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add")]
-        public async Task<ApiResult<string>> AddMenu(SysAdmin parm)
+        public async Task<ApiResult<string>> AddAdmin(SysAdmin parm)
         {
             return await _adminService.AddAsync(parm);
         }
@@ -59,7 +59,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<ApiResult<string>> DeleteMenu(string parm)
+        public async Task<ApiResult<string>> DeleteAdmin(string parm)
         {
             return await _adminService.DeleteAsync(parm);
         }
@@ -69,7 +69,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit")]
-        public async Task<ApiResult<string>> EditMenu(SysAdmin parm)
+        public async Task<ApiResult<string>> EditAdmin(SysAdmin parm)
         {
             return await _adminService.ModifyAsync(parm);
         }

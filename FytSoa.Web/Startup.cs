@@ -28,6 +28,9 @@ namespace FytSoa.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IErpShopsService, ErpShopsService>();
+            services.AddTransient<IErpShopActivityService, ErpShopActivityService>();
+            services.AddTransient<IErpShopUserService, ErpShopUserService>();
+            services.AddTransient<IErpStaffService, ErpStaffService>();
 
             services.AddTransient<ISysBtnFunService, SysBtnFunService>();
             services.AddTransient<ISysPermissionsService, SysPermissionsService>();

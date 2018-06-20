@@ -18,5 +18,29 @@ namespace FytSoa.Service.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<ApiResult<Page<ErpShops>>> GetPagesAsync(PageParm parm);
+
+        /// <summary>
+        /// 获得一条数据
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<ErpShops>> GetByGuidAsync(string parm);
+
+        /// <summary>
+        /// 添加一条数据
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<string>> AddAsync(ErpShops parm);
+
+        /// <summary>
+        /// 删除一条或多条数据
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<string>> DeleteAsync(string parm);
+
+        /// <summary>
+        /// 修改一条数据
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<string>> ModifyAsync(ErpShops parm);
     }
 }

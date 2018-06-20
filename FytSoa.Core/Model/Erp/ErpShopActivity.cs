@@ -33,14 +33,14 @@ namespace FytSoa.Core.Model.Erp
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public byte Types { get; set; }
+        public byte Types { get; set; } = 1;
 
         /// <summary>
         /// Desc:方式(1=打折/2=满减)
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public byte Method { get; set; }
+        public byte Method { get; set; } = 1;
 
         /// <summary>
         /// Desc:折扣数
@@ -75,7 +75,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime AddDate { get; set; }
+        public DateTime AddDate { get; set; } = DateTime.Now;
 
     }
 }

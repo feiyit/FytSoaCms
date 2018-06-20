@@ -37,7 +37,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<ApiResult<string>> DeleteMenu(string parm)
+        public async Task<ApiResult<string>> DeleteLog(string parm)
         {
             return await _logService.DeleteAsync(parm);
         }

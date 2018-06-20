@@ -54,35 +54,35 @@ namespace FytSoa.Core.Model.Erp
         /// Default:0
         /// Nullable:False
         /// </summary>           
-        public int Points { get; set; }
+        public int Points { get; set; } = 0;
 
         /// <summary>
         /// Desc:性别
         /// Default:
         /// Nullable:True
         /// </summary>           
-        public string Sex { get; set; }
+        public string Sex { get; set; } = "男";
 
         /// <summary>
         /// Desc:状态 0=正常 1=账号冻结
         /// Default:0
         /// Nullable:False
         /// </summary>           
-        public byte Status { get; set; }
+        public byte Status { get; set; } = 0;
 
         /// <summary>
         /// Desc:注册时间
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime RegDate { get; set; }
+        public DateTime RegDate { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Desc:登录次数
         /// Default:0
         /// Nullable:False
         /// </summary>           
-        public int LoginCount { get; set; }
+        public int LoginCount { get; set; } = 0;
 
         /// <summary>
         /// Desc:最后登录日期

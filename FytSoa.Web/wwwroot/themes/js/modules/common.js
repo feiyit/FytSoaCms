@@ -1,4 +1,4 @@
-﻿layui.define(['layer', 'toastr', 'ztree', 'ztreecheck','pjax'], function (exports) {
+﻿layui.define(['layer', 'toastr', 'ztree', 'ztreecheck', 'pjax'], function (exports) {
     "use strict";
 
     var $ = layui.jquery,

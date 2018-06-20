@@ -804,6 +804,7 @@
           "FytSoa.Common": "1.0.0",
           "FytSoa.Core": "1.0.0",
           "Microsoft.AspNetCore.App": "2.1.0",
+          "Newtonsoft.Json": "11.0.2",
           "sqlSugarCore": "4.6.4.9"
         },
         "runtime": {

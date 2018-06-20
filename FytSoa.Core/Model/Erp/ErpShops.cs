@@ -47,7 +47,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:
         /// Nullable:True
         /// </summary>           
-        public string Sex { get; set; }
+        public string Sex { get; set; } = "男";
 
         /// <summary>
         /// Desc:店铺封面图
@@ -61,7 +61,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public byte Status { get; set; }
+        public byte Status { get; set; } = 0;
 
         /// <summary>
         /// Desc:店铺名称
@@ -117,14 +117,14 @@ namespace FytSoa.Core.Model.Erp
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime RegDate { get; set; }
+        public DateTime RegDate { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Desc:登录次数
         /// Default:0
         /// Nullable:False
         /// </summary>           
-        public int LoginCount { get; set; }
+        public int LoginCount { get; set; } = 0;
 
         /// <summary>
         /// Desc:最后登录时间

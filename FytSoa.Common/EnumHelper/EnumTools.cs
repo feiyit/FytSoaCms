@@ -39,4 +39,46 @@ namespace FytSoa.Common
         [Text("菜单上面的按钮功能")]
         MenuToBtnFun = 3,
     }
+
+    /// <summary>
+    /// 店铺活动类型
+    /// </summary>
+    public enum ActivityTypeEnum
+    {
+        /// <summary>
+        /// 商铺
+        /// </summary>
+        [Text("商铺")]
+        Shops = 1,
+
+        /// <summary>
+        /// 商品
+        /// </summary>
+        [Text("商品")]
+        Goods = 2,
+
+        /// <summary>
+        /// 地区
+        /// </summary>
+        [Text("地区")]
+        City = 2
+    }
+
+    /// <summary>
+    /// 店铺活动方式
+    /// </summary>
+    public enum ActivityMethodEnum
+    {
+        /// <summary>
+        /// 打折
+        /// </summary>
+        [Text("打折")]
+        Discount = 1,
+
+        /// <summary>
+        /// 满减
+        /// </summary>
+        [Text("满减")]
+        Full = 2
+    }
 }
