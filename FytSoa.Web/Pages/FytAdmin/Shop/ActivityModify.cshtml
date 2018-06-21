@@ -37,23 +37,23 @@
     <div class="layui-form-item layui-hide" id="full">
         <div class="full-wall">
             <label class="layui-form-label">满</label>
-            <input type="number" name="fullbegin[]" value="" maxlength="10" autocomplete="off" class="layui-input">
+            <input type="number" name="fullbegin[]" value="@Model.shopActivity?[0].fullbegin" maxlength="10" autocomplete="off" class="layui-input">
             <label class="layui-form-label">元减</label>
-            <input type="number" name="fullend[]" value="" maxlength="10" autocomplete="off" class="layui-input">
+            <input type="number" name="fullend[]" value="@Model.shopActivity?[0].fullend" maxlength="10" autocomplete="off" class="layui-input">
             <label class="layui-form-label">元</label>
         </div>
         <div class="full-wall">
             <label class="layui-form-label">满</label>
-            <input type="number" name="fullbegin[]" value="" maxlength="10" autocomplete="off" class="layui-input">
+            <input type="number" name="fullbegin[]" value="@Model.shopActivity?[1].fullbegin" maxlength="10" autocomplete="off" class="layui-input">
             <label class="layui-form-label">元减</label>
-            <input type="number" name="fullend[]" value="" maxlength="10" autocomplete="off" class="layui-input">
+            <input type="number" name="fullend[]" value="@Model.shopActivity?[1].fullend" maxlength="10" autocomplete="off" class="layui-input">
             <label class="layui-form-label">元</label>
         </div>
         <div class="full-wall">
             <label class="layui-form-label">满</label>
-            <input type="number" name="fullbegin[]" value="" maxlength="10" autocomplete="off" class="layui-input">
+            <input type="number" name="fullbegin[]" value="@Model.shopActivity?[2].fullbegin" maxlength="10" autocomplete="off" class="layui-input">
             <label class="layui-form-label">元减</label>
-            <input type="number" name="fullend[]" value="" maxlength="10" autocomplete="off" class="layui-input">
+            <input type="number" name="fullend[]" value="@Model.shopActivity?[2].fullend" maxlength="10" autocomplete="off" class="layui-input">
             <label class="layui-form-label">元</label>
         </div>
     </div>
@@ -112,6 +112,9 @@
                     $("#full").removeClass('layui-hide');
                 }
             }); 
+            if (@Model.activityModel.Method== 2) {
+                $("#full").removeClass('layui-hide');
+            }
             //监听提交
             form.on('submit(submit)', function (data) {
                 var urls = "api/shops/addact";

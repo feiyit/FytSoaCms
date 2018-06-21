@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : fyt
-Source Server Version : 50719
+Source Server Version : 50717
 Source Host           : localhost:3306
 Source Database       : fyt_ims
 
 Target Server Type    : MYSQL
-Target Server Version : 50719
+Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-06-21 07:41:47
+Date: 2018-06-21 18:35:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -159,8 +159,8 @@ CREATE TABLE `erpshopactivity` (
 -- ----------------------------
 -- Records of erpshopactivity
 -- ----------------------------
-INSERT INTO `erpshopactivity` VALUES ('adb5e4ce-b3c8-43a5-bd8b-bc55df6f3be9', '29e4fba5-47d4-49e1-b500-b494394628ee', '1', '2', '0', '[{\"fullbegin\":100,\"fullend\":30},{\"fullbegin\":0,\"fullend\":0},{\"fullbegin\":0,\"fullend\":0}]', '2018-06-20 21:56:13', '2018-07-20 21:56:13', '2018-06-20 21:56:13');
-INSERT INTO `erpshopactivity` VALUES ('d014260d-fe01-44dd-aa2d-62eeb3429f7a', '29e4fba5-47d4-49e1-b500-b494394628ee', '1', '1', '90', null, '2018-06-20 21:16:40', '2018-07-20 21:16:40', '2018-06-20 21:16:40');
+INSERT INTO `erpshopactivity` VALUES ('adb5e4ce-b3c8-43a5-bd8b-bc55df6f3be9', '29e4fba5-47d4-49e1-b500-b494394628ee', '1', '2', '0', '[{\"fullbegin\":100,\"fullend\":30},{\"fullbegin\":50,\"fullend\":10},{\"fullbegin\":30,\"fullend\":5}]', '2018-06-20 21:56:13', '2018-07-20 21:56:13', '2018-06-20 21:56:13');
+INSERT INTO `erpshopactivity` VALUES ('d014260d-fe01-44dd-aa2d-62eeb3429f7a', '29e4fba5-47d4-49e1-b500-b494394628ee', '1', '1', '90', null, '2018-05-20 21:16:40', '2018-06-20 21:16:40', '2018-06-20 21:16:40');
 
 -- ----------------------------
 -- Table structure for erpshops
@@ -271,7 +271,7 @@ CREATE TABLE `sysadmin` (
 -- ----------------------------
 -- Records of sysadmin
 -- ----------------------------
-INSERT INTO `sysadmin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-06-13 21:43:43', '2018-06-20 23:26:36', '2018-06-20 23:26:36');
+INSERT INTO `sysadmin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-06-13 21:43:43', '2018-06-21 18:21:34', '2018-06-21 18:21:34');
 INSERT INTO `sysadmin` VALUES ('30d3da88-bb72-4ace-a303-b3aae0ecb732', null, '事业发展部', '4b6ab27f-c0fa-483d-9b5a-55891ee8d727', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,4b6ab27f-c0fa-483d-9b5a-55891ee8d727,', 'testadmin', 'pPo9vFeTWOCF0oLKKdX9Jw==', '李四', '1002', '/themes/img/avatar.jpg', '男', null, '\0', null, null, '2018-06-16 23:35:36', null, null);
 
 -- ----------------------------
@@ -459,6 +459,7 @@ INSERT INTO `syslog` VALUES ('7157442c-45f8-49be-921f-ac1f16cf9c46', 'admins', '
 INSERT INTO `syslog` VALUES ('71ef99c6-f4d6-4a63-a4ac-54e5beb3baa2', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 10:00:30');
 INSERT INTO `syslog` VALUES ('735275c1-f72a-4242-8701-c4fe5c3f5cf6', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 15:46:00');
 INSERT INTO `syslog` VALUES ('761487e4-5f18-498a-afc1-4d239462e1c7', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 09:52:36');
+INSERT INTO `syslog` VALUES ('7ff5bdf7-073a-45cf-8be1-75389d7e6e85', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-21 18:21:34');
 INSERT INTO `syslog` VALUES ('8b776e1d-8e04-41a5-a7a6-d2b4e147ab8c', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 11:18:04');
 INSERT INTO `syslog` VALUES ('8bec1f9f-dbde-4fec-9c52-20225c0b0824', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 22:52:52');
 INSERT INTO `syslog` VALUES ('96ad7900-0c3a-429d-9427-f84d68be8b27', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-18 06:10:02');
@@ -466,9 +467,11 @@ INSERT INTO `syslog` VALUES ('9ec2c692-7935-4591-bdc1-425155fe99a6', 'admins', '
 INSERT INTO `syslog` VALUES ('acbc1fe8-a016-4ab9-aee0-365d967fd4e6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 12:07:10');
 INSERT INTO `syslog` VALUES ('ba4c5061-bc8e-4efa-93ee-82d935813bdd', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 18:33:02');
 INSERT INTO `syslog` VALUES ('ba692f57-cbe8-4fe6-a97d-4b8ea5cd2293', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 20:35:39');
+INSERT INTO `syslog` VALUES ('bc57c675-fc63-4fc2-a55d-db5d0749289d', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-21 16:16:31');
 INSERT INTO `syslog` VALUES ('c1ac92d1-4026-4e5e-9a1c-3c8a23529be5', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '', '2018-06-14 00:29:27');
 INSERT INTO `syslog` VALUES ('ceb69199-c8d6-4c0a-8f2c-4964196d32f0', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-15 23:41:25');
 INSERT INTO `syslog` VALUES ('d28db11a-24f0-4330-925f-85201f7b64d0', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-18 06:30:01');
+INSERT INTO `syslog` VALUES ('d6837afc-2b0b-4262-980c-6a7412a2e8f0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-21 17:20:24');
 INSERT INTO `syslog` VALUES ('da210a5c-a04a-4d98-ba3b-f963409fd879', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 16:29:42');
 INSERT INTO `syslog` VALUES ('daaf69df-3079-4571-ac7e-046c0f20ee88', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 17:27:48');
 INSERT INTO `syslog` VALUES ('dc5fc779-52b6-4ecd-a8ad-d8311527e836', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 13:24:13');

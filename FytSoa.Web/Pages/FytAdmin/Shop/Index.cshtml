@@ -58,12 +58,12 @@
                         [
                             { type: 'checkbox', fixed: 'left' },
                             { field: 'shopName', title: '店铺名称', sort: true, fixed: 'left', event: 'gotool' },
-                            { field: 'loginName', width: 150, title: '登录账号', event: 'gotool' },
-                            { field: 'adminName', width: 150, title: '负责人', event: 'gotool' },
-                            { field: 'mobile', width: 180, title: '联系方式', sort: true, event: 'gotool' },
-                            { field: 'shopCity', width: 300, title: '所在地区', sort: true, event: 'gotool' },
-                            { field: 'regDate', width: 180, title: '添加时间', event: 'gotool' },
-                            { width: 260, title: '操作', templet: '#tool' }
+                            { field: 'loginName', title: '登录账号', event: 'gotool' },
+                            { field: 'adminName',  title: '负责人', event: 'gotool' },
+                            { field: 'mobile',  title: '联系方式', sort: true, event: 'gotool' },
+                            { field: 'shopCity',  title: '所在地区', sort: true, event: 'gotool' },
+                            { field: 'regDate',  title: '添加时间', event: 'gotool' },
+                            { width: 200, title: '操作', templet: '#tool' }
                         ]
                     ],
                     page: true,
@@ -227,23 +227,7 @@
                     toolAdd: function () {
                         os.Open('添加店铺', '/fytadmin/shop/shopmodify', '850px', '500px', function () {
                             active.reload();
-                        });
-                        /*var winH = $(window).height();
-                        layuiIndex = layer.open({
-                            title: '添加店铺'
-                            , type: 2
-                            , area: ['500px', winH-60+'px']
-                            , shade: [0.1, '#333']
-                            , resize: false
-                            , anim: -1
-                            , offset: 'rb'
-                            , shadeClose: true
-                            , skin: 'layer-anim-07'
-                            , content: "/fytadmin/shop/shopmodify"
-                            , end: function () {
-                                active.reload();
-                            }
-                        });*/
+                        });                        
                     },
                     //删除店铺
                     toolDel: function () {
@@ -291,6 +275,24 @@
                     if (obj.event === 'gotool') {
                         shopGuid = data.guid;
                         active.reloadActAndUser();
+                    }
+                    if (obj.event ==='staff') {
+                        var winH = $(window).height();
+                        layuiIndex = layer.open({
+                            title: '员工管理'
+                            , type: 2
+                            , area: ['700px', winH-60+'px']
+                            , shade: [0.1, '#333']
+                            , resize: false
+                            , anim: -1
+                            , offset: 'rb'
+                            , shadeClose: true
+                            , skin: 'layer-anim-07'
+                            , content: "/fytadmin/shop/staffindex?shop=" + data.guid
+                            , end: function () {
+                                
+                            }
+                        });
                     }
                 });
                 //监听工具条

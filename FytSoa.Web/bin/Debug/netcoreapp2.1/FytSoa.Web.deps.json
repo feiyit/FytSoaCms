@@ -33,7 +33,8 @@
           "Microsoft.NETCore.App": "2.1.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.0",
           "NLog": "4.5.6",
-          "NLog.Web.AspNetCore": "4.5.4"
+          "NLog.Web.AspNetCore": "4.5.4",
+          "Newtonsoft.Json": "11.0.2"
         },
         "runtime": {
           "FytSoa.Web.dll": {}

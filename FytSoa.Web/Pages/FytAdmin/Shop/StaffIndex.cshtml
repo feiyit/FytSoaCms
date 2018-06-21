@@ -1,0 +1,77 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Shop.StaffIndexModel
+@{
+    ViewData["Title"] = "员工管理";
+    Layout = string.IsNullOrEmpty(Model.shopGuid)?AdminLayout.Pjax(HttpContext): "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<div id="container">
+    <div class="list-wall">
+        <div class="layui-form list-search">
+            <div class="layui-inline">
+                <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
+            </div>
+            <div class="layui-inline lay-time-icon">
+                <input class="layui-input" id="times" autocomplete="off" placeholder="时间区间"><i class="layui-icon layui-icon-date"></i>
+            </div>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+        </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    <div class="list-wall">
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'common', 'laydate'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common
+                    , laydate = layui.laydate;
+                laydate.render({
+                    elem: '#times'
+                    , theme: '#393D49'
+                    , range: true
+                });
+                table.render({
+                    elem: '#tablist',
+                    url: '/api/shops/stafflist?key=@Model.shopGuid',
+                    cols: [
+                        [
+                            { field: 'userName', title: '姓名', sort: true, fixed: 'left' },
+                            { field: 'mobile', title: '手机号码' },
+                            { field: 'points', title: '积分值' },
+                            { field: 'regDate', title: '注册时间', sort: true },
+                            { field: 'lastLoginDate', title: '最后登录时间' }
+                        ]
+                    ],
+                    page: true,
+                    limit:15,
+                    id: 'tables'
+                });
+                var guid = '', active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    key: $("#key").val(),
+                                    time: $("#times").val()
+                                }
+                            });
+                    },
+                    toolSearch: function () {
+                        active.reload();
+                    }
+                };
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+            });
+    </script>
+</div>

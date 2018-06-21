@@ -112,24 +112,28 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<ShopActivityDto>>();
             try
             {
-                using (Db)
-                {
-                    var query = Db.Queryable<ErpShopActivity>()
+                var dt = DateTime.Now;
+                var query = Db.Queryable<ErpShopActivity>()
                         .WhereIF(!string.IsNullOrEmpty(parm.key),
-                        m=> m.ShopGuid == parm.key)
-                        .OrderBy(m => m.AddDate).Select(g=>new ShopActivityDto() {
-                            Guid=g.Guid,
-                            TypeName="商铺",
-                            MethodName= SqlFunc.IIF(g.Method == 1, "折扣", "满减"),
-                            CountNum=g.CountNum,
-                            BeginDate=g.BeginDate,
-                            EndDate=g.EndDate,
-                            Status=SqlFunc.IIF(SqlFunc.GetDate() > g.EndDate , "已完成" , "进行中")
+                        m => m.ShopGuid == parm.key)
+                        .OrderBy(m => m.AddDate).Select(m => new ShopActivityDto()
+                        {
+                            Guid = m.Guid,
+                            TypeName = SqlFunc.ToString(m.Types),
+                            MethodName = SqlFunc.ToString(m.Method),
+                            CountNum = m.CountNum,
+                            BeginDate = m.BeginDate,
+                            EndDate = m.EndDate
                         }).ToPageAsync(parm.page, parm.limit);
-                    res.success = true;
-                    res.message = "获取成功！";
-                    res.data = await query;
+                foreach (var item in query.Result.Items)
+                {
+                    item.Status = DateTime.Now > item.EndDate ? "已完成" : "进行中";
+                    item.TypeName = "商铺";
+                    item.MethodName = item.MethodName == "1" ? "打折" : "满减";
                 }
+                res.success = true;
+                res.message = "获取成功！";
+                res.data = await query;
             }
             catch (Exception ex)
             {
