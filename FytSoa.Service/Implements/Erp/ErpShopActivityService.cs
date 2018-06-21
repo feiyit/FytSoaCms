@@ -112,11 +112,9 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<ShopActivityDto>>();
             try
             {
-                var dt = DateTime.Now;
                 var query = Db.Queryable<ErpShopActivity>()
-                        .WhereIF(!string.IsNullOrEmpty(parm.key),
-                        m => m.ShopGuid == parm.key)
-                        .OrderBy(m => m.AddDate).Select(m => new ShopActivityDto()
+                        .Where(m=>m.ShopGuid==parm.guid)
+                        .OrderBy(m => m.EndDate, OrderByType.Desc).Select(m => new ShopActivityDto()
                         {
                             Guid = m.Guid,
                             TypeName = SqlFunc.ToString(m.Types),
@@ -125,12 +123,16 @@ namespace FytSoa.Service.Implements
                             BeginDate = m.BeginDate,
                             EndDate = m.EndDate
                         }).ToPageAsync(parm.page, parm.limit);
-                foreach (var item in query.Result.Items)
+                if (query.Result.TotalItems!=0)
                 {
-                    item.Status = DateTime.Now > item.EndDate ? "已完成" : "进行中";
-                    item.TypeName = "商铺";
-                    item.MethodName = item.MethodName == "1" ? "打折" : "满减";
+                    foreach (var item in query.Result.Items)
+                    {
+                        item.Status = DateTime.Now > item.EndDate ? "已完成" : "进行中";
+                        item.TypeName = "商铺";
+                        item.MethodName = item.MethodName == "1" ? "打折" : "满减";
+                    }
                 }
+                
                 res.success = true;
                 res.message = "获取成功！";
                 res.data = await query;

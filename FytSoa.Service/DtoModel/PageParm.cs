@@ -20,6 +20,11 @@ namespace FytSoa.Service.DtoModel
         public int limit { get; set; } = 15;
 
         /// <summary>
+        /// 编号
+        /// </summary>
+        public string guid { get; set; }
+
+        /// <summary>
         /// 搜索关键字
         /// </summary>
         public string key { get; set; }

@@ -170,7 +170,7 @@ namespace FytSoa.Api.Controllers
         public async Task<JsonResult> GetActPages(PageParm parm)
         {
             var res = await _activityService.GetPagesAsync(parm);
-            return Json(new { code = 0, msg = "success", count = res.data.Items?.Count, data = res.data.Items });
+            return Json(new { code = 0, msg = "success", count = res.data.Items?.Count, data = res.data?.Items });
         }
 
         /// <summary>

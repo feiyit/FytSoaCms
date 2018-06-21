@@ -103,18 +103,24 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<ErpStaff>>();
             try
             {
-                using (Db)
+                string beginTime = string.Empty, endTime = string.Empty;
+                if (!string.IsNullOrEmpty(parm.time))
                 {
-                    var query = Db.Queryable<ErpStaff>()
-                        .WhereIF(!string.IsNullOrEmpty(parm.key),
-                        m => m.ShopGuid==parm.key
-                        || m.LoginName== parm.key
-                        || m.Mobile== parm.key)
-                        .OrderBy(m => m.AddDate).ToPageAsync(parm.page, parm.limit);
-                    res.success = true;
-                    res.message = "获取成功！";
-                    res.data = await query;
+                    var timeRes = Utils.SplitString(parm.time, '-');
+                    beginTime = timeRes[0].Trim();
+                    endTime = timeRes[1].Trim();
                 }
+                var query = Db.Queryable<ErpStaff>()
+                        .WhereIF(!string.IsNullOrEmpty(parm.key),
+                        m => m.ShopGuid == parm.key
+                        || m.LoginName == parm.key
+                        || m.TrueName == parm.key
+                        || m.Mobile == parm.key)
+                        .WhereIF(!string.IsNullOrEmpty(parm.time), m => m.AddDate >= Convert.ToDateTime(beginTime) && m.AddDate <= Convert.ToDateTime(endTime))
+                        .OrderBy(m => m.AddDate,OrderByType.Desc).ToPageAsync(parm.page, parm.limit);
+                res.success = true;
+                res.message = "获取成功！";
+                res.data = await query;
             }
             catch (Exception ex)
             {

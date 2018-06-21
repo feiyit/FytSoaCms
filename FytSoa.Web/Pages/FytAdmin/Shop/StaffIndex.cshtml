@@ -35,15 +35,19 @@
                     , theme: '#393D49'
                     , range: true
                 });
+                var urls = '/api/shops/stafflist';
+                if ('@Model.shopGuid' != '') {
+                    urls+='?key=@Model.shopGuid'
+                }
                 table.render({
                     elem: '#tablist',
-                    url: '/api/shops/stafflist?key=@Model.shopGuid',
+                    url: urls,
                     cols: [
                         [
-                            { field: 'userName', title: '姓名', sort: true, fixed: 'left' },
+                            { field: 'trueName', title: '姓名', sort: true, fixed: 'left' },
                             { field: 'mobile', title: '手机号码' },
-                            { field: 'points', title: '积分值' },
-                            { field: 'regDate', title: '注册时间', sort: true },
+                            { field: 'sex', title: '性别' },
+                            { field: 'addDate', title: '注册时间', sort: true },
                             { field: 'lastLoginDate', title: '最后登录时间' }
                         ]
                     ],

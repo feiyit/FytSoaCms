@@ -100,18 +100,15 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<ErpShopUser>>();
             try
             {
-                using (Db)
-                {
-                    var query = Db.Queryable<ErpShopUser>()
+                var query = Db.Queryable<ErpShopUser>()
+                        .Where(m => m.ShopGuid == parm.guid)
                         .WhereIF(!string.IsNullOrEmpty(parm.key),
-                        m => m.Mobile== parm.key
-                        || m.ShopGuid== parm.key
-                        || m.UserName== parm.key)
-                        .OrderBy(m => m.RegDate).ToPageAsync(parm.page, parm.limit);
-                    res.success = true;
-                    res.message = "获取成功！";
-                    res.data = await query;
-                }
+                        m => m.Mobile == parm.key
+                        || m.UserName == parm.key)
+                        .OrderBy(m => m.RegDate,OrderByType.Desc).ToPageAsync(parm.page, parm.limit);
+                res.success = true;
+                res.message = "获取成功！";
+                res.data = await query;
             }
             catch (Exception ex)
             {
