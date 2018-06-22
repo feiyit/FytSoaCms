@@ -19,13 +19,15 @@ namespace FytSoa.Api.Controllers
         private readonly IErpStaffService _staffService;
         private readonly IErpShopUserService _shopUserService;
         private readonly IErpShopActivityService _activityService;
+        private readonly IErpPushService _pushService;
         public ShopsController(IErpShopsService shopsService, IErpStaffService staffService, IErpShopUserService shopUserService,
-            IErpShopActivityService activityService)
+            IErpShopActivityService activityService, IErpPushService pushService)
         {
             _shopsService = shopsService;
             _staffService = staffService;
             _shopUserService = shopUserService;
             _activityService = activityService;
+            _pushService = pushService;
         }
 
         #region 店铺API
@@ -201,6 +203,40 @@ namespace FytSoa.Api.Controllers
         public async Task<ApiResult<string>> EditAct(ErpShopActivity parm, ShopActivityParm fullParm)
         {
             return await _activityService.ModifyAsync(parm, fullParm);
+        }
+        #endregion
+
+        #region 消息推送
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("pushlist")]
+        public async Task<JsonResult> GetPushPages(PageParm parm)
+        {
+            var res = await _staffService.GetPagesAsync(parm);
+            return Json(new { code = 0, msg = "success", count = res.data.Items?.Count, data = res.data.Items });
+        }
+
+        /// <summary>
+        /// 添加一条菜单功能
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("addpush")]
+        public async Task<ApiResult<string>> AddPush(ErpStaff parm)
+        {
+            return await _staffService.AddAsync(parm);
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("deletepush")]
+        public async Task<ApiResult<string>> DeletePush(string parm)
+        {
+            return await _staffService.DeleteAsync(parm);
         }
         #endregion
     }
