@@ -26,7 +26,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public byte Types { get; set; }
+        public byte Types { get; set; } = 1;
 
         /// <summary>
         /// Desc:打包订单号
@@ -47,7 +47,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:0
         /// Nullable:False
         /// </summary>           
-        public int GoodsSum { get; set; }
+        public int GoodsSum { get; set; } = 0;
 
         /// <summary>
         /// Desc:打包的商品归属商铺编号
@@ -61,7 +61,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime AddDate { get; set; }
+        public DateTime AddDate { get; set; } = DateTime.Now;
 
     }
 }

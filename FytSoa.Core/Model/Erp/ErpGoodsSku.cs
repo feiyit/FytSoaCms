@@ -40,35 +40,35 @@ namespace FytSoa.Core.Model.Erp
         /// Default:0.00
         /// Nullable:False
         /// </summary>           
-        public decimal SalePrice { get; set; }
+        public string SalePrice { get; set; }
 
         /// <summary>
         /// Desc:折扣价格
         /// Default:0.00
         /// Nullable:False
         /// </summary>           
-        public decimal DisPrice { get; set; }
+        public string DisPrice { get; set; }
 
         /// <summary>
         /// Desc:库存
         /// Default:0
         /// Nullable:False
         /// </summary>           
-        public int StockSum { get; set; }
+        public int StockSum { get; set; } = 0;
 
         /// <summary>
         /// Desc:销售数量
         /// Default:0
         /// Nullable:False
         /// </summary>           
-        public int SaleSum { get; set; }
+        public int SaleSum { get; set; } = 0;
 
         /// <summary>
         /// Desc:状态 1=正常 2=异常
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public byte Status { get; set; }
+        public byte Status { get; set; } = 1;
 
         /// <summary>
         /// Desc:品牌编号
@@ -106,11 +106,16 @@ namespace FytSoa.Core.Model.Erp
         public string SizeGuid { get; set; }
 
         /// <summary>
+        /// 是否删除  0=否 1=是
+        /// </summary>
+        public bool IsDel { get; set; }
+
+        /// <summary>
         /// Desc:添加时间
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime AddDate { get; set; }
+        public DateTime AddDate { get; set; } = DateTime.Now;
 
     }
 }

@@ -61,21 +61,21 @@ namespace FytSoa.Core.Model.Erp
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public int BackCount { get; set; }
+        public int BackCount { get; set; } = 0;
 
         /// <summary>
         /// Desc:退货的金额
         /// Default:0.00
         /// Nullable:False
         /// </summary>           
-        public decimal BackMoney { get; set; }
+        public decimal BackMoney { get; set; } = 0;
 
         /// <summary>
         /// Desc:退货的状态 1=提交退货 2=受理 3=完成 4=其他
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public byte Status { get; set; }
+        public byte Status { get; set; } = 0;
 
         /// <summary>
         /// Desc:退货原因
@@ -89,7 +89,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime AddDate { get; set; }
+        public DateTime AddDate { get; set; } = DateTime.Now;
 
     }
 }

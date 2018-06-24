@@ -43,12 +43,32 @@ namespace FytSoa.Service.Implements
         /// <returns></returns>
         public async Task<ApiResult<string>> AddAsync(SysCode parm)
         {
-            var dbres = SysCodeDb.Insert(parm);
-            var res = new ApiResult<string>
+            var res = new ApiResult<string>() {statusCode = 200 };
+            try
             {
-                statusCode = dbres ? (int)ApiEnum.Status : (int)ApiEnum.Error,
-                data = dbres.ToString()
-            };
+                //判断是否存在
+                var isExt = SysCodeDb.IsAny(m => m.Name == parm.Name);
+                if (isExt)
+                {
+                    res.statusCode = (int)ApiEnum.ParameterError;
+                    res.message = "该名称已存在~";
+                }
+                else
+                {
+                    parm.Guid = Guid.NewGuid().ToString();
+                    var dbres = SysCodeDb.Insert(parm);
+                    if (!dbres)
+                    {
+                        res.statusCode = (int)ApiEnum.Error;
+                        res.message = "插入数据失败~";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.statusCode = (int)ApiEnum.Error;
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+            }
             return await Task.Run(() => res);
         }
 

@@ -53,14 +53,14 @@ namespace FytSoa.Core.Model.Sys
         /// Default:0
         /// Nullable:False
         /// </summary>           
-        public int Sort { get; set; }
+        public int Sort { get; set; } = 0;
 
         /// <summary>
         /// Desc:字典值——状态
         /// Default:b'1'
         /// Nullable:False
         /// </summary>           
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
 
         /// <summary>
         /// Desc:字典值——描述
@@ -74,14 +74,14 @@ namespace FytSoa.Core.Model.Sys
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime AddTime { get; set; }
+        public DateTime AddTime { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Desc:字典值——修改时间
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime EditTime { get; set; }
+        public DateTime EditTime { get; set; } = DateTime.Now;
 
     }
 }

@@ -1,10 +1,99 @@
 ﻿@page
 @model FytSoa.Web.Pages.FytAdmin.Shop.PushModel
 @{
-    ViewData["Title"] = "Push";
-    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+    ViewData["Title"] = "消息通知";
+    Layout = AdminLayout.Pjax(HttpContext);
 }
 <div id="container">
-    <h2>Push</h2>
+    <div class="list-wall">
+        <div class="layui-form list-search">
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
+            <div class="layui-inline">
+                <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
+            </div>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+        </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'common'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common;               
+                table.render({
+                    elem: '#tablist',
+                    url: '/api/shops/pushlist',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            { field: 'title', title: '消息标题', sort: true, fixed: 'left' },
+                            { field: 'summary', title: '消息内容' },
+                            { field: 'addDate', title: '登录时间' }
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables'
+                });
+
+                var guid = '', active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    key: $("#key").val()
+                                }
+                            });
+                    },
+                    toolAdd: function () {
+                        os.Open('添加消息', '/fytadmin/shop/pushmodify', '650px', '350px', function () {
+                            active.reload();
+                        });
+                    },
+                    toolSearch: function () {
+                        active.reload();
+                    },
+                    toolDel: function () {
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要删除的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            str += item.guid + ",";
+                        });
+                        layer.confirm('确定要执行批量删除吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/shops/deletepush/', { parm: str }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    active.reload();
+                                    os.success('删除成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+
+                    }
+                };
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+            });
+    </script>
 </div>
 

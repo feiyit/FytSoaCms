@@ -30,6 +30,11 @@ namespace FytSoa.Service.DtoModel
         public string key { get; set; }
 
         /// <summary>
+        /// 类型条件
+        /// </summary>
+        public int types { get; set; } = 0;
+
+        /// <summary>
         /// 搜索日期，可能是2个日期，通过-分隔
         /// </summary>
         public string time { get; set; }

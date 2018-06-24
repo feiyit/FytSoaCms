@@ -215,7 +215,7 @@ namespace FytSoa.Api.Controllers
         [HttpGet("pushlist")]
         public async Task<JsonResult> GetPushPages(PageParm parm)
         {
-            var res = await _staffService.GetPagesAsync(parm);
+            var res = await _pushService.GetPagesAsync(parm);
             return Json(new { code = 0, msg = "success", count = res.data.Items?.Count, data = res.data.Items });
         }
 
@@ -224,9 +224,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("addpush")]
-        public async Task<ApiResult<string>> AddPush(ErpStaff parm)
+        public async Task<ApiResult<string>> AddPush(ErpPush parm)
         {
-            return await _staffService.AddAsync(parm);
+            return await _pushService.AddAsync(parm);
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace FytSoa.Api.Controllers
         [HttpPost("deletepush")]
         public async Task<ApiResult<string>> DeletePush(string parm)
         {
-            return await _staffService.DeleteAsync(parm);
+            return await _pushService.DeleteAsync(parm);
         }
         #endregion
     }

@@ -45,7 +45,7 @@
                         [
                             { type: 'checkbox', fixed: 'left' },
                             { field: 'name', title: '字典名称', sort: true, fixed: 'left' },
-                            { field: 'type', title: '阈值' }, { field: 'sort', width: 150, title: '顺序', sort: true },
+                            { field: 'codeType', title: '阈值' }, { field: 'sort', width: 150, title: '顺序', sort: true },
                             { field: 'status', width: 150, title: '状态', templet: '#switchTpl' },
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
@@ -132,7 +132,7 @@
                             var loadindex = layer.load(1, {
                                 shade: [0.1, '#000']
                             });
-                            os.ajax('api/code/delete/', { guid: str }, function (res) {
+                            os.ajax('api/code/delete/', { parm: str }, function (res) {
                                 layer.close(loadindex);
                                 if (res.statusCode === 200) {
                                     active.reload();

@@ -54,7 +54,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public int ReturnCount { get; set; }
+        public int ReturnCount { get; set; } = 0;
 
         /// <summary>
         /// Desc:属于哪个批次
@@ -75,7 +75,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public byte Status { get; set; }
+        public byte Status { get; set; } = 1;
 
         /// <summary>
         /// Desc:返货描述
@@ -89,7 +89,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime AddDate { get; set; }
+        public DateTime AddDate { get; set; } = DateTime.Now;
 
     }
 }
