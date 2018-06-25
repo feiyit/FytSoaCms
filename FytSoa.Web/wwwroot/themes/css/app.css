@@ -110,6 +110,20 @@
 .layui-form-item .layui-inline{margin-right:0px;}
 .layui-form-item .layui-input-inline{margin-right:0px; width:230px;}
 
+/* 出入库diy */
+.fyt-utree li{height:40px; line-height:40px; position:relative;border-bottom:1px solid #e6e6e6;padding-left:15px;}
+.fyt-utree li.active{background-color:#f3f3f3;}
+.fyt-utree li a{display:inline-block;cursor:pointer;}
+.fyt-utree li a.title{ width:75%; overflow:hidden; float:left; padding-right:15px;}
+.fyt-utree li a.sums{width:40px;  float:left;}
+.fyt-utree li span.tool{position:relative; display:inline-block; width:40px;  color:#666;
+                       text-align:center; cursor:pointer; float:right;}
+.fyt-task-menu{min-width:120px; display:block; text-align:center;border: 1px solid #ebeef5;border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);}
+.fyt-task-menu a{display:block; cursor:pointer;}
+.fyt-task-menu a:hover{color:#409eff; background-color:#ecf5ff}
+.fyt-task-menu:after{content:''; position:absolute; width:18px; height:8px;background-color:#ffffff;
+                         clip-path: polygon(50% 0%, 0% 100%, 100% 100%); top:-6px; right:10px;}
 
 ::-webkit-scrollbar-track-piece {
 	background-color: #f5f5f5;

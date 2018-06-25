@@ -32,12 +32,14 @@
     <script>
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['table', 'layer', 'jquery', 'common'],
+        }).use(['table', 'layer', 'jquery', 'common','form'],
             function () {
                 var table = layui.table,
                     layer = layui.layer,
                     $ = layui.jquery,
-                    os = layui.common;                
+                    os = layui.common,
+                    form = layui.form;   
+                form.render('select');
                 table.render({
                     elem: '#tablist',
                     url: '/api/goods/barlist',

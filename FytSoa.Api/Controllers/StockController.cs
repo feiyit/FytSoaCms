@@ -37,9 +37,9 @@ namespace FytSoa.Api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("inoutlist")]
-        public async Task<JsonResult> GetInPages(PageParm parm)
+        public async Task<JsonResult> GetInPages(PageParm parm, SearchParm searchParm)
         {
-            var res = await _inOutLogService.GetPagesAsync(parm);
+            var res = await _inOutLogService.GetPagesAsync(parm,searchParm);
             return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
         }
 
@@ -81,7 +81,7 @@ namespace FytSoa.Api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("packloglist")]
-        public async Task<ApiResult<Page<ErpPackLog>>> GetPackLogPages(PageParm parm)
+        public async Task<ApiResult<Page<PackLogDto>>> GetPackLogPages(PageParm parm)
         {
             return await _packLogService.GetPagesAsync(parm);
         }

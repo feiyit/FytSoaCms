@@ -5,6 +5,30 @@
     Layout = "~/Pages/FytAdmin/_Layout.cshtml";
 }
 <form class="layui-form form-cus" action="">
+    <div class="layui-form-item @(Model.PackModel.Types==2?"":"layui-hide")">
+        <label class="layui-form-label">加盟商</label>
+        <div class="layui-input-block">
+            <select name="ShopGuid" lay-search="">
+                <option value="">请选择加盟商，支持搜索</option>
+                @{
+                    if (Model.List != null && Model.List.Count > 0)
+                    {
+                        foreach (var item in Model.List)
+                        {
+                            if (item.Guid == Model.PackModel.ShopGuid)
+                            {
+                                <option value="@item.Guid" selected="selected">@item.ShopName</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Guid">@item.ShopName</option>
+                            }
+                        }
+                    }
+                }
+            </select>
+        </div>
+    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">订单号</label>
         <div class="layui-input-block">
@@ -16,7 +40,7 @@
         <div class="layui-input-block">
             <input type="text" name="PackName" value="@Model.PackModel.PackName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入名称" class="layui-input">
         </div>
-    </div>   
+    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">数量</label>
         <div class="layui-input-block">

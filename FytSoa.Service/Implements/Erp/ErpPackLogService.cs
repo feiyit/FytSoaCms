@@ -94,9 +94,9 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        public async Task<ApiResult<Page<ErpPackLog>>> GetPagesAsync(PageParm parm)
+        public async Task<ApiResult<Page<PackLogDto>>> GetPagesAsync(PageParm parm)
         {
-            var res = new ApiResult<Page<ErpPackLog>>();
+            var res = new ApiResult<Page<PackLogDto>>();
             try
             {
                 using (Db)
@@ -105,6 +105,15 @@ namespace FytSoa.Service.Implements
                         .Where(m=>!m.IsDel)
                         .WhereIF(parm.types!=0,m=>m.Types==parm.types)
                         .WhereIF(!string.IsNullOrEmpty(parm.key),m=>m.PackName.Contains(parm.key) || m.Number==parm.key)
+                        .OrderBy(m=>m.AddDate,OrderByType.Desc).Select(m=>new PackLogDto() {
+                            Guid=m.Guid,
+                            Number=m.Number,
+                            PackName=m.PackName,
+                            ShopGuid=m.ShopGuid,
+                            GoodsSum=m.GoodsSum,
+                            ShopName= SqlFunc.Subqueryable<ErpShops>().Where(g => g.Guid == m.ShopGuid).Select(g => g.ShopName),
+                            AddDate =m.AddDate
+                        })
                         .ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";

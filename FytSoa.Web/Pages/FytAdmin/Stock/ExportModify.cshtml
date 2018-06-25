@@ -1,7 +1,7 @@
 ﻿@page
-@model FytSoa.Web.Pages.FytAdmin.Stock.ImportModifyModel
+@model FytSoa.Web.Pages.FytAdmin.Stock.ExportModifyModel
 @{
-    ViewData["Title"] = "入库管理";
+    ViewData["Title"] = "出库管理";
     Layout = "~/Pages/FytAdmin/_Layout.cshtml";
 }
 <form class="layui-form form-cus" action="">
@@ -28,6 +28,7 @@
     <input type="hidden" name="AddDate" value="@Model.InoutModel.AddDate" />
     <input type="hidden" name="PackGuid" value="@Model.InoutModel.PackGuid" />
     <input type="hidden" name="AdminGuid" value="@Model.InoutModel.AdminGuid" />
+    <input type="hidden" name="ShopGuid" value="@Model.InoutModel.ShopGuid" />
 </form>
 @section Scripts{
     <script>
@@ -54,4 +55,5 @@
         });
     </script>
 }
+
 

@@ -14,7 +14,7 @@ namespace FytSoa.Service.Interfaces
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<Page<ErpInOutLog>>> GetPagesAsync(PageParm parm);
+        Task<ApiResult<Page<ErpInOutLog>>> GetPagesAsync(PageParm parm, SearchParm searchParm);
 
         /// <summary>
         /// 获得一条数据

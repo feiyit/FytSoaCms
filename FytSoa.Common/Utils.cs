@@ -470,5 +470,28 @@ namespace FytSoa.Common
         }
 
         #endregion
+
+        #region 条形码解析
+        /// <summary>
+        /// 分解条形码，并返回数组
+        /// </summary>
+        /// <param name="code">条形码</param>
+        /// <returns>数组0=品牌  1=季节  2=款式  3=批次  4=尺码</returns>
+        public static List<string> GetSkuArray(string code)
+        {
+            var str = new List<string>();
+            //品牌，截取0-3
+            str.Add(code.Substring(0, 3));
+            //季节截取
+            str.Add(code.Substring(3, 1));
+            //款式截取
+            str.Add(code.Substring(4, 1));
+            //批次截取
+            str.Add(code.Substring(5, 1));
+            //尺码截取
+            str.Add(code.Substring(6, 1));
+            return str;
+        }
+        #endregion
     }
 }
