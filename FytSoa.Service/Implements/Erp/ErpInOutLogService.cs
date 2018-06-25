@@ -23,6 +23,7 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<string>() { data = "1", statusCode = 200 };
             try
             {
+                parm.Guid = Guid.NewGuid().ToString();
                 var dbres = ErpInOutLogDb.Insert(parm);
                 if (!dbres)
                 {
@@ -93,6 +94,7 @@ namespace FytSoa.Service.Implements
                     var query = Db.Queryable<ErpInOutLog>()
                         .WhereIF(parm.types != 0, m => m.Types == parm.types)
                         .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.ShopGuid==parm.guid)
+                        .WhereIF(!string.IsNullOrEmpty(parm.key),m=>m.PackGuid==parm.key)
                         .ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";

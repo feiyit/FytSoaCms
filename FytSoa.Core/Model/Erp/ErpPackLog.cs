@@ -57,6 +57,11 @@ namespace FytSoa.Core.Model.Erp
         public string ShopGuid { get; set; }
 
         /// <summary>
+        /// 是否删除  0=否 1=是
+        /// </summary>
+        public bool IsDel { get; set; } = false;
+
+        /// <summary>
         /// Desc:打包时间
         /// Default:
         /// Nullable:False

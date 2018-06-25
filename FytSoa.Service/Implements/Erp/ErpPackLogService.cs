@@ -28,10 +28,11 @@ namespace FytSoa.Service.Implements
                 if (isExt)
                 {
                     res.statusCode = (int)ApiEnum.ParameterError;
-                    res.message = "该活动已存在~";
+                    res.message = "该信息已存在~";
                 }
                 else
                 {
+                    parm.Guid = Guid.NewGuid().ToString();
                     var dbres = ErpPackLogDb.Insert(parm);
                     if (!dbres)
                     {
@@ -58,7 +59,7 @@ namespace FytSoa.Service.Implements
             try
             {
                 var list = Utils.StrToListString(parm);
-                var dbres = ErpPackLogDb.Delete(m => list.Contains(m.Guid));
+                var dbres = ErpPackLogDb.Update(m => new ErpPackLog() { IsDel = true }, m => list.Contains(m.Guid));
                 if (!dbres)
                 {
                     res.statusCode = (int)ApiEnum.Error;
@@ -101,6 +102,7 @@ namespace FytSoa.Service.Implements
                 using (Db)
                 {
                     var query = Db.Queryable<ErpPackLog>()
+                        .Where(m=>!m.IsDel)
                         .WhereIF(parm.types!=0,m=>m.Types==parm.types)
                         .WhereIF(!string.IsNullOrEmpty(parm.key),m=>m.PackName.Contains(parm.key) || m.Number==parm.key)
                         .ToPageAsync(parm.page, parm.limit);
