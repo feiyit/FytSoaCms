@@ -72,7 +72,7 @@ using FytSoa.Web;
 ");
             EndContext();
             BeginContext(564, 3754, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "654da3adeb2645988530924d74d787bc", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ba423b54281b4fe1b5b1a6cb34ec3cca", async() => {
                 BeginContext(608, 248, true);
                 WriteLiteral("\r\n    <div class=\"layui-form-item\">\r\n        <div class=\"layui-inline\">\r\n            <label class=\"layui-form-label\">活动类型</label>\r\n            <div class=\"layui-input-inline\">\r\n                <input type=\"radio\" name=\"Method\" value=\"1\" title=\"打折\" ");
                 EndContext();
