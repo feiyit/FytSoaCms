@@ -20,17 +20,20 @@ namespace FytSoa.Api.Controllers
         private readonly IErpBackGoodsService _backGoodsService;
         private readonly IErpReturnGoodsService _returnGoodsService;
         private readonly IErpTransferService _transferService;
+        private readonly IErpTransferGoodsService _transferGoodsService;
         public StockController(IErpInOutLogService inOutLogService,
             IErpPackLogService packLogService,
             IErpBackGoodsService backGoodsService,
             IErpReturnGoodsService returnGoodsService,
-            IErpTransferService transferService)
+            IErpTransferService transferService,
+            IErpTransferGoodsService transferGoodsService)
         {
             _inOutLogService = inOutLogService;
             _packLogService = packLogService;
             _backGoodsService = backGoodsService;
             _returnGoodsService = returnGoodsService;
             _transferService = transferService;
+            _transferGoodsService = transferGoodsService;
         }
 
         #region 出入库管理Api
@@ -161,6 +164,50 @@ namespace FytSoa.Api.Controllers
         public async Task<ApiResult<string>> EditTransfer(ErpTransfer parm)
         {
             return await _transferService.ModifyAsync(parm);
+        }
+        #endregion
+
+        #region 调拨单商品管理Api
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("transfergoodslist")]
+        public async Task<JsonResult> GetTransferGoodsPages(PageParm parm)
+        {
+            var res = await _transferGoodsService.GetPagesAsync(parm);
+            return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
+        }
+
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("addtransfergoods")]
+        public async Task<ApiResult<string>> AddTransferGoodsAsync(ErpTransferGoods parm,List<TransferGoods> list)
+        {
+            return await _transferGoodsService.AddAsync(parm,list);
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("deltransfergoods")]
+        public async Task<ApiResult<string>> DeleteTransferGoods(string parm)
+        {
+            return await _transferGoodsService.DeleteAsync(parm);
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("edittransfergoods")]
+        public async Task<ApiResult<string>> EditTransferGoods(ErpTransferGoods parm)
+        {
+            return await _transferGoodsService.ModifyAsync(parm);
         }
         #endregion
     }

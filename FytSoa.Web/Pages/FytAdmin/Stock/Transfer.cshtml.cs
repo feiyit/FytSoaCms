@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FytSoa.Core.Model.Erp;
 using FytSoa.Core.Model.Sys;
 using FytSoa.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -13,16 +14,16 @@ namespace FytSoa.Web.Pages.FytAdmin.Stock
     [Authorize]
     public class TransferModel : PageModel
     {
-        private readonly ISysCodeService _codeService;
-        public TransferModel(ISysCodeService codeService)
+        private readonly IErpShopsService _shopService;
+        public TransferModel(IErpShopsService shopService)
         {
-            _codeService = codeService;
+            _shopService = shopService;
         }
 
-        public List<SysCode> codeList { get; set; }
+        public List<ErpShops> List { get; set; }
         public void OnGet(string guid)
         {
-            codeList = _codeService.GetPagesAsync(new Service.DtoModel.SysCodePostPage() { limit = 10000, guid = "7b664e3e-f58a-4e66-8c0f-be1458541d14" }).Result.data?.Items;
+            List = _shopService.GetPagesAsync(new Service.DtoModel.PageParm() { limit = 1000 }).Result.data.Items;
         }
     }
 }

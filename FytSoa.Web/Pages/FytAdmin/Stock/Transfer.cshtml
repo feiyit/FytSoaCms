@@ -7,14 +7,24 @@
 <div id="container">
     <div class="list-wall">
         <div class="layui-form list-search">
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增调拨单</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除调拨单</button>
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolExport"><i class="layui-icon layui-icon-component"></i> 导出Excel</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolActivity"><i class="layui-icon layui-icon-app"></i> 添加活动</button>
         </div>
         <div class="layui-form list-search" style="margin-top:10px;">
             <div class="layui-inline">
-                <input class="layui-input" id="shopkey" autocomplete="off" placeholder="请输入关键字查询">
+                <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
+            </div>
+            <div class="layui-inline">
+                <select id="shopGuid">
+                    <option value="">--可根据品牌搜索--</option>
+                    @{
+                        foreach (var item in Model.List)
+                        {
+                            <option value="@item.Guid">@item.ShopName</option>
+                        }
+                    }
+                </select>
             </div>
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
         </div>
@@ -22,8 +32,8 @@
     </div>
     <div class="list-wall">
         <div class="layui-form list-search">
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolActAdd"><i class="layui-icon"></i> 添加活动</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolActDel"><i class="layui-icon"></i> 删除活动</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="goodsAdd"><i class="layui-icon"></i> 添加调拨商品</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="goodsDel"><i class="layui-icon"></i> 删除调拨商品</button>
         </div>
         <table class="layui-hide" id="table-goods" lay-filter="acttool"></table>
     </div>
@@ -45,8 +55,8 @@
                         [
                             { type: 'checkbox', fixed: 'left' },
                             { field: 'number', title: '编号', sort: true, fixed: 'left', event: 'gotool' },
-                            { field: 'inShopGuid', title: '入库加盟商', event: 'gotool' },
-                            { field: 'outShopGuid', title: '出库加盟商', event: 'gotool' },
+                            { field: 'inShopName', title: '入库加盟商', event: 'gotool' },
+                            { field: 'outShopName', title: '出库加盟商', event: 'gotool' },
                             { field: 'goodsSum', title: '数量', sort: true, event: 'gotool' },
                             { field: 'addDate', title: '添加时间', event: 'gotool' },
                             { width: 100, title: '操作', templet: '#tool' }
@@ -59,28 +69,25 @@
 
                 //调拨商品
                 table.render({
-                    elem: '#table-act',
-                    url: '/api/shops/actlist',
+                    elem: '#table-goods',
+                    url: '/api/stock/transfergoodslist',
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'methodName', title: '活动方式' },
-                            { field: 'countNum', width: 80, title: '折扣数' },
-                            { field: 'beginDate', title: '开始时间', sort: true },
-                            { field: 'endDate', title: '结束时间', sort: true },
-                            { field: 'status', title: '状态' },
-                            { title: '操作', templet: '#acttool' }
+                            { field: 'code', title: '条形码' },
+                            { field: 'brankName',  title: '品牌' },
+                            { field: 'styleName', title: '款式'},
+                            { field: 'goodsSum', title: '数量', sort: true }
                         ]
                     ],
                     page: true,
                     limit: 10,
-                    id: 'act-tables'
+                    id: 'tabgoods'
                 });
 
                
 
-                var shopGuid = '', active = {
-                    //店铺重载
+                var transferGuid = '', active = {
                     reload: function () {
                         table.reload('tables',
                             {
@@ -88,33 +95,34 @@
                                     curr: 1
                                 },
                                 where: {
-                                    key: $("#shopkey").val()
+                                    key: $("#key").val(),
+                                    guid: $("#shopGuid").val()
                                 }
                             });
                     },
                     //点击店铺查询活动和店铺会员
                     reloadGoods: function () {
-                        table.reload('table-goods',
+                        table.reload('tabgoods',
                             {
                                 page: {
                                     curr: 1
                                 },
                                 where: {
-                                    guid: shopGuid
+                                    guid: transferGuid
                                 }
                             });                        
                     },
-                    //店铺搜索
+                    //调拨单搜索
                     toolSearch: function () {
                         active.reload();
                     },                    
-                    //添加店铺
+                    //添加调拨单
                     toolAdd: function () {
-                        os.Open('添加店铺', '/fytadmin/shop/shopmodify', '850px', '500px', function () {
+                        os.Open('添加调拨单', '/fytadmin/stock/transfermodify', '600px', '450px', function () {
                             active.reload();
                         });
                     },
-                    //删除店铺
+                    //删除调拨单
                     toolDel: function () {
                         var checkStatus = table.checkStatus('tables')
                             , data = checkStatus.data;
@@ -131,7 +139,7 @@
                             var loadindex = layer.load(1, {
                                 shade: [0.1, '#000']
                             });
-                            os.ajax('api/shops/delete/', { parm: str }, function (res) {
+                            os.ajax('api/stock/deltransfer/', { parm: str }, function (res) {
                                 layer.close(loadindex);
                                 if (res.statusCode === 200) {
                                     active.reload();
@@ -141,7 +149,44 @@
                                 }
                             });
                         });
-
+                    },
+                    //调拨商品添加
+                    goodsAdd: function () {
+                        if (transferGuid === '') {
+                            os.error('请选择调拨单~');
+                            return;
+                        }
+                        os.Open('添加商品', '/fytadmin/stock/transfergoods/?transferGuid=' + transferGuid, '950px', '650px', function () {
+                            active.reloadGoods();
+                        });
+                    },
+                    //删除调拨商品
+                    goodsDel: function () {
+                        var checkStatus = table.checkStatus('tabgoods')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.warning("请选择要删除的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            str += item.guid + ",";
+                        });
+                        layer.confirm('确定要执行批量删除吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/stock/deltransfergoods/', { parm: str }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    active.reloadGoods();
+                                    os.success('删除成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
                     }
                 };
                 $('.list-search .layui-btn').on('click', function () {
@@ -153,16 +198,19 @@
                 table.on('tool(tool)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'edit') {
-                        os.Open('编辑店铺', '/fytadmin/shop/shopmodify/?guid=' + data.guid, '850px', '500px', function () {
+                        os.Open('编辑调拨单', '/fytadmin/stock/transfermodify/?guid='+data.guid, '600px', '450px', function () {
                             active.reload();
-                        })
+                        });
+                    }
+                    if (obj.event === 'gotool') {
+                        transferGuid = data.guid;
+                        active.reloadGoods();
                     }
                 });
             });
     </script>
     <script type="text/html" id="tool">
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
-        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="staff"><i class="layui-icon"></i> 员工管理</a>
     </script>
 </div>
 

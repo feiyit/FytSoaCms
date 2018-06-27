@@ -1,6 +1,7 @@
 ﻿using FytSoa.Common;
 using FytSoa.Core.Model.Erp;
 using FytSoa.Service.DtoModel;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FytSoa.Service.Interfaces
@@ -14,7 +15,7 @@ namespace FytSoa.Service.Interfaces
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<Page<ErpTransferGoods>>> GetPagesAsync(PageParm parm);
+        Task<ApiResult<Page<TransferGoodsDto>>> GetPagesAsync(PageParm parm);
 
         /// <summary>
         /// 获得一条数据
@@ -26,7 +27,7 @@ namespace FytSoa.Service.Interfaces
         /// 添加一条数据
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<string>> AddAsync(ErpTransferGoods parm);
+        Task<ApiResult<string>> AddAsync(ErpTransferGoods parm, List<TransferGoods> list);
 
         /// <summary>
         /// 删除一条或多条数据

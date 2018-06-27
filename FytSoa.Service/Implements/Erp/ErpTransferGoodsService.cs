@@ -2,6 +2,7 @@
 using FytSoa.Common;
 using FytSoa.Core;
 using FytSoa.Core.Model.Erp;
+using FytSoa.Core.Model.Sys;
 using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
 using SqlSugar;
@@ -21,13 +22,22 @@ namespace FytSoa.Service.Implements
         /// 添加一条数据
         /// </summary>
         /// <returns></returns>
-        public async Task<ApiResult<string>> AddAsync(ErpTransferGoods parm)
+        public async Task<ApiResult<string>> AddAsync(ErpTransferGoods parm, List<TransferGoods> list)
         {
             var res = new ApiResult<string>() { data = "1", statusCode = 200 };
             try
             {
-                parm.Guid = Guid.NewGuid().ToString();
-                var dbres = ErpTransferGoodsDb.Insert(parm);
+                var listModel = new List<ErpTransferGoods>();
+                foreach (var item in list)
+                {
+                    listModel.Add(new ErpTransferGoods() {
+                        Guid= Guid.NewGuid().ToString(),
+                        TransferGuid=parm.TransferGuid,
+                        GoodsGuid=item.guid,
+                        GoodsSum=item.goodsSum
+                    });
+                }
+                var dbres = ErpTransferGoodsDb.InsertRange(listModel.ToArray());
                 if (!dbres)
                 {
                     res.statusCode = (int)ApiEnum.Error;
@@ -87,20 +97,24 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        public async Task<ApiResult<Page<ErpTransferGoods>>> GetPagesAsync(PageParm parm)
+        public async Task<ApiResult<Page<TransferGoodsDto>>> GetPagesAsync(PageParm parm)
         {
-            var res = new ApiResult<Page<ErpTransferGoods>>();
+            var res = new ApiResult<Page<TransferGoodsDto>>();
             try
             {
-                using (Db)
-                {
-                    var query = Db.Queryable<ErpTransferGoods>()
-                        .Where(m=>m.TransferGuid==parm.guid)
+                var query = Db.Queryable<ErpTransferGoods>()
+                        .Where(m => m.TransferGuid == parm.guid)
+                        .Select(m=>new TransferGoodsDto() {
+                            Guid=m.Guid,
+                            GoodsSum=m.GoodsSum,
+                            Code= SqlFunc.Subqueryable<ErpGoodsSku>().Where(g => g.Guid == m.GoodsGuid).Select(g => g.Code),
+                            BrankName= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == SqlFunc.Subqueryable<ErpGoodsSku>().Where(f => f.Guid == m.GoodsGuid).Select(f => f.BrankGuid)).Select(g => g.Name),
+                            StyleName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == SqlFunc.Subqueryable<ErpGoodsSku>().Where(f => f.Guid == m.GoodsGuid).Select(f => f.StyleGuid)).Select(g => g.Name)
+                        })
                         .ToPageAsync(parm.page, parm.limit);
-                    res.success = true;
-                    res.message = "获取成功！";
-                    res.data = await query;
-                }
+                res.success = true;
+                res.message = "获取成功！";
+                res.data = await query;
             }
             catch (Exception ex)
             {

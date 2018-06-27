@@ -87,16 +87,27 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        public async Task<ApiResult<Page<ErpTransfer>>> GetPagesAsync(PageParm parm)
+        public async Task<ApiResult<Page<TransferDto>>> GetPagesAsync(PageParm parm)
         {
-            var res = new ApiResult<Page<ErpTransfer>>();
+            var res = new ApiResult<Page<TransferDto>>();
             try
             {
                 using (Db)
                 {
                     var query = Db.Queryable<ErpTransfer>()
                         .Where(m => !m.IsDel)
-                        .OrderBy(m => m.AddDate, OrderByType.Desc).ToPageAsync(parm.page, parm.limit);
+                        .WhereIF(!string.IsNullOrEmpty(parm.key),m=>m.Number==parm.key)
+                        .WhereIF(!string.IsNullOrEmpty(parm.guid),m=>m.InShopGuid==parm.guid || m.OutShopGuid==parm.guid)
+                        .OrderBy(m => m.AddDate, OrderByType.Desc)
+                        .Select(m=>new TransferDto() {
+                            Guid=m.Guid,
+                            Number=m.Number,
+                            GoodsSum=m.GoodsSum,
+                            AddDate=m.AddDate,
+                            InShopName= SqlFunc.Subqueryable<ErpShops>().Where(g => g.Guid == m.InShopGuid).Select(g => g.ShopName),
+                            OutShopName = SqlFunc.Subqueryable<ErpShops>().Where(g => g.Guid == m.OutShopGuid).Select(g => g.ShopName)
+                        })
+                        .ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";
                     res.data = await query;
