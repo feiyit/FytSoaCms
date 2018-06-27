@@ -8,8 +8,10 @@ using FytSoa.Service.Interfaces;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace FytSoa.Service.Implements
 {
@@ -28,8 +30,22 @@ namespace FytSoa.Service.Implements
             try
             {
                 var listModel = new List<ErpTransferGoods>();
+                var inStockList = new List<ErpInOutLog>();
                 foreach (var item in list)
                 {
+                    //入库
+                    inStockList.Add(new ErpInOutLog() {
+                        Guid = Guid.NewGuid().ToString(),
+                        Types=1,
+                        PackGuid= "Transfer",
+                        GoodsSku=item.guid,
+                        GoodsSum=item.goodsSum,
+                        AddDate=DateTime.Now,
+                        AdminGuid= parm.GoodsGuid,
+                        InTypes=2
+                    });
+
+                    //调拨单商品
                     listModel.Add(new ErpTransferGoods() {
                         Guid= Guid.NewGuid().ToString(),
                         TransferGuid=parm.TransferGuid,
@@ -37,15 +53,29 @@ namespace FytSoa.Service.Implements
                         GoodsSum=item.goodsSum
                     });
                 }
+                //判断商品总数是否大于调拨单商品数量
+                var transgerModel = ErpTransferDb.GetById(parm.TransferGuid);
+                if (transgerModel.GoodsSum<listModel.Sum(m=>m.GoodsSum))
+                {
+                    res.statusCode = (int)ApiEnum.Error;
+                    res.message = "调拨数量不能大于调拨单总数~";
+                    return await Task.Run(() => res);
+                }
+
+                //开启事务
+                Db.Ado.BeginTran();
+                ErpInOutLogDb.InsertRange(inStockList.ToArray());
                 var dbres = ErpTransferGoodsDb.InsertRange(listModel.ToArray());
                 if (!dbres)
                 {
                     res.statusCode = (int)ApiEnum.Error;
                     res.message = "插入数据失败~";
                 }
+                Db.Ado.CommitTran();
             }
             catch (Exception ex)
             {
+                Db.Ado.CommitTran();
                 res.statusCode = (int)ApiEnum.Error;
                 res.message = ApiEnum.Error.GetEnumText() + ex.Message;
             }

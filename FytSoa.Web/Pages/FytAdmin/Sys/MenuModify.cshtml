@@ -93,7 +93,11 @@
                     urls = "api/menu/edit";
                 }
                 os.ajax(urls, data.field, function(res) {
-                    parent.layer.close(index);
+                    if (res.statusCode === 200) {
+                        parent.layer.close(index);
+                    } else {
+                        os.error(res.message);
+                    }   
                 });
                 return false;
             });

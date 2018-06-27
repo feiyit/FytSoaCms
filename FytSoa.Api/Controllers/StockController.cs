@@ -50,6 +50,18 @@ namespace FytSoa.Api.Controllers
         }
 
         /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("listbyshopguid")]
+        public async Task<JsonResult> GetInPagesByShopGuid(PageParm parm, string outShopGuid)
+        {
+            var res = await _inOutLogService.GetByInOutShopPagesAsync(parm, outShopGuid);
+            return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
+        }
+
+        /// <summary>
         /// 添加
         /// </summary>
         /// <returns></returns>

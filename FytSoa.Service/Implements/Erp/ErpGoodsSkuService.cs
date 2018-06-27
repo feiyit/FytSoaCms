@@ -141,6 +141,7 @@ namespace FytSoa.Service.Implements
             {
                 var query = Db.Queryable<ErpGoodsSku>()
                         .Where(m=>!m.IsDel)
+                        .WhereIF(parm.types==1, m => m.StockSum>0)
                         .WhereIF(!string.IsNullOrEmpty(parm.key),m => m.Code.Contains(parm.key))
                         .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.BrankGuid==parm.guid)
                         .Select(m=>new GoodsSkuDto() {
@@ -155,7 +156,7 @@ namespace FytSoa.Service.Implements
                             SaleSum=m.SaleSum,
                             AddDate=m.AddDate
                         })
-                        .OrderBy(m => m.AddDate).ToPageAsync(parm.page, parm.limit);
+                        .OrderBy(m => m.AddDate,OrderByType.Desc).ToPageAsync(parm.page, parm.limit);
                 res.success = true;
                 res.message = "获取成功！";
                 res.data = await query;

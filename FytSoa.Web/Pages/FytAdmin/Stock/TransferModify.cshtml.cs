@@ -33,7 +33,7 @@ namespace FytSoa.Web.Pages.FytAdmin.Stock
             if (string.IsNullOrEmpty(TransferModel.Guid))
             {
                 TransferModel.Number = Utils.GetOrderNumber();
-                TransferModel.AdminGuid = @User.Identities.First(u => u.IsAuthenticated).FindFirst(ClaimTypes.Sid).Value;
+                TransferModel.AdminGuid = User.Identities.First(u => u.IsAuthenticated).FindFirst(ClaimTypes.Sid).Value;
             }
         }
     }

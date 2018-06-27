@@ -38,7 +38,7 @@
             form.render('select');
             table.render({
                 elem: '#tablist',
-                url: '/api/goods/barlist',
+                url: '/api/stock/listbyshopguid?outShopGuid=@Model.TransferModel.OutShopGuid',
                 cols: [
                     [
                         { type: 'checkbox', fixed: 'left' },
@@ -52,12 +52,12 @@
                     ]
                 ],
                 page: true,
-                limit: 100,
+                limit: 10,
                 height:515,
                 id: 'tables'
             });
             var pIndex = parent.layer.getFrameIndex(window.name);     
-            var transferGuid = '@Model.TransferGuid', active = {
+            var transferGuid = '@Model.TransferModel.Guid',transferSum='@Model.TransferModel.GoodsSum', active = {
                 reload: function () {
                     table.reload('tables',
                         {
@@ -85,19 +85,37 @@
                         os.error("调拨单为空，请关闭重新选择~");
                         return;
                     }
-                    var str = '', isExtNull = false;
+                    var isExtNull = false,stockNot=false,stockSum=0;
                     $.each(data, function (i, item) {
-                        str += item.guid + ",";
+                        stockSum += item.stockSum;
+                        //必须输入库存
                         if (!item.goodsSum) {
                             isExtNull = true;
                         } else {
+                            //判断是否为数字
                             if (isNaN(item.goodsSum)) {
+                                isExtNull = true;
+                            }
+                            //判断库存是否足够 
+                            if (item.stockSum < item.goodsSum) {
+                                stockNot = true;
+                            }
+                            //判断数量不能为0
+                            if (item.goodsSum==0) {
                                 isExtNull = true;
                             }
                         }
                     });
+                    if (stockSum > transferSum) {
+                        os.error("调拨数量不能大于调拨单总数~");
+                        return;
+                    }
                     if (isExtNull) {
                         os.error("调拨数量不能为空，并且必须为数字~~");
+                        return;
+                    }
+                    if (stockNot) {
+                        os.error("调拨数量不能大于库存数~~");
                         return;
                     }
                     
@@ -106,7 +124,7 @@
                         var loadindex = layer.load(1, {
                             shade: [0.1, '#000']
                         });
-                        os.ajax('api/stock/addtransfergoods/', { TransferGuid: transferGuid, GoodsGuid: str, list: data }, function (res) {
+                        os.ajax('api/stock/addtransfergoods/', { TransferGuid: transferGuid, GoodsGuid: '@Model.AdminGuid', list: data }, function (res) {
                             layer.close(loadindex);
                             if (res.statusCode === 200) {
                                 parent.layer.close(pIndex);

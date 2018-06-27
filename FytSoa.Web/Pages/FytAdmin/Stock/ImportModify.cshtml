@@ -42,8 +42,12 @@
                 if ($("#guid").val()) {
                     urls = "api/stock/editinout";
                 }
-                os.ajax(urls, data.field, function(res) {
-                    parent.layer.close(index);
+                os.ajax(urls, data.field, function (res) {
+                    if (res.statusCode === 200) {
+                        parent.layer.close(index);
+                    } else {
+                        os.error(res.message);
+                    }                    
                 });
                 return false;
             });

@@ -29,6 +29,13 @@ namespace FytSoa.Core.Model.Erp
         public byte Types { get; set; } = 1;
 
         /// <summary>
+        /// Desc:入库类型  1=入库单方式  2=调拨方式
+        /// Default:1
+        /// Nullable:False
+        /// </summary>           
+        public byte InTypes { get; set; } = 1;
+
+        /// <summary>
         /// Desc:出入库打包日志的编号
         /// Default:
         /// Nullable:False
@@ -41,6 +48,13 @@ namespace FytSoa.Core.Model.Erp
         /// Nullable:True
         /// </summary>           
         public string ShopGuid { get; set; }
+
+        /// <summary>
+        /// Desc:商品SKU的唯一编号
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string GoodsGuid { get; set; }
 
         /// <summary>
         /// Desc:出入库商品的编号
