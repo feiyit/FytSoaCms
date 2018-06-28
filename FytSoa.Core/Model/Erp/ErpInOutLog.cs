@@ -57,21 +57,11 @@ namespace FytSoa.Core.Model.Erp
         public string GoodsGuid { get; set; }
 
         /// <summary>
-        /// Desc:出入库商品的编号
+        /// Desc:商品SKU的唯一编号
         /// Default:
         /// Nullable:False
         /// </summary>           
         public string GoodsSku { get; set; }
-
-        /// <summary>
-        /// 品牌
-        /// </summary>
-        public string Brank { get; set; }
-
-        /// <summary>
-        /// 款式
-        /// </summary>
-        public string Style { get; set; }
 
         /// <summary>
         /// Desc:出入库商品的数量

@@ -54,7 +54,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public string GoodsSku { get; set; }
+        public string GoodsGuid { get; set; }
 
         /// <summary>
         /// Desc:退货数量

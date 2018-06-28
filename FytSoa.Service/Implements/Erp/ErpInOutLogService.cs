@@ -42,11 +42,6 @@ namespace FytSoa.Service.Implements
                         return await Task.Run(() => res);
                     }
                 }
-                var list = Utils.GetSkuArray(parm.GoodsSku);
-                //查询品牌
-                parm.Brank = SysCodeDb.GetSingle(m => m.ParentGuid == "7b664e3e-f58a-4e66-8c0f-be1458541d14" && m.CodeType == list[0])?.Name;
-                //查询款式
-                parm.Style = SysCodeDb.GetSingle(m => m.ParentGuid == "48458681-48b0-490a-a840-0ffcbe49f5d4" && m.CodeType == list[2])?.Name;
                 parm.Guid = Guid.NewGuid().ToString();
                 parm.GoodsGuid = sukModel.Guid;
                 //开启事务
@@ -54,11 +49,11 @@ namespace FytSoa.Service.Implements
                 if (parm.Types == 1)
                 {
                     //更新该条形码的库存
-                    ErpGoodsSkuDb.Update(m => new ErpGoodsSku() { StockSum = m.StockSum + parm.GoodsSum }, m => m.Code == parm.GoodsSku);
+                    ErpGoodsSkuDb.Update(m => new ErpGoodsSku() { StockSum = m.StockSum + parm.GoodsSum }, m => m.Guid == parm.GoodsGuid);
                 }
                 else
                 {
-                    ErpGoodsSkuDb.Update(m => new ErpGoodsSku() { StockSum = m.StockSum - parm.GoodsSum }, m => m.Code == parm.GoodsSku);
+                    ErpGoodsSkuDb.Update(m => new ErpGoodsSku() { StockSum = m.StockSum - parm.GoodsSum }, m => m.Guid == parm.GoodsGuid);
                 }
                 //保存入库
                 var dbres = ErpInOutLogDb.Insert(parm);
@@ -123,17 +118,28 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        public async Task<ApiResult<Page<ErpInOutLog>>> GetPagesAsync(PageParm parm, SearchParm searchParm)
+        public async Task<ApiResult<Page<GoodsSkuDto>>> GetPagesAsync(PageParm parm, SearchParm searchParm)
         {
-            var res = new ApiResult<Page<ErpInOutLog>>();
+            var res = new ApiResult<Page<GoodsSkuDto>>();
             try
             {
                 var query = Db.Queryable<ErpInOutLog>()
                         .WhereIF(parm.types != 0, m => m.Types == parm.types)
-                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.GoodsSku == parm.key)
+                        .WhereIF(!string.IsNullOrEmpty(parm.key), 
+                        m => SqlFunc.Subqueryable<ErpGoodsSku>().Where(g => g.Guid == m.GoodsGuid).Select(g => g.Code).Contains(parm.key))
                         .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.ShopGuid == parm.guid)
-                        .WhereIF(!string.IsNullOrEmpty(searchParm.brank), m => m.Brank == searchParm.brank)
+                        .WhereIF(!string.IsNullOrEmpty(searchParm.brank), 
+                        m => SqlFunc.Subqueryable<ErpGoodsSku>().Where(g => g.Guid == m.GoodsGuid).Select(g => g.BrankGuid) == searchParm.brank)
                         .Where(m => m.PackGuid == searchParm.packGuid)
+                        .OrderBy(m=>m.AddDate,OrderByType.Desc)
+                        .Select(m=>new GoodsSkuDto() {
+                            Guid=m.Guid,
+                            Code=m.GoodsSku,
+                            StockSum=m.GoodsSum,
+                            AddDate=m.AddDate,
+                            BrankName= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == SqlFunc.Subqueryable<ErpGoodsSku>().Where(t => t.Guid == m.GoodsGuid).Select(t => t.BrankGuid)).Select(g => g.Name),
+                            StyleName= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == SqlFunc.Subqueryable<ErpGoodsSku>().Where(t => t.Guid == m.GoodsGuid).Select(t => t.StyleGuid)).Select(g => g.Name)
+                        })
                         .ToPageAsync(parm.page, parm.limit);
                 res.success = true;
                 res.message = "获取成功！";
@@ -200,7 +206,7 @@ namespace FytSoa.Service.Implements
             try
             {
                 //判断条形码是否存在
-                var isExt = ErpGoodsSkuDb.IsAny(m => m.Code == parm.GoodsSku && !m.IsDel);
+                var isExt = ErpGoodsSkuDb.IsAny(m => m.Guid == parm.GoodsGuid && !m.IsDel);
                 if (!isExt)
                 {
                     res.statusCode = (int)ApiEnum.ParameterError;
@@ -208,11 +214,6 @@ namespace FytSoa.Service.Implements
                 }
                 else
                 {
-                    var list = Utils.GetSkuArray(parm.GoodsSku);
-                    //查询品牌
-                    parm.Brank = SysCodeDb.GetSingle(m => m.ParentGuid == "7b664e3e-f58a-4e66-8c0f-be1458541d14" && m.CodeType == list[0])?.Name;
-                    //查询款式
-                    parm.Style = SysCodeDb.GetSingle(m => m.ParentGuid == "48458681-48b0-490a-a840-0ffcbe49f5d4" && m.CodeType == list[2])?.Name;
                     var dbres = ErpInOutLogDb.Update(parm);
                     if (!dbres)
                     {

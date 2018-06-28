@@ -58,7 +58,6 @@ namespace FytSoa.Service.Implements
                         Types=2,
                         ShopGuid= transferModel.InShopGuid,
                         PackGuid = "Transfer",
-                        GoodsSku=item.guid,
                         GoodsGuid=item.guid,
                         GoodsSum=item.goodsSum,
                         AddDate=DateTime.Now,

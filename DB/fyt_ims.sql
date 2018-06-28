@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : fyt
-Source Server Version : 50717
+Source Server Version : 50719
 Source Host           : localhost:3306
 Source Database       : fyt_ims
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-06-28 18:32:01
+Date: 2018-06-29 01:00:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,7 +25,7 @@ CREATE TABLE `erpbackgoods` (
   `ShopGuid` varchar(50) NOT NULL COMMENT '退货涉及的店铺',
   `OrderGuid` varchar(50) DEFAULT NULL COMMENT '退货涉及的订单号',
   `AdminGuid` varchar(50) NOT NULL COMMENT '谁提交的退货',
-  `GoodsSku` varchar(50) NOT NULL COMMENT '退货的商品',
+  `GoodsGuid` varchar(50) NOT NULL COMMENT '退货的商品',
   `BackCount` int(11) NOT NULL DEFAULT '1' COMMENT '退货数量',
   `BackMoney` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '退货的金额',
   `Status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '退货的状态 1=提交退货 2=受理 3=完成 4=其他',
@@ -119,9 +119,7 @@ CREATE TABLE `erpinoutlog` (
   `PackGuid` varchar(50) NOT NULL COMMENT '出入库打包日志的编号',
   `ShopGuid` varchar(50) DEFAULT NULL COMMENT '出库商品到店铺的编号',
   `GoodsGuid` varchar(50) NOT NULL COMMENT '商品SKU的唯一编号',
-  `GoodsSku` varchar(50) NOT NULL COMMENT '出入库商品的编号',
-  `Brank` varchar(50) DEFAULT NULL,
-  `Style` varchar(50) DEFAULT NULL,
+  `GoodsSku` varchar(50) DEFAULT NULL,
   `GoodsSum` int(11) NOT NULL DEFAULT '0' COMMENT '出入库商品的数量',
   `AdminGuid` varchar(50) NOT NULL COMMENT '后台管理人员的编号',
   `AddDate` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '出入库的时间',
@@ -131,9 +129,9 @@ CREATE TABLE `erpinoutlog` (
 -- ----------------------------
 -- Records of erpinoutlog
 -- ----------------------------
-INSERT INTO `erpinoutlog` VALUES ('31f3094a-929c-43bc-8b4c-a6fc5c3a56f6', '2', '2', 'Transfer', '29e4fba5-47d4-49e1-b500-b494394628ee', '6cd495ad-3465-45e3-90ea-65a321490a69', '6cd495ad-3465-45e3-90ea-65a321490a69', null, null, '10', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-06-28 18:26:01');
-INSERT INTO `erpinoutlog` VALUES ('6b741aa4-be5b-427c-bc6e-7dfdaf9507e0', '2', '1', 'ede09775-80f8-4ff6-8cef-d599c62c1b55', '5f997966-d21c-4048-9894-86a47d779c73', '6cd495ad-3465-45e3-90ea-65a321490a69', 'ADIABBA02130180', 'ADI阿迪', '连衣裙', '10', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-06-28 18:25:16');
-INSERT INTO `erpinoutlog` VALUES ('d2e36b8a-3f26-49d4-bb95-285ecead2813', '1', '1', '1e864555-182e-4f67-bf76-41a9008e0799', null, '6cd495ad-3465-45e3-90ea-65a321490a69', 'ADIABBA02130180', 'ADI阿迪', '连衣裙', '50', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-06-28 18:24:31');
+INSERT INTO `erpinoutlog` VALUES ('31f3094a-929c-43bc-8b4c-a6fc5c3a56f6', '2', '2', 'Transfer', '29e4fba5-47d4-49e1-b500-b494394628ee', '6cd495ad-3465-45e3-90ea-65a321490a69', 'ADIABBA02130180', '10', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-06-29 00:30:43');
+INSERT INTO `erpinoutlog` VALUES ('6b741aa4-be5b-427c-bc6e-7dfdaf9507e0', '2', '1', 'ede09775-80f8-4ff6-8cef-d599c62c1b55', '5f997966-d21c-4048-9894-86a47d779c73', '6cd495ad-3465-45e3-90ea-65a321490a69', 'ADIABBA02130180', '10', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-06-29 00:30:43');
+INSERT INTO `erpinoutlog` VALUES ('d2e36b8a-3f26-49d4-bb95-285ecead2813', '1', '1', '1e864555-182e-4f67-bf76-41a9008e0799', null, '6cd495ad-3465-45e3-90ea-65a321490a69', 'ADIABBA02130180', '50', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-06-29 00:30:45');
 
 -- ----------------------------
 -- Table structure for erppacklog
@@ -156,6 +154,51 @@ CREATE TABLE `erppacklog` (
 -- ----------------------------
 INSERT INTO `erppacklog` VALUES ('1e864555-182e-4f67-bf76-41a9008e0799', '1', '20180628011852185255', '测试入库', '50', null, '\0', '2018-06-28 01:18:52');
 INSERT INTO `erppacklog` VALUES ('ede09775-80f8-4ff6-8cef-d599c62c1b55', '2', '20180628011925192538', '测试出库ABC', '20', '5f997966-d21c-4048-9894-86a47d779c73', '\0', '2018-06-28 01:19:25');
+
+-- ----------------------------
+-- Table structure for erppurchase
+-- ----------------------------
+DROP TABLE IF EXISTS `erppurchase`;
+CREATE TABLE `erppurchase` (
+  `Guid` varchar(50) NOT NULL COMMENT '采购单唯一编号',
+  `SupplierGuid` varchar(50) NOT NULL COMMENT '供应商',
+  `Contacts` varchar(20) DEFAULT NULL COMMENT '联系人',
+  `Mobile` varchar(20) DEFAULT NULL COMMENT '联系电话',
+  `Money` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '采购金额',
+  `DeliverCity` varchar(255) DEFAULT NULL COMMENT '交付区域',
+  `DeliverDate` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '交付日期',
+  `AdminGuid` varchar(50) NOT NULL COMMENT '操作人',
+  `Attribute` text COMMENT '属性=自定义 Json对象',
+  `Status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态 1=未完成入库  2=未完成付款  3=未完成到票  4=完成',
+  `Summary` varchar(2000) DEFAULT NULL COMMENT '备注',
+  `AddDate` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '采购日期',
+  PRIMARY KEY (`Guid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of erppurchase
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for erppurchasegoods
+-- ----------------------------
+DROP TABLE IF EXISTS `erppurchasegoods`;
+CREATE TABLE `erppurchasegoods` (
+  `Guid` varchar(50) NOT NULL COMMENT '采购商品表唯一编号',
+  `PurchaseGuid` varchar(50) DEFAULT NULL COMMENT '物品属于哪个采购单',
+  `Number` varchar(50) NOT NULL COMMENT '物品编号',
+  `Name` varchar(50) NOT NULL COMMENT '物品名称',
+  `Specification` varchar(100) DEFAULT NULL COMMENT '规格型号',
+  `Unit` varchar(20) NOT NULL COMMENT '单位',
+  `Quantity` int(11) NOT NULL DEFAULT '0' COMMENT '采购数量',
+  `Price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '单价',
+  `Summary` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`Guid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of erppurchasegoods
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for erppush
@@ -185,7 +228,7 @@ CREATE TABLE `erpreturngoods` (
   `Number` varchar(30) NOT NULL COMMENT '订单号',
   `ShopGuid` varchar(50) NOT NULL COMMENT '哪个店铺提出的返货',
   `AdminGuid` varchar(50) NOT NULL COMMENT '哪个人操作的',
-  `GoodsSku` varchar(50) NOT NULL COMMENT '返货的是哪件衣服',
+  `GoodsGuid` varchar(50) NOT NULL COMMENT '返货的是哪件衣服',
   `ReturnCount` int(11) NOT NULL DEFAULT '1' COMMENT '返货的数量',
   `BatchGuid` varchar(50) DEFAULT NULL COMMENT '属于哪个批次',
   `BatchName` varchar(50) DEFAULT NULL COMMENT '批次名称',
@@ -306,6 +349,26 @@ INSERT INTO `erpstaff` VALUES ('21576fef-1a5b-4af8-a394-ec5166b4a8e5', '29e4fba5
 INSERT INTO `erpstaff` VALUES ('21576fef-1a5b-4af8-a394-ec5166b4a8e8', '21576fef-1a5b-4af8-a394-ec5166b4a810', '1366666666', '123567', '李四', '13666666666', '女', '2', '2018-06-21 22:44:37', '0', '2018-06-21 22:44:37', '2018-06-21 22:44:37');
 
 -- ----------------------------
+-- Table structure for erpsupplier
+-- ----------------------------
+DROP TABLE IF EXISTS `erpsupplier`;
+CREATE TABLE `erpsupplier` (
+  `Guid` varchar(50) NOT NULL COMMENT '采购供应商唯一编号',
+  `Name` varchar(50) NOT NULL COMMENT '供应商名称',
+  `Contacts` varchar(50) NOT NULL COMMENT '联系人',
+  `Mobile` varchar(15) DEFAULT NULL COMMENT '联系电话',
+  `Email` varchar(50) DEFAULT NULL COMMENT '联系邮箱',
+  `Attribute` text COMMENT '属性=自定义 Json对象',
+  `Summary` text COMMENT '备注',
+  `AddDate` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
+  PRIMARY KEY (`Guid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of erpsupplier
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for erptransfer
 -- ----------------------------
 DROP TABLE IF EXISTS `erptransfer`;
@@ -372,7 +435,7 @@ CREATE TABLE `sysadmin` (
 -- ----------------------------
 -- Records of sysadmin
 -- ----------------------------
-INSERT INTO `sysadmin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-06-13 21:43:43', '2018-06-28 17:45:56', '2018-06-28 17:45:56');
+INSERT INTO `sysadmin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-06-13 21:43:43', '2018-06-28 23:43:56', '2018-06-28 23:43:56');
 INSERT INTO `sysadmin` VALUES ('30d3da88-bb72-4ace-a303-b3aae0ecb732', null, '事业发展部', '4b6ab27f-c0fa-483d-9b5a-55891ee8d727', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,4b6ab27f-c0fa-483d-9b5a-55891ee8d727,', 'testadmin', 'pPo9vFeTWOCF0oLKKdX9Jw==', '李四', '1002', '/themes/img/avatar.jpg', '男', null, '\0', null, null, '2018-06-16 23:35:36', null, null);
 
 -- ----------------------------
@@ -580,6 +643,7 @@ INSERT INTO `syslog` VALUES ('38e89fc8-3936-4de7-8657-1c45f1e00533', 'admins', '
 INSERT INTO `syslog` VALUES ('3fb076fb-2a73-4a9e-b6e3-91624b9d1d28', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-23 11:04:25');
 INSERT INTO `syslog` VALUES ('41cc908d-1db0-4638-a8ca-6da59ac88de8', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '', '2018-06-13 23:24:13');
 INSERT INTO `syslog` VALUES ('4472790a-e267-468b-af5c-b9ce48695ddf', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-28 17:45:56');
+INSERT INTO `syslog` VALUES ('4719b57d-7b74-45a4-85d7-a496df51949d', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-28 23:43:57');
 INSERT INTO `syslog` VALUES ('4a2ebd0b-b32b-40db-8174-764d54f28e85', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 21:49:36');
 INSERT INTO `syslog` VALUES ('4f23b4b3-68dc-45e1-a6b9-d69f8438a184', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-24 21:11:06');
 INSERT INTO `syslog` VALUES ('504cd3e2-0b6b-455d-9532-2f6f7b19e618', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 11:38:26');
@@ -630,6 +694,7 @@ INSERT INTO `syslog` VALUES ('dc5fc779-52b6-4ecd-a8ad-d8311527e836', 'admins', '
 INSERT INTO `syslog` VALUES ('dd3b9bad-46ec-4f9f-b032-be0f27518afa', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-26 21:05:13');
 INSERT INTO `syslog` VALUES ('e1221cf9-38f5-4c32-b828-16a627fae434', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-28 16:42:51');
 INSERT INTO `syslog` VALUES ('e4adfaa2-2b6a-4430-a300-bd7f3c06bed3', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 00:02:25');
+INSERT INTO `syslog` VALUES ('e9df80a7-991a-418b-9240-a82b212f95e6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-28 21:20:24');
 INSERT INTO `syslog` VALUES ('ee46cf74-5288-476d-b920-7e23a3f4ed46', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-25 17:49:58');
 INSERT INTO `syslog` VALUES ('f3eae8f5-e1f6-49bc-b70c-03a07530ca05', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-27 09:43:29');
 INSERT INTO `syslog` VALUES ('f626126c-f102-45ad-848c-43697ecab1de', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-27 12:19:37');

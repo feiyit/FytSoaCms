@@ -24,7 +24,7 @@ namespace FytSoa.Service.Implements
             try
             {
                 //判断是否存在
-                var isExt = ErpBackGoodsDb.IsAny(m => m.ShopGuid == parm.ShopGuid && m.GoodsSku==parm.GoodsSku && m.OrderGuid==parm.OrderGuid);
+                var isExt = ErpBackGoodsDb.IsAny(m => m.ShopGuid == parm.ShopGuid && m.GoodsGuid==parm.GoodsGuid && m.OrderGuid==parm.OrderGuid);
                 if (isExt)
                 {
                     res.statusCode = (int)ApiEnum.ParameterError;
@@ -102,7 +102,7 @@ namespace FytSoa.Service.Implements
                 {
                     var query = Db.Queryable<ErpBackGoods>()
                         .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.ShopGuid == parm.guid)
-                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.Number==parm.key || m.GoodsSku == parm.key)
+                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.Number==parm.key || m.GoodsGuid == parm.key)
                         .ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";

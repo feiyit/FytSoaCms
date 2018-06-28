@@ -12,7 +12,7 @@ namespace FytSoa.Service.DtoModel
         /// <summary>
         /// 当前页
         /// </summary>
-        public int page { get; set; }
+        public int page { get; set; } = 1;
 
         /// <summary>
         /// 每页总条数

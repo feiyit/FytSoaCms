@@ -46,7 +46,7 @@
             <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree fyt-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
+                    <li class="layui-nav-item">
                         <a class="" href="javascript:;"><i class="layui-icon"></i>系统管理</a>
                         <dl class="layui-nav-child">
                             <dd><a data-pjax href="/fytadmin/sys/organize/">部门管理</a></dd>
@@ -82,6 +82,7 @@
                             <dd><a data-pjax href="/fytadmin/stock/export/">出库管理</a></dd>
                             <dd><a data-pjax href="/fytadmin/stock/transfer/">调拨管理</a></dd>
                             <dd><a data-pjax href="/fytadmin/goods/index/">商品管理</a></dd>
+                            <dd><a data-pjax href="/fytadmin/stock/inventory/">库存盘点</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -144,6 +145,14 @@
                     show: 'fade'
                 }
             );
+            //定位到菜单
+            $(".layui-bg-black .fyt-nav-tree li a").each(function () { 
+                if (window.location.pathname === $(this).attr('href')) {
+                    $(".layui-bg-black .fyt-nav-tree li").removeClass('layui-nav-itemed');
+                    $(this).parents('.layui-nav-item').addClass('layui-nav-itemed');
+                    $(this).parent().addClass('layui-this');
+                }
+            });
             $(document).on('pjax:start', function () { NProgress.start(); });
             $(document).on('pjax:end', function () { NProgress.done(); });
         });

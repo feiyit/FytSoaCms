@@ -1,0 +1,94 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Stock.InventoryModel
+@{
+    ViewData["Title"] = "库存盘点";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <div class="list-wall">
+        <div class="layui-form list-search">
+            <div class="layui-inline">
+                <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
+            </div>
+            <div class="layui-inline lay-time-icon">
+                <input class="layui-input" id="times" autocomplete="off" placeholder="时间区间"><i class="layui-icon layui-icon-date"></i>
+            </div>
+            <div class="layui-inline">
+                <select id="branks">
+                    <option value="">--可根据品牌搜索--</option>
+                    @{
+                        foreach (var item in Model.codeList)
+                        {
+                            <option value="@item.Guid">@item.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolExport"><i class="layui-icon layui-icon-component"></i> 导出Excel</button>
+        </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'common', 'laydate'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common,
+                    laydate = layui.laydate;
+                laydate.render({
+                    elem: '#times'
+                    , theme: '#393D49'
+                    , range: true
+                });
+                table.render({
+                    elem: '#tablist',
+                    url: '/api/inventory/stock',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            { field: 'code',width:200, title: '条形码', sort: true, fixed: 'left' },
+                            { field: 'stock', title: '库存', sort: true },
+                            { field: 'transfer', title: '调拨', sort: true },
+                            { field: 'return', title: '返货', sort: true },
+                            { field: 'back', title: '退货', sort: true },
+                            { field: 'sale', title: '销售数', sort: true }
+                        ]
+                    ],
+                    page: true,
+                    limit: 15,
+                    id: 'tables'
+                });
+
+                var guid = '', active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    key: $("#key").val(),
+                                    time: $("#times").val(),
+                                    guid: $("#branks").val()
+                                }
+                            });
+                    },
+                    toolSearch: function () {
+                        active.reload();
+                    },
+                    toolExport: function () {
+                        os.success('正在开发中');
+                    }
+                };
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });                
+            });
+    </script>
+</div>
+

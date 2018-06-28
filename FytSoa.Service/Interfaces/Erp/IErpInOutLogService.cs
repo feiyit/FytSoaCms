@@ -14,7 +14,7 @@ namespace FytSoa.Service.Interfaces
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<Page<ErpInOutLog>>> GetPagesAsync(PageParm parm, SearchParm searchParm);
+        Task<ApiResult<Page<GoodsSkuDto>>> GetPagesAsync(PageParm parm, SearchParm searchParm);
 
         /// <summary>
         /// 获得列表,根据出库商家查询，调拨用

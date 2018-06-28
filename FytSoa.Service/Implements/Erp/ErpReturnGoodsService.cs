@@ -92,7 +92,7 @@ namespace FytSoa.Service.Implements
                 {
                     var query = Db.Queryable<ErpReturnGoods>()
                         .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.ShopGuid == parm.guid)
-                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.Number == parm.key || m.GoodsSku == parm.key)
+                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.Number == parm.key || m.GoodsGuid == parm.key)
                         .ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";

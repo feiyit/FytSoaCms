@@ -37,7 +37,7 @@
                         @{
                             foreach (var item in Model.codeList)
                             {
-                                <option value="@item.Name">@item.Name</option>
+                                <option value="@item.Guid">@item.Name</option>
                             }
                         }
                     </select>
@@ -92,10 +92,10 @@
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'goodsSku', title: '条形码',  fixed: 'left' },
-                            { field: 'brank', title: '品牌' },
-                            { field: 'style', title: '款式' },
-                            { field: 'goodsSum', width: 150, title: '入库数量', sort: true },
+                            { field: 'code', width:200, title: '条形码',  fixed: 'left' },
+                            { field: 'brankName', title: '品牌' },
+                            { field: 'styleName', title: '款式' },
+                            { field: 'stockSum', width: 150, title: '入库数量', sort: true },
                             { field: 'addDate', title: '添加时间' },
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
