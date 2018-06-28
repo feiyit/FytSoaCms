@@ -29,16 +29,37 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<string>() { data = "1", statusCode = 200 };
             try
             {
+                //根据调拨单，查询入库信息
+                var transferModel = ErpTransferDb.GetById(parm.TransferGuid);
+                if (transferModel==null)
+                {
+                    res.statusCode = (int)ApiEnum.Error;
+                    res.message = "调拨单不存在~";
+                    return await Task.Run(() => res);
+                }
+                //增加调拨商品日志
                 var listModel = new List<ErpTransferGoods>();
+                //增加调拨的入库
                 var inStockList = new List<ErpInOutLog>();
+                //更改调拨出库的库存
+                var skuArray = list.Select(m=>m.guid).ToList();
+                var outStockList = ErpInOutLogDb.GetList(m=>m.ShopGuid==transferModel.OutShopGuid 
+                && skuArray.Contains(m.GoodsGuid));
+                //循环操作
                 foreach (var item in list)
                 {
+                    //出库减少库存
+                    var sourceStockSum=outStockList.Find(m=>m.GoodsGuid==item.guid).GoodsSum;
+                    outStockList.Find(m => m.GoodsGuid == item.guid).GoodsSum = sourceStockSum - item.goodsSum;
+
                     //入库
                     inStockList.Add(new ErpInOutLog() {
                         Guid = Guid.NewGuid().ToString(),
-                        Types=1,
-                        PackGuid= "Transfer",
+                        Types=2,
+                        ShopGuid= transferModel.InShopGuid,
+                        PackGuid = "Transfer",
                         GoodsSku=item.guid,
+                        GoodsGuid=item.guid,
                         GoodsSum=item.goodsSum,
                         AddDate=DateTime.Now,
                         AdminGuid= parm.GoodsGuid,
@@ -64,7 +85,10 @@ namespace FytSoa.Service.Implements
 
                 //开启事务
                 Db.Ado.BeginTran();
+                //插入调拨入库信息
                 ErpInOutLogDb.InsertRange(inStockList.ToArray());
+                //更新调拨出库库存
+                ErpInOutLogDb.UpdateRange(outStockList.ToArray());
                 var dbres = ErpTransferGoodsDb.InsertRange(listModel.ToArray());
                 if (!dbres)
                 {

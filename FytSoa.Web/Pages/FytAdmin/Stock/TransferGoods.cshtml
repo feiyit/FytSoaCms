@@ -57,7 +57,7 @@
                 id: 'tables'
             });
             var pIndex = parent.layer.getFrameIndex(window.name);     
-            var transferGuid = '@Model.TransferModel.Guid',transferSum='@Model.TransferModel.GoodsSum', active = {
+            var transferGuid = '@Model.TransferModel.Guid',transferSum=@Model.TransferModel.GoodsSum, active = {
                 reload: function () {
                     table.reload('tables',
                         {
@@ -87,7 +87,7 @@
                     }
                     var isExtNull = false,stockNot=false,stockSum=0;
                     $.each(data, function (i, item) {
-                        stockSum += item.stockSum;
+                        stockSum += item.goodsSum;
                         //必须输入库存
                         if (!item.goodsSum) {
                             isExtNull = true;
