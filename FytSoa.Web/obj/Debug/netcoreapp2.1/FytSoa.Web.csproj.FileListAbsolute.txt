@@ -213,3 +213,5 @@ D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pag
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\TransferGoods.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\TransferModify.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\Inventory.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\Inventory.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Purchase\Index.g.cshtml.cs
