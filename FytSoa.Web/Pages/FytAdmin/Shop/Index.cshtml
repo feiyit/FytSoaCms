@@ -10,7 +10,7 @@
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增</button>
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolExport"><i class="layui-icon layui-icon-component"></i> 导出Excel</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolActivity"><i class="layui-icon layui-icon-app"></i> 添加活动</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolActivity"><i class="layui-icon layui-icon-app"></i> 添加全局活动</button>
         </div>
         <div class="layui-form list-search" style="margin-top:10px;">
             <div class="layui-inline">
@@ -78,12 +78,12 @@
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'methodName', title: '活动方式' },
+                            { field: 'methodName',width:100, title: '活动方式' },
                             { field: 'countNum',width:80, title: '折扣数' },
                             { field: 'beginDate', title: '开始时间', sort: true },
                             { field: 'endDate', title: '结束时间', sort: true },
-                            { field: 'status', title: '状态' },
-                            { title: '操作', templet: '#acttool' }
+                            { field: 'status', width: 100, title: '状态' },
+                            { title: '操作', width: 100, templet: '#acttool' }
                         ]
                     ],
                     page: true,
@@ -149,7 +149,13 @@
                     toolSearch: function () {
                         active.reload();
                     },
-                    //添加活动
+                    //添加全局活动
+                    toolActivity: function () { 
+                        os.Open('添加活动', '/fytadmin/shop/activitymodify?shop=all', '850px', '450px', function () {
+                            active.reloadActAndUser();
+                        });
+                    },
+                    //添加店铺活动
                     toolActAdd: function () {
                         if (shopGuid === '') {
                             os.warning('请选择店铺~'); return;
@@ -298,6 +304,10 @@
                 //监听工具条
                 table.on('tool(acttool)', function (obj) {
                     var data = obj.data;
+                    if (data.types !=1) {
+                        os.error('全局活动不能修改');
+                        return;
+                    }
                     if (obj.event === 'edit') {
                         os.Open('编辑活动', '/fytadmin/shop/activitymodify/?guid=' + data.guid + "&shop=" + shopGuid, '850px', '500px', function () {
                             active.reloadActAndUser();

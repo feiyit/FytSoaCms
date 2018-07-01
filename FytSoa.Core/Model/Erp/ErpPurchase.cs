@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -20,6 +22,11 @@ namespace FytSoa.Core.Model.Erp
         /// Nullable:False
         /// </summary>           
         public string Guid { get; set; }
+
+        /// <summary>
+        /// 采购单编号
+        /// </summary>
+        public string Number { get; set; }
 
         /// <summary>
         /// Desc:供应商
@@ -47,7 +54,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:0
         /// Nullable:False
         /// </summary>           
-        public decimal Money { get; set; }
+        public decimal Money { get; set; } = 0;
 
         /// <summary>
         /// Desc:交付区域
@@ -61,7 +68,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime DeliverDate { get; set; }
+        public DateTime DeliverDate { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Desc:操作人
@@ -82,7 +89,14 @@ namespace FytSoa.Core.Model.Erp
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public byte Status { get; set; }
+        public int Status { get; set; } = 1;
+
+        /// <summary>
+        /// Desc:状态 是否删除 0=否  1=是
+        /// Default:1
+        /// Nullable:False
+        /// </summary>           
+        public bool IsDel { get; set; } = false;
 
         /// <summary>
         /// Desc:备注
@@ -96,7 +110,15 @@ namespace FytSoa.Core.Model.Erp
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime AddDate { get; set; }
+        public DateTime AddDate { get; set; } = DateTime.Now;
+
+        /// <summary>
+        /// Desc:采购单商品列表
+        /// Default:
+        /// Nullable:True
+        /// </summary>      
+        [SugarColumn(IsIgnore = true)]
+        public string  GoodsList{ get; set; }
 
     }
 }

@@ -35,6 +35,9 @@ namespace FytSoa.Core
         public DbSet<SysBtnFun> SysBtnFunDb => new DbSet<SysBtnFun>(Db);
 
         //ERP表信息
+        public DbSet<ErpSupplier> ErpSupplierDb => new DbSet<ErpSupplier>(Db);
+        public DbSet<ErpPurchase> ErpPurchaseDb => new DbSet<ErpPurchase>(Db);
+        public DbSet<ErpPurchaseGoods> ErpPurchaseGoodsDb => new DbSet<ErpPurchaseGoods>(Db);
         public DbSet<ErpBackGoods> ErpBackGoodsDb => new DbSet<ErpBackGoods>(Db);
         public DbSet<ErpGoods> ErpGoodsDb => new DbSet<ErpGoods>(Db);
         public DbSet<ErpGoodsSku> ErpGoodsSkuDb => new DbSet<ErpGoodsSku>(Db);

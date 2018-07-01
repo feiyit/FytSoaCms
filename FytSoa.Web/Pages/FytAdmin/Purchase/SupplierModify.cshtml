@@ -1,0 +1,145 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Purchase.SupplierModifyModel
+@{
+    ViewData["Title"] = "供应商管理";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<style>
+    .layui-textarea {
+        min-height: 60px;
+    }
+    .layui-form-item .layui-input-inline {
+        width: 220px;
+    }
+    .addAttr {
+        cursor: pointer;
+    }
+    .addAttr i {
+        vertical-align: middle;
+        position: relative;
+        top: -2px;
+        margin-right: 5px;
+        color: #666;
+        font-size: 24px;        
+    }
+</style>
+<form class="layui-form form-cus" action="" id="app">
+    <div class="layui-form-item">
+        <label class="layui-form-label">供应商名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="Name" value="@Model.Supplier.Name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请填写公司名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系人</label>
+        <div class="layui-input-block">
+            <input type="text" name="Contacts" value="@Model.Supplier.Contacts" lay-verify="required" lay-verType="tips" lay-verType="tips" autocomplete="off" placeholder="请输入联系人" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Mobile" value="@Model.Supplier.Mobile" lay-verify="required|phone" lay-verType="tips" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Email" value="@Model.Supplier.Email" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item" v-for="it,index in attrList">
+        <div class="layui-inline">
+            <label class="layui-form-label">自定义</label>
+            <div class="layui-input-inline">
+                <input type="text" v-model="it.Name" placeholder="如经营地址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <input type="text" v-model="it.Value" placeholder="北京-朝阳" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-inline">
+                <span class="addAttr" @@click="addAttrRow()"><i class="layui-icon layui-icon-add-circle"></i>添加自定义</span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea name="Summary" class="layui-textarea">@Model.Supplier.Summary</textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="Guid" id="Guid" value="@Model.Supplier.Guid" />
+    <input type="hidden" name="AddDate" value="@Model.Supplier.AddDate" />
+    <input type="hidden" name="Attribute" value="@Model.Supplier.Attribute" />
+</form>
+@section Scripts{
+    <script>
+        var app, data = {
+            attrList: [
+                { 'Name': '', 'Value': ''}
+            ]
+        };
+        var vm = new Vue({
+            el: "#app",
+            data: data,
+            created: function () { 
+                var that = this;                
+                var attrStr = '@Html.Raw(Model.Supplier.Attribute)';
+                if (attrStr != "") {
+                    that.attrList = JSON.parse(attrStr);
+                }               
+            },
+            methods: {
+                addAttrRow: function () {
+                    this.attrList.push({
+                        'Name': '', 'Value': ''
+                    });
+                }
+            }
+        });
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form'], function () {
+            var form = layui.form, $ = layui.$, os = layui.common;
+            var index = parent.layer.getFrameIndex(window.name);
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                var urls = "api/purchase/addsupplier";
+                if ($("#Guid").val()) {
+                    urls = "api/purchase/editsupplier";
+                }
+                data.field.Attribute = JSON.stringify(vm.attrList);
+                os.ajax(urls, data.field, function(res) {
+                    if (res.statusCode === 200) {
+                        var $$ = parent.layui.jquery;
+                        $$("#isSave").val('1');
+                        parent.layer.close(index);
+                    } else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+        });
+    </script>
+}
+

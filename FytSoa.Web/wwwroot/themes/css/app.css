@@ -21,7 +21,7 @@
 .list-search .layui-form-label{width:auto; padding: 5px 15px;}
 .list-search .layui-input, .list-search .layui-input.layui-input-sm {height: 34px;line-height: 34px;padding: 0 10px; }
 .list-search .layui-form-select dl{top:33px;}
-.list-search .layui-btn-sm{font-size:14px;padding: 0 15px;height: 32px;line-height: 32px;}
+.list-search .layui-btn-sm{font-size:14px;padding: 0 15px;height: 32px;line-height: 31px;}
 .layui-nav-tree .layui-nav-item>a,.layui-nav-tree .layui-nav-child a{font-size:13.3333px;}
 .layui-btn,.layui-input,.layui-table td, .layui-table th,.layui-nav{border-radius:4px;font: 400 13.3333px Arial;}
 .layui-header .layui-nav-bar{top:0px !important; height:2px;}
@@ -53,6 +53,9 @@
     border: 1px solid #409eff !important;
 }
 .layui-form-select dl dd.layui-this{background-color: #409eff;}
+
+.layui-btn-disabled{border:1px solid #e6e7e8;background-color: #e6e7e8 !important; color: #666 !important; }
+.layui-btn-disabled:hover{border:1px solid #e6e7e8 !important;}
 
 /* 弹框优化 */
 .layui-body{z-index:60 !important;}
@@ -109,6 +112,7 @@
 .layadmin-takerates .layui-progress-text{top:-35px;line-height:26px;font-size:22px}
 .layui-form-item .layui-inline{margin-right:0px;}
 .layui-form-item .layui-input-inline{margin-right:0px; width:230px;}
+.fytadmin-header{ padding:15px;}
 
 /* 出入库diy */
 .fyt-utree li{height:40px; line-height:40px; position:relative;border-bottom:1px solid #e6e6e6;padding-left:15px;}

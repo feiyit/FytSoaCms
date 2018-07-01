@@ -1,0 +1,306 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Purchase.ModifyModel
+@{
+    ViewData["Title"] = "采购单管理";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<style>
+    .fyt-select .layui-form-select dl dd:last-child {
+        text-align: center;
+        color: #0094ff;
+    }
+    .list-wall {padding:0px 0px 10px 110px;  }
+    .fyt-table thead th{ padding: 5px 0; border-top: none; border-left: none;border-width: 1px; border-style: solid;border-color: #e6e6e6;}
+    .fyt-table thead th span{display:inline-block;height: 28px;line-height: 28px; padding: 0 15px; position: relative;font-weight:normal;}
+    .fyt-table td{padding:0px;}
+    .fyt-table td .layui-input{border-color:#ffffff;}
+    .fyt-table td:last-child{text-align:center;}
+    .fyt-table td:last-child i,.addAttr i{font-size:24px; cursor:pointer; }
+    .addAttr i{vertical-align:middle; position:relative; top:-2px; margin-right:5px; color:#666;}
+    .fyt-table .layui-form-select{display:none;}
+    .fyt-table select{display:block; border:1px solid #e6e6e6; width:100%; border-radius:4px; height:38px; line-height:38px; padding:0 5px;
+                      border:1px solid #fff;
+    }
+    .fyt-table select:focus, .fyt-table select:active{border:1px solid #0094ff;}
+    .fyt-table samp{color:#ff0000;}
+    .addAttr {
+        cursor: pointer;
+    }
+</style>
+<form class="layui-form form-cus" action="" id="app">
+    <div class="layui-form-item">
+        <label class="layui-form-label">采购日期</label>
+        <div class="layui-input-block">
+            <input type="text" id="AddDate" name="AddDate" value="@Model.Purchase.AddDate.ToString().Replace("/","-")" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">供应商</label>
+            <div class="layui-input-inline fyt-select">
+                <select id="Supplier" name="SupplierGuid" v-model="couponSelected" lay-filter="selSupplier" lay-verify="required" lay-verType="tips">
+                    <option value="">--可根据关键字搜索--</option>
+                    <option :value="it.guid" v-for="it in supplier">{{it.name}}</option>
+                    <option value="0">新建供应商</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">联系人</label>
+            <div class="layui-input-inline">
+                <input type="text" id="Contacts" name="Contacts" value="@Model.Purchase.Contacts" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-inline">
+                <input type="text" id="Mobile" name="Mobile" value="@Model.Purchase.Mobile" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">交付地址</label>
+            <div class="layui-input-inline">
+                <input type="text" name="DeliverCity" data-toggle="city-picker" value="@Model.Purchase.DeliverCity" autocomplete="off" class="layui-input city-picker-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">交付时间</label>
+            <div class="layui-input-inline">
+                <input type="text" id="DeliverDate" name="DeliverDate" value="@Model.Purchase.DeliverDate.ToString().Replace("/","-")" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="list-wall">
+        <table class="layui-table fyt-table">
+            <thead>
+                <tr>
+                    <th width="60"><span>序号</span></th>
+                    <th><span><samp>*</samp>物品编号</span></th>
+                    <th><span><samp>*</samp>名称</span></th>
+                    <th><span>规格型号</span></th>
+                    <th width="100"><span><samp>*</samp>单位</span></th>
+                    <th width="100"><span><samp>*</samp>采购数量</span></th>
+                    <th width="80"><span><samp>*</samp>单价</span></th>
+                    <th><span>备注</span></th>
+                    <th width="60"><span>操作</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="it,index in tabList">
+                    <td align="center">{{index+1}}</td>
+                    <td><input type="text" v-model="it.Number" class="layui-input" /></td>
+                    <td><input type="text" v-model="it.Name" class="layui-input" /></td>
+                    <td><input type="text" v-model="it.Specification" class="layui-input" /></td>
+                    <td>
+                        <select v-model="it.Unit">
+                            @{
+                                foreach (var item in Model.codeList)
+                                {
+                                    <option value="@item.Name">@item.Name</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td><input type="number" v-model="it.Quantity" class="layui-input" /></td>
+                    <td><input type="number" v-model="it.Price" class="layui-input" /></td>
+                    <td><input type="text" v-model="it.Summary" class="layui-input" /></td>
+                    <td><i @@click="addTableRow()" class="layui-icon layui-icon-add-circle-fine"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form-item" v-for="it,index in attrList">
+        <div class="layui-inline">
+            <label class="layui-form-label">自定义</label>
+            <div class="layui-input-inline">
+                <input type="text" v-model="it.Name" placeholder="如支付方式" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <input type="text" v-model="it.Value" placeholder="银行转账" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-inline">
+                <span @@click="addAttrRow()" class="addAttr"><i class="layui-icon layui-icon-add-circle"></i>添加自定义</span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <textarea name="Summary" class="layui-textarea">@Model.Purchase.Summary</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="Guid" id="Guid" value="@Model.Purchase.Guid" />
+    <input type="hidden" name="Status" value="@Model.Purchase.Status" />
+    <input type="hidden" name="AddDate" value="@Model.Purchase.AddDate" />
+    <input type="hidden" name="AdminGuid" value="@Model.Purchase.AdminGuid" />
+    <input type="hidden" name="Number" value="@Model.Purchase.Number" />
+    <input type="hidden" name="Attribute" value="" />
+    <input type="hidden" name="GoodsList" value="@Model.Purchase.GoodsList" />
+    <input type="hidden" id="isSave" value="0" />
+</form>
+<script type="text/html" id="selectTpl">
+    <select name="Unit"><option>件</option><option>个</option></select>
+</script>
+
+<link rel="stylesheet" href="~/themes/css/city-picker.css" type="text/css">
+<script>
+    var app, data = {
+        supplier:[],
+        tabList: [
+            { 'Number': '', 'Name': '', 'Specification': '', 'Unit': '', 'Quantity': '0', 'Price': '0','Summary':'' },
+            { 'Number': '', 'Name': '', 'Specification': '', 'Unit': '', 'Quantity': '0', 'Price': '0', 'Summary': '' },
+            { 'Number': '', 'Name': '', 'Specification': '', 'Unit': '', 'Quantity': '0', 'Price': '0', 'Summary': '' }
+        ],
+        attrList: [
+            { 'Name': '', 'Value': '' }
+        ],
+        couponSelected: '',
+    };
+    var vm = new Vue({
+        el: "#app",
+        data: data,
+        created: function () { 
+            var that = this;
+            this.couponSelected = '@Model.Purchase.SupplierGuid';
+            var attrStr = '@Html.Raw(Model.Purchase.Attribute)';
+            if (attrStr != "") {
+                that.attrList = JSON.parse(attrStr);
+            }
+            var tabStr = '@Html.Raw(Model.GoodsJson)';
+            if (tabStr != "") {                
+                that.tabList = JSON.parse(tabStr);  
+                if (that.tabList.length < 3) {
+                    for (var i = 0; i < 3 - that.tabList.length; i++) {
+                        that.tabList.push({
+                            'Number': '', 'Name': '', 'Specification': '', 'Unit': '', 'Quantity': '0', 'Price': '0', 'Summary': ''
+                        });  
+                    }
+                }
+            }
+        },
+        methods: {
+            addTableRow: function () {               
+                this.tabList.push({
+                    'Number': '', 'Name': '', 'Specification': '', 'Unit': '', 'Quantity': '0', 'Price': '0', 'Summary': ''
+                });                              
+            },
+            addAttrRow: function () {
+                this.attrList.push({
+                    'Name': '', 'Value': ''
+                });
+            }
+        }
+    });
+    layui.define(['layer', 'city-picker'], function (exports) {
+        "use strict";
+        exports('citys', null);
+    });
+    layui.config({
+        base: '/themes/js/modules/'
+    }).use(['table', 'layer', 'jquery', 'common', 'form', 'laydate'], function () {
+        var form = layui.form, $ = layui.$, os = layui.common, laydate = layui.laydate;
+        var index = parent.layer.getFrameIndex(window.name);
+        laydate.render({
+            elem: '#AddDate'
+            , theme: '#393D49'
+            , type: 'datetime'
+        });
+        laydate.render({
+            elem: '#DeliverDate'
+            , theme: '#393D49'
+            , type: 'datetime'
+        });        
+        form.on('select(selSupplier)', function (data) {            
+            if (data.value == 0 && data.value) {                
+                $("#Supplier").val('');
+                form.render('select');
+                var winH = $(window).height();
+                layuiIndex = layer.open({
+                    title: '添加供应商'
+                    , type: 2
+                    , area: ['700px', winH+'px']
+                    , shade: [0.1, '#333']
+                    , resize: false
+                    , anim: -1
+                    , offset: 'rb'
+                    , shadeClose: true
+                    , skin: 'layer-anim-07'
+                    , content: "/fytadmin/purchase/suppliermodify"
+                    , end: function () {                       
+                        if (parseInt($("#isSave").val()) == 1) {
+                            app.initSupplier();
+                        }         
+                        $("#isSave").val('0');
+                    }
+                });
+            } else {
+                if (data.value) { 
+                    os.ajax('api/purchase/supplierbyid', { parm: data.value }, function (res) { 
+                        if (res.statusCode === 200) {
+                            $('#Contacts').val(res.data.contacts);
+                            $('#Mobile').val(res.data.mobile)
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
+                }
+            }
+        });
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            var urls = "api/purchase/addpurchase";
+            if ($("#Guid").val()) {
+                urls = "api/purchase/editpurchase";
+            }
+            data.field.Attribute = JSON.stringify(vm.attrList);
+            data.field.GoodsList = JSON.stringify(vm.tabList);
+            os.ajax(urls, data.field, function (res) {
+                if (res.statusCode == 200) {
+                    parent.layer.close(index);
+                }
+                else {
+                    os.error(res.message);
+                }
+            });
+            return false;
+        });
+        app = {
+            selectRender: function () {
+                form.render('select'); 
+            }
+            , initSupplier: function () { 
+                os.ajax('api/purchase/supplierlist', { limit: 1000 }, function (res) { 
+                    if (res.statusCode === 200) {
+                        vm.supplier = res.data.items;                        
+                        vm.$nextTick(function () {
+                            form.render('select'); 
+                        })
+                    } else {
+                        os.error(res.message);
+                    }
+                })
+            }
+        }
+        app.initSupplier();
+        $(".btn-open-close").on('click', function () {
+            parent.layer.close(index);
+        });
+    });
+</script>
+
+

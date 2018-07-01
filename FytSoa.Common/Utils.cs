@@ -493,5 +493,36 @@ namespace FytSoa.Common
             return str;
         }
         #endregion
+
+        #region 返回采购单入库状态
+        /// <summary>
+        /// 返回采购单入库状态
+        /// </summary>
+        /// <param name="status">状态</param>
+        /// <returns></returns>
+        public static string PurchaseStatus(string status)
+        {
+            var str = "";
+            switch (int.Parse(status))
+            {
+                case 1: str = "未完成入库"; break;
+                case 2: str = "未完成付款"; break;
+                case 3: str = "未完成到票"; break;
+                case 4: str = "完成"; break;
+            }
+            return str;
+        }
+        #endregion
+
+        #region 生成采购单编号
+        /// <summary>
+        /// 生成采购单编号
+        /// </summary>
+        /// <returns></returns>
+        public static string PurchaseNumber(int lastNumber)
+        {
+            return "CG-"+ DateTime.Now.ToString("yyyyMMdd")+"-"+ lastNumber.ToString();     
+        }
+        #endregion
     }
 }

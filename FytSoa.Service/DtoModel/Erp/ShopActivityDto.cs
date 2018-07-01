@@ -38,6 +38,10 @@ namespace FytSoa.Service.DtoModel
         /// <summary>
         /// 类型(1=按商铺/2=按商品/3=按地区)
         /// </summary>
+        public int Types { get; set; }
+        /// <summary>
+        /// 类型(1=按商铺/2=按商品/3=按地区)
+        /// </summary>
         public string TypeName { get; set; }
         /// <summary>
         /// 方式(1=打折/2=满减)
@@ -55,6 +59,10 @@ namespace FytSoa.Service.DtoModel
         /// 活动结束时间
         /// </summary>
         public DateTime EndDate { get; set; }
+        /// <summary>
+        /// 是否启用  1=启用  0=不启用
+        /// </summary>
+        public bool Enable { get; set; } = true;
         /// <summary>
         /// 活动状态，根据开始时间和结束时间来判断
         /// </summary>

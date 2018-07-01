@@ -101,7 +101,7 @@ namespace FytSoa.Service.Implements
             try
             {
                 var query = Db.Queryable<ErpShopUser>()
-                        .Where(m => m.ShopGuid == parm.guid)
+                        .WhereIF(parm.guid!="all",m => m.ShopGuid == parm.guid)
                         .WhereIF(!string.IsNullOrEmpty(parm.key),
                         m => m.Mobile == parm.key
                         || m.UserName == parm.key)

@@ -204,6 +204,16 @@ namespace FytSoa.Api.Controllers
         {
             return await _activityService.ModifyAsync(parm, fullParm);
         }
+
+        /// <summary>
+        /// 修改状态
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("modifyactstatus")]
+        public async Task<ApiResult<string>> ModifyStatusAsync(ErpShopActivity parm)
+        {
+            return await _activityService.ModifyStatusAsync(parm);
+        }
         #endregion
 
         #region 消息推送

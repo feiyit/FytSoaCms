@@ -178,7 +178,6 @@ E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pag
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Shop\ShopModify.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Shop\ActivityModify.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Shop\UserModify.g.cshtml.cs
-E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Shop\StaffModify.g.cshtml.cs
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Shop\ActivityModify.g.cshtml.cs
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Shop\Index.g.cshtml.cs
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Shop\ShopModify.g.cshtml.cs
@@ -215,3 +214,15 @@ E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pag
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\Inventory.g.cshtml.cs
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\Inventory.g.cshtml.cs
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Purchase\Index.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Purchase\Index.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Purchase\Modify.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Purchase\SupplierModify.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Purchase\Supplier.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Shop\ActivityIndex.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Member\Index.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Member\Grade.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Member\Statistics.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Member\Birthday.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Sale\Index.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Sale\Back.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Sale\Return.g.cshtml.cs

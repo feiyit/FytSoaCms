@@ -61,14 +61,19 @@ namespace FytSoa.Core.Model.Erp
         /// Default:0
         /// Nullable:False
         /// </summary>           
-        public int Quantity { get; set; }
+        public int Quantity { get; set; } = 0;
 
         /// <summary>
         /// Desc:单价
         /// Default:0.00
         /// Nullable:False
         /// </summary>           
-        public decimal Price { get; set; }
+        public decimal Price { get; set; } = 0;
+
+        /// <summary>
+        /// 是否删除  0=否 1=是
+        /// </summary>
+        public bool IsDel { get; set; } = false;
 
         /// <summary>
         /// Desc:备注

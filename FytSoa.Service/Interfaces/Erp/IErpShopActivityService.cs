@@ -42,5 +42,12 @@ namespace FytSoa.Service.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<ApiResult<string>> ModifyAsync(ErpShopActivity parm, ShopActivityParm fullParm);
+
+        /// <summary>
+        /// 修改状态
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        Task<ApiResult<string>> ModifyStatusAsync(ErpShopActivity parm);
     }
 }

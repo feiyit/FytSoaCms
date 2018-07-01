@@ -41,8 +41,9 @@ namespace FytSoa.Service.Implements
                     .Select(m => new StockInventory() {
                         Code = m.Code,
                         Sale = SqlFunc.AggregateSum(m.SaleSum),
-                        Stock = SqlFunc.Subqueryable<ErpInOutLog>().Where(g => g.GoodsGuid == m.Guid && g.Types==1).Sum(g => g.GoodsSum),
-                        //Stock = SqlFunc.Subqueryable<ErpInOutLog>().Where(g => g.GoodsGuid == m.Guid).Sum(g => g.GoodsSum),
+                        Stock = m.StockSum,
+                        TotalStock = SqlFunc.Subqueryable<ErpInOutLog>().Where(g => g.GoodsGuid == m.Guid && g.Types == 1).Sum(g => g.GoodsSum),
+                        OutStock= SqlFunc.Subqueryable<ErpInOutLog>().Where(g => g.GoodsGuid == m.Guid && g.Types == 2).Sum(g => g.GoodsSum),
                         Transfer = SqlFunc.Subqueryable<ErpTransferGoods>().Where(g => g.GoodsGuid == m.Guid).Sum(g => g.GoodsSum),
                         Return = SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == m.Guid).Count(),
                         Back = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.GoodsGuid == m.Guid).Count()

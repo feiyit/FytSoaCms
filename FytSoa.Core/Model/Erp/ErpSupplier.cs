@@ -57,6 +57,11 @@ namespace FytSoa.Core.Model.Erp
         public string Attribute { get; set; }
 
         /// <summary>
+        /// 是否删除  0=否 1=是
+        /// </summary>
+        public bool IsDel { get; set; } = false;
+
+        /// <summary>
         /// Desc:备注
         /// Default:
         /// Nullable:True
@@ -68,7 +73,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime AddDate { get; set; }
+        public DateTime AddDate { get; set; } = DateTime.Now;
 
     }
 }

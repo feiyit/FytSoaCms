@@ -72,7 +72,7 @@ namespace FytSoa.Service.Implements
             try
             {
                 var list = Utils.StrToListString(parm);
-                var dbres = ErpShopActivityDb.Delete(m => list.Contains(m.Guid));
+                var dbres = ErpShopActivityDb.Update(m => new ErpShopActivity() { IsDel = true }, m => list.Contains(m.Guid));
                 if (!dbres)
                 {
                     res.statusCode = (int)ApiEnum.Error;
@@ -113,14 +113,17 @@ namespace FytSoa.Service.Implements
             try
             {
                 var query = Db.Queryable<ErpShopActivity>()
-                        .Where(m=>m.ShopGuid==parm.guid)
+                        .Where(m=>!m.IsDel)
+                        .Where(m=>m.ShopGuid==parm.guid || m.ShopGuid=="all")
                         .OrderBy(m => m.EndDate, OrderByType.Desc).Select(m => new ShopActivityDto()
                         {
                             Guid = m.Guid,
+                            Types=m.Types,
                             TypeName = SqlFunc.ToString(m.Types),
                             MethodName = SqlFunc.ToString(m.Method),
                             CountNum = m.CountNum,
                             BeginDate = m.BeginDate,
+                            Enable=m.Enable,
                             EndDate = m.EndDate
                         }).ToPageAsync(parm.page, parm.limit);
                 if (query.Result.TotalItems!=0)
@@ -128,7 +131,12 @@ namespace FytSoa.Service.Implements
                     foreach (var item in query.Result.Items)
                     {
                         item.Status = DateTime.Now > item.EndDate ? "已完成" : "进行中";
-                        item.TypeName = "商铺";
+                        switch (item.Types)
+                        {
+                            case 0: item.TypeName = "全部加盟商"; break;
+                            case 1: item.TypeName = "商铺"; break;
+                            case 2: item.TypeName = "品牌"; break;
+                        }
                         item.MethodName = item.MethodName == "1" ? "打折" : "满减";
                     }
                 }
@@ -189,6 +197,27 @@ namespace FytSoa.Service.Implements
                 res.statusCode = (int)ApiEnum.Error;
                 res.message = ApiEnum.Error.GetEnumText() + ex.Message;
             }
+            return await Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 修改状态
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        public async Task<ApiResult<string>> ModifyStatusAsync(ErpShopActivity parm)
+        {
+            var isok = ErpShopActivityDb.Update(
+                m => new ErpShopActivity()
+                {
+                    Enable = parm.Enable
+                }, m => m.Guid == parm.Guid);
+            var res = new ApiResult<string>
+            {
+                success = isok,
+                statusCode = isok ? (int)ApiEnum.Status : (int)ApiEnum.Error,
+                data = isok ? "1" : "0"
+            };
             return await Task.Run(() => res);
         }
     }

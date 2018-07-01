@@ -19,6 +19,9 @@
         <div class="layui-form list-search" style="margin-top:10px;">
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增</button>
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
+            <button style="margin-left:40px;" type="button" class="layui-btn layui-btn-sm@(Model.Type==1 ? "" :" layui-btn-disabled")" @(Model.Type==1 ? "" :"disabled") data-type="toolStatus"><i class="layui-icon layui-icon-cart"></i> 入库</button>
+            <button type="button" class="layui-btn layui-btn-sm@(Model.Type==2 ? "" :" layui-btn-disabled")" @(Model.Type==2 ? "" :"disabled") data-type="toolStatus"><i class="layui-icon layui-icon-rmb"></i> 付款</button>
+            <button type="button" class="layui-btn layui-btn-sm@(Model.Type==3 ? "" :" layui-btn-disabled")" @(Model.Type==3 ? "" :"disabled") data-type="toolStatus"><i class="layui-icon layui-icon-file-b"></i> 到票</button>
         </div>
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
@@ -41,19 +44,18 @@
                 });
                 table.render({
                     elem: '#tablist',
-                    url: '/api/goods/barlist',
+                    url: '/api/purchase/purchaselist?types=@Model.Type',
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'code', title: '条形码', sort: true, fixed: 'left' },
-                            { field: 'brankName', title: '品牌', sort: true },
-                            { field: 'styleName', title: '款式', sort: true },
-                            { field: 'salePrice', title: '价格', sort: true },
-                            { field: 'disPrice', title: '折扣价', sort: true },
-                            { field: 'stockSum', title: '库存', sort: true },
-                            { field: 'saleSum', title: '销售数', sort: true },
-                            { field: 'addDate', title: '添加时间', sort: true }
-                            //{ width: 100, title: '操作', templet: '#tool' }
+                            { field: 'number',width:200, title: '采购单号', sort: true, fixed: 'left' },
+                            { field: 'status', title: '入库状态' },
+                            { field: 'supplier', title: '供应商', sort: true },
+                            { field: 'addDate', title: '采购日期', sort: true },
+                            { field: 'money', title: '订单总金额', sort: true },
+                            { field: 'deliverDate', title: '交付日期', sort: true },
+                            { field: 'deliverCity', title: '交付地点', sort: true },
+                            { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
                     page: true,
@@ -73,11 +75,35 @@
                                 }
                             });
                     },
+                    toolStatus: function () { 
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要变更的采购单~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            str += item.guid + ",";
+                        });
+                        var loadindex = layer.load(1, {
+                            shade: [0.1, '#000']
+                        });
+                        os.ajax('api/purchase/modifystatus/', { parm: str }, function (res) {
+                            layer.close(loadindex);
+                            if (res.statusCode === 200) {
+                                active.reload();
+                                os.success('变更成功！');
+                            } else {
+                                os.error(res.message);
+                            }
+                        });
+                    },
                     toolSearch: function () {
                         active.reload();
                     },
                     toolAdd: function () {
-                        os.Open('添加条形码', '/fytadmin/goods/barcodemodify', '750px', '400px', function () {
+                        os.Open('添加采购单', '/fytadmin/purchase/modify', '1200px', '700px', function () {
                             active.reload();
                         });
                     },
@@ -117,11 +143,9 @@
                 //监听工具条
                 table.on('tool(tool)', function (obj) {
                     var data = obj.data;
-                    if (obj.event === 'edit') {
-                        os.Open('编辑条形码', '/fytadmin/goods/barcodemodify/?guid=' + data.guid, '750px', '400px', function () {
-                            active.reload();
-                        })
-                    }
+                    os.Open('修改采购单', '/fytadmin/purchase/modify?guid='+data.guid, '1200px', '700px', function () {
+                        active.reload();
+                    });                    
                 });
             });
     </script>
