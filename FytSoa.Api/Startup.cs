@@ -70,6 +70,7 @@ namespace FytSoa.Api
             }
             app.UseCors("AllowAll");
             app.UseMvc();
+            
         }
     }
 }

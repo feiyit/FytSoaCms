@@ -92,7 +92,7 @@ namespace FytSoa.Web
 
             app.UseStaticFiles();
             app.UseCors("AllowAll");
-            app.UseMvc();
+            app.UseMvc();            
         }
     }
 }
