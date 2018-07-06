@@ -42,4 +42,39 @@ namespace FytSoa.Service.DtoModel
         /// </summary>
         public int Sale { get; set; }
     }
+
+    /// <summary>
+    /// 库存剩余数量
+    /// </summary>
+    public class StockSaleNum
+    {
+        /// <summary>
+        /// 商品编号
+        /// </summary>
+        public string Guid { get; set; }
+        /// <summary>
+        /// 商品Sku编号
+        /// </summary>
+        public string Code { get; set; }
+        /// <summary>
+        /// 商品品牌
+        /// </summary>
+        public string Brand { get; set; }
+        /// <summary>
+        /// 商品款式
+        /// </summary>
+        public string Style { get; set; }
+        /// <summary>
+        /// 商品销售数量
+        /// </summary>
+        public int Sale { get; set; }
+        /// <summary>
+        /// 商品库存数量
+        /// </summary>
+        public int Stock { get; set; }
+        /// <summary>
+        /// 销售和库存数量的百分比
+        /// </summary>
+        public int Perc { get; set; }
+    }
 }

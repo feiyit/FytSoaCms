@@ -59,5 +59,26 @@ namespace FytSoa.Service.Implements
             }
             return Task.Run(() => res);
         }
+
+        /// <summary>
+        /// 查询库存剩余数量和销售数量
+        /// 可根据店铺查询，日期，品牌
+        /// </summary>
+        /// <returns></returns>
+        public Task<ApiResult<Page<StockSaleNum>>> GetStockNumByShopAsync(PageParm parm)
+
+        {
+            var res = new ApiResult<Page<StockSaleNum>>();
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return Task.Run(() => res);
+        }
     }
 }

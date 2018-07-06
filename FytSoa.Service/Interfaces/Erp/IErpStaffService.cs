@@ -14,6 +14,18 @@ namespace FytSoa.Service.Interfaces
     public interface IErpStaffService
     {
         /// <summary>
+        /// 根据账号密码登录
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<ShopBasicDto>> LoginAsync(StaffLoginDto parm);
+
+        /// <summary>
+        /// 修改登录密码
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<string>> ModifyLoginPwdAsync(StaffModifyPwdParm parm);
+
+        /// <summary>
         /// 获得列表
         /// </summary>
         /// <returns></returns>

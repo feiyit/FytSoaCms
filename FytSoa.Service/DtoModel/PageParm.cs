@@ -38,5 +38,10 @@ namespace FytSoa.Service.DtoModel
         /// 搜索日期，可能是2个日期，通过-分隔
         /// </summary>
         public string time { get; set; }
+
+        /// <summary>
+        /// 排序方式，可根据数字来判断，
+        /// </summary>
+        public int orderType { get; set; } = 0;
     }
 }

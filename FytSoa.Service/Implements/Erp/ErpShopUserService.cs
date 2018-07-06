@@ -127,23 +127,12 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<string>() { data = "1", statusCode = 200 };
             try
             {
-                //判断登录账号和店铺名是否存在
-                var isExt = ErpShopUserDb.IsAny(m => m.ShopGuid == parm.ShopGuid && m.Mobile == parm.Mobile && m.Guid != parm.Guid);
-                if (isExt)
-                {
-                    res.statusCode = (int)ApiEnum.ParameterError;
-                    res.message = "该商铺已存在~";
-                }
-                else
-                {
-                    parm.LoginPwd = DES3Encrypt.EncryptString(parm.LoginPwd);
-                    var dbres = ErpShopUserDb.Update(parm);
-                    if (!dbres)
-                    {
-                        res.statusCode = (int)ApiEnum.Error;
-                        res.message = "修改数据失败~";
-                    }
-                }
+                ErpShopUserDb.Update(m=>new ErpShopUser() {
+                    Mobile=parm.Mobile,
+                    UserName=parm.UserName,
+                    Sex=parm.Sex,
+                    Birthday=parm.Birthday                    
+                },m=>m.Guid==parm.Guid);
             }
             catch (Exception ex)
             {

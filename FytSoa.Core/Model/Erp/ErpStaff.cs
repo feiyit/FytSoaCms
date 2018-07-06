@@ -71,6 +71,21 @@ namespace FytSoa.Core.Model.Erp
         public byte Status { get; set; } = 0;
 
         /// <summary>
+        /// 推送用的到token
+        /// </summary>
+        public string Token { get; set; }
+
+        /// <summary>
+        /// 设备类型，是苹果还是安卓  0=苹果 1=安卓
+        /// </summary>
+        public int IsDevice { get; set; }
+
+        /// <summary>
+        /// 设备类型名称，是苹果还是安卓
+        /// </summary>
+        public string DeviceName { get; set; }
+
+        /// <summary>
         /// Desc:添加时间
         /// Default:
         /// Nullable:False

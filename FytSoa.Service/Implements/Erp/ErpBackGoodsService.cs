@@ -98,16 +98,13 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<ErpBackGoods>>();
             try
             {
-                using (Db)
-                {
-                    var query = Db.Queryable<ErpBackGoods>()
+                var query = Db.Queryable<ErpBackGoods>()
                         .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.ShopGuid == parm.guid)
-                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.Number==parm.key || m.GoodsGuid == parm.key)
+                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.Number == parm.key || m.GoodsGuid == parm.key)
                         .ToPageAsync(parm.page, parm.limit);
-                    res.success = true;
-                    res.message = "获取成功！";
-                    res.data = await query;
-                }
+                res.success = true;
+                res.message = "获取成功！";
+                res.data = await query;
             }
             catch (Exception ex)
             {

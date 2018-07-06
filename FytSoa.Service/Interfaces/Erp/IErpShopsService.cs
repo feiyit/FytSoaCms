@@ -13,6 +13,8 @@ namespace FytSoa.Service.Interfaces
     /// </summary>
     public interface IErpShopsService
     {
+        
+
         /// <summary>
         /// 获得列表
         /// </summary>

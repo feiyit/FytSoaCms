@@ -17,6 +17,7 @@ namespace FytSoa.Service.Implements
     /// </summary>
     public class ErpShopsService : DbContext, IErpShopsService
     {
+
         /// <summary>
         /// 添加一条数据
         /// </summary>

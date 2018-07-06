@@ -64,6 +64,11 @@ namespace FytSoa.Core.Model.Erp
         public string Sex { get; set; } = "男";
 
         /// <summary>
+        /// 生日
+        /// </summary>
+        public DateTime? Birthday { get; set; }
+
+        /// <summary>
         /// Desc:状态 0=正常 1=账号冻结
         /// Default:0
         /// Nullable:False

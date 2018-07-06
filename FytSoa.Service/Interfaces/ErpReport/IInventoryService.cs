@@ -15,5 +15,13 @@ namespace FytSoa.Service.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<ApiResult<Page<StockInventory>>> GetPagesAsync(PageParm parm);
+
+
+        /// <summary>
+        /// 查询库存剩余数量和销售数量
+        /// 可根据店铺查询，日期，品牌
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<Page<StockSaleNum>>> GetStockNumByShopAsync(PageParm parm);
     }
 }
