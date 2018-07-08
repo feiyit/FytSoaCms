@@ -35,6 +35,8 @@ namespace FytSoa.Core
         public DbSet<SysBtnFun> SysBtnFunDb => new DbSet<SysBtnFun>(Db);
 
         //ERP表信息
+        public DbSet<ErpSaleOrder> ErpSaleOrderDb => new DbSet<ErpSaleOrder>(Db);
+        public DbSet<ErpSaleOrderGoods> ErpSaleOrderGoodsDb => new DbSet<ErpSaleOrderGoods>(Db);
         public DbSet<ErpSupplier> ErpSupplierDb => new DbSet<ErpSupplier>(Db);
         public DbSet<ErpPurchase> ErpPurchaseDb => new DbSet<ErpPurchase>(Db);
         public DbSet<ErpPurchaseGoods> ErpPurchaseGoodsDb => new DbSet<ErpPurchaseGoods>(Db);
@@ -44,6 +46,7 @@ namespace FytSoa.Core
         public DbSet<ErpInOutLog> ErpInOutLogDb => new DbSet<ErpInOutLog>(Db);
         public DbSet<ErpPackLog> ErpPackLogDb => new DbSet<ErpPackLog>(Db);
         public DbSet<ErpReturnGoods> ErpReturnGoodsDb => new DbSet<ErpReturnGoods>(Db);
+        public DbSet<ErpReturnOrder> ErpReturnOrderDb => new DbSet<ErpReturnOrder>(Db);
         public DbSet<ErpShopActivity> ErpShopActivityDb => new DbSet<ErpShopActivity>(Db);
         public DbSet<ErpShops> ErpShopsDb => new DbSet<ErpShops>(Db);
         public DbSet<ErpShopUser> ErpShopUserDb => new DbSet<ErpShopUser>(Db);

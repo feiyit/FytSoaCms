@@ -14,7 +14,7 @@ namespace FytSoa.Service.Interfaces
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<Page<ErpBackGoods>>> GetPagesAsync(PageParm parm);
+        Task<ApiResult<Page<BackGoodsDto>>> GetPagesAsync(PageParm parm);
 
         /// <summary>
         /// 获得一条数据

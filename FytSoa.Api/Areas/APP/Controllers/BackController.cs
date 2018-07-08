@@ -31,8 +31,13 @@ namespace FytSoa.Api.Areas.APP.Controllers
         public JsonResult BackGoodsList(PageParm parm)
         {
             var res = _backService.GetPagesAsync(parm).Result;
-            
-            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count ?? 0, data = res.data.Items });
+            var list = res.data.Items?.Select(m => new {
+                m.Code,
+                m.BackCount,
+                m.GoodsName,
+                AddDate = m.AddDate.ToShortDateString().Replace("/", "-")
+            });
+            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count ?? 0, data = list });
         }
     }
 }

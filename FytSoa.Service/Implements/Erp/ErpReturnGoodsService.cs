@@ -2,6 +2,7 @@
 using FytSoa.Common;
 using FytSoa.Core;
 using FytSoa.Core.Model.Erp;
+using FytSoa.Core.Model.Sys;
 using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
 using SqlSugar;
@@ -83,21 +84,25 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        public async Task<ApiResult<Page<ErpReturnGoods>>> GetPagesAsync(PageParm parm)
+        public async Task<ApiResult<Page<ReturnGoodsDto>>> GetPagesAsync(PageParm parm)
         {
-            var res = new ApiResult<Page<ErpReturnGoods>>();
+            var res = new ApiResult<Page<ReturnGoodsDto>>();
             try
             {
-                using (Db)
-                {
-                    var query = Db.Queryable<ErpReturnGoods>()
-                        .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.ShopGuid == parm.guid)
-                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.Number == parm.key || m.GoodsGuid == parm.key)
+                var query = Db.Queryable<ErpReturnGoods,ErpGoodsSku>((erg,egs)=>new object[] {JoinType.Left,erg.GoodsGuid==egs.Guid })
+                        .WhereIF(!string.IsNullOrEmpty(parm.guid), (erg, egs) => erg.OrderGuid == parm.guid)
+                        .Select((erg, egs)=>new ReturnGoodsDto() {
+                            Code=egs.Code,
+                            GoodsName= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.BrankGuid).Select(g => g.Name)+
+                            SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.SeasonGuid).Select(g => g.Name)+
+                            SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.StyleGuid).Select(g => g.Name),
+                            Counts = erg.ReturnCount,
+                            Summary=erg.Summary
+                        })
                         .ToPageAsync(parm.page, parm.limit);
-                    res.success = true;
-                    res.message = "获取成功！";
-                    res.data = await query;
-                }
+                res.success = true;
+                res.message = "获取成功！";
+                res.data = await query;
             }
             catch (Exception ex)
             {

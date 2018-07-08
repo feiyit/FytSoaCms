@@ -2,6 +2,7 @@
 using FytSoa.Common;
 using FytSoa.Core;
 using FytSoa.Core.Model.Erp;
+using FytSoa.Core.Model.Sys;
 using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
 using SqlSugar;
@@ -24,7 +25,7 @@ namespace FytSoa.Service.Implements
             try
             {
                 //判断是否存在
-                var isExt = ErpBackGoodsDb.IsAny(m => m.ShopGuid == parm.ShopGuid && m.GoodsGuid==parm.GoodsGuid && m.OrderGuid==parm.OrderGuid);
+                var isExt = ErpBackGoodsDb.IsAny(m => m.ShopGuid == parm.ShopGuid && m.GoodsGuid==parm.GoodsGuid && m.OrderNumber==parm.OrderNumber);
                 if (isExt)
                 {
                     res.statusCode = (int)ApiEnum.ParameterError;
@@ -93,14 +94,31 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        public async Task<ApiResult<Page<ErpBackGoods>>> GetPagesAsync(PageParm parm)
+        public async Task<ApiResult<Page<BackGoodsDto>>> GetPagesAsync(PageParm parm)
         {
-            var res = new ApiResult<Page<ErpBackGoods>>();
+            var res = new ApiResult<Page<BackGoodsDto>>();
             try
             {
-                var query = Db.Queryable<ErpBackGoods>()
-                        .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.ShopGuid == parm.guid)
-                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.Number == parm.key || m.GoodsGuid == parm.key)
+                var query = Db.Queryable<ErpBackGoods,ErpGoodsSku,ErpShops,ErpStaff>((ebg,eg,es,est)=>new object[] {
+                    JoinType.Left,ebg.GoodsGuid==eg.Guid,
+                    JoinType.Left,es.Guid==ebg.ShopGuid,
+                    JoinType.Left,ebg.AdminGuid==est.Guid})
+                        .WhereIF(!string.IsNullOrEmpty(parm.guid), (ebg, eg, es, est) => ebg.ShopGuid == parm.guid)
+                        .WhereIF(!string.IsNullOrEmpty(parm.key), (ebg, eg, es, est) => ebg.Number == parm.key || ebg.GoodsGuid == parm.key)
+                        .Select((ebg, eg, es, est) => new BackGoodsDto() {
+                            Code=eg.Code,
+                            OrderNumber=ebg.OrderNumber,
+                            GoodsName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == eg.BrankGuid).Select(g => g.Name) +
+                            SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == eg.SeasonGuid).Select(g => g.Name) +
+                            SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == eg.StyleGuid).Select(g => g.Name),
+                            ShopName =es.ShopName,
+                            Operator=est.TrueName,
+                            Mobile=est.Mobile,
+                            BackCount =ebg.BackCount,
+                            Money=ebg.BackMoney,
+                            Summary=ebg.Summary,
+                            AddDate =ebg.AddDate
+                        })
                         .ToPageAsync(parm.page, parm.limit);
                 res.success = true;
                 res.message = "获取成功！";

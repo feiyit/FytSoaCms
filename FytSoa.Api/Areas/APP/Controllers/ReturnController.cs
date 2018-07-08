@@ -16,23 +16,46 @@ namespace FytSoa.Api.Areas.APP.Controllers
     [Produces("application/json")]
     public class ReturnController : Controller
     {
-        private readonly IErpReturnGoodsService _returnService;
-        public ReturnController(IErpReturnGoodsService returnService)
+        private readonly IErpReturnOrderService _orderService;
+        private readonly IErpReturnGoodsService _goodsService;
+        public ReturnController(IErpReturnOrderService orderService,IErpReturnGoodsService goodsService)
         {
-            _returnService = returnService;
+            _orderService = orderService;
+            _goodsService = goodsService;
         }
 
         /// <summary>
-        /// 返货列表
+        /// 返货订单列表
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        [HttpPost("list")]
-        public JsonResult BackGoodsList(PageParm parm)
+        [HttpPost("order/list")]
+        public JsonResult ReturnOrderList(PageParm parm)
         {
-            var res = _returnService.GetPagesAsync(parm).Result;
+            var res = _orderService.GetPagesAsync(parm).Result;
+            var list = res.data.Items?.Select(m => new {
+                m.Number,
+                m.Counts,
+                AddDate = m.AddDate.ToShortDateString().Replace("/", "-")
+            });
+            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count ?? 0, data = list });
+        }
 
-            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count ?? 0, data = res.data.Items });
+        /// <summary>
+        /// 返货订单里面的商品列表
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        [HttpPost("goods/list")]
+        public JsonResult ReturnOrderGoodsList(PageParm parm)
+        {
+            var res = _goodsService.GetPagesAsync(parm).Result;
+            var list = res.data.Items?.Select(m => new {
+                m.Code,
+                m.GoodsName,
+                m.Counts
+            });
+            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count ?? 0, data = list });
         }
     }
 }

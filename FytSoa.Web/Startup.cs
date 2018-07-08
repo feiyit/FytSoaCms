@@ -27,6 +27,8 @@ namespace FytSoa.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IErpSaleOrderService, ErpSaleOrderService>();
+            services.AddTransient<IErpSaleOrderGoodsService, ErpSaleOrderGoodsService>();
             services.AddTransient<IErpSupplierService, ErpSupplierService>();
             services.AddTransient<IErpPurchaseService, ErpPurchaseService>();
             services.AddTransient<IErpPurchaseGoodsService, ErpPurchaseGoodsService>();
@@ -37,6 +39,7 @@ namespace FytSoa.Web
             services.AddTransient<IErpTransferGoodsService, ErpTransferGoodsService>();
             services.AddTransient<IErpInOutLogService, ErpInOutLogService>();
             services.AddTransient<IErpPackLogService, ErpPackLogService>();
+            services.AddTransient<IErpReturnOrderService, ErpReturnOrderService>();
             services.AddTransient<IErpReturnGoodsService, ErpReturnGoodsService>();
             services.AddTransient<IErpBackGoodsService, ErpBackGoodsService>();
             services.AddTransient<IErpGoodsService, ErpGoodsService>();

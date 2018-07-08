@@ -40,7 +40,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:
         /// Nullable:True
         /// </summary>           
-        public string OrderGuid { get; set; }
+        public string OrderNumber { get; set; }
 
         /// <summary>
         /// Desc:谁提交的退货
