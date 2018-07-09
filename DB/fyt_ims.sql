@@ -10,10 +10,29 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-07-08 21:17:52
+Date: 2018-07-09 23:56:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for erpappsetting
+-- ----------------------------
+DROP TABLE IF EXISTS `erpappsetting`;
+CREATE TABLE `erpappsetting` (
+  `Guid` varchar(50) NOT NULL,
+  `AndroidVersion` decimal(2,1) NOT NULL DEFAULT '0.0' COMMENT '安卓版本号',
+  `AndroidFile` varchar(255) DEFAULT NULL COMMENT '更新文件',
+  `IosVersion` decimal(2,1) NOT NULL COMMENT 'Ios版本号',
+  `IosFile` varchar(255) DEFAULT NULL COMMENT 'Ios更新文件地址',
+  `IosAudit` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Ios审核开关  0=关/1=开',
+  `UpdateDate` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`Guid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of erpappsetting
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for erpbackgoods
