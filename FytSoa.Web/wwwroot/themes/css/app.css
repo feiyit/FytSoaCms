@@ -114,6 +114,11 @@
 .layui-form-item .layui-input-inline{margin-right:0px; width:230px;}
 .fytadmin-header{ padding:15px;}
 
+/* 文件上传 */
+.fytui-file .layui-input { width:calc(100% - 100px); display:inline-block; border-bottom-right-radius:0px !important; 
+                           border-top-right-radius:0px !important; vertical-align:middle;}
+.fytui-file button{width:100px; border-radius:0px !important; height:38px;}
+
 /* 出入库diy */
 .fyt-utree li{height:40px; line-height:40px; position:relative;border-bottom:1px solid #e6e6e6;padding-left:15px;}
 .fyt-utree li.active{background-color:#f3f3f3;}

@@ -524,5 +524,72 @@ namespace FytSoa.Common
             return "CG-"+ DateTime.Now.ToString("yyyyMMdd")+"-"+ lastNumber.ToString();     
         }
         #endregion
+
+        #region 上传配置
+        /// <summary>
+        ///  根据文件类型分配路径
+        /// </summary>
+        /// <param name="fileExt"></param>
+        /// <returns></returns>
+        public static string AssigendPath(string fileExt, string path)
+        {
+            if (IsImage(fileExt))
+                return path + "/upload/images/" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + "/";
+            if (IsVideos(fileExt))
+                return path + "/upload/videos/" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + "/";
+            if (IsDocument(fileExt))
+                return "/upload/files/" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + "/";
+            if (IsMusics(fileExt))
+                return "/upload/musics/" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + "/";
+            return path + "/uploadothers/";
+        }
+        #endregion
+        #region 文件格式
+        /// <summary>
+        /// 是否为图片
+        /// </summary>
+        /// <param name="_fileExt">文件扩展名，不含“.”</param>
+        /// <returns></returns>
+        private static bool IsImage(string _fileExt)
+        {
+            var images = new List<string> { "bmp", "gif", "jpg", "jpeg", "png" };
+            if (images.Contains(_fileExt.ToLower())) return true;
+            return false;
+        }
+        /// <summary>
+        /// 是否为视频
+        /// </summary>
+        /// <param name="_fileExt">文件扩展名，不含“.”</param>
+        /// <returns></returns>
+        private static bool IsVideos(string _fileExt)
+        {
+            var videos = new List<string> { "rmvb", "mkv", "ts", "wma", "avi", "rm", "mp4", "flv", "mpeg", "mov", "3gp", "mpg" };
+            if (videos.Contains(_fileExt.ToLower())) return true;
+            return false;
+        }
+        /// <summary>
+        /// 是否为音频
+        /// </summary>
+        /// <param name="_fileExt">文件扩展名，不含“.”</param>
+        /// <returns></returns>
+        private static bool IsMusics(string _fileExt)
+        {
+            var musics = new List<string> { "mp3", "wav" };
+            if (musics.Contains(_fileExt.ToLower())) return true;
+            return false;
+        }
+        /// <summary>
+        /// 是否为文档
+        /// </summary>
+        /// <param name="_fileExt">文件扩展名，不含“.”</param>
+        /// <returns></returns>
+        private static bool IsDocument(string _fileExt)
+        {
+            var documents = new List<string> { "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "pdf" };
+            if (documents.Contains(_fileExt.ToLower())) return true;
+            return false;
+        }
+        #endregion
+        
     }
 }
