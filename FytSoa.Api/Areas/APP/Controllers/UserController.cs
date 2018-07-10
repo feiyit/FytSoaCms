@@ -75,6 +75,17 @@ namespace FytSoa.Api.Areas.APP.Controllers
         }
 
         /// <summary>
+        /// 店铺的店员修改
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        [HttpPost("staffadd")]
+        public async Task<ApiResult<string>> AtaffAddAsync(ErpStaff parm)
+        {
+            return await _staffService.AddAsync(parm);
+        }
+
+        /// <summary>
         /// 店铺的会员列表
         /// </summary>
         /// <param name="parm"></param>
@@ -89,7 +100,7 @@ namespace FytSoa.Api.Areas.APP.Controllers
                 m.Sex,
                 m.UserName,
                 m.Points,
-                m.Birthday
+                Birthday=Convert.ToDateTime(m.Birthday).ToShortDateString().Replace("/","-")
             });
             return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count??0, data = list });
         }
@@ -103,6 +114,17 @@ namespace FytSoa.Api.Areas.APP.Controllers
         public async Task<ApiResult<string>> UserModifyAsync(ErpShopUser parm)
         {
             return await _userService.ModifyAsync(parm);
+        }
+
+        /// <summary>
+        /// 店铺的会员修改
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        [HttpPost("useradd")]
+        public async Task<ApiResult<string>> UserAddAsync(ErpShopUser parm)
+        {
+            return await _userService.AddAsync(parm);
         }
     }
 }
