@@ -1,0 +1,11 @@
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\bin\Release\netcoreapp2.1\FytSoa.Common.deps.json
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\bin\Release\netcoreapp2.1\FytSoa.Common.runtimeconfig.json
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\bin\Release\netcoreapp2.1\FytSoa.Common.runtimeconfig.dev.json
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\bin\Release\netcoreapp2.1\FytSoa.Common.dll
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\bin\Release\netcoreapp2.1\FytSoa.Common.pdb
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\obj\Release\netcoreapp2.1\FytSoa.Common.csprojAssemblyReference.cache
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\obj\Release\netcoreapp2.1\FytSoa.Common.csproj.CoreCompileInputs.cache
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\obj\Release\netcoreapp2.1\FytSoa.Common.AssemblyInfoInputs.cache
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\obj\Release\netcoreapp2.1\FytSoa.Common.AssemblyInfo.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\obj\Release\netcoreapp2.1\FytSoa.Common.dll
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\obj\Release\netcoreapp2.1\FytSoa.Common.pdb
