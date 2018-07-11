@@ -93,7 +93,8 @@ namespace FytSoa.Service.Implements
                 using (Db)
                 {
                     var query = Db.Queryable<ErpAppSetting>()
-                        .Where(m => !m.IsDel)                        
+                        .Where(m => !m.IsDel)     
+                        .OrderBy(m=>m.UpdateDate,OrderByType.Desc)
                         .ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";

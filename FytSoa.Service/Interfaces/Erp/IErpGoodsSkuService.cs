@@ -22,6 +22,13 @@ namespace FytSoa.Service.Interfaces
         /// <returns></returns>
         Task<ApiResult<ErpGoodsSku>> GetByGuidAsync(string parm);
 
+
+        /// <summary>
+        /// 根据条形获得一条数据
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<GoodsSkuDto>> GetByCodeAsync(string shopGuid,string code);
+
         /// <summary>
         /// 添加一条数据
         /// </summary>

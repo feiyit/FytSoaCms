@@ -18,12 +18,17 @@ namespace FytSoa.Api.Areas.APP.Controllers
         private readonly IErpShopsService _shopsService;
         private readonly IErpStaffService _staffService;
         private readonly IErpShopUserService _userService;
+        private readonly IErpPushService _pushService;
+        private readonly IErpAppSettingService _settingService;
         public UserController(IErpShopsService shopsService, IErpStaffService staffService,
-            IErpShopUserService userService)
+            IErpShopUserService userService, IErpPushService pushService,
+            IErpAppSettingService settingService)
         {
             _shopsService = shopsService;
             _staffService = staffService;
             _userService = userService;
+            _pushService = pushService;
+            _settingService = settingService;
         }
 
         /// <summary>
@@ -125,6 +130,31 @@ namespace FytSoa.Api.Areas.APP.Controllers
         public async Task<ApiResult<string>> UserAddAsync(ErpShopUser parm)
         {
             return await _userService.AddAsync(parm);
+        }
+
+        /// <summary>
+        /// 系统消息列表
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        [HttpPost("message")]
+        public JsonResult MessageListAsync(PageParm parm)
+        {
+            var res = _pushService.GetPagesAsync(parm).Result;            
+            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count ?? 0, data = res.data.Items });
+        }
+
+        /// <summary>
+        /// 版本更新
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        [HttpPost("version")]
+        public JsonResult AppVersionAsync(PageParm parm)
+        {
+            parm.limit = 1;
+            var res = _settingService.GetPagesAsync(parm).Result;
+            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count ?? 0, data = res.data.Items });
         }
     }
 }

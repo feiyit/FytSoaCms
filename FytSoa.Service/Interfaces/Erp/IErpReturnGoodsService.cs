@@ -1,6 +1,7 @@
 ﻿using FytSoa.Common;
 using FytSoa.Core.Model.Erp;
 using FytSoa.Service.DtoModel;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FytSoa.Service.Interfaces
@@ -26,7 +27,7 @@ namespace FytSoa.Service.Interfaces
         /// 添加一条数据
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<string>> AddAsync(ErpReturnGoods parm);
+        Task<ApiResult<string>> AddAsync(List<ErpReturnGoods> parm);
 
         /// <summary>
         /// 删除一条或多条数据

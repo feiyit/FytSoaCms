@@ -64,7 +64,7 @@ using FytSoa.Web;
                     ");
             EndContext();
             BeginContext(509, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7962e97f3adf4014a5f8d9f4a5ccf050", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8e4f3706e00c418fb3bf71a7279ab08e", async() => {
                 BeginContext(526, 11, true);
                 WriteLiteral("--可根据品牌搜索--");
                 EndContext();

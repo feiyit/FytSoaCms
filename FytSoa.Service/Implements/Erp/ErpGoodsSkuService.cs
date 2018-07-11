@@ -130,6 +130,33 @@ namespace FytSoa.Service.Implements
         }
 
         /// <summary>
+        /// 获得一条数据,根据店铺，和出库信息
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ApiResult<GoodsSkuDto>> GetByCodeAsync(string shopGuid, string code)
+        {
+            var model = Db.Queryable<ErpGoodsSku, ErpInOutLog>((egs, elog) => new object[] {
+                JoinType.Left,egs.Guid==elog.GoodsGuid
+            })
+                .Where((egs, elog) => egs.Code==code && elog.ShopGuid==shopGuid && elog.Types==2 && elog.GoodsSum>0)
+                .Select((egs, elog) => new GoodsSkuDto() {
+                    Guid= egs.Guid,
+                    Code= egs.Code,
+                    BrankName= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.BrankGuid).Select(g => g.Name),
+                    StyleName= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.StyleGuid).Select(g => g.Name),
+                    SalePrice= egs.SalePrice,
+                    DisPrice= egs.DisPrice,
+                    StockSum= elog.GoodsSum
+                }).First();
+            var res = new ApiResult<GoodsSkuDto>
+            {
+                statusCode = 200,
+                data = model
+            };
+            return await Task.Run(() => res);
+        }
+
+        /// <summary>
         /// 分页
         /// </summary>
         /// <param name="parm"></param>

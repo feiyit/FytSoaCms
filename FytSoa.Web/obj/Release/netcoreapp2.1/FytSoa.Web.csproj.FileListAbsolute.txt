@@ -88,3 +88,5 @@ D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\FytSoa.
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\FytSoa.Web.csproj.CopyComplete
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\FytSoa.Web.dll
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\FytSoa.Web.pdb
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\App\Setting.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\App\SettingModify.g.cshtml.cs

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FytSoa.Common;
+using FytSoa.Core.Model.Erp;
 using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -56,6 +58,18 @@ namespace FytSoa.Api.Areas.APP.Controllers
                 m.Counts
             });
             return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count ?? 0, data = list });
+        }
+
+        /// <summary>
+        /// 添加返货信息，包括返货订单和返货订单里面的商品
+        /// </summary>
+        /// <param name="parm">订单信息</param>
+        /// <param name="goodsJson">返货订单商品Json字符串</param>
+        /// <returns></returns>
+        [HttpPost("add/order")]
+        public Task<ApiResult<string>> AddReturnOrder(ErpReturnOrder parm,string goodsJson)
+        {
+            return _orderService.AddAsync(parm, goodsJson);
         }
     }
 }

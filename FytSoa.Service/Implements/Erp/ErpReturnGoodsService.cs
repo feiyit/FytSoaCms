@@ -19,12 +19,12 @@ namespace FytSoa.Service.Implements
         /// 添加一条数据
         /// </summary>
         /// <returns></returns>
-        public async Task<ApiResult<string>> AddAsync(ErpReturnGoods parm)
+        public async Task<ApiResult<string>> AddAsync(List<ErpReturnGoods> parm)
         {
             var res = new ApiResult<string>() { data = "1", statusCode = 200 };
             try
             {
-                var dbres = ErpReturnGoodsDb.Insert(parm);
+                var dbres = ErpReturnGoodsDb.InsertRange(parm.ToArray());
                 if (!dbres)
                 {
                     res.statusCode = (int)ApiEnum.Error;
