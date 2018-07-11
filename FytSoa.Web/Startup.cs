@@ -27,6 +27,7 @@ namespace FytSoa.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IErpAppSettingService, ErpAppSettingService>();
             services.AddTransient<IErpSaleOrderService, ErpSaleOrderService>();
             services.AddTransient<IErpSaleOrderGoodsService, ErpSaleOrderGoodsService>();
             services.AddTransient<IErpSupplierService, ErpSupplierService>();
