@@ -65,7 +65,7 @@ namespace FytSoa.Api.Areas.APP.Controllers
             var list = res.data.Items?.Select(m=>new {
                 m.Guid,m.TrueName,m.Sex,m.Mobile
             });            
-            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count??0, data = list });
+            return Json(new { statusCode = 200, msg = "success", count = res.data.TotalPages, data = list });
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace FytSoa.Api.Areas.APP.Controllers
                 m.Points,
                 Birthday=Convert.ToDateTime(m.Birthday).ToShortDateString().Replace("/","-")
             });
-            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count??0, data = list });
+            return Json(new { statusCode = 200, msg = "success", count = res.data.TotalPages, data = list });
         }
 
         /// <summary>
@@ -140,8 +140,8 @@ namespace FytSoa.Api.Areas.APP.Controllers
         [HttpPost("message")]
         public JsonResult MessageListAsync(PageParm parm)
         {
-            var res = _pushService.GetPagesAsync(parm).Result;            
-            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count ?? 0, data = res.data.Items });
+            var res = _pushService.GetPagesAsync(parm).Result;
+            return Json(new { statusCode = 200, msg = "success", count = res.data?.TotalPages, data = res.data.Items });
         }
 
         /// <summary>

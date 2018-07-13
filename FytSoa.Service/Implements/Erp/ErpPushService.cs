@@ -78,7 +78,8 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<ErpPush>>();
             try
             {
-                var query = Db.Queryable<ErpPush>().OrderBy(m => m.AddDate, OrderByType.Desc).ToPage(parm.page, parm.limit);
+                var query = Db.Queryable<ErpPush>().OrderBy(m => m.AddDate, OrderByType.Desc)
+                    .ToPage(parm.page, parm.limit);
                 res.success = true;
                 res.message = "获取成功！";
                 res.data = query;

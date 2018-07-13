@@ -28,7 +28,14 @@ namespace FytSoa.Service.DtoModel
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public string Types { get; set; }
+        public string ActivityTypes { get; set; }
+
+        /// <summary>
+        /// Desc:销售类型 1=正常销售/2=残次品销售
+        /// Default:1
+        /// Nullable:False
+        /// </summary>           
+        public string SaleType { get; set; }
 
         /// <summary>
         /// Desc:订单总件数
@@ -50,6 +57,13 @@ namespace FytSoa.Service.DtoModel
         /// Nullable:False
         /// </summary>           
         public decimal Money { get; set; }
+
+        /// <summary>
+        /// Desc:实际收入金额
+        /// Default:0.00
+        /// Nullable:False
+        /// </summary>           
+        public decimal RealMoney { get; set; }
 
         /// <summary>
         /// Desc:下单日期

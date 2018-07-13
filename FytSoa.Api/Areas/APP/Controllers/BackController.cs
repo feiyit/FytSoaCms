@@ -39,7 +39,7 @@ namespace FytSoa.Api.Areas.APP.Controllers
                 m.GoodsName,
                 AddDate = m.AddDate.ToShortDateString().Replace("/", "-")
             });
-            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count ?? 0, data = list });
+            return Json(new { statusCode = 200, msg = "success", count = res.data.TotalPages, data = list });
         }
 
         /// <summary>

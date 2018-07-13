@@ -43,7 +43,7 @@ namespace FytSoa.Api.Areas.APP.Controllers
                 m.GoodsSum,
                 AddDate=m.AddDate.ToShortDateString().Replace("/","-")
             });
-            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count ?? 0, data = list });
+            return Json(new { statusCode = 200, msg = "success", count = res.data.TotalPages, data = list });
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace FytSoa.Api.Areas.APP.Controllers
         public JsonResult OutPackGoodsList(PageParm parm, SearchParm searchParm)
         {
             var res = _inOutLogService.GetPagesAsync(parm, searchParm).Result;
-            return Json(new { statusCode = 200, msg = "success", count = res.data.Items?.Count ?? 0, data = res.data.Items });
+            return Json(new { statusCode = 200, msg = "success", count = res.data.TotalPages, data = res.data.Items });
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace FytSoa.Api.Areas.APP.Controllers
         public JsonResult Inventory(PageParm parm)
         {
             var res = _inventoryService.GetStockNumByShopAsync(parm).Result;
-            return Json(new { statusCode = 200, msg = "success", count = res.data?.Items?.Count ?? 0, data = res.data?.Items });
+            return Json(new { statusCode = 200, msg = "success", count = res.data?.TotalPages, data = res.data?.Items });
         }
 
     }

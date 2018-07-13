@@ -100,7 +100,7 @@ using FytSoa.Web;
                         ");
             EndContext();
             BeginContext(1863, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0bcf2f7061474acca59405365260b09d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a2f04a79f16042fa95f5a58a7f9a7736", async() => {
                 BeginContext(1880, 11, true);
                 WriteLiteral("--可根据品牌搜索--");
                 EndContext();
@@ -132,7 +132,7 @@ using FytSoa.Web;
             WriteLiteral("                                ");
             EndContext();
             BeginContext(2059, 46, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "368dd996ac544948a3a1708d62728733", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2608156856a04f799f7500d9bc5aeaf4", async() => {
                 BeginContext(2087, 9, false);
 #line 45 "D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Stock\Export.cshtml"
                                                       Write(item.Name);
@@ -183,7 +183,7 @@ using FytSoa.Web;
     ");
             EndContext();
             BeginContext(2541, 73, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9e11cc969bc6456e84bc5a401196e506", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e651958469ff49128f3294d20b7b7062", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

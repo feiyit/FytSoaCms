@@ -46,7 +46,7 @@ namespace FytIms.Service.Extensions
             bool isOrderBy = false)
         {
             var page = new Page<T>();
-            var totalItems = 0; //await query.CountAsync();
+            var totalItems =  query.Count();
             page.Items = query.ToPageList(pageIndex, pageSize, ref totalItems);
             var totalPages = totalItems != 0 ? (totalItems % pageSize) == 0 ? (totalItems / pageSize) : (totalItems / pageSize) + 1 : 0;
             page.CurrentPage = pageIndex;

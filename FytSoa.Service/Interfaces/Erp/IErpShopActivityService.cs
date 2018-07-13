@@ -26,6 +26,12 @@ namespace FytSoa.Service.Interfaces
         Task<ApiResult<ErpShopActivity>> GetByGuidAsync(string parm);
 
         /// <summary>
+        /// 根据店铺获得最新的活动
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<ShopActivityApp>> GetByShopsAsync(string parm);
+
+        /// <summary>
         /// 添加一条数据
         /// </summary>
         /// <returns></returns>

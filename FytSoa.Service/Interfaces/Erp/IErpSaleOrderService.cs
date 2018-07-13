@@ -20,6 +20,6 @@ namespace FytSoa.Service.Interfaces
         /// 添加一条数据
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<string>> AddAsync(ErpSaleOrder parm);
+        Task<ApiResult<string>> AddAsync(ErpSaleOrder parm,string goodsJson);
     }
 }

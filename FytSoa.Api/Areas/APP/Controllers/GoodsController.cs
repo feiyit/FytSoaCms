@@ -15,9 +15,11 @@ namespace FytSoa.Api.Areas.APP.Controllers
     public class GoodsController : Controller
     {
         private readonly IErpGoodsSkuService _goodsService;
-        public GoodsController(IErpGoodsSkuService goodsService)
+        private readonly IErpShopActivityService _activityService;
+        public GoodsController(IErpGoodsSkuService goodsService, IErpShopActivityService activityService)
         {
             _goodsService = goodsService;
+            _activityService = activityService;
         }
 
         /// <summary>
@@ -26,9 +28,13 @@ namespace FytSoa.Api.Areas.APP.Controllers
         /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost("bycode")]
-        public Task<ApiResult<GoodsSkuDto>> GetGoodsByCode(string shopGuid,string code)
+        public JsonResult GetGoodsByCode(string shopGuid,string code)
         {
-            return _goodsService.GetByCodeAsync(shopGuid,code);
+            //根据条形码，查询是商品
+            var goods=_goodsService.GetByCodeAsync(shopGuid, code).Result.data;
+            //查询活动，包括店铺和全部加盟商活动 只查询最新添加的一条
+            var activity = _activityService.GetByShopsAsync(shopGuid).Result.data;
+            return Json(new { statusCode = 200,good=goods,activity });
         }
     }
 }

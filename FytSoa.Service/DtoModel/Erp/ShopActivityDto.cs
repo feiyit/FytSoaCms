@@ -52,6 +52,10 @@ namespace FytSoa.Service.DtoModel
         /// </summary>
         public int? CountNum { get; set; }
         /// <summary>
+        /// 满减
+        /// </summary>
+        public string FullBack { get; set; }
+        /// <summary>
         /// 活动开始时间
         /// </summary>
         public DateTime BeginDate { get; set; }
@@ -67,5 +71,28 @@ namespace FytSoa.Service.DtoModel
         /// 活动状态，根据开始时间和结束时间来判断
         /// </summary>
         public string Status { get; set; }
+    }
+
+    /// <summary>
+    /// 提供给APP的活动内容
+    /// </summary>
+    public class ShopActivityApp
+    {
+        /// <summary>
+        /// 活动编号
+        /// </summary>
+        public string Guid { get; set; }
+        /// <summary>
+        /// 活动类型
+        /// </summary>
+        public string Method { get; set; }
+        /// <summary>
+        /// 折扣值
+        /// </summary>
+        public int? CountNum { get; set; }
+        /// <summary>
+        /// 满减值
+        /// </summary>
+        public string FullBack { get; set; }
     }
 }

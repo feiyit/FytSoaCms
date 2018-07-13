@@ -55,32 +55,46 @@ namespace FytSoa.Core.Model.Erp
         public string ActivityName { get; set; }
 
         /// <summary>
-        /// Desc:订单类型 1=普通销售/2=打折销售/3=满减销售
+        /// Desc:活动类型 1=普通销售/2=打折销售/3=满减销售
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public byte Types { get; set; }
+        public byte ActivityTypes { get; set; } = 1;
+
+        /// <summary>
+        /// Desc:销售类型 1=正常销售/2=残次品销售
+        /// Default:1
+        /// Nullable:False
+        /// </summary>           
+        public byte SaleType { get; set; } = 1;
 
         /// <summary>
         /// Desc:订单总件数
         /// Default:0
         /// Nullable:False
         /// </summary>           
-        public int Counts { get; set; }
+        public int Counts { get; set; } = 1;
 
         /// <summary>
         /// Desc:订单金额
         /// Default:0.00
         /// Nullable:False
         /// </summary>           
-        public decimal Money { get; set; }
+        public decimal Money { get; set; } = 0;
+
+        /// <summary>
+        /// Desc:实收金额-如果有活动会比订单金额要低
+        /// Default:0.00
+        /// Nullable:False
+        /// </summary>           
+        public decimal RealMoney { get; set; } = 0;
 
         /// <summary>
         /// Desc:下单日期
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public DateTime AddDate { get; set; }
+        public DateTime AddDate { get; set; } = DateTime.Now;
 
     }
 }

@@ -103,6 +103,46 @@ namespace FytSoa.Service.Implements
         }
 
         /// <summary>
+        /// 根据店铺获得最新的活动
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ApiResult<ShopActivityApp>> GetByShopsAsync(string parm)
+        {
+            var res = new ApiResult<ShopActivityApp>
+            {
+                statusCode = 200,
+                data = null
+            };
+            var nowTime = DateTime.Now;
+            //先查询店铺是否有活动，如果没有在查询全局是否有活动
+            var shopActivity = ErpShopActivityDb.GetSingle(m=>!m.IsDel && m.ShopGuid==parm && SqlFunc.Between(nowTime, m.BeginDate, m.EndDate));
+            if (shopActivity != null)
+            {
+                res.data = new ShopActivityApp()
+                {
+                    Guid= shopActivity.Guid,
+                    Method= (shopActivity.Method == 1 ? "打折" : "满减"),
+                    CountNum= shopActivity.CountNum,
+                    FullBack= shopActivity.FullBack
+                };
+                return await Task.Run(() => res);
+            }
+            //查询全局活动
+            var platformActivity = ErpShopActivityDb.GetSingle(m => !m.IsDel && m.ShopGuid == "all" && SqlFunc.Between(nowTime, m.BeginDate, m.EndDate));
+            if (platformActivity!=null)
+            {
+                res.data = new ShopActivityApp()
+                {
+                    Guid = platformActivity.Guid,
+                    Method = (platformActivity.Method == 1 ? "打折" : "满减"),
+                    CountNum = platformActivity.CountNum,
+                    FullBack = platformActivity.FullBack
+                };
+            }
+            return await Task.Run(() => res);
+        }
+
+        /// <summary>
         /// 分页
         /// </summary>
         /// <param name="parm"></param>
@@ -112,10 +152,12 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<ShopActivityDto>>();
             try
             {
+                var nowTime = DateTime.Now;
                 var query = Db.Queryable<ErpShopActivity>()
                         .Where(m=>!m.IsDel)
+                        .WhereIF(parm.types==1,m=> SqlFunc.Between(nowTime,m.BeginDate,m.EndDate))
                         .Where(m=>m.ShopGuid==parm.guid || m.ShopGuid=="all")
-                        .OrderBy(m => m.EndDate, OrderByType.Desc).Select(m => new ShopActivityDto()
+                        .OrderBy(m => m.AddDate, OrderByType.Desc).Select(m => new ShopActivityDto()
                         {
                             Guid = m.Guid,
                             Types=m.Types,
