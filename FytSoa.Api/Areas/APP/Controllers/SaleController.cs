@@ -32,14 +32,15 @@ namespace FytSoa.Api.Areas.APP.Controllers
         /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost("order/list")]
-        public JsonResult SaleOrderList(PageParm parm)
+        public JsonResult SaleOrderList(PageParm parm,AppSearchParm searchParm)
         {
-            var res = _orderService.GetPagesAsync(parm).Result;
+            var res = _orderService.GetPagesAsync(parm, searchParm).Result;
             var list = res.data.Items?.Select(m => new {
                 m.Number,
                 m.Counts,
-                m.Money,
-                AddDate = m.AddDate.ToShortDateString().Replace("/", "-")
+                m.RealMoney,
+                m.Goods,
+                AddDate = m.AddDate.ToString().Replace("/", "-").Replace("T"," ")
             });
             return Json(new { statusCode = 200, msg = "success", count = res.data.TotalPages, data = list });
         }
@@ -66,6 +67,17 @@ namespace FytSoa.Api.Areas.APP.Controllers
         public Task<ApiResult<string>> AddSaleOrder(ErpSaleOrder parm, string goodsJson)
         {
             return _orderService.AddAsync(parm, goodsJson);
+        }
+
+        /// <summary>
+        /// 根据编号，查询订单信息
+        /// </summary>
+        /// <param name="number">订单编号</param>
+        /// <returns></returns>
+        [HttpPost("bynumber")]
+        public Task<ApiResult<SaleOrderApp>> GetSaleOrderByNumber(string number)
+        {
+            return _orderService.GetByNumberAsync(number);
         }
     }
 }

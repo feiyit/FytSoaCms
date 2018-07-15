@@ -148,6 +148,15 @@ namespace FytSoa.Service.Implements
                     DisPrice= egs.DisPrice,
                     StockSum= elog.GoodsSum
                 }).First();
+            //出库  库存=返货+销售的数量
+            var saleStock = Db.Queryable<ErpSaleOrderGoods,ErpGoodsSku>((eso,egs)=>new object[] { JoinType.Left,eso.GoodsGuid==egs.Guid})
+                .Where((eso, egs) => eso.ShopGuid == shopGuid && egs.Code == code)
+                .Sum((eso, egs) => eso.Counts);
+            var returnStock = Db.Queryable<ErpReturnGoods, ErpGoodsSku>((eso, egs) => new object[] { JoinType.Left, eso.GoodsGuid == egs.Guid })
+                .Where((eso, egs) => eso.ShopGuid == shopGuid && egs.Code == code)
+                .Sum((eso, egs) => eso.ReturnCount);
+            model.StockSum = model.StockSum - (saleStock+ returnStock);
+
             var res = new ApiResult<GoodsSkuDto>
             {
                 statusCode = 200,

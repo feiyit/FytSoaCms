@@ -44,4 +44,13 @@ namespace FytSoa.Service.DtoModel
         /// </summary>
         public int orderType { get; set; } = 0;
     }
+
+    public class AppSearchParm
+    {
+        public string btime { get; set; }
+        public string etime { get; set; }
+        public string brand { get; set; }
+        public int saleType { get; set; } = 0;
+        public int activityTypes { get; set; } = 0;
+    }
 }

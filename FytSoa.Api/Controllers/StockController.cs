@@ -222,5 +222,19 @@ namespace FytSoa.Api.Controllers
             return await _transferGoodsService.ModifyAsync(parm);
         }
         #endregion
+
+        #region 退货
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("backlist")]
+        public async Task<JsonResult> GetBackPages(PageParm parm, SearchParm searchParm)
+        {
+            var res = await _backGoodsService.GetPagesAsync(parm, searchParm);
+            return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
+        }
+        #endregion
     }
 }

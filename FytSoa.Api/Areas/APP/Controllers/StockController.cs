@@ -63,10 +63,10 @@ namespace FytSoa.Api.Areas.APP.Controllers
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        [HttpGet("inventory")]
-        public JsonResult Inventory(PageParm parm)
+        [HttpPost("inventory")]
+        public JsonResult Inventory(PageParm parm, AppSearchParm searchParm)
         {
-            var res = _inventoryService.GetStockNumByShopAsync(parm).Result;
+            var res = _inventoryService.GetStockNumByShopAsync(parm, searchParm).Result;
             return Json(new { statusCode = 200, msg = "success", count = res.data?.TotalPages, data = res.data?.Items });
         }
 

@@ -14,12 +14,18 @@ namespace FytSoa.Service.Interfaces
         /// 获得列表
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<Page<SaleOrderDto>>> GetPagesAsync(PageParm parm);
+        Task<ApiResult<Page<SaleOrderDto>>> GetPagesAsync(PageParm parm, AppSearchParm searchParm);
 
         /// <summary>
         /// 添加一条数据
         /// </summary>
         /// <returns></returns>
         Task<ApiResult<string>> AddAsync(ErpSaleOrder parm,string goodsJson);
+
+        /// <summary>
+        /// 获得一条数据
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<SaleOrderApp>> GetByNumberAsync(string parm);
     }
 }

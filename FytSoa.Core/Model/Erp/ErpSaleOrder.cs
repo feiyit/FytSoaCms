@@ -50,6 +50,11 @@ namespace FytSoa.Core.Model.Erp
         public string UserGuid { get; set; }
 
         /// <summary>
+        /// 活动编号
+        /// </summary>
+        public string ActivityGuid { get; set; }
+
+        /// <summary>
         /// 活动名称
         /// </summary>
         public string ActivityName { get; set; }

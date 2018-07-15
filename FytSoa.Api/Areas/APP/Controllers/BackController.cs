@@ -30,13 +30,13 @@ namespace FytSoa.Api.Areas.APP.Controllers
         /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost("list")]
-        public JsonResult BackGoodsList(PageParm parm)
+        public JsonResult BackGoodsList(PageParm parm, SearchParm searchParm)
         {
-            var res = _backService.GetPagesAsync(parm).Result;
+            var res = _backService.GetPagesAsync(parm,searchParm).Result;
             var list = res.data.Items?.Select(m => new {
                 m.Code,
                 m.BackCount,
-                m.GoodsName,
+                GoodsName = m.BrandName + m.StyleName + m.SeasonName,
                 AddDate = m.AddDate.ToShortDateString().Replace("/", "-")
             });
             return Json(new { statusCode = 200, msg = "success", count = res.data.TotalPages, data = list });

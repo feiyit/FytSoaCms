@@ -12,3 +12,17 @@ D:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Release\netcoreapp2.1\FytSoa
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Release\netcoreapp2.1\FytSoa.Core.csproj.CopyComplete
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Release\netcoreapp2.1\FytSoa.Core.dll
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Release\netcoreapp2.1\FytSoa.Core.pdb
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\bin\Release\netcoreapp2.1\FytSoa.Core.deps.json
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\bin\Release\netcoreapp2.1\FytSoa.Core.runtimeconfig.json
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\bin\Release\netcoreapp2.1\FytSoa.Core.runtimeconfig.dev.json
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\bin\Release\netcoreapp2.1\FytSoa.Core.dll
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\bin\Release\netcoreapp2.1\FytSoa.Core.pdb
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\bin\Release\netcoreapp2.1\FytSoa.Extensions.dll
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\bin\Release\netcoreapp2.1\FytSoa.Extensions.pdb
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Release\netcoreapp2.1\FytSoa.Core.csprojAssemblyReference.cache
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Release\netcoreapp2.1\FytSoa.Core.csproj.CoreCompileInputs.cache
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Release\netcoreapp2.1\FytSoa.Core.AssemblyInfoInputs.cache
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Release\netcoreapp2.1\FytSoa.Core.AssemblyInfo.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Release\netcoreapp2.1\FytSoa.Core.csproj.CopyComplete
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Release\netcoreapp2.1\FytSoa.Core.dll
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Core\obj\Release\netcoreapp2.1\FytSoa.Core.pdb

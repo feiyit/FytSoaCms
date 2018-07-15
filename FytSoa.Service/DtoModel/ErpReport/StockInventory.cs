@@ -73,8 +73,8 @@ namespace FytSoa.Service.DtoModel
         /// </summary>
         public int Stock { get; set; }
         /// <summary>
-        /// 销售和库存数量的百分比
+        /// 返货数量
         /// </summary>
-        public int Perc { get; set; }
+        public int returnSum { get; set; } = 0;
     }
 }

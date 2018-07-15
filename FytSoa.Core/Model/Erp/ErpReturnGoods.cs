@@ -29,6 +29,13 @@ namespace FytSoa.Core.Model.Erp
         public string OrderGuid { get; set; }
 
         /// <summary>
+        /// Desc:加盟商编号
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string ShopGuid { get; set; }
+
+        /// <summary>
         /// Desc:返货的是哪件衣服
         /// Default:
         /// Nullable:False

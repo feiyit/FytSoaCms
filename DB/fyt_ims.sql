@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : fyt
-Source Server Version : 50717
+Source Server Version : 50719
 Source Host           : localhost:3306
 Source Database       : fyt_ims
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-07-13 18:10:32
+Date: 2018-07-14 16:14:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,7 +46,7 @@ CREATE TABLE `erpbackgoods` (
   `ShopGuid` varchar(50) NOT NULL COMMENT '退货涉及的店铺',
   `OrderNumber` varchar(50) DEFAULT NULL COMMENT '退货涉及的订单号',
   `AdminGuid` varchar(50) NOT NULL COMMENT '谁提交的退货',
-  `GoodsGuid` varchar(50) NOT NULL COMMENT '退货的商品',
+  `GoodsGuid` varchar(50) DEFAULT NULL COMMENT '退货的商品',
   `BackCount` int(11) NOT NULL DEFAULT '1' COMMENT '退货数量',
   `BackMoney` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '退货的金额',
   `Status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '退货的状态 1=提交退货 2=受理 3=完成 4=其他',
@@ -58,7 +58,6 @@ CREATE TABLE `erpbackgoods` (
 -- ----------------------------
 -- Records of erpbackgoods
 -- ----------------------------
-INSERT INTO `erpbackgoods` VALUES ('1111', '111', '111', '111', '111', '111', '1', '0.00', '1', null, '2018-07-07 20:58:12');
 
 -- ----------------------------
 -- Table structure for erpgoods
@@ -257,6 +256,7 @@ DROP TABLE IF EXISTS `erpreturngoods`;
 CREATE TABLE `erpreturngoods` (
   `Guid` varchar(50) NOT NULL,
   `OrderGuid` varchar(50) DEFAULT NULL COMMENT '返货订单编号',
+  `ShopGuid` varchar(50) DEFAULT NULL COMMENT '加盟商编号',
   `GoodsGuid` varchar(50) NOT NULL COMMENT '返货的是哪件衣服',
   `ReturnCount` int(11) NOT NULL DEFAULT '1' COMMENT '返货的数量',
   `Summary` varchar(500) DEFAULT NULL COMMENT '返货描述',
@@ -317,6 +317,7 @@ CREATE TABLE `erpsaleorder` (
 DROP TABLE IF EXISTS `erpsaleordergoods`;
 CREATE TABLE `erpsaleordergoods` (
   `Guid` varchar(50) NOT NULL,
+  `ShopGuid` varchar(50) DEFAULT NULL COMMENT '加盟商编号',
   `OrderNumber` varchar(50) NOT NULL COMMENT '订单编号',
   `GoodsGuid` varchar(50) NOT NULL COMMENT '订单商品编号',
   `Counts` int(11) NOT NULL DEFAULT '1' COMMENT '购买数量',
@@ -531,7 +532,7 @@ CREATE TABLE `sysadmin` (
 -- ----------------------------
 -- Records of sysadmin
 -- ----------------------------
-INSERT INTO `sysadmin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-06-13 21:43:43', '2018-07-13 14:50:11', '2018-07-13 14:50:11');
+INSERT INTO `sysadmin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-06-13 21:43:43', '2018-07-14 10:06:32', '2018-07-14 10:06:32');
 INSERT INTO `sysadmin` VALUES ('30d3da88-bb72-4ace-a303-b3aae0ecb732', null, '事业发展部', '4b6ab27f-c0fa-483d-9b5a-55891ee8d727', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,4b6ab27f-c0fa-483d-9b5a-55891ee8d727,', 'testadmin', 'pPo9vFeTWOCF0oLKKdX9Jw==', '李四', '1002', '/themes/img/avatar.jpg', '男', null, '\0', null, null, '2018-06-16 23:35:36', null, null);
 
 -- ----------------------------
@@ -811,6 +812,7 @@ INSERT INTO `syslog` VALUES ('ba4c5061-bc8e-4efa-93ee-82d935813bdd', 'admins', '
 INSERT INTO `syslog` VALUES ('ba692f57-cbe8-4fe6-a97d-4b8ea5cd2293', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 20:35:39');
 INSERT INTO `syslog` VALUES ('bbc5cc55-fd9c-4464-b277-8051dfbd852d', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-01 00:38:51');
 INSERT INTO `syslog` VALUES ('bc57c675-fc63-4fc2-a55d-db5d0749289d', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-21 16:16:31');
+INSERT INTO `syslog` VALUES ('be2dacc7-ce46-4f07-832d-c85756a27ef0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-14 10:06:32');
 INSERT INTO `syslog` VALUES ('be4c7ba7-336f-48e3-a318-268d3eadec39', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-29 19:31:43');
 INSERT INTO `syslog` VALUES ('bf95bbbc-72e5-4045-89b5-2d10caca1ee8', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-25 15:00:26');
 INSERT INTO `syslog` VALUES ('c1ac92d1-4026-4e5e-9a1c-3c8a23529be5', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '', '2018-06-14 00:29:27');

@@ -2,11 +2,13 @@
 using FytSoa.Common;
 using FytSoa.Core;
 using FytSoa.Core.Model.Erp;
+using FytSoa.Core.Model.Sys;
 using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,6 +39,7 @@ namespace FytSoa.Service.Implements
                     .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.Code.Contains(parm.key))
                     .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.BrankGuid == parm.guid)
                     .WhereIF(!string.IsNullOrEmpty(parm.time), m => m.AddDate >= Convert.ToDateTime(beginTime) && m.AddDate <= Convert.ToDateTime(endTime))
+
                     .PartitionBy(m => new { m.Code, m.Guid })
                     .Select(m => new StockInventory() {
                         Code = m.Code,
@@ -65,13 +68,60 @@ namespace FytSoa.Service.Implements
         /// 可根据店铺查询，日期，品牌
         /// </summary>
         /// <returns></returns>
-        public Task<ApiResult<Page<StockSaleNum>>> GetStockNumByShopAsync(PageParm parm)
+        public Task<ApiResult<Page<StockSaleNum>>> GetStockNumByShopAsync(PageParm parm, AppSearchParm searchParm)
 
         {
             var res = new ApiResult<Page<StockSaleNum>>();
             try
             {
-
+                var query = Db.Queryable<ErpGoodsSku, ErpInOutLog>((t1, t2) => new object[] { JoinType.Left, t1.Guid == t2.GoodsGuid })
+                    .Where((t1, t2) => t2.ShopGuid == parm.guid)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.brand), (t1, t2) => t1.BrankGuid == searchParm.brand)
+                    .Select((t1, t2) => new StockSaleNum()
+                    {
+                        Guid=t1.Guid,
+                        Code=t1.Code,
+                        Brand= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t1.BrankGuid).Select(g => g.Name),
+                        Style= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t1.StyleGuid).Select(g => g.Name),
+                        Stock=t2.GoodsSum,
+                        returnSum= SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == t1.Guid).Sum(g => g.ReturnCount)
+                    }).ToPage(parm.page,parm.limit);
+                //根据日期查询
+                var guidList = query.Items.Select(m=>m.Guid).ToList();
+                if (parm.types==1)
+                {
+                    //本日
+                    var dayList = ErpSaleOrderGoodsDb.GetList(m=>guidList.Contains(m.GoodsGuid) && 
+                    SqlFunc.DateIsSame(SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.Number == m.OrderNumber).Select(g => g.AddDate), DateTime.Now));
+                    foreach (var item in query.Items)
+                    {
+                        item.Sale = dayList.Where(m=>m.GoodsGuid==item.Guid).Sum(m=>m.Counts);
+                    }
+                }
+                if (parm.types == 2)
+                {
+                    //本月
+                    DateTime now = DateTime.Now;
+                    DateTime d1 = new DateTime(now.Year, now.Month, 1);
+                    DateTime d2 = d1.AddMonths(1).AddDays(-1);
+                    var dayList = ErpSaleOrderGoodsDb.GetList(m => guidList.Contains(m.GoodsGuid) &&
+                    SqlFunc.Between(SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.Number == m.OrderNumber).Select(g => g.AddDate), d1, d2));
+                    foreach (var item in query.Items)
+                    {
+                        item.Sale = dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.Counts);
+                    }
+                }
+                if (parm.types==3)
+                {
+                    //自定义时间
+                    var dayList = ErpSaleOrderGoodsDb.GetList(m => guidList.Contains(m.GoodsGuid) &&
+                    SqlFunc.Between(SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.Number == m.OrderNumber).Select(g => g.AddDate), Convert.ToDateTime(searchParm.btime), Convert.ToDateTime(searchParm.etime)));
+                    foreach (var item in query.Items)
+                    {
+                        item.Sale = dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.Counts);
+                    }
+                }
+                res.data = query;
             }
             catch (Exception ex)
             {

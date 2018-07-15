@@ -22,6 +22,6 @@ namespace FytSoa.Service.Interfaces
         /// 可根据店铺查询，日期，品牌
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<Page<StockSaleNum>>> GetStockNumByShopAsync(PageParm parm);
+        Task<ApiResult<Page<StockSaleNum>>> GetStockNumByShopAsync(PageParm parm, AppSearchParm searchParm);
     }
 }

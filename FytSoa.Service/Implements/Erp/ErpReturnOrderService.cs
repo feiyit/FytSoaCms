@@ -55,6 +55,7 @@ namespace FytSoa.Service.Implements
                 {
                     item.OrderGuid = parm.Guid;
                     item.Guid = Guid.NewGuid().ToString();
+                    item.ShopGuid = parm.ShopGuid;
                 }
                 //查询今天返货数量
                 var dayCount = ErpReturnOrderDb.Count(m => SqlFunc.DateIsSame(m.AddDate, DateTime.Now));                

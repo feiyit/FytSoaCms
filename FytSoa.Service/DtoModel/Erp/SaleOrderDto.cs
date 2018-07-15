@@ -71,7 +71,10 @@ namespace FytSoa.Service.DtoModel
         /// Nullable:False
         /// </summary>           
         public DateTime AddDate { get; set; }
+
+        public List<SaleOrderGoodsDto> Goods { get; set; }
     }
+
 
     /// <summary>
     /// 订单商品详情列表
@@ -87,6 +90,27 @@ namespace FytSoa.Service.DtoModel
         /// 条形码
         /// </summary>
         public string Code { get; set; }
+
+        /// <summary>
+        /// 数量
+        /// </summary>
+        public int Counts { get; set; }
+    }
+
+    /// <summary>
+    /// 提供根据订单编号查询的内容
+    /// </summary>
+    public class SaleOrderApp
+    {
+        /// <summary>
+        /// 商品名称
+        /// </summary>
+        public string Number { get; set; }
+
+        /// <summary>
+        /// 条形码
+        /// </summary>
+        public decimal Money { get; set; }
 
         /// <summary>
         /// 数量
