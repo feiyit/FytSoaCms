@@ -84,14 +84,14 @@ namespace FytSoa.Service.Implements
                         Brand= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t1.BrankGuid).Select(g => g.Name),
                         Style= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t1.StyleGuid).Select(g => g.Name),
                         Stock=t2.GoodsSum,
-                        returnSum= SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == t1.Guid).Sum(g => g.ReturnCount)
+                        returnSum= SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == t1.Guid && g.ShopGuid == parm.guid).Sum(g => g.ReturnCount)
                     }).ToPage(parm.page,parm.limit);
                 //根据日期查询
                 var guidList = query.Items.Select(m=>m.Guid).ToList();
                 if (parm.types==1)
                 {
                     //本日
-                    var dayList = ErpSaleOrderGoodsDb.GetList(m=>guidList.Contains(m.GoodsGuid) && 
+                    var dayList = ErpSaleOrderGoodsDb.GetList(m=>guidList.Contains(m.GoodsGuid) && m.ShopGuid == parm.guid &&
                     SqlFunc.DateIsSame(SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.Number == m.OrderNumber).Select(g => g.AddDate), DateTime.Now));
                     foreach (var item in query.Items)
                     {
@@ -104,7 +104,7 @@ namespace FytSoa.Service.Implements
                     DateTime now = DateTime.Now;
                     DateTime d1 = new DateTime(now.Year, now.Month, 1);
                     DateTime d2 = d1.AddMonths(1).AddDays(-1);
-                    var dayList = ErpSaleOrderGoodsDb.GetList(m => guidList.Contains(m.GoodsGuid) &&
+                    var dayList = ErpSaleOrderGoodsDb.GetList(m => guidList.Contains(m.GoodsGuid) && m.ShopGuid==parm.guid &&
                     SqlFunc.Between(SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.Number == m.OrderNumber).Select(g => g.AddDate), d1, d2));
                     foreach (var item in query.Items)
                     {
@@ -114,7 +114,7 @@ namespace FytSoa.Service.Implements
                 if (parm.types==3)
                 {
                     //自定义时间
-                    var dayList = ErpSaleOrderGoodsDb.GetList(m => guidList.Contains(m.GoodsGuid) &&
+                    var dayList = ErpSaleOrderGoodsDb.GetList(m => guidList.Contains(m.GoodsGuid) && m.ShopGuid == parm.guid &&
                     SqlFunc.Between(SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.Number == m.OrderNumber).Select(g => g.AddDate), Convert.ToDateTime(searchParm.btime), Convert.ToDateTime(searchParm.etime)));
                     foreach (var item in query.Items)
                     {
