@@ -70,5 +70,16 @@ namespace FytSoa.Api.Areas.APP.Controllers
             return Json(new { statusCode = 200, msg = "success", count = res.data?.TotalPages, data = res.data?.Items });
         }
 
+        /// <summary>
+        /// 营业额
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        [HttpPost("turnover")]
+        public Task<ApiResult<DayTurnover>> GetTurnover(PageParm parm, AppSearchParm searchParm)
+        {
+            return _inventoryService.GetTurnover(parm, searchParm);
+        }
+
     }
 }

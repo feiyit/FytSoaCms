@@ -23,5 +23,11 @@ namespace FytSoa.Service.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<ApiResult<Page<StockSaleNum>>> GetStockNumByShopAsync(PageParm parm, AppSearchParm searchParm);
+
+        /// <summary>
+        /// 获得APP端统计的营业额
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<DayTurnover>> GetTurnover(PageParm parm, AppSearchParm searchParm);
     }
 }

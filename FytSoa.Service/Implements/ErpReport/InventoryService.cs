@@ -130,5 +130,47 @@ namespace FytSoa.Service.Implements
             }
             return Task.Run(() => res);
         }
+
+        /// <summary>
+        /// 查询营业额
+        /// </summary>
+        /// <returns></returns>
+        public Task<ApiResult<DayTurnover>> GetTurnover(PageParm parm,AppSearchParm searchParm)
+        {
+            var res = new ApiResult<DayTurnover>();
+            try
+            {                
+                DateTime now = DateTime.Now;
+                DateTime d1 = new DateTime(now.Year, now.Month, 1);
+                DateTime d2 = d1.AddMonths(1).AddDays(-1);
+                //订单数
+                var orderSum = Db.Queryable<ErpSaleOrder>()
+                    .WhereIF(!string.IsNullOrEmpty(parm.guid),m=>m.ShopGuid==parm.guid)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.btime) && !string.IsNullOrEmpty(searchParm.btime),
+                    m => SqlFunc.Between(m.AddDate, Convert.ToDateTime(searchParm.btime), Convert.ToDateTime(searchParm.etime)))
+                    .WhereIF(parm.types == 1, m => SqlFunc.DateIsSame(m.AddDate, DateTime.Now))
+                    .WhereIF(parm.types == 2, m => SqlFunc.Between(m.AddDate, d1, d2))
+                    .Count();
+                //订单金额
+                var orderMoney= Db.Queryable<ErpSaleOrder>()
+                    .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.ShopGuid == parm.guid)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.btime) && !string.IsNullOrEmpty(searchParm.btime),
+                    m => SqlFunc.Between(m.AddDate, Convert.ToDateTime(searchParm.btime), Convert.ToDateTime(searchParm.etime)))
+                    .WhereIF(parm.types == 1, m => SqlFunc.DateIsSame(m.AddDate, DateTime.Now))
+                    .WhereIF(parm.types == 2, m => SqlFunc.Between(m.AddDate, d1, d2))
+                    .Sum(m=>m.RealMoney);
+                res.data = new DayTurnover()
+                {
+                    OrderSum = orderSum,
+                    Money = orderMoney
+                };
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return Task.Run(() => res);
+        }
     }
 }

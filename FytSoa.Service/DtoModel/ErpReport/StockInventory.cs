@@ -77,4 +77,19 @@ namespace FytSoa.Service.DtoModel
         /// </summary>
         public int returnSum { get; set; } = 0;
     }
+
+    /// <summary>
+    /// 营业额
+    /// </summary>
+    public class DayTurnover
+    {
+        /// <summary>
+        /// 今日/本月订单数据
+        /// </summary>
+        public int OrderSum { get; set; }
+        /// <summary>
+        /// 对应的订单总金额
+        /// </summary>
+        public decimal Money { get; set; }
+    }
 }
