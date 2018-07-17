@@ -92,6 +92,11 @@ namespace FytSoa.Service.DtoModel
         public string Code { get; set; }
 
         /// <summary>
+        /// 金额
+        /// </summary>
+        public decimal Money { get; set; } = 0;
+
+        /// <summary>
         /// 数量
         /// </summary>
         public int Counts { get; set; }
@@ -111,6 +116,11 @@ namespace FytSoa.Service.DtoModel
         /// 条形码
         /// </summary>
         public decimal Money { get; set; }
+
+        /// <summary>
+        /// 活动名称
+        /// </summary>
+        public string ActivityName { get; set; }
 
         /// <summary>
         /// 数量

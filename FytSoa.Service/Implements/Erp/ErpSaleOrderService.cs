@@ -263,6 +263,7 @@ namespace FytSoa.Service.Implements
             {
                 Number = model.Number,
                 Counts = model.Counts,
+                ActivityName=!string.IsNullOrEmpty(model.ActivityName)?model.ActivityName:"",
                 Money = model.RealMoney
             };
             return await Task.Run(() => res);
