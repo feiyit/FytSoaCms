@@ -73,10 +73,11 @@ namespace FytSoa.Service.Implements
         {
             var res = new ApiResult<Page<StockSaleNum>>();
             try
-            {
+            {                
                 var query = Db.Queryable<ErpGoodsSku, ErpInOutLog>((t1, t2) => new object[] { JoinType.Left, t1.Guid == t2.GoodsGuid })
                     .Where((t1, t2) => t2.ShopGuid == parm.guid)
                     .WhereIF(!string.IsNullOrEmpty(searchParm.brand), (t1, t2) => t1.BrankGuid == searchParm.brand)
+                    .OrderByIF(parm.orderType==1, (t1, t2)=>t1.SaleSum,OrderByType.Desc)
                     .Select((t1, t2) => new StockSaleNum()
                     {
                         Guid=t1.Guid,
@@ -88,11 +89,21 @@ namespace FytSoa.Service.Implements
                     }).ToPage(parm.page,parm.limit);
                 //根据日期查询
                 var guidList = query.Items.Select(m=>m.Guid).ToList();
+                if (parm.types == 0)
+                {
+                    //所有
+                    var dayList = ErpSaleOrderGoodsDb.GetList(m => guidList.Contains(m.GoodsGuid) && m.ShopGuid == parm.guid);
+                    foreach (var item in query.Items)
+                    {
+                        item.Sale = dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.Counts);
+                    }
+                }
                 if (parm.types==1)
                 {
+                    DateTime dayTime = Convert.ToDateTime(DateTime.Now.AddDays(1).ToShortDateString() + " 00:00:00");
                     //本日
                     var dayList = ErpSaleOrderGoodsDb.GetList(m=>guidList.Contains(m.GoodsGuid) && m.ShopGuid == parm.guid &&
-                    SqlFunc.DateIsSame(SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.Number == m.OrderNumber).Select(g => g.AddDate), DateTime.Now));
+                    SqlFunc.DateIsSame(SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.Number == m.OrderNumber).Select(g => g.AddDate), dayTime));
                     foreach (var item in query.Items)
                     {
                         item.Sale = dayList.Where(m=>m.GoodsGuid==item.Guid).Sum(m=>m.Counts);
@@ -143,20 +154,22 @@ namespace FytSoa.Service.Implements
                 DateTime now = DateTime.Now;
                 DateTime d1 = new DateTime(now.Year, now.Month, 1);
                 DateTime d2 = d1.AddMonths(1).AddDays(-1);
+
+                DateTime dayTime = Convert.ToDateTime(now.AddDays(1).ToShortDateString() + " 00:00:00");
                 //订单数
                 var orderSum = Db.Queryable<ErpSaleOrder>()
                     .WhereIF(!string.IsNullOrEmpty(parm.guid),m=>m.ShopGuid==parm.guid)
                     .WhereIF(!string.IsNullOrEmpty(searchParm.btime) && !string.IsNullOrEmpty(searchParm.btime),
                     m => SqlFunc.Between(m.AddDate, Convert.ToDateTime(searchParm.btime), Convert.ToDateTime(searchParm.etime)))
-                    .WhereIF(parm.types == 1, m => SqlFunc.DateIsSame(m.AddDate, DateTime.Now))
+                    .WhereIF(parm.types == 1, m => SqlFunc.DateIsSame(m.AddDate, dayTime))
                     .WhereIF(parm.types == 2, m => SqlFunc.Between(m.AddDate, d1, d2))
                     .Count();
                 //订单金额
-                var orderMoney= Db.Queryable<ErpSaleOrder>()
+                var orderMoney = Db.Queryable<ErpSaleOrder>()
                     .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.ShopGuid == parm.guid)
                     .WhereIF(!string.IsNullOrEmpty(searchParm.btime) && !string.IsNullOrEmpty(searchParm.btime),
                     m => SqlFunc.Between(m.AddDate, Convert.ToDateTime(searchParm.btime), Convert.ToDateTime(searchParm.etime)))
-                    .WhereIF(parm.types == 1, m => SqlFunc.DateIsSame(m.AddDate, DateTime.Now))
+                    .WhereIF(parm.types == 1, m => SqlFunc.DateIsSame(m.AddDate, dayTime))
                     .WhereIF(parm.types == 2, m => SqlFunc.Between(m.AddDate, d1, d2))
                     .Sum(m=>m.RealMoney);
                 res.data = new DayTurnover()

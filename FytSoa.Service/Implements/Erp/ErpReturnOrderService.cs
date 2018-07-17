@@ -58,7 +58,8 @@ namespace FytSoa.Service.Implements
                     item.ShopGuid = parm.ShopGuid;
                 }
                 //查询今天返货数量
-                var dayCount = ErpReturnOrderDb.Count(m => SqlFunc.DateIsSame(m.AddDate, DateTime.Now));                
+                DateTime dayTime = Convert.ToDateTime(DateTime.Now.AddDays(1).ToShortDateString() + " 00:00:00");
+                var dayCount = ErpReturnOrderDb.Count(m => SqlFunc.DateIsSame(m.AddDate, dayTime));                
                 parm.Number= "RO-" + DateTime.Now.ToString("yyyyMMdd") + "-" + (1001 + dayCount);
                 var result = Db.Ado.UseTran(() =>
                 {

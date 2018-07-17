@@ -27,6 +27,7 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<string>() { data = "1", statusCode = (int)ApiEnum.Error };
             try
             {
+                DateTime dayTime = Convert.ToDateTime(DateTime.Now.AddDays(1).ToShortDateString() + " 00:00:00");
                 parm.Guid = Guid.NewGuid().ToString();
                 //判断销售订单字符串是否为空
                 if (string.IsNullOrEmpty(goodsJson))
@@ -101,6 +102,9 @@ namespace FytSoa.Service.Implements
                     {
                         if (roitem.GoodsGuid==item.Guid)
                         {
+                            //修改商品的销售数量
+                            item.SaleSum += roitem.Counts;
+                            //获得商品原价*购买商品的数量
                             parm.Money += Convert.ToDecimal(item.SalePrice)*roitem.Counts;
                             //整除销售计算价格，残次品价格是前端传过来的
                             if (parm.SaleType==1)
@@ -142,7 +146,7 @@ namespace FytSoa.Service.Implements
                 }
 
                 //查询今天销售数量
-                var dayCount = ErpSaleOrderDb.Count(m => SqlFunc.DateIsSame(m.AddDate, DateTime.Now));
+                var dayCount = ErpSaleOrderDb.Count(m => SqlFunc.DateIsSame(m.AddDate, dayTime));
                 parm.Number = "SO-" + DateTime.Now.ToString("yyyyMMdd") + "-" + (1001 + dayCount);
                 res.data = parm.Number;
                 foreach (var item in roGoodsList)
@@ -151,13 +155,15 @@ namespace FytSoa.Service.Implements
                     item.Guid = Guid.NewGuid().ToString();
                     item.ShopGuid = parm.ShopGuid;
                 }
-                
+
                 var result = Db.Ado.UseTran(() =>
                 {                    
                     //添加订单
                     Db.Insertable(parm).ExecuteCommand();
                     //添加订单商品
                     Db.Insertable(roGoodsList).ExecuteCommand();
+                    //根据商品修改商品的销售数量
+                    Db.Updateable(goodList).ExecuteCommand();
                     if (userModel!=null)
                     {
                         //修改用户积分

@@ -24,9 +24,10 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<string>() { data = "1", statusCode = (int)ApiEnum.Error };
             try
             {
+                DateTime dayTime = Convert.ToDateTime(DateTime.Now.AddDays(1).ToShortDateString() + " 00:00:00");
                 parm.Guid = Guid.NewGuid().ToString();
                 //查询今天退货数量
-                var dayCount = ErpBackGoodsDb.Count(m => SqlFunc.DateIsSame(m.AddDate, DateTime.Now));
+                var dayCount = ErpBackGoodsDb.Count(m => SqlFunc.DateIsSame(m.AddDate, dayTime));
                 parm.Number = "BO-" + DateTime.Now.ToString("yyyyMMdd") + "-" + (1001 + dayCount);
                 //根据条形码查询唯一编号
                 var goodSku = ErpGoodsSkuDb.GetSingle(m=>m.Code==parm.GoodsGuid);
