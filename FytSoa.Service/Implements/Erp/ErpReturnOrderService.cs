@@ -41,7 +41,15 @@ namespace FytSoa.Service.Implements
                     var shopStockSum = Db.Queryable<ErpInOutLog>()
                         .Where(m=>m.ShopGuid==parm.ShopGuid && m.Types==2 && m.GoodsGuid==item.GoodsGuid)
                         .Sum(m=>m.GoodsSum);
-                    if (shopStockSum<item.ReturnCount)
+                    //出库  库存=返货+销售的数量
+                    var saleStock = Db.Queryable<ErpSaleOrderGoods>()
+                        .Where(m => m.ShopGuid == parm.ShopGuid && m.GoodsGuid == item.GoodsGuid)
+                        .Sum(m => m.Counts);
+                    var returnStock = Db.Queryable<ErpReturnGoods>()
+                        .Where(m => m.ShopGuid == parm.ShopGuid && m.GoodsGuid == item.GoodsGuid)
+                        .Sum(m => m.ReturnCount);
+                    var stockSum = shopStockSum - (saleStock + returnStock);
+                    if (stockSum < item.ReturnCount)
                     {
                         isStockSuccess = false;
                     }
@@ -57,6 +65,7 @@ namespace FytSoa.Service.Implements
                     item.Guid = Guid.NewGuid().ToString();
                     item.ShopGuid = parm.ShopGuid;
                 }
+                parm.GoodsSum = roGoodsList.Sum(m=>m.ReturnCount);
                 //查询今天返货数量
                 DateTime dayTime = Convert.ToDateTime(DateTime.Now.AddDays(1).ToShortDateString() + " 00:00:00");
                 var dayCount = ErpReturnOrderDb.Count(m => SqlFunc.DateIsSame(m.AddDate, dayTime));                
@@ -137,7 +146,7 @@ namespace FytSoa.Service.Implements
             {
                 var query = Db.Queryable<ErpReturnOrder,ErpShops,ErpStaff>((ero,es,est)=>
                 new object[] {JoinType.Left,ero.ShopGuid==es.Guid,JoinType.Left,es.Guid==est.ShopGuid })
-                        .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.ShopGuid == parm.guid)
+                        .WhereIF(!string.IsNullOrEmpty(parm.guid), (ero, es, est) => ero.ShopGuid == parm.guid)
                         .OrderBy((ero, es, est)=>ero.AddDate,OrderByType.Desc)
                         .Select((ero, es, est) => new ReturnOrderDto() {
                             Guid=ero.Guid,

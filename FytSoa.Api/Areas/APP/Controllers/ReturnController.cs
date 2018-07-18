@@ -36,9 +36,10 @@ namespace FytSoa.Api.Areas.APP.Controllers
         {
             var res = _orderService.GetPagesAsync(parm).Result;
             var list = res.data.Items?.Select(m => new {
+                m.Guid,
                 m.Number,
                 m.Counts,
-                AddDate = m.AddDate.ToShortDateString().Replace("/", "-")
+                AddDate=m.AddDate.ToString().Replace("/","-").Replace("T"," ")
             });
             return Json(new { statusCode = 200, msg = "success", count = res.data.TotalPages, data = list });
         }
@@ -54,7 +55,9 @@ namespace FytSoa.Api.Areas.APP.Controllers
             var res = _goodsService.GetPagesAsync(parm).Result;
             var list = res.data.Items?.Select(m => new {
                 m.Code,
-                m.GoodsName,
+                m.BrandName,
+                m.StyleName,
+                m.SeasonName,
                 m.Counts
             });
             return Json(new { statusCode = 200, msg = "success", count = res.data.TotalPages, data = list });

@@ -93,9 +93,9 @@ namespace FytSoa.Service.Implements
                         .WhereIF(!string.IsNullOrEmpty(parm.guid), (erg, egs) => erg.OrderGuid == parm.guid)
                         .Select((erg, egs)=>new ReturnGoodsDto() {
                             Code=egs.Code,
-                            GoodsName= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.BrankGuid).Select(g => g.Name)+
-                            SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.SeasonGuid).Select(g => g.Name)+
-                            SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.StyleGuid).Select(g => g.Name),
+                            BrandName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.BrankGuid).Select(g => g.Name),
+                            SeasonName=SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.SeasonGuid).Select(g => g.Name),
+                            StyleName=SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.StyleGuid).Select(g => g.Name),
                             Counts = erg.ReturnCount,
                             Summary=erg.Summary
                         })

@@ -44,7 +44,7 @@ namespace FytSoa.Core.Model.Erp
         /// <summary>
         /// 是否删除 0=否 1=是
         /// </summary>
-        public bool IsDel { get; set; }
+        public bool IsDel { get; set; } = false;
 
         /// <summary>
         /// 添加时间

@@ -14,9 +14,17 @@ namespace FytSoa.Service.DtoModel
         /// </summary>
         public string Code { get; set; }
         /// <summary>
-        /// 商品编号
+        /// 品牌名称
         /// </summary>
-        public string GoodsName { get; set; }
+        public string BrandName { get; set; }
+        /// <summary>
+        /// 款式名称
+        /// </summary>
+        public string StyleName { get; set; }
+        /// <summary>
+        /// 季节名称
+        /// </summary>
+        public string SeasonName { get; set; }
         /// <summary>
         /// 返货数量
         /// </summary>
