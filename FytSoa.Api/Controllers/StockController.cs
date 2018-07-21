@@ -18,12 +18,14 @@ namespace FytSoa.Api.Controllers
         private readonly IErpInOutLogService _inOutLogService;
         private readonly IErpPackLogService _packLogService;
         private readonly IErpBackGoodsService _backGoodsService;
+        private readonly IErpReturnOrderService _returnOrderService;
         private readonly IErpReturnGoodsService _returnGoodsService;
         private readonly IErpTransferService _transferService;
         private readonly IErpTransferGoodsService _transferGoodsService;
         public StockController(IErpInOutLogService inOutLogService,
             IErpPackLogService packLogService,
             IErpBackGoodsService backGoodsService,
+            IErpReturnOrderService returnOrderService,
             IErpReturnGoodsService returnGoodsService,
             IErpTransferService transferService,
             IErpTransferGoodsService transferGoodsService)
@@ -31,6 +33,7 @@ namespace FytSoa.Api.Controllers
             _inOutLogService = inOutLogService;
             _packLogService = packLogService;
             _backGoodsService = backGoodsService;
+            _returnOrderService = returnOrderService;
             _returnGoodsService = returnGoodsService;
             _transferService = transferService;
             _transferGoodsService = transferGoodsService;
@@ -233,6 +236,30 @@ namespace FytSoa.Api.Controllers
         public async Task<JsonResult> GetBackPages(PageParm parm, SearchParm searchParm)
         {
             var res = await _backGoodsService.GetPagesAsync(parm, searchParm);
+            return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
+        }
+        #endregion
+
+        #region 返货订单列表
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("return/order")]
+        public async Task<ApiResult<Page<ReturnOrderDto>>> GetReturnOrderPages(PageParm parm)
+        {
+            return await _returnOrderService.GetPagesAsync(parm);
+        }
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("return/goods")]
+        public async Task<JsonResult> GetReturnGoodsPages(PageParm parm, SearchParm searchParm)
+        {
+            var res = await _returnGoodsService.GetPagesAsync(parm, searchParm);
             return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
         }
         #endregion

@@ -37,7 +37,7 @@
                 });
                 var urls = '/api/shops/stafflist';
                 if ('@Model.shopGuid' != '') {
-                    urls+='?key=@Model.shopGuid'
+                    urls +='?guid=@Model.shopGuid'
                 }
                 table.render({
                     elem: '#tablist',

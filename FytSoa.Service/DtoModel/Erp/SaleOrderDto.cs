@@ -82,8 +82,22 @@ namespace FytSoa.Service.DtoModel
     public class SaleOrderGoodsDto
     {
         /// <summary>
-        /// 商品名称
+        /// 编号
         /// </summary>
+        public string Guid { get; set; }
+        /// <summary>
+        /// 品牌名称
+        /// </summary>
+        public string BrandName { get; set; }
+        /// <summary>
+        /// 款式名称
+        /// </summary>
+        public string StyleName { get; set; }
+        /// <summary>
+        /// 季节名称
+        /// </summary>
+        public string SeasonName { get; set; }
+
         public string GoodsName { get; set; }
 
         /// <summary>

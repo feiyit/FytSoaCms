@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-07-16 00:59:41
+Date: 2018-07-21 09:26:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,9 +21,9 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `erpappsetting`;
 CREATE TABLE `erpappsetting` (
   `Guid` varchar(50) NOT NULL,
-  `AndroidVersion` decimal(2,1) NOT NULL DEFAULT '0.0' COMMENT '安卓版本号',
+  `AndroidVersion` varchar(50) NOT NULL DEFAULT '0.0' COMMENT '安卓版本号',
   `AndroidFile` varchar(255) DEFAULT NULL COMMENT '更新文件',
-  `IosVersion` decimal(2,1) NOT NULL COMMENT 'Ios版本号',
+  `IosVersion` varchar(50) NOT NULL COMMENT 'Ios版本号',
   `IosFile` varchar(255) DEFAULT NULL COMMENT 'Ios更新文件地址',
   `IosAudit` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Ios审核开关  0=关/1=开',
   `IsDel` bit(1) NOT NULL DEFAULT b'0' COMMENT '删除 0=不删除/1=删除',
@@ -34,7 +34,7 @@ CREATE TABLE `erpappsetting` (
 -- ----------------------------
 -- Records of erpappsetting
 -- ----------------------------
-INSERT INTO `erpappsetting` VALUES ('d7fbe4d9-3f92-4cae-995d-8d080a8f1e92', '1.0', null, '1.0', null, '0', '\0', '2018-07-11 09:50:11');
+INSERT INTO `erpappsetting` VALUES ('d7fbe4d9-3f92-4cae-995d-8d080a8f1e92', '1.0.1', 'http://ay.feiyit.com/upload/files/1.wgt', '1.0.0', null, '0', '\0', '2018-07-19 18:03:52');
 
 -- ----------------------------
 -- Table structure for erpbackgoods
@@ -118,17 +118,17 @@ CREATE TABLE `erpgoodssku` (
 -- ----------------------------
 -- Records of erpgoodssku
 -- ----------------------------
-INSERT INTO `erpgoodssku` VALUES ('1f1eaeac-388f-4fac-a81c-627f4c9f817f', '64fd9c02-279c-4e12-97ee-97b1c2a06783', 'LINAAAA01000090', '0100', '0090', '0', '0', '1', '9bc94f7c-5c4f-4b35-8516-fb6235e27348', 'a61ee6cc-beda-4060-8c37-4d3a774a4420', 'f6dcb7b8-711f-42d6-b5ec-d7d49e021618', '46f2ec29-8437-48eb-9daf-12ba6603dba5', '24ab542a-50fd-4060-bbb9-95a08425ddd5', '\0', '2018-06-27 21:32:50');
+INSERT INTO `erpgoodssku` VALUES ('1f1eaeac-388f-4fac-a81c-627f4c9f817f', '64fd9c02-279c-4e12-97ee-97b1c2a06783', 'LINAAAA01000090', '0100', '0090', '80', '0', '1', '9bc94f7c-5c4f-4b35-8516-fb6235e27348', 'a61ee6cc-beda-4060-8c37-4d3a774a4420', 'f6dcb7b8-711f-42d6-b5ec-d7d49e021618', '46f2ec29-8437-48eb-9daf-12ba6603dba5', '24ab542a-50fd-4060-bbb9-95a08425ddd5', '\0', '2018-07-16 15:50:15');
 INSERT INTO `erpgoodssku` VALUES ('435389da-8fa5-495a-a1e3-a5ce1eaa6c23', '585056c6-5c91-4b74-8c1b-b88a25300a49', 'NIKBBBA13041200', '1304', '1200', '0', '0', '1', '0f12dca9-9c49-49a0-a82a-5e5147261e64', '10c2d55f-2115-4e6b-9104-bc8d7667ae5d', 'b91f790a-22fc-45a3-b14e-8643f0f1353f', '14a00ed2-e1c0-4869-8245-20b7e98add36', '24ab542a-50fd-4060-bbb9-95a08425ddd5', '\0', '2018-06-27 21:31:03');
-INSERT INTO `erpgoodssku` VALUES ('5a1203e8-2976-404c-a71e-f1d3a6abbf38', '31f602d2-71a1-4d1a-8885-173f09b2a9b3', 'ADIACAC02300210', '0230', '0210', '0', '0', '1', '90c7c15d-9cc5-4612-a925-9834de0aeb2f', 'a61ee6cc-beda-4060-8c37-4d3a774a4420', '73ab9f29-193c-4cb7-a953-7b8fba964375', '46f2ec29-8437-48eb-9daf-12ba6603dba5', 'c2cb8776-7318-415c-8027-487a97ed4aaa', '\0', '2018-06-28 18:23:46');
+INSERT INTO `erpgoodssku` VALUES ('5a1203e8-2976-404c-a71e-f1d3a6abbf38', '31f602d2-71a1-4d1a-8885-173f09b2a9b3', 'ADIACAC02300210', '0230', '0210', '70', '1', '1', '90c7c15d-9cc5-4612-a925-9834de0aeb2f', 'a61ee6cc-beda-4060-8c37-4d3a774a4420', '73ab9f29-193c-4cb7-a953-7b8fba964375', '46f2ec29-8437-48eb-9daf-12ba6603dba5', 'c2cb8776-7318-415c-8027-487a97ed4aaa', '\0', '2018-07-16 15:50:08');
 INSERT INTO `erpgoodssku` VALUES ('6cd495ad-3465-45e3-90ea-65a321490a69', '0a5f0b36-c457-48d1-8f68-eda48080e6d1', 'ADIABBA02130180', '0213', '0180', '30', '0', '1', '90c7c15d-9cc5-4612-a925-9834de0aeb2f', 'a61ee6cc-beda-4060-8c37-4d3a774a4420', 'b91f790a-22fc-45a3-b14e-8643f0f1353f', '14a00ed2-e1c0-4869-8245-20b7e98add36', '24ab542a-50fd-4060-bbb9-95a08425ddd5', '\0', '2018-06-28 18:25:36');
-INSERT INTO `erpgoodssku` VALUES ('a15d8107-679b-4e61-8eb0-aba2a4cf8023', '99205af7-ccaa-49a2-b934-4b064b0226dd', 'JORAABA06600550', '0660', '0550', '0', '0', '1', 'b9ece0a4-d3ce-4ebd-bf60-52895dfdc9db', 'a61ee6cc-beda-4060-8c37-4d3a774a4420', 'f6dcb7b8-711f-42d6-b5ec-d7d49e021618', '14a00ed2-e1c0-4869-8245-20b7e98add36', '24ab542a-50fd-4060-bbb9-95a08425ddd5', '\0', '2018-06-28 18:23:47');
+INSERT INTO `erpgoodssku` VALUES ('a15d8107-679b-4e61-8eb0-aba2a4cf8023', '99205af7-ccaa-49a2-b934-4b064b0226dd', 'JORAABA06600550', '0660', '0550', '50', '5', '1', 'b9ece0a4-d3ce-4ebd-bf60-52895dfdc9db', 'a61ee6cc-beda-4060-8c37-4d3a774a4420', 'f6dcb7b8-711f-42d6-b5ec-d7d49e021618', '14a00ed2-e1c0-4869-8245-20b7e98add36', '24ab542a-50fd-4060-bbb9-95a08425ddd5', '\0', '2018-07-16 15:50:00');
 INSERT INTO `erpgoodssku` VALUES ('c5fa40ec-d403-4fe5-b8ea-327c3fc3e25c', '5e46347c-9643-4e76-a9b0-85e93bbf0396', 'LINBBCB05600450', '0560', '0450', '0', '0', '1', '9bc94f7c-5c4f-4b35-8516-fb6235e27348', '10c2d55f-2115-4e6b-9104-bc8d7667ae5d', 'b91f790a-22fc-45a3-b14e-8643f0f1353f', 'a280b15b-ce10-4863-ba84-e61164761a58', '93e895c2-4b65-45cd-ab94-d8ccaa4ac1db', '\0', '2018-06-27 21:31:15');
 INSERT INTO `erpgoodssku` VALUES ('c86ec042-8ed7-4a8a-85c1-1290c97b2ebe', 'f1a4cecc-829b-49a0-983a-aeddaff541b6', 'LINBBBA15601230', '1560', '1230', '0', '0', '1', '9bc94f7c-5c4f-4b35-8516-fb6235e27348', '10c2d55f-2115-4e6b-9104-bc8d7667ae5d', 'b91f790a-22fc-45a3-b14e-8643f0f1353f', '14a00ed2-e1c0-4869-8245-20b7e98add36', '24ab542a-50fd-4060-bbb9-95a08425ddd5', '\0', '2018-06-27 21:31:32');
 INSERT INTO `erpgoodssku` VALUES ('d5c41749-c07d-4227-91b1-8f4e83bd7421', 'a433162a-7af7-4834-826d-68c54174d9ff', 'NIKBBBA15601300', '1560', '1300', '0', '0', '1', '0f12dca9-9c49-49a0-a82a-5e5147261e64', '10c2d55f-2115-4e6b-9104-bc8d7667ae5d', 'b91f790a-22fc-45a3-b14e-8643f0f1353f', '14a00ed2-e1c0-4869-8245-20b7e98add36', '24ab542a-50fd-4060-bbb9-95a08425ddd5', '\0', '2018-06-24 22:52:06');
-INSERT INTO `erpgoodssku` VALUES ('e3e53984-aa87-4771-aff0-b1e2e1a244dd', '34057bbe-6165-4ded-9ac1-4b38a45fdc8d', 'ADICAAD06500550', '0650', '0550', '0', '0', '1', '90c7c15d-9cc5-4612-a925-9834de0aeb2f', '09fdf8b4-aef9-45c9-84d6-d2bfbf89fa5b', 'f6dcb7b8-711f-42d6-b5ec-d7d49e021618', '46f2ec29-8437-48eb-9daf-12ba6603dba5', '6c50d781-91ab-45f6-9aaa-dcd76c5a981e', '\0', '2018-06-27 21:32:33');
+INSERT INTO `erpgoodssku` VALUES ('e3e53984-aa87-4771-aff0-b1e2e1a244dd', '34057bbe-6165-4ded-9ac1-4b38a45fdc8d', 'ADICAAD06500550', '0650', '0550', '100', '0', '1', '90c7c15d-9cc5-4612-a925-9834de0aeb2f', '09fdf8b4-aef9-45c9-84d6-d2bfbf89fa5b', 'f6dcb7b8-711f-42d6-b5ec-d7d49e021618', '46f2ec29-8437-48eb-9daf-12ba6603dba5', '6c50d781-91ab-45f6-9aaa-dcd76c5a981e', '\0', '2018-07-16 15:49:01');
 INSERT INTO `erpgoodssku` VALUES ('e8451a70-b7ff-4e3a-9d36-efdc878aeeef', 'be85fcff-d419-428b-b12b-df173fc311bd', 'JORBACA01500134', '0150', '0134', '0', '0', '1', 'b9ece0a4-d3ce-4ebd-bf60-52895dfdc9db', '10c2d55f-2115-4e6b-9104-bc8d7667ae5d', 'f6dcb7b8-711f-42d6-b5ec-d7d49e021618', 'a280b15b-ce10-4863-ba84-e61164761a58', '24ab542a-50fd-4060-bbb9-95a08425ddd5', '\0', '2018-06-27 21:30:50');
-INSERT INTO `erpgoodssku` VALUES ('ede1f3d6-6de9-4a62-a207-d63e2e4f815f', 'eabd1d03-cc80-43cb-bd45-834d1f741b5e', 'LINDBCC05600450', '0560', '0450', '0', '0', '1', '9bc94f7c-5c4f-4b35-8516-fb6235e27348', '2b15a147-d1b0-4bc8-b937-21999d202d16', 'b91f790a-22fc-45a3-b14e-8643f0f1353f', 'a280b15b-ce10-4863-ba84-e61164761a58', 'c2cb8776-7318-415c-8027-487a97ed4aaa', '\0', '2018-06-27 21:32:07');
+INSERT INTO `erpgoodssku` VALUES ('ede1f3d6-6de9-4a62-a207-d63e2e4f815f', 'eabd1d03-cc80-43cb-bd45-834d1f741b5e', 'LINDBCC05600450', '0560', '0450', '100', '0', '1', '9bc94f7c-5c4f-4b35-8516-fb6235e27348', '2b15a147-d1b0-4bc8-b937-21999d202d16', 'b91f790a-22fc-45a3-b14e-8643f0f1353f', 'a280b15b-ce10-4863-ba84-e61164761a58', 'c2cb8776-7318-415c-8027-487a97ed4aaa', '\0', '2018-07-16 15:49:06');
 
 -- ----------------------------
 -- Table structure for erpinoutlog
@@ -151,9 +151,17 @@ CREATE TABLE `erpinoutlog` (
 -- ----------------------------
 -- Records of erpinoutlog
 -- ----------------------------
+INSERT INTO `erpinoutlog` VALUES ('0efefac5-959f-49ae-b4cd-d3f10808172e', '2', '1', 'fc5f4723-670e-4563-b901-35de36cb53de', '5f997966-d21c-4048-9894-86a47d779c73', '1f1eaeac-388f-4fac-a81c-627f4c9f817f', 'LINAAAA01000090', '20', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-07-16 15:50:10');
 INSERT INTO `erpinoutlog` VALUES ('31f3094a-929c-43bc-8b4c-a6fc5c3a56f6', '2', '2', 'Transfer', '29e4fba5-47d4-49e1-b500-b494394628ee', '6cd495ad-3465-45e3-90ea-65a321490a69', 'ADIABBA02130180', '10', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-06-29 00:30:43');
+INSERT INTO `erpinoutlog` VALUES ('40576704-1b69-4d5f-b37e-68f72631fe81', '1', '1', 'f875c2ef-722f-440d-8ac5-24709b12e77d', null, 'e3e53984-aa87-4771-aff0-b1e2e1a244dd', 'ADICAAD06500550', '100', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-07-16 15:48:56');
+INSERT INTO `erpinoutlog` VALUES ('5c5d02b3-cfaa-477e-95fb-4794a93b4fa6', '1', '1', 'f875c2ef-722f-440d-8ac5-24709b12e77d', null, '1f1eaeac-388f-4fac-a81c-627f4c9f817f', 'LINAAAA01000090', '100', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-07-16 15:48:51');
 INSERT INTO `erpinoutlog` VALUES ('6b741aa4-be5b-427c-bc6e-7dfdaf9507e0', '2', '1', 'ede09775-80f8-4ff6-8cef-d599c62c1b55', '5f997966-d21c-4048-9894-86a47d779c73', '6cd495ad-3465-45e3-90ea-65a321490a69', 'ADIABBA02130180', '10', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-06-29 00:30:43');
+INSERT INTO `erpinoutlog` VALUES ('74a6ffd2-c67e-4f20-9791-8e4384e3e92c', '2', '1', 'fc5f4723-670e-4563-b901-35de36cb53de', '5f997966-d21c-4048-9894-86a47d779c73', 'a15d8107-679b-4e61-8eb0-aba2a4cf8023', 'JORAABA06600550', '50', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-07-16 15:49:49');
+INSERT INTO `erpinoutlog` VALUES ('8a6c685b-be00-4d41-8c07-4e837bf2a9ec', '1', '1', 'f875c2ef-722f-440d-8ac5-24709b12e77d', null, 'ede1f3d6-6de9-4a62-a207-d63e2e4f815f', 'LINDBCC05600450', '100', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-07-16 15:49:02');
+INSERT INTO `erpinoutlog` VALUES ('9d46a8a7-f7a2-4317-8daa-6fdc40c0543a', '1', '1', 'f875c2ef-722f-440d-8ac5-24709b12e77d', null, '5a1203e8-2976-404c-a71e-f1d3a6abbf38', 'ADIACAC02300210', '100', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-07-16 15:48:44');
+INSERT INTO `erpinoutlog` VALUES ('bb413264-edbd-410c-b712-9602d6cace88', '1', '1', 'f875c2ef-722f-440d-8ac5-24709b12e77d', null, 'a15d8107-679b-4e61-8eb0-aba2a4cf8023', 'JORAABA06600550', '100', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-07-16 15:48:36');
 INSERT INTO `erpinoutlog` VALUES ('d2e36b8a-3f26-49d4-bb95-285ecead2813', '1', '1', '1e864555-182e-4f67-bf76-41a9008e0799', null, '6cd495ad-3465-45e3-90ea-65a321490a69', 'ADIABBA02130180', '50', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-06-29 00:30:45');
+INSERT INTO `erpinoutlog` VALUES ('f512c289-89d9-4109-bda7-a7139623c49f', '2', '1', 'fc5f4723-670e-4563-b901-35de36cb53de', '5f997966-d21c-4048-9894-86a47d779c73', '5a1203e8-2976-404c-a71e-f1d3a6abbf38', 'ADIACAC02300210', '30', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', '2018-07-16 15:50:03');
 
 -- ----------------------------
 -- Table structure for erppacklog
@@ -176,6 +184,8 @@ CREATE TABLE `erppacklog` (
 -- ----------------------------
 INSERT INTO `erppacklog` VALUES ('1e864555-182e-4f67-bf76-41a9008e0799', '1', '20180628011852185255', '测试入库', '50', null, '\0', '2018-06-28 01:18:52');
 INSERT INTO `erppacklog` VALUES ('ede09775-80f8-4ff6-8cef-d599c62c1b55', '2', '20180628011925192538', '测试出库ABC', '20', '5f997966-d21c-4048-9894-86a47d779c73', '\0', '2018-06-28 01:19:25');
+INSERT INTO `erppacklog` VALUES ('f875c2ef-722f-440d-8ac5-24709b12e77d', '1', '20180716154823482342', '0716入库', '500', null, '\0', '2018-07-16 15:48:23');
+INSERT INTO `erppacklog` VALUES ('fc5f4723-670e-4563-b901-35de36cb53de', '2', '20180716154917491706', '0716出库', '100', '5f997966-d21c-4048-9894-86a47d779c73', '\0', '2018-07-16 15:49:17');
 
 -- ----------------------------
 -- Table structure for erppurchase
@@ -267,6 +277,8 @@ CREATE TABLE `erpreturngoods` (
 -- ----------------------------
 -- Records of erpreturngoods
 -- ----------------------------
+INSERT INTO `erpreturngoods` VALUES ('ea9af5a6-033b-422c-94ab-b2356778d6d9', 'bd9a1d05-c9f1-4853-8f5c-56af9b3e7c63', '5f997966-d21c-4048-9894-86a47d779c73', '5a1203e8-2976-404c-a71e-f1d3a6abbf38', '1', '1111');
+INSERT INTO `erpreturngoods` VALUES ('fe2b9385-352f-4eaa-b3d0-ff0a210d519a', 'bd9a1d05-c9f1-4853-8f5c-56af9b3e7c63', '5f997966-d21c-4048-9894-86a47d779c73', 'a15d8107-679b-4e61-8eb0-aba2a4cf8023', '1', '2222');
 
 -- ----------------------------
 -- Table structure for erpreturnorder
@@ -287,6 +299,7 @@ CREATE TABLE `erpreturnorder` (
 -- ----------------------------
 -- Records of erpreturnorder
 -- ----------------------------
+INSERT INTO `erpreturnorder` VALUES ('bd9a1d05-c9f1-4853-8f5c-56af9b3e7c63', 'RO-20180718-1001', '5f997966-d21c-4048-9894-86a47d779c73', '2', '3', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', '\0', '2018-07-18 22:42:27');
 
 -- ----------------------------
 -- Table structure for erpsaleorder
@@ -312,11 +325,30 @@ CREATE TABLE `erpsaleorder` (
 -- ----------------------------
 -- Records of erpsaleorder
 -- ----------------------------
+INSERT INTO `erpsaleorder` VALUES ('02928395-2c9c-4e75-b789-04911d4f142d', 'SO-20180716-1002', '29e4fba5-47d4-49e1-b500-b494394628ee', '21576fef-1a5b-4af8-a394-ec5166b4a8e5', null, 'adb5e4ce-b3c8-43a5-bd8b-bc55df6f3be9', '满减', '3', '1', '2', '426.00', '330.00', '2018-07-16 14:36:55');
+INSERT INTO `erpsaleorder` VALUES ('04ed1eb2-fe46-4400-9a4f-4b41f2667083', 'SO-20180717-1004', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, null, '1', '1', '3', '990.00', '850.00', '2018-07-17 10:34:35');
+INSERT INTO `erpsaleorder` VALUES ('18e77879-38d3-4144-a1d4-df0a7a66d120', 'SO-20180716-1010', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, null, '1', '1', '2', '890.00', '760.00', '2018-07-16 23:20:58');
 INSERT INTO `erpsaleorder` VALUES ('295da8e7-31ea-4a40-9a9a-fd9ee2953a1f', 'SO-20180715-1004', '29e4fba5-47d4-49e1-b500-b494394628ee', '21576fef-1a5b-4af8-a394-ec5166b4a8e5', null, 'adb5e4ce-b3c8-43a5-bd8b-bc55df6f3be9', '满减', '3', '1', '1', '213.00', '150.00', '2018-07-15 11:01:33');
+INSERT INTO `erpsaleorder` VALUES ('3aba73a0-cecf-49cd-815b-9e987537e7f2', 'SO-20180717-1005', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, 'undefined', '1', '1', '1', '660.00', '550.00', '2018-07-17 23:20:31');
+INSERT INTO `erpsaleorder` VALUES ('3c3945a9-2a9c-42f0-8ca0-afc542188ba3', 'SO-20180716-1004', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, 'undefined', '1', '1', '1', '100.00', '90.00', '2018-07-16 18:19:02');
 INSERT INTO `erpsaleorder` VALUES ('48d8b81e-fd34-420b-ab91-c71fc53d7234', 'SO-20180715-1003', '29e4fba5-47d4-49e1-b500-b494394628ee', '21576fef-1a5b-4af8-a394-ec5166b4a8e5', null, null, null, '1', '2', '1', '213.00', '50.00', '2018-07-15 10:54:37');
+INSERT INTO `erpsaleorder` VALUES ('4deebcb9-fe32-42e2-9443-ae77fa1df91f', 'SO-20180716-1007', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, null, '1', '1', '3', '1120.00', '970.00', '2018-07-16 23:08:41');
+INSERT INTO `erpsaleorder` VALUES ('504724cb-48c1-4b1f-af4d-f0415d2576b5', 'SO-20180717-1001', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, 'undefined', '1', '1', '2', '200.00', '180.00', '2018-07-17 10:31:24');
+INSERT INTO `erpsaleorder` VALUES ('5256d4d1-042b-433d-a0a8-f51e2cb19f53', 'SO-20180717-1008', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, null, '1', '1', '2', '890.00', '760.00', '2018-07-17 23:42:37');
+INSERT INTO `erpsaleorder` VALUES ('5ced21d6-6227-418a-a419-f568a59a1012', 'SO-20180716-1008', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, null, '1', '1', '2', '460.00', '420.00', '2018-07-16 23:15:39');
+INSERT INTO `erpsaleorder` VALUES ('63fa2c9e-97b6-4920-9c97-758ee43ebdb5', 'SO-20180717-1007', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, 'undefined', '1', '1', '1', '660.00', '550.00', '2018-07-17 23:36:43');
+INSERT INTO `erpsaleorder` VALUES ('95e4f210-2e45-4eba-a9d0-abe1b0196838', 'SO-20180716-1005', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, 'undefined', '1', '1', '2', '460.00', '420.00', '2018-07-16 21:22:44');
+INSERT INTO `erpsaleorder` VALUES ('963d5bae-8e09-46d0-b586-8513f192f8db', 'SO-20180716-1003', '29e4fba5-47d4-49e1-b500-b494394628ee', '21576fef-1a5b-4af8-a394-ec5166b4a8e5', null, 'adb5e4ce-b3c8-43a5-bd8b-bc55df6f3be9', '满减', '3', '1', '1', '213.00', '150.00', '2018-07-16 14:40:37');
+INSERT INTO `erpsaleorder` VALUES ('aa8f40a0-f4d9-4a45-96d1-21b1eecb1214', 'SO-20180716-1009', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, 'undefined', '1', '1', '1', '230.00', '210.00', '2018-07-16 23:20:21');
+INSERT INTO `erpsaleorder` VALUES ('b6b435c1-85f9-4e67-a52f-1a635c154aa7', 'SO-20180719-1001', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, 'undefined', '1', '1', '1', '660.00', '550.00', '2018-07-19 14:53:21');
+INSERT INTO `erpsaleorder` VALUES ('d09044a8-30bd-4d61-9384-c73315d94d60', 'SO-20180716-1006', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, 'undefined', '1', '1', '3', '690.00', '630.00', '2018-07-16 21:41:39');
 INSERT INTO `erpsaleorder` VALUES ('db84cdee-2717-4a77-bb59-737424c70ffc', 'SO-20180715-1001', '29e4fba5-47d4-49e1-b500-b494394628ee', '21576fef-1a5b-4af8-a394-ec5166b4a8e5', null, 'adb5e4ce-b3c8-43a5-bd8b-bc55df6f3be9', '满减', '3', '1', '2', '426.00', '330.00', '2018-07-15 11:02:24');
 INSERT INTO `erpsaleorder` VALUES ('e02c4806-a448-4080-ac73-18ed3c44a271', 'SO-20180715-1002', '29e4fba5-47d4-49e1-b500-b494394628ee', '21576fef-1a5b-4af8-a394-ec5166b4a8e5', null, 'adb5e4ce-b3c8-43a5-bd8b-bc55df6f3be9', '满减', '3', '1', '1', '213.00', '150.00', '2018-07-15 11:02:24');
+INSERT INTO `erpsaleorder` VALUES ('e2256c90-22ac-447b-a016-27e7213f2bd8', 'SO-20180716-1001', '29e4fba5-47d4-49e1-b500-b494394628ee', '21576fef-1a5b-4af8-a394-ec5166b4a8e5', null, 'adb5e4ce-b3c8-43a5-bd8b-bc55df6f3be9', '满减', '3', '1', '1', '213.00', '150.00', '2018-07-16 14:05:30');
 INSERT INTO `erpsaleorder` VALUES ('e6e8597e-4785-4e27-bb39-a18fce4063f0', 'SO-20180715-1005', '29e4fba5-47d4-49e1-b500-b494394628ee', '21576fef-1a5b-4af8-a394-ec5166b4a8e5', null, null, null, '1', '2', '1', '213.00', '80.00', '2018-07-15 11:01:55');
+INSERT INTO `erpsaleorder` VALUES ('eb7a7abb-e4af-4cf8-8335-15f7ca896349', 'SO-20180717-1006', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, 'undefined', '1', '1', '1', '660.00', '550.00', '2018-07-17 23:35:00');
+INSERT INTO `erpsaleorder` VALUES ('f26a34ce-fe04-4281-a903-ca679f25cab3', 'SO-20180717-1003', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, 'undefined', '1', '1', '1', '230.00', '210.00', '2018-07-17 10:33:17');
+INSERT INTO `erpsaleorder` VALUES ('ffb85ca9-2226-48b7-9055-f60c347d8add', 'SO-20180717-1002', '5f997966-d21c-4048-9894-86a47d779c73', '21576fef-1a5b-4af8-a394-ec5166b4a8e8', null, null, 'undefined', '1', '1', '1', '660.00', '550.00', '2018-07-17 10:33:05');
 
 -- ----------------------------
 -- Table structure for erpsaleordergoods
@@ -334,11 +366,35 @@ CREATE TABLE `erpsaleordergoods` (
 -- ----------------------------
 -- Records of erpsaleordergoods
 -- ----------------------------
+INSERT INTO `erpsaleordergoods` VALUES ('0e96b179-64a0-4989-a225-570d8e0c592e', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180717-1002', 'a15d8107-679b-4e61-8eb0-aba2a4cf8023', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('1567666b-2fbf-40d3-975c-486fd9d798be', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180719-1001', 'a15d8107-679b-4e61-8eb0-aba2a4cf8023', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('15705924-982b-409b-9797-746a17320b4f', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180717-1003', '5a1203e8-2976-404c-a71e-f1d3a6abbf38', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('15b339df-6859-4d7d-b356-248ef74e53f7', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180716-1007', '5a1203e8-2976-404c-a71e-f1d3a6abbf38', '2');
+INSERT INTO `erpsaleordergoods` VALUES ('1cb95aca-dd6e-4c5a-9a50-c69d56bfa869', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180717-1004', 'a15d8107-679b-4e61-8eb0-aba2a4cf8023', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('2b6deda6-0547-4418-8a47-f017c0297d50', '29e4fba5-47d4-49e1-b500-b494394628ee', 'SO-20180716-1003', '6cd495ad-3465-45e3-90ea-65a321490a69', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('343ee55d-e201-47dc-b7a5-7fe0898bb69a', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180716-1010', 'a15d8107-679b-4e61-8eb0-aba2a4cf8023', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('38824266-5058-4bf8-ad02-d020c715a4ac', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180716-1009', '5a1203e8-2976-404c-a71e-f1d3a6abbf38', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('4313b940-4438-438c-9bb4-daab7bcaf17d', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180716-1007', 'a15d8107-679b-4e61-8eb0-aba2a4cf8023', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('5fe0fbfd-3e65-4e2e-a301-db4b889fbc4e', '29e4fba5-47d4-49e1-b500-b494394628ee', 'SO-20180716-1001', '6cd495ad-3465-45e3-90ea-65a321490a69', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('6039a4b5-c162-4164-97fc-d88f1e046662', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180717-1004', '1f1eaeac-388f-4fac-a81c-627f4c9f817f', '1');
 INSERT INTO `erpsaleordergoods` VALUES ('61f80073-1a5f-4e87-bce0-80789ae06c88', '29e4fba5-47d4-49e1-b500-b494394628ee', 'SO-20180715-1003', '6cd495ad-3465-45e3-90ea-65a321490a69', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('79a51d7d-35e3-411c-b71b-34199c2ea07e', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180716-1005', '5a1203e8-2976-404c-a71e-f1d3a6abbf38', '2');
+INSERT INTO `erpsaleordergoods` VALUES ('7adadab3-76ba-4be1-9c30-5a51b7b40d97', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180716-1004', '1f1eaeac-388f-4fac-a81c-627f4c9f817f', '1');
 INSERT INTO `erpsaleordergoods` VALUES ('924daeee-da29-490d-9bbd-c02585962145', '29e4fba5-47d4-49e1-b500-b494394628ee', 'SO-20180715-1004', '6cd495ad-3465-45e3-90ea-65a321490a69', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('9661cd06-c621-4d7e-bdbe-d7885ae7a659', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180717-1007', 'a15d8107-679b-4e61-8eb0-aba2a4cf8023', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('98dacdd3-20e2-461b-a21b-72f24080548f', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180716-1008', '5a1203e8-2976-404c-a71e-f1d3a6abbf38', '2');
 INSERT INTO `erpsaleordergoods` VALUES ('9ff055d5-e506-457e-9779-17650f54d5c7', '29e4fba5-47d4-49e1-b500-b494394628ee', 'SO-20180715-1001', '6cd495ad-3465-45e3-90ea-65a321490a69', '2');
+INSERT INTO `erpsaleordergoods` VALUES ('a294c8ea-92ac-46a8-bfd7-586d837b9529', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180716-1010', '5a1203e8-2976-404c-a71e-f1d3a6abbf38', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('a359da0f-31d5-4076-a8a8-35b472c4df4d', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180717-1004', '5a1203e8-2976-404c-a71e-f1d3a6abbf38', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('b1014546-46ec-4744-af4c-a8c1dc4ff3b8', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180717-1005', 'a15d8107-679b-4e61-8eb0-aba2a4cf8023', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('b744b202-fafb-49c1-b9af-ffb71720976f', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180717-1001', '1f1eaeac-388f-4fac-a81c-627f4c9f817f', '2');
 INSERT INTO `erpsaleordergoods` VALUES ('bb19938e-2f8d-437b-987a-9f5b9d973e1f', '29e4fba5-47d4-49e1-b500-b494394628ee', 'SO-20180715-1002', '6cd495ad-3465-45e3-90ea-65a321490a69', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('bca35082-8fbe-4221-9702-960f7db81ba5', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180717-1006', 'a15d8107-679b-4e61-8eb0-aba2a4cf8023', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('d0ed59f9-eb06-4782-b404-c19e49ff1d14', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180716-1006', '5a1203e8-2976-404c-a71e-f1d3a6abbf38', '3');
 INSERT INTO `erpsaleordergoods` VALUES ('d3172c53-8feb-427b-b969-a8311ad01bf6', '29e4fba5-47d4-49e1-b500-b494394628ee', 'SO-20180715-1005', '6cd495ad-3465-45e3-90ea-65a321490a69', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('f561bfc2-562a-4f9a-9513-1821564ca47a', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180717-1008', 'a15d8107-679b-4e61-8eb0-aba2a4cf8023', '1');
+INSERT INTO `erpsaleordergoods` VALUES ('fed8ff06-9b6b-433f-af34-2ab69adc6181', '29e4fba5-47d4-49e1-b500-b494394628ee', 'SO-20180716-1002', '6cd495ad-3465-45e3-90ea-65a321490a69', '2');
+INSERT INTO `erpsaleordergoods` VALUES ('ff59735e-8c78-4949-9883-788d77f26c00', '5f997966-d21c-4048-9894-86a47d779c73', 'SO-20180717-1008', '5a1203e8-2976-404c-a71e-f1d3a6abbf38', '1');
 
 -- ----------------------------
 -- Table structure for erpshopactivity
@@ -363,7 +419,7 @@ CREATE TABLE `erpshopactivity` (
 -- ----------------------------
 -- Records of erpshopactivity
 -- ----------------------------
-INSERT INTO `erpshopactivity` VALUES ('054acf04-433a-4c5f-8f95-7d580adfa597', 'all', '0f12dca9-9c49-49a0-a82a-5e5147261e64', '2', '1', '95', null, '2018-07-01 21:33:32', '2018-07-01 21:33:32', '', '\0', '2018-07-01 21:33:32');
+INSERT INTO `erpshopactivity` VALUES ('054acf04-433a-4c5f-8f95-7d580adfa597', 'all', '0f12dca9-9c49-49a0-a82a-5e5147261e64', '2', '1', '95', null, '2018-07-16 11:17:35', '2018-07-16 11:17:35', '', '\0', '2018-07-16 11:17:35');
 INSERT INTO `erpshopactivity` VALUES ('613d2e06-b263-4ee4-b0ac-2ed4a102e834', 'all', '9bc94f7c-5c4f-4b35-8516-fb6235e27348', '0', '1', '50', null, '2018-07-01 21:34:00', '2018-07-01 21:34:00', '', '', '2018-07-01 21:34:00');
 INSERT INTO `erpshopactivity` VALUES ('adb5e4ce-b3c8-43a5-bd8b-bc55df6f3be9', '29e4fba5-47d4-49e1-b500-b494394628ee', null, '1', '2', '0', '[{\"fullbegin\":100,\"fullend\":30},{\"fullbegin\":50,\"fullend\":10},{\"fullbegin\":30,\"fullend\":5}]', '2018-06-20 21:56:13', '2018-07-20 21:56:13', '', '\0', '2018-06-20 21:56:13');
 INSERT INTO `erpshopactivity` VALUES ('d014260d-fe01-44dd-aa2d-62eeb3429f7a', '29e4fba5-47d4-49e1-b500-b494394628ee', null, '1', '1', '90', null, '2018-05-20 21:16:40', '2018-06-20 21:16:40', '', '\0', '2018-06-20 21:16:40');
@@ -398,7 +454,7 @@ CREATE TABLE `erpshops` (
 -- Records of erpshops
 -- ----------------------------
 INSERT INTO `erpshops` VALUES ('29e4fba5-47d4-49e1-b500-b494394628ee', 'testzh', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '男', null, '1', '河北张家口店', '13888888888', '010-88888888', '河北/张家口市/阳原县/辛堡乡', '测试详细地址', null, null, '2018-06-20 15:00:41', '0', null, null);
-INSERT INTO `erpshops` VALUES ('5f997966-d21c-4048-9894-86a47d779c73', '2233222', 'pPo9vFeTWOCF0oLKKdX9Jw==', '刘向荣', '男', null, '0', '刘向荣河西店', '13876545678', '010-88888888', '天津/河西区/全境', null, null, null, '2018-06-27 15:35:21', '0', null, null);
+INSERT INTO `erpshops` VALUES ('5f997966-d21c-4048-9894-86a47d779c73', '13876545678', 'pPo9vFeTWOCF0oLKKdX9Jw==', '刘向荣', '男', null, '0', '刘向荣河西店', '13876545678', '010-88888888', '天津/河西区/全境', null, null, null, '2018-07-16 15:56:27', '0', null, null);
 
 -- ----------------------------
 -- Table structure for erpshopuser
@@ -452,8 +508,8 @@ CREATE TABLE `erpstaff` (
 -- ----------------------------
 -- Records of erpstaff
 -- ----------------------------
-INSERT INTO `erpstaff` VALUES ('21576fef-1a5b-4af8-a394-ec5166b4a8e5', '29e4fba5-47d4-49e1-b500-b494394628ee', '13888888888', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '13888888888', '男', '0', '1', '小米', 'aaaaaaaaaaaaaaaaaaaa', '2018-07-06 11:23:35', '1', '2018-07-06 11:23:35', '2018-07-06 11:23:35');
-INSERT INTO `erpstaff` VALUES ('21576fef-1a5b-4af8-a394-ec5166b4a8e8', '21576fef-1a5b-4af8-a394-ec5166b4a810', '1366666666', 'pPo9vFeTWOCF0oLKKdX9Jw==', '李四', '13666666666', '女', '0', '1', null, null, '2018-07-06 11:08:59', '0', '2018-07-06 11:08:59', '2018-07-06 11:08:59');
+INSERT INTO `erpstaff` VALUES ('21576fef-1a5b-4af8-a394-ec5166b4a8e5', '29e4fba5-47d4-49e1-b500-b494394628ee', '13888888888', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '13888888888', '男', '0', '0', null, 'null', '2018-07-06 11:23:35', '2', '2018-07-16 13:47:47', '2018-07-16 13:47:47');
+INSERT INTO `erpstaff` VALUES ('21576fef-1a5b-4af8-a394-ec5166b4a8e8', '5f997966-d21c-4048-9894-86a47d779c73', '13666666668', 'pPo9vFeTWOCF0oLKKdX9Jw==', '李四', '13666666666', '女', '0', '0', 'HUAWEI', 'e1f5ada9bbe5720333c60aac70cb1aea', '2018-07-16 16:13:44', '13', '2018-07-19 17:35:53', '2018-07-19 17:35:53');
 
 -- ----------------------------
 -- Table structure for erpsupplier
@@ -544,7 +600,7 @@ CREATE TABLE `sysadmin` (
 -- ----------------------------
 -- Records of sysadmin
 -- ----------------------------
-INSERT INTO `sysadmin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-06-13 21:43:43', '2018-07-15 23:10:58', '2018-07-15 23:10:58');
+INSERT INTO `sysadmin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '智障', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-07-16 11:14:37', '2018-07-20 23:20:13', '2018-07-20 23:20:13');
 INSERT INTO `sysadmin` VALUES ('30d3da88-bb72-4ace-a303-b3aae0ecb732', null, '事业发展部', '4b6ab27f-c0fa-483d-9b5a-55891ee8d727', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,4b6ab27f-c0fa-483d-9b5a-55891ee8d727,', 'testadmin', 'pPo9vFeTWOCF0oLKKdX9Jw==', '李四', '1002', '/themes/img/avatar.jpg', '男', null, '\0', null, null, '2018-06-16 23:35:36', null, null);
 
 -- ----------------------------
@@ -565,7 +621,7 @@ CREATE TABLE `sysbtnfun` (
 -- ----------------------------
 INSERT INTO `sysbtnfun` VALUES ('6b8d6513-5da7-4f68-a2c4-f0c7cfaf7f61', '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '新增', 'Add', null);
 INSERT INTO `sysbtnfun` VALUES ('931bd729-f160-4fe3-bb7c-7828a2da047a', '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '修改', 'Edit', null);
-INSERT INTO `sysbtnfun` VALUES ('c4261103-dfc7-46e5-ab20-4ca5fc7729f6', '5ce13ead-971b-4ed4-ad5f-acacccd82381', '删除', 'Delete', null);
+INSERT INTO `sysbtnfun` VALUES ('b943200f-7c99-44b5-93d9-e4ea2505928a', '5ce13ead-971b-4ed4-ad5f-acacccd82381', '新增', 'Add', null);
 
 -- ----------------------------
 -- Table structure for syscode
@@ -613,13 +669,13 @@ INSERT INTO `syscode` VALUES ('2f3fcc5e-737b-4ae8-8e8d-4a9b0032453c', '1f1db281-
 INSERT INTO `syscode` VALUES ('331dcdc9-a57a-42a3-9f5e-49fb156fd030', '21576fef-1a5b-4af8-a394-ec5166b4a8e4', '1012', '无党派人士', null, '25', '', null, '2018-03-29 12:30:58', '2018-03-29 12:30:58');
 INSERT INTO `syscode` VALUES ('36821613-cdf3-423b-a430-2d882b8e2d44', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '2', '2', null, '68', '', null, '2018-06-24 21:32:13', '2018-06-24 21:32:13');
 INSERT INTO `syscode` VALUES ('3c9cae16-42dd-482b-804a-da75b3d7a160', '21576fef-1a5b-4af8-a394-ec5166b4a8e4', '1006', '民建会员', null, '19', '', null, '2018-03-29 12:30:09', '2018-03-29 12:30:09');
-INSERT INTO `syscode` VALUES ('439083c4-c62d-459f-9564-c9ae85fd5320', 'b3767d9d-2ecc-48c5-b56d-d9af628c0c63', '1001', '小学', null, '3', '', null, '2018-05-06 00:52:41', '2018-05-06 00:52:42');
+INSERT INTO `syscode` VALUES ('439083c4-c62d-459f-9564-c9ae85fd5320', 'b3767d9d-2ecc-48c5-b56d-d9af628c0c63', '1001', '小学', null, '3', '', null, '2018-07-16 11:20:14', '2018-07-16 11:20:14');
 INSERT INTO `syscode` VALUES ('46f2ec29-8437-48eb-9daf-12ba6603dba5', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', 'A', 'A', null, '63', '', null, '2018-06-24 21:31:59', '2018-06-24 21:31:59');
 INSERT INTO `syscode` VALUES ('484a55b2-410b-428a-bdaa-54f6f48d4219', '21576fef-1a5b-4af8-a394-ec5166b4a8e4', '1009', '致公党党员', null, '22', '', null, '2018-03-29 12:30:27', '2018-03-29 12:30:27');
 INSERT INTO `syscode` VALUES ('4c8cbfd1-5aad-4019-98cd-3c9dfd667257', '21576fef-1a5b-4af8-a394-ec5166b4a8e4', '1008', '农工党党员', null, '21', '', null, '2018-03-29 12:30:21', '2018-03-29 12:30:21');
 INSERT INTO `syscode` VALUES ('515ba6ca-4f37-48ad-b88c-0a444ab13d49', '36eefb08-1a44-4989-b4dc-e7be65e32349', '1005', '价值观信仰', null, '34', '', '道德主义、律法主义、自由主义、功利主义、拜金主义', '2018-03-29 12:40:38', '2018-03-29 12:40:38');
 INSERT INTO `syscode` VALUES ('6c50d781-91ab-45f6-9aaa-dcd76c5a981e', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'D', 'M', null, '72', '', null, '2018-06-24 21:35:05', '2018-06-24 21:35:05');
-INSERT INTO `syscode` VALUES ('72fd052f-15e7-499b-9bc1-7eee1b5d6f8c', '59dd330c-13a5-4ef8-9e86-918e95b5b1e2', '1001', '男', null, '1', '', null, '2018-07-01 21:20:13', '2018-07-01 21:20:14');
+INSERT INTO `syscode` VALUES ('72fd052f-15e7-499b-9bc1-7eee1b5d6f8c', '59dd330c-13a5-4ef8-9e86-918e95b5b1e2', '1001', '男', null, '1', '', null, '2018-07-16 11:20:16', '2018-07-16 11:20:16');
 INSERT INTO `syscode` VALUES ('73ab9f29-193c-4cb7-a953-7b8fba964375', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'C', '上衣', null, '62', '', null, '2018-06-24 21:31:46', '2018-06-24 21:31:46');
 INSERT INTO `syscode` VALUES ('74a40e09-36bf-4311-808d-f8fb7142374a', '36eefb08-1a44-4989-b4dc-e7be65e32349', '1002', '政治信仰', null, '31', '', '三民主义、共产主义、自由民主、天赋人权', '2018-03-29 12:40:16', '2018-03-29 12:40:17');
 INSERT INTO `syscode` VALUES ('74d07de9-2ba5-4bf0-b9a4-5061321d6b48', 'd14fb7c9-e867-467e-94fa-9f1a94692b88', '1005', '葡萄言语', null, '41', '', null, '2018-05-06 22:07:49', '2018-05-06 22:07:50');
@@ -632,7 +688,7 @@ INSERT INTO `syscode` VALUES ('8e37481c-db25-4b7a-929b-0f0a5bd05e5d', 'b3767d9d-
 INSERT INTO `syscode` VALUES ('90c7c15d-9cc5-4612-a925-9834de0aeb2f', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ADI', 'ADI阿迪', null, '48', '', 'ADI阿迪', '2018-06-24 21:28:44', '2018-06-24 21:28:44');
 INSERT INTO `syscode` VALUES ('93e895c2-4b65-45cd-ab94-d8ccaa4ac1db', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'B', 'XS', null, '70', '', null, '2018-06-24 21:34:49', '2018-06-24 21:34:49');
 INSERT INTO `syscode` VALUES ('9593506f-193a-4503-8929-e88cb13be728', '6ceddac9-c24a-4e36-bcc3-33d31a2d737e', '1002', '私立', null, '43', '', null, '2018-03-30 14:23:16', '2018-03-30 14:23:16');
-INSERT INTO `syscode` VALUES ('9b5b8286-3021-4809-addd-18a334076518', '59dd330c-13a5-4ef8-9e86-918e95b5b1e2', '1002', '女', null, '2', '', null, '2018-05-07 21:58:21', '2018-05-07 21:58:22');
+INSERT INTO `syscode` VALUES ('9b5b8286-3021-4809-addd-18a334076518', '59dd330c-13a5-4ef8-9e86-918e95b5b1e2', '1002', '女', null, '2', '', null, '2018-07-16 11:20:15', '2018-07-16 11:20:16');
 INSERT INTO `syscode` VALUES ('9bc94f7c-5c4f-4b35-8516-fb6235e27348', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'LIN', 'LIN李宁', null, '50', '', null, '2018-06-24 21:29:22', '2018-06-24 21:29:22');
 INSERT INTO `syscode` VALUES ('9bcb2638-6fa8-4dba-8240-4d70566f5ae9', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'H', '四季装', null, '59', '', null, '2018-06-24 21:30:56', '2018-06-24 21:30:56');
 INSERT INTO `syscode` VALUES ('9d484458-5dad-4233-b18e-c5d37f185f13', 'd14fb7c9-e867-467e-94fa-9f1a94692b88', '1002', '英语', null, '12', '', null, '2018-03-29 13:51:45', '2018-03-29 13:51:46');
@@ -747,22 +803,31 @@ CREATE TABLE `syslog` (
 -- ----------------------------
 -- Records of syslog
 -- ----------------------------
+INSERT INTO `syslog` VALUES ('01c06cfe-e6f2-4182-9ba4-02012d9d6a40', 'admins', '商务中心', 'SysAdmin', '登录操作', '180.108.145.117', null, '1', '/fytadmin/login', '2018-07-16 11:14:46');
 INSERT INTO `syslog` VALUES ('01ed5b4b-d0ba-468f-89e5-eba553e7aa35', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-12 15:16:39');
+INSERT INTO `syslog` VALUES ('01ef1a26-2dd9-48fd-a90f-ea80aab6eb53', 'admins', '商务中心', 'SysAdmin', '登录操作', '180.108.145.117', null, '1', '/fytadmin/login', '2018-07-16 11:13:49');
 INSERT INTO `syslog` VALUES ('02dcf71f-dd51-41b3-b343-b78a6bd5ec05', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-05 17:44:19');
 INSERT INTO `syslog` VALUES ('03a70eaa-a7f3-4837-9d10-b35e70b90567', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 14:35:56');
 INSERT INTO `syslog` VALUES ('05237e11-988f-4fbc-b05a-689f48a245c5', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-30 18:32:49');
 INSERT INTO `syslog` VALUES ('0551e4af-15c3-45a7-962d-3d50edab413a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 16:15:12');
+INSERT INTO `syslog` VALUES ('06282513-6cb8-4411-a26e-fff7b1a7fd0e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-20 22:43:28');
 INSERT INTO `syslog` VALUES ('064bb09c-303a-41aa-bf9e-8bc7f190b81b', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-29 22:21:16');
+INSERT INTO `syslog` VALUES ('08f3f043-4ea6-4ed1-9163-38e5b43bade5', 'admins', '商务中心', 'SysAdmin', '登录操作', '58.59.29.2', null, '1', '/fytadmin/login', '2018-07-16 11:23:35');
 INSERT INTO `syslog` VALUES ('0c3afc47-9e73-48fb-a8f2-36cae2aad5db', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-12 13:32:05');
 INSERT INTO `syslog` VALUES ('10425344-1ab9-439a-aeaf-9edbf764125e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-15 23:10:58');
 INSERT INTO `syslog` VALUES ('109ab36a-e462-4b4e-a941-005f40683676', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 10:28:52');
 INSERT INTO `syslog` VALUES ('123ace48-b144-4162-82ed-a1ff5b205cae', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-23 23:09:31');
 INSERT INTO `syslog` VALUES ('18f92f1a-3400-47d2-9a79-ee87ed853d7c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-30 12:58:14');
+INSERT INTO `syslog` VALUES ('19cbfbcf-c209-4ef2-bfee-9bc335dbe078', 'admins', '商务中心', 'SysAdmin', '登录操作', '113.57.182.94', null, '1', '/fytadmin/login', '2018-07-16 11:16:12');
 INSERT INTO `syslog` VALUES ('1f4ff433-bd1c-4afa-8d09-f94a286d3359', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-05 10:21:26');
 INSERT INTO `syslog` VALUES ('2094e8bb-9bd4-40a6-aaa3-a972114e1528', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 15:20:03');
 INSERT INTO `syslog` VALUES ('21daf62b-23ec-451c-9a8b-43f132f08940', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-25 13:54:34');
 INSERT INTO `syslog` VALUES ('24ed042f-0924-40a9-918f-e5f3f6712fc7', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-30 23:26:02');
+INSERT INTO `syslog` VALUES ('25897348-32ae-446c-a5f8-8dde7987da7b', 'admins', '商务中心', 'SysAdmin', '登录操作', '124.65.115.154', null, '1', '/fytadmin/login', '2018-07-19 17:31:14');
+INSERT INTO `syslog` VALUES ('26589c1c-a0ae-4bcb-911d-71f33acb6af6', 'admins', '商务中心', 'SysAdmin', '登录操作', '124.65.115.154', null, '1', '/fytadmin/login', '2018-07-19 09:57:14');
 INSERT INTO `syslog` VALUES ('265ded84-11d8-40b3-ac6d-bbc084bbaeb3', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-28 00:29:11');
+INSERT INTO `syslog` VALUES ('27280b85-4e04-4837-b009-a323907468bf', 'admins', '商务中心', 'SysAdmin', '登录操作', '218.93.176.206', null, '1', '/fytadmin/login', '2018-07-16 11:13:34');
+INSERT INTO `syslog` VALUES ('28af85e7-5c4a-4750-890c-f57d79ae753d', 'admins', '商务中心', 'SysAdmin', '登录操作', '58.59.29.2', null, '1', '/fytadmin/login', '2018-07-16 11:24:07');
 INSERT INTO `syslog` VALUES ('2e69a87a-6e35-4c2c-991c-026743721a42', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-06 11:02:57');
 INSERT INTO `syslog` VALUES ('3491bb1b-5279-49a6-adec-f1f0dc4bb4bb', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 17:31:48');
 INSERT INTO `syslog` VALUES ('35a33665-c341-4fff-8cec-8afa001a666d', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-01 01:56:03');
@@ -774,51 +839,73 @@ INSERT INTO `syslog` VALUES ('3fb076fb-2a73-4a9e-b6e3-91624b9d1d28', 'admins', '
 INSERT INTO `syslog` VALUES ('41cc908d-1db0-4638-a8ca-6da59ac88de8', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '', '2018-06-13 23:24:13');
 INSERT INTO `syslog` VALUES ('4472790a-e267-468b-af5c-b9ce48695ddf', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-28 17:45:56');
 INSERT INTO `syslog` VALUES ('457e858b-b7b3-498c-abf6-fd674b80798c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-01 11:42:02');
+INSERT INTO `syslog` VALUES ('463687f8-3441-4468-bafc-90d28b77b5a5', 'admins', '商务中心', 'SysAdmin', '登录操作', '61.136.114.186', null, '1', '/fytadmin/login', '2018-07-16 11:13:22');
 INSERT INTO `syslog` VALUES ('4719b57d-7b74-45a4-85d7-a496df51949d', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-28 23:43:57');
 INSERT INTO `syslog` VALUES ('47bae6ad-5545-4e47-9772-2a5c442cbec7', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-30 11:56:58');
+INSERT INTO `syslog` VALUES ('49dd435b-3199-43c2-851a-9ae627f431a1', 'admins', '商务中心', 'SysAdmin', '登录操作', '180.137.106.169', null, '1', '/fytadmin/login', '2018-07-16 11:19:02');
 INSERT INTO `syslog` VALUES ('4a2ebd0b-b32b-40db-8174-764d54f28e85', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 21:49:36');
 INSERT INTO `syslog` VALUES ('4caa3b25-152a-4d25-92d1-f60cdb3de1dc', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-01 21:07:05');
 INSERT INTO `syslog` VALUES ('4f23b4b3-68dc-45e1-a6b9-d69f8438a184', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-24 21:11:06');
 INSERT INTO `syslog` VALUES ('504cd3e2-0b6b-455d-9532-2f6f7b19e618', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 11:38:26');
+INSERT INTO `syslog` VALUES ('5315da65-c381-4e65-aff3-5b9039b471fb', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-20 23:15:53');
 INSERT INTO `syslog` VALUES ('54af6c0f-7766-42e6-a7b7-d2be2f182b53', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 11:05:38');
 INSERT INTO `syslog` VALUES ('57171254-c3e9-4219-a77a-bd546c2f5355', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 19:27:06');
+INSERT INTO `syslog` VALUES ('578cc0a6-29b0-4975-b045-3c4e92adfb61', 'admins', '商务中心', 'SysAdmin', '登录操作', '113.57.182.94', null, '1', '/fytadmin/login', '2018-07-16 11:13:26');
 INSERT INTO `syslog` VALUES ('5bf53b17-0c95-4493-98b2-4520f2bdfd89', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-15 20:10:39');
 INSERT INTO `syslog` VALUES ('5ca915b8-5a74-46c5-8bb4-fa436d8b9cf6', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-15 22:40:17');
+INSERT INTO `syslog` VALUES ('5dffc271-ddda-43e2-9824-37ac0affc9ff', 'admins', '商务中心', 'SysAdmin', '登录操作', '121.17.207.23', null, '1', '/fytadmin/login', '2018-07-16 11:13:51');
 INSERT INTO `syslog` VALUES ('5e055f94-da30-45e1-992f-be931bb821d5', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-19 21:30:51');
 INSERT INTO `syslog` VALUES ('60ae7a82-c81f-4d2a-8d06-3f802515366d', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 18:25:15');
 INSERT INTO `syslog` VALUES ('6120f664-c215-461b-a8e3-5749f72c4b46', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 23:26:36');
 INSERT INTO `syslog` VALUES ('627648c4-612d-4db4-8f1d-165d779875bb', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-27 21:23:50');
 INSERT INTO `syslog` VALUES ('644f5df1-012c-4a8f-bc38-b8dea39a69ed', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-11 13:52:53');
 INSERT INTO `syslog` VALUES ('6634e635-b8b9-4e5f-aea6-9ff1b9371993', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-07 20:36:21');
+INSERT INTO `syslog` VALUES ('68ca878d-be30-44d6-9fe3-7bcd9cc32a81', 'admins', '商务中心', 'SysAdmin', '登录操作', '115.175.77.239', null, '1', '/fytadmin/login', '2018-07-16 11:18:06');
+INSERT INTO `syslog` VALUES ('6c780240-1157-4ed8-b96b-3fb4f7753958', 'admins', '商务中心', 'SysAdmin', '登录操作', '60.190.61.106', null, '1', '/fytadmin/login', '2018-07-16 11:15:06');
 INSERT INTO `syslog` VALUES ('6ca95159-8f79-4bc0-92c3-7000052c771d', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-24 21:18:59');
 INSERT INTO `syslog` VALUES ('6dfae024-f269-4083-9631-fba8e6c65ba8', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-12 11:15:52');
 INSERT INTO `syslog` VALUES ('7157442c-45f8-49be-921f-ac1f16cf9c46', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 09:23:36');
 INSERT INTO `syslog` VALUES ('71ef99c6-f4d6-4a63-a4ac-54e5beb3baa2', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 10:00:30');
 INSERT INTO `syslog` VALUES ('735275c1-f72a-4242-8701-c4fe5c3f5cf6', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 15:46:00');
+INSERT INTO `syslog` VALUES ('73593b8d-0cd3-478a-9f79-28ad544b8d2e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-16 15:47:39');
 INSERT INTO `syslog` VALUES ('761487e4-5f18-498a-afc1-4d239462e1c7', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 09:52:36');
 INSERT INTO `syslog` VALUES ('7624303f-ff23-4a86-98d8-caefca51d749', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-25 22:52:35');
+INSERT INTO `syslog` VALUES ('76deebdd-f131-49f9-a09c-5469a4f719c8', 'admins', '商务中心', 'SysAdmin', '登录操作', '113.92.35.65', null, '1', '/fytadmin/login', '2018-07-16 11:13:45');
 INSERT INTO `syslog` VALUES ('7aee8b35-19bd-49e4-b3cb-d3dab8bd07ab', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-27 16:50:55');
+INSERT INTO `syslog` VALUES ('7c0e185f-c332-43c4-8cf1-0c9621d8416b', 'admins', '商务中心', 'SysAdmin', '登录操作', '122.228.154.214', null, '1', '/fytadmin/login', '2018-07-16 11:16:35');
+INSERT INTO `syslog` VALUES ('7c2dc4f7-bb76-44a6-a747-5d9688fc6fb6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-16 10:52:19');
 INSERT INTO `syslog` VALUES ('7dae3a5d-3a44-4532-92da-a17aa5997a5b', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-25 12:48:13');
 INSERT INTO `syslog` VALUES ('7ff5bdf7-073a-45cf-8be1-75389d7e6e85', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-21 18:21:34');
 INSERT INTO `syslog` VALUES ('80b8baec-5aa3-4714-b55d-ce481c6e7283', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-01 19:42:31');
 INSERT INTO `syslog` VALUES ('83026695-b85d-4472-9420-38148725dbf8', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-23 00:08:15');
 INSERT INTO `syslog` VALUES ('8318386a-efde-4903-9313-692f172a2c5c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-27 09:57:02');
+INSERT INTO `syslog` VALUES ('8682c653-2f65-4c7b-b638-4582581a12f1', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-20 23:17:24');
 INSERT INTO `syslog` VALUES ('8a40199b-b66f-4f12-8eda-6962334af5d0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-30 19:33:18');
 INSERT INTO `syslog` VALUES ('8b776e1d-8e04-41a5-a7a6-d2b4e147ab8c', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 11:18:04');
+INSERT INTO `syslog` VALUES ('8beb08a0-5d7a-4169-af6e-1611ab4139bc', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-16 09:40:32');
 INSERT INTO `syslog` VALUES ('8bec1f9f-dbde-4fec-9c52-20225c0b0824', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-16 22:52:52');
 INSERT INTO `syslog` VALUES ('8c58ac5a-7f11-40ba-aae3-f0bc130e33f8', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-27 22:34:22');
+INSERT INTO `syslog` VALUES ('8d5f7ba2-5621-4d18-8774-d27fd33b6baf', 'admins', '商务中心', 'SysAdmin', '登录操作', '125.84.88.121', null, '1', '/fytadmin/login', '2018-07-16 14:35:50');
 INSERT INTO `syslog` VALUES ('92f819b0-8e30-480a-8e79-8b90ed07ef65', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-23 01:46:30');
+INSERT INTO `syslog` VALUES ('95aab8a2-47a2-4275-b68f-c086864f61a0', 'admins', '商务中心', 'SysAdmin', '登录操作', '180.173.147.87', null, '1', '/fytadmin/login', '2018-07-16 11:14:01');
 INSERT INTO `syslog` VALUES ('96ad7900-0c3a-429d-9427-f84d68be8b27', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-18 06:10:02');
 INSERT INTO `syslog` VALUES ('9bf65643-86c7-49c7-99d8-9b7492dc499f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-24 22:31:16');
 INSERT INTO `syslog` VALUES ('9d81d47f-0812-418e-8702-22f70d67084a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-05 14:53:50');
 INSERT INTO `syslog` VALUES ('9ec2c692-7935-4591-bdc1-425155fe99a6', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 13:10:51');
 INSERT INTO `syslog` VALUES ('9f5ee004-2a8d-40ee-bfc9-047dec592368', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-25 21:17:34');
+INSERT INTO `syslog` VALUES ('a05c840d-a632-4e88-92c4-1467760d7a8b', 'admins', '商务中心', 'SysAdmin', '登录操作', '124.200.109.2', null, '1', '/fytadmin/login', '2018-07-16 11:13:29');
+INSERT INTO `syslog` VALUES ('a1331a96-38fb-43ca-b855-26b9653bcf23', 'admins', '商务中心', 'SysAdmin', '登录操作', '59.175.207.126', null, '1', '/fytadmin/login', '2018-07-16 11:20:09');
+INSERT INTO `syslog` VALUES ('a1f92b89-dfb9-4283-9d47-bd02f3aad2ee', 'admins', '商务中心', 'SysAdmin', '登录操作', '124.65.115.154', null, '1', '/fytadmin/login', '2018-07-16 11:13:01');
 INSERT INTO `syslog` VALUES ('a39095a9-6e11-42bc-ae3d-ea85ee7cd9ab', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-13 14:50:11');
 INSERT INTO `syslog` VALUES ('a49e2a2c-5133-4bff-8b53-65ffd8d57717', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-23 15:38:23');
 INSERT INTO `syslog` VALUES ('a5a558ad-2f39-475b-904d-73111665acad', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-25 10:10:14');
 INSERT INTO `syslog` VALUES ('ab97515a-4d8c-4b3f-ae2a-47e1c44bf31c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-30 09:36:05');
 INSERT INTO `syslog` VALUES ('acbc1fe8-a016-4ab9-aee0-365d967fd4e6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-20 12:07:10');
+INSERT INTO `syslog` VALUES ('ad479bfd-0885-4f1d-b412-fd3b32272095', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-17 23:19:55');
+INSERT INTO `syslog` VALUES ('b00c0278-8039-4798-9b14-9c15d57107cd', 'admins', '商务中心', 'SysAdmin', '登录操作', '113.116.61.32', null, '1', '/fytadmin/login', '2018-07-16 11:15:28');
+INSERT INTO `syslog` VALUES ('b1273897-ddcb-415d-85f5-ddb8c3f14b8b', 'admins', '商务中心', 'SysAdmin', '登录操作', '58.59.29.2', null, '1', '/fytadmin/login', '2018-07-16 11:13:05');
 INSERT INTO `syslog` VALUES ('b4c1ea10-aa82-44ad-bcae-3fc6b6011356', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-30 21:05:56');
+INSERT INTO `syslog` VALUES ('b528159a-52d0-4383-a895-3910c3edb16e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-18 21:56:35');
 INSERT INTO `syslog` VALUES ('b551b0dc-dabd-434b-8ccd-4da9c3e5b986', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-26 23:41:07');
 INSERT INTO `syslog` VALUES ('b667f987-5338-4396-8d72-fde229382b1d', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-06 09:50:59');
 INSERT INTO `syslog` VALUES ('b7cd2285-a05f-4168-ba2c-176dfaa68bbb', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-05 09:20:39');
@@ -830,6 +917,7 @@ INSERT INTO `syslog` VALUES ('be2dacc7-ce46-4f07-832d-c85756a27ef0', 'admins', '
 INSERT INTO `syslog` VALUES ('be4c7ba7-336f-48e3-a318-268d3eadec39', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-29 19:31:43');
 INSERT INTO `syslog` VALUES ('bf95bbbc-72e5-4045-89b5-2d10caca1ee8', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-25 15:00:26');
 INSERT INTO `syslog` VALUES ('c1ac92d1-4026-4e5e-9a1c-3c8a23529be5', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '', '2018-06-14 00:29:27');
+INSERT INTO `syslog` VALUES ('c2160ace-bb94-45fe-af47-90dcb24ee859', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-17 10:07:52');
 INSERT INTO `syslog` VALUES ('c2ec0a71-9262-49c2-9bdd-04a00a346c04', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-27 18:00:58');
 INSERT INTO `syslog` VALUES ('c634011b-cc8a-4f94-9955-21251349b65f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-30 10:42:43');
 INSERT INTO `syslog` VALUES ('c7c36aad-9a74-4ec8-a80a-ee55273deda8', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-11 15:17:12');
@@ -840,8 +928,10 @@ INSERT INTO `syslog` VALUES ('d28db11a-24f0-4330-925f-85201f7b64d0', 'admins', '
 INSERT INTO `syslog` VALUES ('d4af5c7e-165b-45f7-8e42-4e024c9e3ff1', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-13 09:57:38');
 INSERT INTO `syslog` VALUES ('d4e763ce-fd76-424b-8b8a-869232764947', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-27 16:09:10');
 INSERT INTO `syslog` VALUES ('d6837afc-2b0b-4262-980c-6a7412a2e8f0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-21 17:20:24');
+INSERT INTO `syslog` VALUES ('d91d611d-2fcf-4318-8fda-38d041006f3e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-20 23:20:13');
 INSERT INTO `syslog` VALUES ('da210a5c-a04a-4d98-ba3b-f963409fd879', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 16:29:42');
 INSERT INTO `syslog` VALUES ('da4a2150-c92e-43f2-8e66-76d58d2de905', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-11 09:46:09');
+INSERT INTO `syslog` VALUES ('da970e3a-1f81-4a90-9dd5-78f10ba200b0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-16 21:21:43');
 INSERT INTO `syslog` VALUES ('daaf69df-3079-4571-ac7e-046c0f20ee88', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-06-17 17:27:48');
 INSERT INTO `syslog` VALUES ('dbb986e8-2c30-47c7-b537-97355956867a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-22 21:01:44');
 INSERT INTO `syslog` VALUES ('dc554682-39c9-4596-a916-f520e1b10a8a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-12 17:32:28');
@@ -853,6 +943,7 @@ INSERT INTO `syslog` VALUES ('e8e33493-8fe4-4b3e-a137-ce429e6c7e16', 'admins', '
 INSERT INTO `syslog` VALUES ('e9df80a7-991a-418b-9240-a82b212f95e6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-28 21:20:24');
 INSERT INTO `syslog` VALUES ('ed3f596b-91d2-405d-a8e3-df4555156dfb', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-07-06 14:36:34');
 INSERT INTO `syslog` VALUES ('ee46cf74-5288-476d-b920-7e23a3f4ed46', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-25 17:49:58');
+INSERT INTO `syslog` VALUES ('ee92567f-0281-476d-acb2-26f8abafc95b', 'admins', '商务中心', 'SysAdmin', '登录操作', '27.155.224.135', null, '1', '/fytadmin/login', '2018-07-16 11:17:03');
 INSERT INTO `syslog` VALUES ('ef0937e1-b60e-4373-b60f-e15da9adb5ea', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-30 22:14:45');
 INSERT INTO `syslog` VALUES ('f3eae8f5-e1f6-49bc-b70c-03a07530ca05', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-27 09:43:29');
 INSERT INTO `syslog` VALUES ('f626126c-f102-45ad-848c-43697ecab1de', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-06-27 12:19:37');
@@ -923,7 +1014,7 @@ CREATE TABLE `sysorganize` (
 INSERT INTO `sysorganize` VALUES ('24febdc4-655f-4492-ac8a-4adab18c22c8', null, '388b72d3-e10a-4183-8ef7-6be44eb99b1a', '融媒体中心', '包头分公司', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,24febdc4-655f-4492-ac8a-4adab18c22c8,', '2', '7', '', '2018-05-16 22:09:35');
 INSERT INTO `sysorganize` VALUES ('388b72d3-e10a-4183-8ef7-6be44eb99b1a', null, '883deb1c-ddd7-484e-92c1-b3ad3b32e655', '包头分公司', '飞易腾集团', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,', '1', '3', '', '2018-05-16 22:06:20');
 INSERT INTO `sysorganize` VALUES ('4b6ab27f-c0fa-483d-9b5a-55891ee8d727', null, '388b72d3-e10a-4183-8ef7-6be44eb99b1a', '事业发展部', '包头分公司', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,4b6ab27f-c0fa-483d-9b5a-55891ee8d727,', '2', '6', '', '2018-05-16 22:09:30');
-INSERT INTO `sysorganize` VALUES ('52523a76-52b3-4c25-a1bd-9123a011f2a8', null, '5533b6c5-ba2e-4659-be29-c860bb41e04d', '商务中心', '北京总公司', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', '2', '4', '', '2018-05-16 22:09:27');
+INSERT INTO `sysorganize` VALUES ('52523a76-52b3-4c25-a1bd-9123a011f2a8', null, '24febdc4-655f-4492-ac8a-4adab18c22c8', '商务中心', '融媒体中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,24febdc4-655f-4492-ac8a-4adab18c22c8,52523a76-52b3-4c25-a1bd-9123a011f2a8,', '3', '4', '', '2018-07-20 23:03:59');
 INSERT INTO `sysorganize` VALUES ('5533b6c5-ba2e-4659-be29-c860bb41e04d', null, '883deb1c-ddd7-484e-92c1-b3ad3b32e655', '北京总公司', '飞易腾集团', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,', '1', '2', '', '2018-05-16 22:06:02');
 INSERT INTO `sysorganize` VALUES ('883deb1c-ddd7-484e-92c1-b3ad3b32e655', null, null, '飞易腾集团', '根目录', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,', '0', '1', '', '2018-05-15 00:11:55');
 INSERT INTO `sysorganize` VALUES ('dcf99638-5db6-4dd7-a485-31df1160d45a', null, '5533b6c5-ba2e-4659-be29-c860bb41e04d', '互联网中心', '北京总公司', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,dcf99638-5db6-4dd7-a485-31df1160d45a,', '2', '5', '', '2018-05-16 22:09:36');
@@ -943,7 +1034,6 @@ CREATE TABLE `syspermissions` (
 -- ----------------------------
 -- Records of syspermissions
 -- ----------------------------
-INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, null, '2');
 INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '6b8d6513-5da7-4f68-a2c4-f0c7cfaf7f61', '3');
 INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', 'c4261103-dfc7-46e5-ab20-4ca5fc7729f6', '3');
 INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '931bd729-f160-4fe3-bb7c-7828a2da047a', '3');
@@ -963,10 +1053,20 @@ INSERT INTO `syspermissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', nul
 INSERT INTO `syspermissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '6b8d6513-5da7-4f68-a2c4-f0c7cfaf7f61', '3');
 INSERT INTO `syspermissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', 'c4261103-dfc7-46e5-ab20-4ca5fc7729f6', '3');
 INSERT INTO `syspermissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', '30d3da88-bb72-4ace-a303-b3aae0ecb732', null, null, '2');
-INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, null, '2');
 INSERT INTO `syspermissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, null, '2');
 INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '30d3da88-bb72-4ace-a303-b3aae0ecb732', null, null, '2');
 INSERT INTO `syspermissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, null, '2');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', 'b943200f-7c99-44b5-93d9-e4ea2505928a', '3');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', null, '1');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', null, '1');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', null, '1');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '1fc3d8e8-e3f2-49cf-a652-2341082643df', null, '1');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '404d4b8b-8e3c-42ee-aee5-f29df31308fa', null, '1');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'b354ea64-88b6-4032-a26a-fee198e24d9d', null, '1');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'a280f6e2-3100-445f-871d-77ea443356a9', null, '1');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '51216bb3-d0c7-474a-b565-71cf96db19f4', null, '1');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '40823e8a-bc10-4e38-a45f-a6dd7dd0ef78', null, '1');
+INSERT INTO `syspermissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, null, '2');
 
 -- ----------------------------
 -- Table structure for sysrole
@@ -990,5 +1090,5 @@ CREATE TABLE `sysrole` (
 -- Records of sysrole
 -- ----------------------------
 INSERT INTO `sysrole` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', 'dcf99638-5db6-4dd7-a485-31df1160d45a', '互联网中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,dcf99638-5db6-4dd7-a485-31df1160d45a,', '超级管理员', '1001', '', '超级管理员', '2018-03-29 00:00:00', '2018-05-17 23:36:28');
-INSERT INTO `sysrole` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', '52523a76-52b3-4c25-a1bd-9123a011f2a8', '商务中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', '客服管理员', '1002', '', '只能查看会员相关功能', '2018-05-17 23:37:56', '2018-05-17 23:37:56');
+INSERT INTO `sysrole` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', '52523a76-52b3-4c25-a1bd-9123a011f2a8', '商务中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', '客服管理员', '1002', '', '只能查看会员相关功能', '2018-05-17 23:37:56', '2018-07-16 11:24:03');
 INSERT INTO `sysrole` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', 'dcf99638-5db6-4dd7-a485-31df1160d45a', '互联网中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,dcf99638-5db6-4dd7-a485-31df1160d45a,', '财务管理员', '1003', '', '只能查看财务相关功能', '2018-05-17 23:39:01', '2018-05-17 23:39:01');

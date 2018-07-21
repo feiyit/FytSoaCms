@@ -48,17 +48,21 @@ namespace FytSoa.Service.Implements
         /// 查询多条记录
         /// </summary>
         /// <returns></returns>
-        public Task<ApiResult<Page<SaleOrderGoodsDto>>> GetPagesAsync(PageParm parm)
+        public Task<ApiResult<Page<SaleOrderGoodsDto>>> GetPagesAsync(PageParm parm, SearchParm searchParm)
         {
             var res = new ApiResult<Page<SaleOrderGoodsDto>>();
             try
             {
                 var query = Db.Queryable<ErpSaleOrderGoods, ErpGoodsSku>((eso, egs) => new object[] { JoinType.Left, eso.GoodsGuid == egs.Guid })
+                    .WhereIF(!string.IsNullOrEmpty(parm.guid), (eso, egs) => eso.OrderNumber == parm.guid)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.shopGuid), (eso, egs) => eso.ShopGuid == searchParm.shopGuid)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.brank), (eso, egs) => egs.BrankGuid == searchParm.brank)
                     .Select((eso, egs) => new SaleOrderGoodsDto()
                     {
-                        GoodsName= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.BrankGuid).Select(g => g.Name) +
-                            SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.SeasonGuid).Select(g => g.Name) +
-                            SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.StyleGuid).Select(g => g.Name),
+                        Guid=eso.Guid,
+                        BrandName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.BrankGuid).Select(g => g.Name),
+                        SeasonName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.SeasonGuid).Select(g => g.Name),
+                        StyleName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.StyleGuid).Select(g => g.Name),
                         Code = egs.Code,
                         Counts = eso.Counts
                     })

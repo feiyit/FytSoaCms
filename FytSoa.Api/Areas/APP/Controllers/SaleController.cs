@@ -51,9 +51,9 @@ namespace FytSoa.Api.Areas.APP.Controllers
         /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost("goods/list")]
-        public JsonResult SaleOrderGoodsList(PageParm parm)
+        public JsonResult SaleOrderGoodsList(PageParm parm,SearchParm searchParm)
         {
-            var res = _goodsService.GetPagesAsync(parm).Result;
+            var res = _goodsService.GetPagesAsync(parm, searchParm).Result;
             return Json(new { statusCode = 200, msg = "success", count = res.data.TotalPages, data = res.data.Items });
         }
 

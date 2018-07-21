@@ -84,13 +84,15 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        public async Task<ApiResult<Page<ReturnGoodsDto>>> GetPagesAsync(PageParm parm)
+        public async Task<ApiResult<Page<ReturnGoodsDto>>> GetPagesAsync(PageParm parm, SearchParm searchParm)
         {
             var res = new ApiResult<Page<ReturnGoodsDto>>();
             try
             {
                 var query = Db.Queryable<ErpReturnGoods,ErpGoodsSku>((erg,egs)=>new object[] {JoinType.Left,erg.GoodsGuid==egs.Guid })
                         .WhereIF(!string.IsNullOrEmpty(parm.guid), (erg, egs) => erg.OrderGuid == parm.guid)
+                        .WhereIF(!string.IsNullOrEmpty(searchParm.shopGuid), (erg, egs) => erg.ShopGuid == searchParm.shopGuid)
+                        .WhereIF(!string.IsNullOrEmpty(searchParm.brank), (erg, egs) => egs.BrankGuid == searchParm.brank)
                         .Select((erg, egs)=>new ReturnGoodsDto() {
                             Code=egs.Code,
                             BrandName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.BrankGuid).Select(g => g.Name),

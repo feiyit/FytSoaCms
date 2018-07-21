@@ -5,30 +5,84 @@
     Layout = AdminLayout.Pjax(HttpContext);
 }
 <div id="container">
-    <div class="list-wall">
-        <div class="layui-form list-search">
-            <div class="layui-inline">
-                <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
-            </div>
-            <div class="layui-inline">
-                <select id="branks" lay-search="">
-                    <option value="">--可根据品牌搜索--</option>
-                    @{
-                        foreach (var item in Model.codeList)
-                        {
-                            <option value="@item.Guid">@item.Name</option>
-                        }
-                    }
-                </select>
-            </div>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
-        </div>
-        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    <style>
+        .layui-col-220 {
+            width: 400px;
+        }
+
+        .right-col-body {
+            left: 400px;
+        }
+    </style>
+    <div class="layui-col-220" id="app">
+        <div class="layui-nav-title">返货订单列表　　　</div>
+        <ul class="fyt-utree">
+            <li v-for="it in list" v-cloak :class="{active: activeName == it.guid}" @@click="selected(it.guid)">
+                <a class="layui-elip title" @@click="getList(it)">{{it.number}}——{{it.shopName}}</a>
+                <a class="layui-elip sums"><span class="layui-badge layui-bg-blue">{{it.counts}}</span></a>
+            </li>
+        </ul>
     </div>
+    <div class="right-col-body">
+        <div class="list-wall">
+            <div class="layui-form list-search">
+                <div class="layui-inline">
+                    <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
+                </div>
+                <div class="layui-inline">
+                    <select id="shops" lay-search="">
+                        <option value="">--可根据店铺搜索--</option>
+                        @{
+                            foreach (var item in Model.shopList)
+                            {
+                                <option value="@item.Guid">@item.ShopName</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="layui-inline">
+                    <select id="branks">
+                        <option value="">--可根据品牌搜索--</option>
+                        @{
+                            foreach (var item in Model.codeList)
+                            {
+                                <option value="@item.Name">@item.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch">
+                    <i class="layui-icon layui-icon-search"></i> 搜索
+                </button>
+            </div>
+            <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/themes/js/modules/vue.js"></script>
     <script>
+        var funTool, vm = new Vue({
+            el: "#app",
+            data: {
+                list: [],
+                curModel: {},
+                activeName: '',
+                parm: {
+                    guid:''
+                }
+            },
+            methods: {
+                selected: function (m) {
+                    console.log(m);
+                    this.activeName = m;
+                },
+                getList: function (m) {
+                    funTool.getGoodsSku(m);
+                }              
+            }
+        });
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['table', 'layer', 'jquery', 'common', 'form'],
+        }).use(['table', 'layer', 'jquery', 'form', 'common'],
             function () {
                 var table = layui.table,
                     layer = layui.layer,
@@ -38,27 +92,24 @@
                 form.render('select');
                 table.render({
                     elem: '#tablist',
-                    url: '/api/goods/barlist',
+                    url: '/api/stock/return/goods',
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'code', width: 180, title: '条形码', sort: true, fixed: 'left' },
-                            { field: 'brankName', title: '品牌', sort: true },
-                            { field: 'styleName', title: '款式', sort: true },
-                            { field: 'salePrice', title: '商铺', sort: true },
-                            { field: 'disPrice', title: '负责人', sort: true },
-                            { field: 'stockSum', title: '返货数量', sort: true },
-                            { field: 'saleSum', title: '返货原因', sort: true },
-                            { field: 'addDate', title: '返货状态', sort: true },
-                            { field: 'addDate', title: '返货时间', sort: true }
-                            //{ width: 100, title: '操作', templet: '#tool' }
+                            { field: 'code', width: 200, title: '条形码', fixed: 'left' },
+                            { field: 'brandName', title: '品牌' },
+                            { field: 'styleName', title: '款式' },
+                            { field: 'seasonName', width: 150, title: '季节' },
+                            { field: 'counts', title: '返货数' },
+                            { field: 'summary', title: '返货原因' }
                         ]
                     ],
                     page: true,
+                    limit: 20,
                     id: 'tables'
                 });
 
-                var guid = '', active = {
+                var orderguid = '', shopGuid = '', active = {
                     reload: function () {
                         table.reload('tables',
                             {
@@ -66,65 +117,43 @@
                                     curr: 1
                                 },
                                 where: {
-                                    key: $("#key").val(),
-                                    guid: $("#branks").val()
+                                    guid: orderguid,
+                                    key: $('#key').val(),
+                                    brank: $('#branks').val(),
+                                    shopGuid: $("#shops").val()
                                 }
                             });
                     },
                     toolSearch: function () {
+                        vm.parm.guid = $("#shops").val();
+                        active.reload();
+                        funTool.orderPage();
+                    }                    
+                };
+
+                funTool = {
+                    getGoodsSku: function (obj) {
+                        orderguid = obj.guid;
+                        shopGuid = obj.shopGuid;
                         active.reload();
                     },
-                    toolAdd: function () {
-                        os.Open('添加条形码', '/fytadmin/goods/barcodemodify', '750px', '400px', function () {
-                            active.reload();
+                    orderPage: function () {
+                        os.ajax('api/stock/return/order', vm.parm, function (res) {
+                            if (res.statusCode === 200) {
+                                vm.list = res.data.items;
+                            } else {
+                                os.error(res.message);
+                            }
                         });
-                    },
-                    toolDel: function () {
-                        var checkStatus = table.checkStatus('tables')
-                            , data = checkStatus.data;
-                        if (data.length === 0) {
-                            os.error("请选择要删除的项目~");
-                            return;
-                        }
-                        var str = '';
-                        $.each(data, function (i, item) {
-                            str += item.guid + ",";
-                        });
-                        layer.confirm('确定要执行批量删除吗？', function (index) {
-                            layer.close(index);
-                            var loadindex = layer.load(1, {
-                                shade: [0.1, '#000']
-                            });
-                            os.ajax('api/goods/delbarcode/', { parm: str }, function (res) {
-                                layer.close(loadindex);
-                                if (res.statusCode === 200) {
-                                    active.reload();
-                                    os.success('删除成功！');
-                                } else {
-                                    os.error(res.message);
-                                }
-                            });
-                        });
-
                     }
-                };
+                }
+                //初始化入库单管理
+                funTool.orderPage();
                 $('.list-search .layui-btn').on('click', function () {
                     var type = $(this).data('type');
                     active[type] ? active[type].call(this) : '';
                 });
-                //监听工具条
-                table.on('tool(tool)', function (obj) {
-                    var data = obj.data;
-                    if (obj.event === 'edit') {
-                        os.Open('编辑条形码', '/fytadmin/goods/barcodemodify/?guid=' + data.guid, '750px', '400px', function () {
-                            active.reload();
-                        })
-                    }
-                });
             });
-    </script>
-    <script type="text/html" id="tool">
-        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
     </script>
 </div>
 

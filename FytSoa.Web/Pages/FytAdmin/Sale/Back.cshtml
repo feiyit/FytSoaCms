@@ -11,23 +11,23 @@
                 <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
             </div>
             <div class="layui-inline">
-                <select id="branks" lay-search="">
-                    <option value="">--可根据品牌搜索--</option>
-                    @{
-                        foreach (var item in Model.codeList)
-                        {
-                            <option value="@item.Guid">@item.Name</option>
-                        }
-                    }
-                </select>
-            </div>
-            <div class="layui-inline">
                 <select id="shops" lay-search="">
                     <option value="">--可根据店铺搜索--</option>
                     @{
                         foreach (var item in Model.shopList)
                         {
                             <option value="@item.Guid">@item.ShopName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="layui-inline">
+                <select id="branks" lay-search="">
+                    <option value="">--可根据品牌搜索--</option>
+                    @{
+                        foreach (var item in Model.codeList)
+                        {
+                            <option value="@item.Guid">@item.Name</option>
                         }
                     }
                 </select>

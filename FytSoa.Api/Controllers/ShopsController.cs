@@ -40,7 +40,7 @@ namespace FytSoa.Api.Controllers
         public async Task<JsonResult> GetPages(PageParm parm)
         {
             var res = await _shopsService.GetPagesAsync(parm);
-            return Json(new { code = 0, msg = "success", count = res.data.Items?.Count, data = res.data.Items });
+            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace FytSoa.Api.Controllers
         public async Task<JsonResult> GetStaffPages(PageParm parm)
         {
             var res = await _staffService.GetPagesAsync(parm);
-            return Json(new { code = 0, msg = "success", count = res.data.Items?.Count, data = res.data.Items });
+            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace FytSoa.Api.Controllers
         public async Task<JsonResult> GetUserPages(PageParm parm)
         {
             var res = await _shopUserService.GetPagesAsync(parm);
-            return Json(new { code = 0, msg = "success", count = res.data.Items?.Count, data = res.data.Items });
+            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace FytSoa.Api.Controllers
         public async Task<JsonResult> GetActPages(PageParm parm)
         {
             var res = await _activityService.GetPagesAsync(parm);
-            return Json(new { code = 0, msg = "success", count = res.data.Items?.Count, data = res.data?.Items });
+            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data?.Items });
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace FytSoa.Api.Controllers
         public async Task<JsonResult> GetPushPages(PageParm parm)
         {
             var res = await _pushService.GetPagesAsync(parm);
-            return Json(new { code = 0, msg = "success", count = res.data.Items?.Count, data = res.data.Items });
+            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
         /// <summary>

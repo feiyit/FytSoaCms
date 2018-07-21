@@ -50,9 +50,9 @@ namespace FytSoa.Api.Areas.APP.Controllers
         /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost("goods/list")]
-        public JsonResult ReturnOrderGoodsList(PageParm parm)
+        public JsonResult ReturnOrderGoodsList(PageParm parm,SearchParm searchParm)
         {
-            var res = _goodsService.GetPagesAsync(parm).Result;
+            var res = _goodsService.GetPagesAsync(parm, searchParm).Result;
             var list = res.data.Items?.Select(m => new {
                 m.Code,
                 m.BrandName,

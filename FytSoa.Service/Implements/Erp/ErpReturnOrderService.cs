@@ -145,7 +145,9 @@ namespace FytSoa.Service.Implements
             try
             {
                 var query = Db.Queryable<ErpReturnOrder,ErpShops,ErpStaff>((ero,es,est)=>
-                new object[] {JoinType.Left,ero.ShopGuid==es.Guid,JoinType.Left,es.Guid==est.ShopGuid })
+                new object[] {
+                    JoinType.Left,ero.ShopGuid==es.Guid,
+                    JoinType.Left,ero.StaffGuid==est.Guid })
                         .WhereIF(!string.IsNullOrEmpty(parm.guid), (ero, es, est) => ero.ShopGuid == parm.guid)
                         .OrderBy((ero, es, est)=>ero.AddDate,OrderByType.Desc)
                         .Select((ero, es, est) => new ReturnOrderDto() {
