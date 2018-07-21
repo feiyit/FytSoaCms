@@ -109,7 +109,26 @@ namespace FytSoa.Service.Implements
                             //整除销售计算价格，残次品价格是前端传过来的
                             if (parm.SaleType==1)
                             {
-                                parm.RealMoney += Convert.ToDecimal(item.DisPrice) * roitem.Counts;
+                                //这里面只处理打折的，并且是按品牌的
+                                if(activityModel!=null && activityModel.Method==1 && activityModel.Types==2)
+                                {
+                                    if (item.BrankGuid == activityModel.BrandGuid)
+                                    {
+                                        //品牌打折
+                                        var tempMoney = Convert.ToDecimal(item.DisPrice) * roitem.Counts;
+                                        tempMoney = tempMoney * (Convert.ToDecimal(activityModel.CountNum) / 100);
+                                        parm.RealMoney += tempMoney;
+                                    }
+                                    else
+                                    {
+                                        //不是该品牌部打折
+                                        parm.RealMoney += Convert.ToDecimal(item.DisPrice) * roitem.Counts;
+                                    }
+                                }
+                                else
+                                {
+                                    parm.RealMoney += Convert.ToDecimal(item.DisPrice) * roitem.Counts;
+                                }
                             }                            
                         }
                     }                    
@@ -117,10 +136,14 @@ namespace FytSoa.Service.Implements
                 if (activityModel!=null && parm.SaleType==1)
                 {
                     //====打折/满减
-                    if (activityModel.Method==1)
+                    if (activityModel.Method == 1)
                     {
                         //打折   实收金额=实收金额*（折扣值/100）
-                        parm.RealMoney =Convert.ToDecimal(parm.RealMoney * (activityModel.CountNum/100));
+                        if (activityModel.Types == 0)
+                        {
+                            //全部商铺，也就是所有金额
+                            parm.RealMoney = Convert.ToDecimal(parm.RealMoney * (activityModel.CountNum / 100));
+                        }                        
                     }
                     else
                     {
