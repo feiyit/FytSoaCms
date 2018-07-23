@@ -17,6 +17,12 @@ namespace FytSoa.Service.Interfaces
         Task<ApiResult<Page<SaleOrderDto>>> GetPagesAsync(PageParm parm, AppSearchParm searchParm);
 
         /// <summary>
+        /// 获得列表 不包含订单下面的商品列表
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<Page<SaleOrderDto>>> GetPagesNoGoodsAsync(PageParm parm, AppSearchParm searchParm);
+
+        /// <summary>
         /// 添加一条数据
         /// </summary>
         /// <returns></returns>

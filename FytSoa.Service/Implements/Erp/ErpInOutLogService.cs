@@ -25,8 +25,8 @@ namespace FytSoa.Service.Implements
             try
             {
                 //判断条形码是否存在
-                var sukModel = ErpGoodsSkuDb.GetSingle(m => m.Code == parm.GoodsSku && !m.IsDel);
-                if (sukModel==null)
+                var skuModel = ErpGoodsSkuDb.GetSingle(m => m.Code == parm.GoodsSku && !m.IsDel);
+                if (skuModel == null)
                 {
                     res.statusCode = (int)ApiEnum.ParameterError;
                     res.message = "该条形码不存在~";
@@ -35,15 +35,15 @@ namespace FytSoa.Service.Implements
                 if (parm.Types==2)
                 {
                     //出库  需要判断库存是否足够
-                    if (sukModel.StockSum < parm.GoodsSum)
+                    if (skuModel.StockSum < parm.GoodsSum)
                     {
                         res.statusCode = (int)ApiEnum.ParameterError;
-                        res.message = "库存不足,只剩下" + sukModel.StockSum + "件~";
+                        res.message = "库存不足,只剩下" + skuModel.StockSum + "件~";
                         return await Task.Run(() => res);
                     }
                 }
                 parm.Guid = Guid.NewGuid().ToString();
-                parm.GoodsGuid = sukModel.Guid;
+                parm.GoodsGuid = skuModel.Guid;
                 //开启事务
                 Db.Ado.BeginTran();
                 if (parm.Types == 1)
@@ -53,7 +53,25 @@ namespace FytSoa.Service.Implements
                 }
                 else
                 {
-                    ErpGoodsSkuDb.Update(m => new ErpGoodsSku() { StockSum = m.StockSum - parm.GoodsSum }, m => m.Guid == parm.GoodsGuid);
+                    //ErpGoodsSkuDb.Update(m => new ErpGoodsSku() { StockSum = m.StockSum - parm.GoodsSum }, m => m.Guid == parm.GoodsGuid);
+                    //增加到店铺条形码表中
+                    var shopSku = ErpShopSkuDb.GetSingle(m=>m.ShopGuid==parm.ShopGuid && m.SkuGuid== skuModel.Guid);
+                    if (shopSku!=null)
+                    {
+                        //修改，增加库存
+                        ErpShopSkuDb.Update(m=>new ErpShopSku() { Stock=m.Stock+parm.GoodsSum,UpdateDate=DateTime.Now},m=>m.ShopGuid==parm.ShopGuid && m.SkuGuid== skuModel.Guid);
+                    }
+                    else
+                    {
+                        //增加一条库存
+                        var shopSkuModel = new ErpShopSku()
+                        {
+                            SkuGuid=skuModel.Guid,
+                            SkuCode=skuModel.Code,
+                            ShopGuid=parm.ShopGuid,
+                            Stock=parm.GoodsSum
+                        };
+                    }
                 }
                 //保存入库
                 var dbres = ErpInOutLogDb.Insert(parm);

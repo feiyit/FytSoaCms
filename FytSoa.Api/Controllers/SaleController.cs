@@ -32,7 +32,7 @@ namespace FytSoa.Api.Controllers
         [HttpPost("order")]
         public async Task<ApiResult<Page<SaleOrderDto>>> GetSaleOrderPages(PageParm parm,AppSearchParm searchParm)
         {
-            return await _orderService.GetPagesAsync(parm, searchParm);
+            return await _orderService.GetPagesNoGoodsAsync(parm, searchParm);
         }
         /// <summary>
         /// 查询列表

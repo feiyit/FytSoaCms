@@ -46,6 +46,7 @@ namespace FytSoa.Web
             services.AddTransient<IErpGoodsService, ErpGoodsService>();
             services.AddTransient<IErpGoodsSkuService, ErpGoodsSkuService>();
             services.AddTransient<IErpPushService, ErpPushService>();
+            services.AddTransient<IErpShopSkuService, ErpShopSkuService>();
             services.AddTransient<IErpShopsService, ErpShopsService>();
             services.AddTransient<IErpShopActivityService, ErpShopActivityService>();
             services.AddTransient<IErpShopUserService, ErpShopUserService>();

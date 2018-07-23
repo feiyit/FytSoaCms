@@ -271,6 +271,48 @@ namespace FytSoa.Service.Implements
         }
 
         /// <summary>
+        /// 获得列表 不包含订单下面的商品列表
+        /// </summary>
+        /// <returns></returns>
+        public Task<ApiResult<Page<SaleOrderDto>>> GetPagesNoGoodsAsync(PageParm parm, AppSearchParm searchParm)
+        {
+            var res = new ApiResult<Page<SaleOrderDto>>();
+            try
+            {
+                var query = Db.Queryable<ErpSaleOrder, ErpShops>((eso, es) => new object[] { JoinType.Left, eso.ShopGuid == es.Guid })
+                    .WhereIF(!string.IsNullOrEmpty(parm.guid), (eso, es) => eso.ShopGuid == parm.guid)
+                    .WhereIF(parm.types != 0, (eso, es) => eso.ActivityTypes == parm.types)
+                    .WhereIF(searchParm.saleType != 0, (eso, es) => eso.SaleType == searchParm.saleType)
+                    .WhereIF(searchParm.activityTypes != 0, (eso, es) => eso.ActivityTypes == searchParm.activityTypes)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.btime) && !string.IsNullOrEmpty(searchParm.etime),
+                    (eso, es) => eso.AddDate >= Convert.ToDateTime(searchParm.btime) && eso.AddDate <= Convert.ToDateTime(searchParm.etime))
+                    .OrderBy((eso, es) => eso.AddDate, OrderByType.Desc)
+                    .Select((eso, es) => new SaleOrderDto()
+                    {
+                        Number = eso.Number,
+                        ShopName = es.ShopName,
+                        ActivityTypes = SqlFunc.ToString(eso.ActivityTypes),
+                        SaleType = SqlFunc.ToString(eso.SaleType),
+                        Counts = eso.Counts,
+                        ActivityName = eso.ActivityName,
+                        Money = eso.Money,
+                        RealMoney = eso.RealMoney,
+                        AddDate = eso.AddDate
+                    })
+                    .ToPage(parm.page, parm.limit);                
+                res.success = true;
+                res.message = "获取成功！";
+                res.data = query;
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return Task.Run(() => res);
+        }
+
+        /// <summary>
         /// 获得一条数据
         /// </summary>
         /// <returns></returns>
