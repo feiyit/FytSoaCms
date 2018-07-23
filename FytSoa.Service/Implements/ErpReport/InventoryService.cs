@@ -73,20 +73,21 @@ namespace FytSoa.Service.Implements
         {
             var res = new ApiResult<Page<StockSaleNum>>();
             try
-            {                
-                var query = Db.Queryable<ErpGoodsSku, ErpInOutLog>((t1, t2) => new object[] { JoinType.Left, t1.Guid == t2.GoodsGuid })
-                    .Where((t1, t2) => t2.ShopGuid == parm.guid)
-                    .WhereIF(!string.IsNullOrEmpty(searchParm.brand), (t1, t2) => t1.BrankGuid == searchParm.brand)
-                    .OrderByIF(parm.orderType==1, (t1, t2)=>t1.SaleSum,OrderByType.Desc)
+            {   
+                var query=Db.Queryable<ErpShopSku,ErpGoodsSku>((t1,t2)=>new object[] {JoinType.Left,t1.SkuGuid==t2.Guid })
+                    .Where((t1, t2) => t1.ShopGuid == parm.guid)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.brand), (t1, t2) => t2.BrankGuid == searchParm.brand)
+                    .OrderByIF(parm.orderType == 1, (t1, t2) => t1.Sale, OrderByType.Desc)
                     .Select((t1, t2) => new StockSaleNum()
                     {
-                        Guid=t1.Guid,
-                        Code=t1.Code,
-                        Brand= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t1.BrankGuid).Select(g => g.Name),
-                        Style= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t1.StyleGuid).Select(g => g.Name),
-                        Stock=t2.GoodsSum,
-                        returnSum= SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == t1.Guid && g.ShopGuid == parm.guid).Sum(g => g.ReturnCount)
-                    }).ToPage(parm.page,parm.limit);
+                        Guid = t2.Guid,
+                        Code = t2.Code,
+                        Brand = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t2.BrankGuid).Select(g => g.Name),
+                        Style = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t2.StyleGuid).Select(g => g.Name),
+                        Stock = t1.Sale,
+                        returnSum = SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == t1.SkuGuid && g.ShopGuid == parm.guid).Sum(g => g.ReturnCount)
+                    }).ToPage(parm.page, parm.limit);
+
                 //根据日期查询
                 var guidList = query.Items.Select(m=>m.Guid).ToList();
                 if (parm.types == 0)

@@ -22,11 +22,16 @@ namespace FytSoa.Core.Model.Erp
         public string Guid { get; set; }
 
         /// <summary>
-        /// Desc:类型：1=出库打包日志  2=入库打包日志
+        /// Desc:类型：1=入库打包日志   2=出库打包日志  
         /// Default:1
         /// Nullable:False
         /// </summary>           
         public byte Types { get; set; } = 1;
+
+        /// <summary>
+        /// 出库方式  0=正常出库 1=调拨出库
+        /// </summary>
+        public byte Mode { get; set; } = 0;
 
         /// <summary>
         /// Desc:打包订单号

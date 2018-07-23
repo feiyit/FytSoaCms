@@ -26,38 +26,71 @@ namespace FytSoa.Service.Implements
         /// <returns></returns>
         public async Task<ApiResult<string>> AddAsync(ErpTransferGoods parm, List<TransferGoods> list)
         {
-            var res = new ApiResult<string>() { data = "1", statusCode = 200 };
+            var res = new ApiResult<string>() { statusCode = (int)ApiEnum.Error };
             try
             {
                 //根据调拨单，查询入库信息
                 var transferModel = ErpTransferDb.GetById(parm.TransferGuid);
                 if (transferModel==null)
                 {
-                    res.statusCode = (int)ApiEnum.Error;
                     res.message = "调拨单不存在~";
                     return await Task.Run(() => res);
                 }
                 //增加调拨商品日志
                 var listModel = new List<ErpTransferGoods>();
                 //增加调拨的入库
-                var inStockList = new List<ErpInOutLog>();
-                //更改调拨出库的库存
+                var inOutLogList = new List<ErpInOutLog>();
+                //查询调拨的商品唯一编号
                 var skuArray = list.Select(m=>m.guid).ToList();
-                var outStockList = ErpInOutLogDb.GetList(m=>m.ShopGuid==transferModel.OutShopGuid 
-                && skuArray.Contains(m.GoodsGuid));
+                //根据条形码编号，查询条形码信息
+                var goodsSkuList = ErpGoodsSkuDb.GetList(m=>skuArray.Contains(m.Guid));
+                //查询调拨出库的商家条形码列表
+                var outStockSkuList = ErpShopSkuDb.GetList(m=>m.ShopGuid==transferModel.OutShopGuid && skuArray.Contains(m.SkuGuid));
+                //查询调拨入库的商家条形码列表
+                var inStockSkuList = ErpShopSkuDb.GetList(m=>m.ShopGuid==transferModel.InShopGuid && skuArray.Contains(m.SkuGuid));
+
+                var newShopSkuList = new List<ErpShopSku>();
+
+                //创建一个出库到加盟商的打包日志
+                var packModel = new ErpPackLog()
+                {
+                    Guid = Guid.NewGuid().ToString(),
+                    Types = 2,
+                    Mode = 1,
+                    Number = "DB"+Utils.GetOrderNumber(),
+                    PackName = "调拨",
+                    GoodsSum= list.Sum(m=>m.goodsSum),
+                    ShopGuid=transferModel.InShopGuid
+                };
                 //循环操作
                 foreach (var item in list)
                 {
                     //出库减少库存
-                    var sourceStockSum=outStockList.Find(m=>m.GoodsGuid==item.guid).GoodsSum;
-                    outStockList.Find(m => m.GoodsGuid == item.guid).GoodsSum = sourceStockSum - item.goodsSum;
+                    var sourceStockOutModel= outStockSkuList.Find(m=>m.SkuGuid==item.guid);
+                    outStockSkuList.Find(m => m.SkuGuid == item.guid).Stock = sourceStockOutModel.Stock - item.goodsSum;
+
+                    //根据条形码，查询商家条形码表是否存在，如果存在，则修改-增加库存，不存在，增加一条数据
+                    var sourceStockSkuInModel = inStockSkuList.Find(m=>m.SkuGuid==item.guid);
+                    if (sourceStockSkuInModel != null)
+                    {
+                        inStockSkuList.Find(m => m.SkuGuid == item.guid).Stock = sourceStockSkuInModel.Stock + item.goodsSum;
+                    }
+                    else
+                    {
+                        newShopSkuList.Add(new ErpShopSku() {
+                            SkuGuid=item.guid,
+                            SkuCode= goodsSkuList.Find(m=>m.Guid==item.guid).Code,
+                            ShopGuid= transferModel.InShopGuid,
+                            Stock=item.goodsSum
+                        });
+                    }
 
                     //入库
-                    inStockList.Add(new ErpInOutLog() {
+                    inOutLogList.Add(new ErpInOutLog() {
                         Guid = Guid.NewGuid().ToString(),
                         Types=2,
                         ShopGuid= transferModel.InShopGuid,
-                        PackGuid = "Transfer",
+                        PackGuid = packModel.Guid,
                         GoodsGuid=item.guid,
                         GoodsSum=item.goodsSum,
                         AddDate=DateTime.Now,
@@ -82,24 +115,34 @@ namespace FytSoa.Service.Implements
                     return await Task.Run(() => res);
                 }
 
-                //开启事务
-                Db.Ado.BeginTran();
-                //插入调拨入库信息
-                ErpInOutLogDb.InsertRange(inStockList.ToArray());
-                //更新调拨出库库存
-                ErpInOutLogDb.UpdateRange(outStockList.ToArray());
-                var dbres = ErpTransferGoodsDb.InsertRange(listModel.ToArray());
-                if (!dbres)
+                var result = Db.Ado.UseTran(() =>
+                {
+                    //增加一条打包日志
+                    Db.Insertable(packModel).ExecuteCommand();
+                    //增加打包里面的商品列表
+                    Db.Insertable(inOutLogList).ExecuteCommand();
+                    //增加调拨单里面的商品记录
+                    Db.Insertable(listModel).ExecuteCommand();
+
+                    //更新调拨  选择出库的商家条形码库存数
+                    Db.Updateable(outStockSkuList).ExecuteCommand();
+                    //更新调拨  选择入库的商家条形码的库存，有的增加，没有的增加一条数据
+                    Db.Updateable(inStockSkuList).ExecuteCommand();
+                    if (newShopSkuList.Count>0)
+                    {
+                        Db.Insertable(newShopSkuList).ExecuteCommand();
+                    }
+                });
+                res.statusCode = (int)ApiEnum.Status;
+                if (!result.IsSuccess)
                 {
                     res.statusCode = (int)ApiEnum.Error;
-                    res.message = "插入数据失败~";
+                    res.message = result.ErrorMessage;
                 }
-                Db.Ado.CommitTran();
+
             }
             catch (Exception ex)
             {
-                Db.Ado.CommitTran();
-                res.statusCode = (int)ApiEnum.Error;
                 res.message = ApiEnum.Error.GetEnumText() + ex.Message;
             }
             return await Task.Run(() => res);

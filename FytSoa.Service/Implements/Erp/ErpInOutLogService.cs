@@ -53,7 +53,6 @@ namespace FytSoa.Service.Implements
                 }
                 else
                 {
-                    //ErpGoodsSkuDb.Update(m => new ErpGoodsSku() { StockSum = m.StockSum - parm.GoodsSum }, m => m.Guid == parm.GoodsGuid);
                     //增加到店铺条形码表中
                     var shopSku = ErpShopSkuDb.GetSingle(m=>m.ShopGuid==parm.ShopGuid && m.SkuGuid== skuModel.Guid);
                     if (shopSku!=null)
@@ -71,15 +70,10 @@ namespace FytSoa.Service.Implements
                             ShopGuid=parm.ShopGuid,
                             Stock=parm.GoodsSum
                         };
+                        ErpShopSkuDb.Insert(shopSkuModel);
                     }
                 }
-                //保存入库
-                var dbres = ErpInOutLogDb.Insert(parm);
-                if (!dbres)
-                {
-                    res.statusCode = (int)ApiEnum.Error;
-                    res.message = "插入数据失败~";
-                }
+                ErpInOutLogDb.Insert(parm);
                 Db.Ado.CommitTran();
             }
             catch (Exception ex)

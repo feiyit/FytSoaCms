@@ -55,18 +55,9 @@ namespace FytSoa.Service.Implements
                 //验证销售商品的数量是否大于库存数量
                 foreach (var item in roGoodsList.GroupBy(m => m.GoodsGuid).Select(m => new ErpSaleOrderGoods { GoodsGuid = m.Key, Counts = m.Sum(g => g.Counts) }).ToList())
                 {
-                    var shopStockSum = Db.Queryable<ErpInOutLog>()
-                        .Where(m => m.ShopGuid == parm.ShopGuid && m.Types == 2 && m.GoodsGuid == item.GoodsGuid)
-                        .Sum(m => m.GoodsSum);
-                    //出库  库存=返货+销售的数量
-                    var saleStock= Db.Queryable<ErpSaleOrderGoods>()
-                        .Where(m => m.ShopGuid == parm.ShopGuid && m.GoodsGuid == item.GoodsGuid)
-                        .Sum(m => m.Counts);
-                    var returnStock = Db.Queryable<ErpReturnGoods>()
-                        .Where(m => m.ShopGuid == parm.ShopGuid && m.GoodsGuid == item.GoodsGuid)
-                        .Sum(m => m.ReturnCount);
-                    var stockSum = shopStockSum - (saleStock + returnStock);
-                    if (stockSum < item.Counts)
+                    var shopStockSum = Db.Queryable<ErpShopSku>()
+                        .Where(m => m.ShopGuid == parm.ShopGuid && m.SkuGuid == item.GoodsGuid).First();
+                    if (shopStockSum.Stock < item.Counts)
                     {
                         isStockSuccess = false;
                     }
@@ -96,6 +87,8 @@ namespace FytSoa.Service.Implements
                 var goodIds = roGoodsList.Select(m => m.GoodsGuid).ToList();
                 //根据商品获得列表
                 var goodList = ErpGoodsSkuDb.GetList(m => goodIds.Contains(m.Guid));
+                //根据店铺获得加盟商的库存信息
+                var shopGoodsSkuList = ErpShopSkuDb.GetList(m=>m.ShopGuid==parm.ShopGuid && goodIds.Contains(m.SkuGuid));
                 foreach (var item in goodList)
                 {
                     foreach (var roitem in roGoodsList)
@@ -104,30 +97,40 @@ namespace FytSoa.Service.Implements
                         {
                             //修改商品的销售数量
                             item.SaleSum += roitem.Counts;
+                            //修改加盟商条形码表中的库存
+                            var shopSkuModel = shopGoodsSkuList.Find(m=>m.SkuGuid==roitem.GoodsGuid);
+                            shopGoodsSkuList.Find(m => m.SkuGuid == roitem.GoodsGuid).Stock = shopSkuModel.Stock + roitem.Counts;
                             //获得商品原价*购买商品的数量
                             parm.Money += Convert.ToDecimal(item.SalePrice)*roitem.Counts;
                             //整除销售计算价格，残次品价格是前端传过来的
                             if (parm.SaleType==1)
                             {
                                 //这里面只处理打折的，并且是按品牌的
-                                if(activityModel!=null && activityModel.Method==1 && activityModel.Types==2)
+                                if (activityModel != null && activityModel.Method == 1 && activityModel.Types == 2)
                                 {
                                     if (item.BrankGuid == activityModel.BrandGuid)
                                     {
                                         //品牌打折
-                                        var tempMoney = Convert.ToDecimal(item.DisPrice) * roitem.Counts;
+                                        var tempMoney = Convert.ToDecimal(item.SalePrice) * roitem.Counts;
                                         tempMoney = tempMoney * (Convert.ToDecimal(activityModel.CountNum) / 100);
                                         parm.RealMoney += tempMoney;
                                     }
                                     else
                                     {
                                         //不是该品牌部打折
-                                        parm.RealMoney += Convert.ToDecimal(item.DisPrice) * roitem.Counts;
+                                        parm.RealMoney += Convert.ToDecimal(item.SalePrice) * roitem.Counts;
                                     }
                                 }
+                                //else if (activityModel != null && activityModel.Method == 2 && activityModel.Types == 2) {
+                                //    //品牌满减
+                                //    if (item.BrankGuid == activityModel.BrandGuid)
+                                //    {
+
+                                //    }
+                                //}
                                 else
                                 {
-                                    parm.RealMoney += Convert.ToDecimal(item.DisPrice) * roitem.Counts;
+                                    parm.RealMoney += Convert.ToDecimal(item.SalePrice) * roitem.Counts;
                                 }
                             }                            
                         }
@@ -187,6 +190,8 @@ namespace FytSoa.Service.Implements
                     Db.Insertable(roGoodsList).ExecuteCommand();
                     //根据商品修改商品的销售数量
                     Db.Updateable(goodList).ExecuteCommand();
+                    //修改加盟商商品条形码的销售数量
+                    Db.Updateable(shopGoodsSkuList).ExecuteCommand();
                     if (userModel!=null)
                     {
                         //修改用户积分
