@@ -53,6 +53,8 @@ namespace FytSoa.Service.Implements
                 }
                 else
                 {
+                    //更新平台的库存，减少
+                    ErpGoodsSkuDb.Update(m => new ErpGoodsSku() { StockSum = m.StockSum - parm.GoodsSum }, m => m.Guid == parm.GoodsGuid);
                     //增加到店铺条形码表中
                     var shopSku = ErpShopSkuDb.GetSingle(m=>m.ShopGuid==parm.ShopGuid && m.SkuGuid== skuModel.Guid);
                     if (shopSku!=null)

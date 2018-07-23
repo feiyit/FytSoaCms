@@ -7,13 +7,53 @@
 <div id="container">
     <style>
         .layui-col-220 {
-            width: 400px;
+            width: 388px;
+            top: 80px;
+            left: 12px;
         }
+
+            .layui-col-220 .layui-nav-title {
+                height: 42px;
+                line-height: 42px;
+            }
 
         .right-col-body {
             left: 400px;
+            top: 60px;
         }
     </style>
+    <div class="list-wall">
+        <div class="layui-form list-search">
+            <div class="layui-inline">
+                <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
+            </div>
+            <div class="layui-inline">
+                <select id="shops" lay-search="">
+                    <option value="">--可根据店铺搜索--</option>
+                    @{
+                        foreach (var item in Model.shopList)
+                        {
+                            <option value="@item.Guid">@item.ShopName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="layui-inline">
+                <select id="branks">
+                    <option value="">--可根据品牌搜索--</option>
+                    @{
+                        foreach (var item in Model.codeList)
+                        {
+                            <option value="@item.Name">@item.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch">
+                <i class="layui-icon layui-icon-search"></i> 搜索
+            </button>
+        </div>
+    </div>
     <div class="layui-col-220" id="app">
         <div class="layui-nav-title">返货订单列表　　　</div>
         <ul class="fyt-utree">
@@ -25,36 +65,6 @@
     </div>
     <div class="right-col-body">
         <div class="list-wall">
-            <div class="layui-form list-search">
-                <div class="layui-inline">
-                    <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
-                </div>
-                <div class="layui-inline">
-                    <select id="shops" lay-search="">
-                        <option value="">--可根据店铺搜索--</option>
-                        @{
-                            foreach (var item in Model.shopList)
-                            {
-                                <option value="@item.Guid">@item.ShopName</option>
-                            }
-                        }
-                    </select>
-                </div>
-                <div class="layui-inline">
-                    <select id="branks">
-                        <option value="">--可根据品牌搜索--</option>
-                        @{
-                            foreach (var item in Model.codeList)
-                            {
-                                <option value="@item.Name">@item.Name</option>
-                            }
-                        }
-                    </select>
-                </div>
-                <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch">
-                    <i class="layui-icon layui-icon-search"></i> 搜索
-                </button>
-            </div>
             <table class="layui-hide" id="tablist" lay-filter="tool"></table>
         </div>
     </div>
@@ -67,7 +77,7 @@
                 curModel: {},
                 activeName: '',
                 parm: {
-                    guid:''
+                    guid: ''
                 }
             },
             methods: {
@@ -77,7 +87,7 @@
                 },
                 getList: function (m) {
                     funTool.getGoodsSku(m);
-                }              
+                }
             }
         });
         layui.config({
@@ -128,7 +138,7 @@
                         vm.parm.guid = $("#shops").val();
                         active.reload();
                         funTool.orderPage();
-                    }                    
+                    }
                 };
 
                 funTool = {

@@ -35,24 +35,24 @@ namespace FytSoa.Service.Implements
                 var isStockSuccess = true;
                 //解析字符串转换成List对象
                 var roGoodsList = JsonConvert.DeserializeObject<List<ErpReturnGoods>>(goodsJson);
+                var guidArray = roGoodsList.Select(m=>m.GoodsGuid).ToList();
+                //根据返货的商品，查询平台的条形码
+                var goodsSkuList = ErpGoodsSkuDb.GetList(m=>guidArray.Contains(m.Guid));
+                //根据返货的商品，查询加盟商的条形码
+                var shopsSkuList = ErpShopSkuDb.GetList(m => guidArray.Contains(m.SkuGuid) && m.ShopGuid==parm.ShopGuid);
                 //验证返货商品的数量是否大于库存数量
                 foreach (var item in roGoodsList.GroupBy(m=>m.GoodsGuid).Select(m=>new ErpReturnGoods { GoodsGuid=m.Key,ReturnCount=m.Sum(g=>g.ReturnCount) }).ToList())
                 {
-                    var shopStockSum = Db.Queryable<ErpInOutLog>()
-                        .Where(m=>m.ShopGuid==parm.ShopGuid && m.Types==2 && m.GoodsGuid==item.GoodsGuid)
-                        .Sum(m=>m.GoodsSum);
-                    //出库  库存=返货+销售的数量
-                    var saleStock = Db.Queryable<ErpSaleOrderGoods>()
-                        .Where(m => m.ShopGuid == parm.ShopGuid && m.GoodsGuid == item.GoodsGuid)
-                        .Sum(m => m.Counts);
-                    var returnStock = Db.Queryable<ErpReturnGoods>()
-                        .Where(m => m.ShopGuid == parm.ShopGuid && m.GoodsGuid == item.GoodsGuid)
-                        .Sum(m => m.ReturnCount);
-                    var stockSum = shopStockSum - (saleStock + returnStock);
-                    if (stockSum < item.ReturnCount)
+                    var shopStockSum = shopsSkuList.Find(m=>m.SkuGuid==item.GoodsGuid);
+                    if (shopStockSum.Stock < item.ReturnCount)
                     {
                         isStockSuccess = false;
                     }
+                    //加盟商条形码表，减少返货的库存
+                    shopsSkuList.Find(m => m.SkuGuid == item.GoodsGuid).Stock = shopStockSum.Stock - item.ReturnCount;
+                    //平台条形码表，增加返货的库存
+                    var goodsStock = goodsSkuList.Find(m => m.Guid == item.GoodsGuid);
+                    goodsSkuList.Find(m => m.Guid == item.GoodsGuid).StockSum = goodsStock.StockSum + item.ReturnCount;
                 }
                 if (!isStockSuccess)
                 {
@@ -72,27 +72,14 @@ namespace FytSoa.Service.Implements
                 parm.Number= "RO-" + DateTime.Now.ToString("yyyyMMdd") + "-" + (1001 + dayCount);
                 var result = Db.Ado.UseTran(() =>
                 {
-                    //循环减少加盟商库存，增加平台库存
-                    //foreach (var item in roGoodsList)
-                    //{
-                    //    item.OrderGuid = parm.Guid;
-                    //    item.Guid = Guid.NewGuid().ToString();
-                    //    //减少加盟商库存
-                    //    Db.Updateable<ErpInOutLog>()
-                    //    .UpdateColumns(m => m.GoodsSum == m.GoodsSum - item.ReturnCount)
-                    //    .Where(m => m.ShopGuid == parm.ShopGuid && m.GoodsGuid == item.GoodsGuid && m.Types == 2)
-                    //    .ExecuteCommand();
-                    //    //增加平台库存
-                    //    Db.Updateable<ErpGoodsSku>()
-                    //    .UpdateColumns(m => m.StockSum == m.StockSum + item.ReturnCount)
-                    //    .Where(m => m.Guid == item.GoodsGuid)
-                    //    .ExecuteCommand();
-                    //}
                     //添加订单
                     Db.Insertable(parm).ExecuteCommand();
                     //添加订单商品
                     Db.Insertable(roGoodsList).ExecuteCommand();
-                    
+                    //修改平台库存
+                    Db.Updateable(goodsSkuList).ExecuteCommand();
+                    //修改加盟商库存
+                    Db.Updateable(shopsSkuList).ExecuteCommand();
                 });
                 res.statusCode = (int)ApiEnum.Status;
                 if (!result.IsSuccess)

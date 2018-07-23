@@ -65,6 +65,29 @@
                     id: 'tables'
                 });
 
+                table.on('sort(tool)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                    console.log(obj.field); //当前排序的字段名
+                    console.log(obj.type); //当前排序类型：desc（降序）、asc（升序）、null（空对象，默认排序）
+                    var e = layer.load(2, { shade: [.05, '#000']});
+                    table.reload('tables', {
+                        initSort: obj,
+                        page: {
+                            curr: 1
+                        },
+                        loading:true
+                        , where: { 
+                            key: $("#key").val(),
+                            time: $("#times").val(),
+                            guid: $("#branks").val(),
+                            field: obj.field 
+                            , order: obj.type 
+                        },
+                        done: function () {
+                            layer.close(e);
+                        }
+                    });
+                });
+
                 var guid = '', active = {
                     reload: function () {
                         table.reload('tables',

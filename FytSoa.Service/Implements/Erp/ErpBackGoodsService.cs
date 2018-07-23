@@ -59,12 +59,22 @@ namespace FytSoa.Service.Implements
                     res.message = "该退货信息已存在~";
                     return await Task.Run(() => res);
                 }
-                var dbres = ErpBackGoodsDb.Insert(parm);
-                if (!dbres)
-                {                    
-                    res.message = "插入数据失败~";
-                }
+                var result = Db.Ado.UseTran(() =>
+                {
+                    //修改加盟商条形码里面的库存 退货=加盟商库存增加
+                    Db.Updateable<ErpShopSku>()
+                    .UpdateColumns(m=>new ErpShopSku() { Stock=m.Stock+parm.BackCount })
+                    .Where(m=>m.ShopGuid==parm.ShopGuid && m.SkuGuid==parm.GoodsGuid)
+                    .ExecuteCommand();
+                    //增加一条退货信息
+                    Db.Insertable(parm).ExecuteCommand();
+                });
                 res.statusCode = (int)ApiEnum.Status;
+                if (!result.IsSuccess)
+                {
+                    res.statusCode = (int)ApiEnum.Error;
+                    res.message = result.ErrorMessage;
+                }
             }
             catch (Exception ex)
             {
