@@ -97,9 +97,11 @@ namespace FytSoa.Service.Implements
                         {
                             //修改商品的销售数量
                             item.SaleSum += roitem.Counts;
-                            //修改加盟商条形码表中的库存
+                            //修改加盟商条形码表中的库存减少，  销售数量增加
                             var shopSkuModel = shopGoodsSkuList.Find(m=>m.SkuGuid==roitem.GoodsGuid);
-                            shopGoodsSkuList.Find(m => m.SkuGuid == roitem.GoodsGuid).Stock = shopSkuModel.Stock + roitem.Counts;
+                            shopGoodsSkuList.Find(m => m.SkuGuid == roitem.GoodsGuid).Stock = shopSkuModel.Stock - roitem.Counts;
+                            //修改加盟商条形码表中的销售数量   增加
+                            shopGoodsSkuList.Find(m => m.SkuGuid == roitem.GoodsGuid).Sale = shopSkuModel.Sale + roitem.Counts;
                             //获得商品原价*购买商品的数量
                             parm.Money += Convert.ToDecimal(item.SalePrice)*roitem.Counts;
                             //整除销售计算价格，残次品价格是前端传过来的

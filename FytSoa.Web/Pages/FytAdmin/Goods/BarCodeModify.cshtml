@@ -7,24 +7,47 @@
 <style>.layui-form-select dl{max-height:180px;}</style>
 <form class="layui-form form-cus" action="">
     <div class="layui-form-item">
-        <label class="layui-form-label">品牌</label>
-        <div class="layui-input-block" style="width:80.3%;">
-            <select name="BrankGuid" lay-verify="required" lay-search="" lay-verType="tips">
-                <option value="">请选择，支持搜索</option>
-                @{
-                    foreach (var item in Model.codeList.Where(m => m.ParentGuid == "7b664e3e-f58a-4e66-8c0f-be1458541d14").OrderBy(m => m.Sort))
-                    {
-                        if (item.Guid == Model.skuModel.BrankGuid)
+        <div class="layui-inline">
+            <label class="layui-form-label">品牌</label>
+            <div class="layui-input-inline">
+                <select name="BrankGuid" lay-verify="required" lay-search="" lay-verType="tips">
+                    <option value="">请选择，支持搜索</option>
+                    @{
+                        foreach (var item in Model.codeList.Where(m => m.ParentGuid == "7b664e3e-f58a-4e66-8c0f-be1458541d14").OrderBy(m => m.Sort))
                         {
-                            <option value="@item.Guid" selected="selected">@item.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@item.Guid">@item.Name</option>
+                            if (item.Guid == Model.skuModel.BrankGuid)
+                            {
+                                <option value="@item.Guid" selected="selected">@item.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Guid">@item.Name</option>
+                            }
                         }
                     }
-                }
-            </select>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">年份</label>
+            <div class="layui-input-inline">
+                <select name="YearGuid" lay-verify="required" lay-search="" lay-verType="tips">
+                    <option value="">请选择，支持搜索</option>
+                    @{
+                        foreach (var item in Model.codeList.Where(m => m.ParentGuid == "1942d4fd-3203-42b1-a955-4a84a532b2a2").OrderBy(m => m.Sort))
+                        {
+                            if (item.Guid == Model.skuModel.StyleGuid)
+                            {
+                                <option value="@item.Guid" selected="selected">@item.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Guid">@item.Name</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
         </div>
     </div>
     <div class="layui-form-item">

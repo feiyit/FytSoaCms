@@ -63,8 +63,8 @@ namespace FytSoa.Service.Implements
                 {
                     //修改加盟商条形码里面的库存 退货=加盟商库存增加
                     Db.Updateable<ErpShopSku>()
-                    .UpdateColumns(m=>new ErpShopSku() { Stock=m.Stock+parm.BackCount })
-                    .Where(m=>m.ShopGuid==parm.ShopGuid && m.SkuGuid==parm.GoodsGuid)
+                    .UpdateColumns(m=>new ErpShopSku() { Stock=m.Stock+parm.BackCount,Sale=m.Sale-parm.BackCount })
+                    .Where(m=>m.ShopGuid==parm.ShopGuid && m.SkuGuid== goodSku.Guid)
                     .ExecuteCommand();
                     //增加一条退货信息
                     Db.Insertable(parm).ExecuteCommand();
