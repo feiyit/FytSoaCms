@@ -41,6 +41,7 @@ namespace FytSoa.Service.Implements
                     var codeType = SysCodeTypeDb.GetList(m => m.ParentGuid == "8d3158d6-e179-4046-99e9-53eb8c04ddb1").Select(m => m.Guid).ToList();
                     var codeList = SysCodeDb.GetList(m => codeType.Contains(m.ParentGuid));
                     parm.Code = codeList.Find(m => m.Guid == parm.BrankGuid).CodeType
+                        + codeList.Find(m => m.Guid == parm.YearGuid).CodeType
                         + codeList.Find(m => m.Guid == parm.SeasonGuid).CodeType
                         + codeList.Find(m => m.Guid == parm.StyleGuid).CodeType
                         + codeList.Find(m => m.Guid == parm.BatchGuid).CodeType
