@@ -147,7 +147,8 @@ namespace FytSoa.Service.Implements
                         if (activityModel.Types == 0)
                         {
                             //全部商铺，也就是所有金额
-                            parm.RealMoney = Convert.ToDecimal(parm.RealMoney * (activityModel.CountNum / 100));
+                            var zhVal = Convert.ToDecimal(activityModel.CountNum) / 100;
+                            parm.RealMoney = Convert.ToDecimal(parm.RealMoney * zhVal);
                         }                        
                     }
                     else

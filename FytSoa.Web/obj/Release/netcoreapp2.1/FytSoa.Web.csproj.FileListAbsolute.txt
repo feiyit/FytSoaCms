@@ -182,3 +182,6 @@ E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\FytSoa.
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\FytSoa.Web.csproj.CopyComplete
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\FytSoa.Web.dll
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\FytSoa.Web.pdb
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Finance\Accounting.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Finance\Report.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Report\ShopStock.g.cshtml.cs

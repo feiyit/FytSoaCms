@@ -78,6 +78,7 @@ namespace FytSoa.Service.Implements
                     .Where((t1, t2) => t1.ShopGuid == parm.guid)
                     .WhereIF(!string.IsNullOrEmpty(searchParm.brand), (t1, t2) => t2.BrankGuid == searchParm.brand)
                     .OrderByIF(parm.orderType == 1, (t1, t2) => t1.Sale, OrderByType.Desc)
+                    .OrderByIF(parm.orderType == 2, (t1, t2) => t1.Stock, OrderByType.Desc)
                     .Select((t1, t2) => new StockSaleNum()
                     {
                         Guid = t2.Guid,
@@ -291,7 +292,9 @@ namespace FytSoa.Service.Implements
             try
             {
                 var query = Db.Queryable<ErpShops>()
+                    .WhereIF(!string.IsNullOrEmpty(parm.guid),m=>m.Guid==parm.guid)
                     .Select(m=>new ShopStockReport() {
+                        ShopGuid=m.Guid,
                         ShopName=m.ShopName,
                         Stock = SqlFunc.Subqueryable<ErpShopSku>().Where(g => g.ShopGuid == m.Guid).Sum(g=>g.Stock),
                     })

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FytSoa.Common;
 using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -59,11 +60,22 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpGet("shopstock")]
-        public async Task<JsonResult> GetShopStockReport(PageParm parm)
+        [HttpPost("shopstock")]
+        public async Task<ApiResult<List<ShopStockReport>>> GetShopStockReport(PageParm parm)
         {
-            var res = await _inventoryService.GetShopStockReport(parm);
-            return Json(new { code = 0, msg = "success", count = 1, res.data });
+            return await _inventoryService.GetShopStockReport(parm);
+        }
+
+        /// <summary>
+        /// 商家营业额
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("stockbyshop")]
+        public async Task<JsonResult> GetStockByShop(PageParm parm, AppSearchParm searchParm)
+        {
+            var res = await _inventoryService.GetStockNumByShopAsync(parm, searchParm);
+            return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
         }
     }
 }

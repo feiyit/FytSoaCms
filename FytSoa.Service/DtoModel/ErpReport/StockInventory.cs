@@ -141,6 +141,10 @@ namespace FytSoa.Service.DtoModel
     public class ShopStockReport
     {
         /// <summary>
+        /// 加盟商唯一编号
+        /// </summary>
+        public string ShopGuid { get; set; }
+        /// <summary>
         /// 加盟商列表
         /// </summary>
         public string ShopName { get; set; }

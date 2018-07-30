@@ -21,6 +21,7 @@
             left: 400px;
             top: 60px;
         }
+        .fyt-utree{overflow:auto;}
     </style>
     <div class="list-wall">
         <div class="layui-form list-search">
@@ -41,7 +42,7 @@
                     @{
                         foreach (var item in Model.codeList)
                         {
-                            <option value="@item.Name">@item.Name</option>
+                            <option value="@item.Guid">@item.Name</option>
                         }
                     }
                 </select>
@@ -55,8 +56,8 @@
         <div class="layui-nav-title">加盟商列表　　　</div>
         <ul class="fyt-utree">
             <li v-for="it in list" v-cloak :class="{active: activeName == it.guid}" @@click="selected(it.guid)">
-                <a class="layui-elip title" @@click="getList(it)">{{it.number}}——{{it.shopName}}</a>
-                <a class="layui-elip sums"><span class="layui-badge layui-bg-blue">{{it.counts}}</span></a>
+                <a class="layui-elip title" @@click="getList(it)">{{it.shopName}}</a>
+                <a class="layui-elip sums"><span class="layui-badge layui-bg-blue">{{it.stock}}</span></a>
             </li>
         </ul>
     </div>
@@ -79,7 +80,6 @@
             },
             methods: {
                 selected: function (m) {
-                    console.log(m);
                     this.activeName = m;
                 },
                 getList: function (m) {
@@ -97,26 +97,27 @@
                     os = layui.common,
                     form = layui.form;
                 form.render('select');
+                $("ul.fyt-utree").css({'height':$(window).height()-182});
                 table.render({
                     elem: '#tablist',
-                    url: '/api/stock/return/goods',
+                    url: '/api/inventory/stockbyshop',
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
                             { field: 'code', width: 200, title: '条形码', fixed: 'left' },
-                            { field: 'brandName', title: '品牌' },
-                            { field: 'styleName', title: '款式' },
-                            { field: 'seasonName', width: 150, title: '季节' },
-                            { field: 'counts', title: '返货数' },
-                            { field: 'summary', title: '返货原因' }
+                            { field: 'brand', title: '品牌' },
+                            { field: 'style', title: '款式' },
+                            { field: 'stock', width: 150, title: '库存' },
+                            { field: 'sale', title: '销售数' },
+                            { field: 'returnSum', title: '返货数' }
                         ]
                     ],
                     page: true,
-                    limit: 20,
+                    limit: 15,
                     id: 'tables'
                 });
 
-                var orderguid = '', shopGuid = '', active = {
+                var shopGuid = '', active = {
                     reload: function () {
                         table.reload('tables',
                             {
@@ -124,15 +125,17 @@
                                     curr: 1
                                 },
                                 where: {
-                                    guid: orderguid,
-                                    key: $('#key').val(),
-                                    brank: $('#branks').val(),
-                                    shopGuid: $("#shops").val()
+                                    brand: $('#branks').val(),
+                                    guid: shopGuid,
+                                    orderType:2
                                 }
                             });
                     },
                     toolSearch: function () {
                         vm.parm.guid = $("#shops").val();
+                        if (shopGuid == '') {
+                            shopGuid = $("#shops").val();
+                        }
                         active.reload();
                         funTool.orderPage();
                     }
@@ -140,14 +143,13 @@
 
                 funTool = {
                     getGoodsSku: function (obj) {
-                        orderguid = obj.guid;
                         shopGuid = obj.shopGuid;
                         active.reload();
                     },
                     orderPage: function () {
-                        os.ajax('api/stock/return/order', vm.parm, function (res) {
+                        os.ajax('api/inventory/shopstock', vm.parm, function (res) {
                             if (res.statusCode === 200) {
-                                vm.list = res.data.items;
+                                vm.list = res.data;
                             } else {
                                 os.error(res.message);
                             }
