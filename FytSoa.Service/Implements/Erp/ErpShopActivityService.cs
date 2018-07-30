@@ -115,7 +115,7 @@ namespace FytSoa.Service.Implements
             };
             var nowTime = DateTime.Now;
             //先查询店铺是否有活动，如果没有在查询全局是否有活动
-            var shopActivity = ErpShopActivityDb.GetSingle(m=>!m.IsDel && m.ShopGuid==parm && SqlFunc.Between(nowTime, m.BeginDate, m.EndDate));
+            var shopActivity = ErpShopActivityDb.GetSingle(m=>!m.IsDel && m.Enable && m.ShopGuid==parm && SqlFunc.Between(nowTime, m.BeginDate, m.EndDate));
             if (shopActivity != null)
             {
                 res.data = new ShopActivityApp()
@@ -128,7 +128,7 @@ namespace FytSoa.Service.Implements
                 return await Task.Run(() => res);
             }
             //查询全局活动
-            var platformActivity = ErpShopActivityDb.GetSingle(m => !m.IsDel && m.ShopGuid == "all" && SqlFunc.Between(nowTime, m.BeginDate, m.EndDate));
+            var platformActivity = ErpShopActivityDb.GetSingle(m => !m.IsDel && m.Enable && m.ShopGuid == "all" && SqlFunc.Between(nowTime, m.BeginDate, m.EndDate));
             if (platformActivity!=null)
             {
                 res.data = new ShopActivityApp()

@@ -67,6 +67,7 @@ namespace FytSoa.Service.Implements
                         //增加一条库存
                         var shopSkuModel = new ErpShopSku()
                         {
+                            Guid=Guid.NewGuid().ToString(),
                             SkuGuid=skuModel.Guid,
                             SkuCode=skuModel.Code,
                             ShopGuid=parm.ShopGuid,
@@ -145,7 +146,7 @@ namespace FytSoa.Service.Implements
                         .WhereIF(!string.IsNullOrEmpty(searchParm.brank), 
                         m => SqlFunc.Subqueryable<ErpGoodsSku>().Where(g => g.Guid == m.GoodsGuid).Select(g => g.BrankGuid) == searchParm.brank)
                         .Where(m => m.PackGuid == searchParm.packGuid)
-                        .OrderBy(m=>m.AddDate,OrderByType.Desc)
+                        .OrderBy(m=>m.GoodsSum,OrderByType.Asc)
                         .Select(m=>new GoodsSkuDto() {
                             Guid=m.Guid,
                             Code=m.GoodsSku,

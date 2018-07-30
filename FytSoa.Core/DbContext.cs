@@ -56,5 +56,8 @@ namespace FytSoa.Core
         public DbSet<ErpPush> ErpPushDb => new DbSet<ErpPush>(Db);
         public DbSet<ErpTransfer> ErpTransferDb => new DbSet<ErpTransfer>(Db);
         public DbSet<ErpTransferGoods> ErpTransferGoodsDb => new DbSet<ErpTransferGoods>(Db);
+
+        //ERP  视图表信息
+        public DbSet<VMonthTurnover> VMonthTurnoverDb => new DbSet<VMonthTurnover>(Db);
     }
 }

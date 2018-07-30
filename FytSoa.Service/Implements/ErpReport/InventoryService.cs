@@ -48,8 +48,8 @@ namespace FytSoa.Service.Implements
                         TotalStock = SqlFunc.Subqueryable<ErpInOutLog>().Where(g => g.GoodsGuid == m.Guid && g.Types == 1).Sum(g => g.GoodsSum),
                         OutStock= SqlFunc.Subqueryable<ErpInOutLog>().Where(g => g.GoodsGuid == m.Guid && g.Types == 2).Sum(g => g.GoodsSum),
                         Transfer = SqlFunc.Subqueryable<ErpTransferGoods>().Where(g => g.GoodsGuid == m.Guid).Sum(g => g.GoodsSum),
-                        Return = SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == m.Guid).Count(),
-                        Back = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.GoodsGuid == m.Guid).Count()
+                        Return = SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == m.Guid).Sum(g=>g.ReturnCount),
+                        Back = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.GoodsGuid == m.Guid).Sum(g => g.BackCount)
                     }).ToPage(parm.page, parm.limit);                
                 res.success = true;
                 res.message = "获取成功！";
@@ -84,7 +84,7 @@ namespace FytSoa.Service.Implements
                         Code = t2.Code,
                         Brand = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t2.BrankGuid).Select(g => g.Name),
                         Style = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t2.StyleGuid).Select(g => g.Name),
-                        Stock = t1.Sale,
+                        Stock = t1.Stock,
                         returnSum = SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == t1.SkuGuid && g.ShopGuid == parm.guid).Sum(g => g.ReturnCount)
                     }).ToPage(parm.page, parm.limit);
 
@@ -96,7 +96,7 @@ namespace FytSoa.Service.Implements
                     var dayList = ErpSaleOrderGoodsDb.GetList(m => guidList.Contains(m.GoodsGuid) && m.ShopGuid == parm.guid);
                     foreach (var item in query.Items)
                     {
-                        item.Sale = dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.Counts);
+                        item.Sale = dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.Counts) - dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.BackCounts);
                     }
                 }
                 if (parm.types==1)
@@ -107,7 +107,7 @@ namespace FytSoa.Service.Implements
                     SqlFunc.DateIsSame(SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.Number == m.OrderNumber).Select(g => g.AddDate), dayTime));
                     foreach (var item in query.Items)
                     {
-                        item.Sale = dayList.Where(m=>m.GoodsGuid==item.Guid).Sum(m=>m.Counts);
+                        item.Sale = dayList.Where(m=>m.GoodsGuid==item.Guid).Sum(m=>m.Counts)- dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.BackCounts);
                     }
                 }
                 if (parm.types == 2)
@@ -120,7 +120,7 @@ namespace FytSoa.Service.Implements
                     SqlFunc.Between(SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.Number == m.OrderNumber).Select(g => g.AddDate), d1, d2));
                     foreach (var item in query.Items)
                     {
-                        item.Sale = dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.Counts);
+                        item.Sale = dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.Counts) - dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.BackCounts);
                     }
                 }
                 if (parm.types==3)
@@ -130,7 +130,7 @@ namespace FytSoa.Service.Implements
                     SqlFunc.Between(SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.Number == m.OrderNumber).Select(g => g.AddDate), Convert.ToDateTime(searchParm.btime), Convert.ToDateTime(searchParm.etime)));
                     foreach (var item in query.Items)
                     {
-                        item.Sale = dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.Counts);
+                        item.Sale = dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.Counts) - dayList.Where(m => m.GoodsGuid == item.Guid).Sum(m => m.BackCounts);
                     }
                 }
                 res.data = query;
@@ -173,11 +173,131 @@ namespace FytSoa.Service.Implements
                     .WhereIF(parm.types == 1, m => SqlFunc.DateIsSame(m.AddDate, dayTime))
                     .WhereIF(parm.types == 2, m => SqlFunc.Between(m.AddDate, d1, d2))
                     .Sum(m=>m.RealMoney);
+                //查询退单金额
+                var backMoney=Db.Queryable<ErpBackGoods>()
+                    .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.ShopGuid == parm.guid)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.btime) && !string.IsNullOrEmpty(searchParm.btime),
+                    m => SqlFunc.Between(m.AddDate, Convert.ToDateTime(searchParm.btime), Convert.ToDateTime(searchParm.etime)))
+                    .WhereIF(parm.types == 1, m => SqlFunc.DateIsSame(m.AddDate, dayTime))
+                    .WhereIF(parm.types == 2, m => SqlFunc.Between(m.AddDate, d1, d2))
+                    .Sum(m => m.BackMoney);
                 res.data = new DayTurnover()
                 {
                     OrderSum = orderSum,
-                    Money = orderMoney
+                    Money = orderMoney- backMoney
                 };
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 查询营业额
+        /// </summary>
+        /// <returns></returns>
+        public Task<ApiResult<Page<ShopTurnover>>> GetShopTurnover(PageParm parm)
+        {
+            var res = new ApiResult<Page<ShopTurnover>>();
+            try
+            {
+                //默认只查询当月的营业额
+                DateTime now = DateTime.Now;
+                DateTime beginTime = new DateTime(now.Year, now.Month, 1), endTime = beginTime.AddMonths(1).AddDays(-1);
+                if (!string.IsNullOrEmpty(parm.time))
+                {
+                    var timeRes = Utils.SplitString(parm.time, '-');
+                    beginTime = Convert.ToDateTime(timeRes[0].Trim());
+                    endTime = Convert.ToDateTime(timeRes[1].Trim());
+                }
+                var query = Db.Queryable<ErpShops>()
+                    .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.Guid == parm.guid)
+                    .Select(m=>new ShopTurnover() {
+                        ShopName=m.ShopName,
+                        Principal=m.AdminName,
+                        Mobile=m.Mobile,
+                        OrderCount= SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Count(),
+                        Money= SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Sum(g=>g.RealMoney),
+                        ReturnCount = SqlFunc.Subqueryable<ErpReturnOrder>().Where(g => g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Count(),
+                        BackCount = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Count(),
+                        BackMoney = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Sum(g=>g.BackMoney),
+                    })
+                    .OrderBy(m=>m.Money,OrderByType.Desc)
+                    .ToPage(parm.page,parm.limit);
+
+                res.data = query;
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 查询营业额
+        /// </summary>
+        /// <returns></returns>
+        public Task<ApiResult<List<VMonthTurnover>>> GetMonthTurnover(PageParm parm)
+        {
+            var res = new ApiResult<List<VMonthTurnover>>();
+            try
+            {
+                var query = Db.Queryable<VMonthTurnover>().OrderBy(m=>m.Months).ToList();
+                if (query!=null && query.Count>0)
+                {
+                    for (int i = 1; i < 13; i++)
+                    {
+                        var month = "0";
+                        if (i < 10) { month = month + i.ToString(); }
+                        else { month = i.ToString(); }
+                        if (query.Find(m=>m.Months==month)==null)
+                        {
+                            query.Add(new VMonthTurnover() { Months = month });
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < 13; i++)
+                    {
+                        var month = "0";
+                        if (i < 10) { month=month + i.ToString(); }
+                        else { month = i.ToString(); }
+                        query.Add(new VMonthTurnover() { Months = month });
+                    }
+                }
+                res.data = query.OrderBy(m=>m.Months).ToList();
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 获得加盟商列表，包含库存总数
+        /// </summary>
+        /// <returns></returns>
+        public Task<ApiResult<List<ShopStockReport>>> GetShopStockReport(PageParm parm)
+        {
+            var res = new ApiResult<List<ShopStockReport>>();
+            try
+            {
+                var query = Db.Queryable<ErpShops>()
+                    .Select(m=>new ShopStockReport() {
+                        ShopName=m.ShopName,
+                        Stock = SqlFunc.Subqueryable<ErpShopSku>().Where(g => g.ShopGuid == m.Guid).Sum(g=>g.Stock),
+                    })
+                    .OrderBy(m=>m.Stock,OrderByType.Desc)
+                    .ToList();
+                res.data = query;
             }
             catch (Exception ex)
             {

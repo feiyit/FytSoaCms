@@ -306,7 +306,11 @@ namespace FytSoa.Service.Implements
                         RealMoney = eso.RealMoney,
                         AddDate = eso.AddDate
                     })
-                    .ToPage(parm.page, parm.limit);                
+                    .ToPage(parm.page, parm.limit);
+                foreach (var item in query.Items)
+                {
+                    item.ActivityName = !string.IsNullOrEmpty(item.ActivityName) && item.ActivityName!= "undefined" ? item.ActivityName : "无活动";
+                }
                 res.success = true;
                 res.message = "获取成功！";
                 res.data = query;

@@ -92,4 +92,61 @@ namespace FytSoa.Service.DtoModel
         /// </summary>
         public decimal Money { get; set; }
     }
+
+    /// <summary>
+    /// 店铺营业额统计=核算总账
+    /// </summary>
+    public class ShopTurnover
+    {
+        /// <summary>
+        /// 店铺名称
+        /// </summary>
+        public string ShopName { get; set; }
+        /// <summary>
+        /// 店铺负责人
+        /// </summary>
+        public string Principal { get; set; }
+        /// <summary>
+        /// 店铺负责人联系方式
+        /// </summary>
+        public string Mobile { get; set; }
+        /// <summary>
+        /// 订单总数
+        /// </summary>
+        public int OrderCount { get; set; }
+        /// <summary>
+        /// 营业额
+        /// </summary>
+        public decimal Money { get; set; }
+
+        /// <summary>
+        /// 返货数
+        /// </summary>
+        public int ReturnCount { get; set; }
+
+        /// <summary>
+        /// 退货数
+        /// </summary>
+        public int BackCount { get; set; }
+
+        /// <summary>
+        /// 退货金额
+        /// </summary>
+        public decimal BackMoney { get; set; }
+    }
+
+    /// <summary>
+    /// 加盟商库存
+    /// </summary>
+    public class ShopStockReport
+    {
+        /// <summary>
+        /// 加盟商列表
+        /// </summary>
+        public string ShopName { get; set; }
+        /// <summary>
+        /// 当前库存数
+        /// </summary>
+        public int Stock { get; set; }
+    }
 }

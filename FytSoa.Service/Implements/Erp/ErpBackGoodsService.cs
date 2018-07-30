@@ -59,6 +59,18 @@ namespace FytSoa.Service.Implements
                     res.message = "该退货信息已存在~";
                     return await Task.Run(() => res);
                 }
+                //根据订单查询商品数量是否满足
+                var orderGoodsModel = ErpSaleOrderGoodsDb.GetSingle(m=>m.OrderNumber==parm.OrderNumber && m.GoodsGuid== parm.GoodsGuid && m.ShopGuid==parm.ShopGuid);
+                if (orderGoodsModel == null)
+                {
+                    res.message = "该商品在该订单号中不存在~";
+                    return await Task.Run(() => res);
+                }
+                if (orderGoodsModel.Counts<parm.BackCount)
+                {
+                    res.message = "退货商品数量不能大于订单购买数量~";
+                    return await Task.Run(() => res);
+                }
                 var result = Db.Ado.UseTran(() =>
                 {
                     //修改加盟商条形码里面的库存 退货=加盟商库存增加
@@ -66,6 +78,12 @@ namespace FytSoa.Service.Implements
                     .UpdateColumns(m=>new ErpShopSku() { Stock=m.Stock+parm.BackCount,Sale=m.Sale-parm.BackCount })
                     .Where(m=>m.ShopGuid==parm.ShopGuid && m.SkuGuid== goodSku.Guid)
                     .ExecuteCommand();
+                    //根据商品编号，修改平台的销售数量
+                    Db.Updateable<ErpGoodsSku>().UpdateColumns(m=>new ErpGoodsSku() {SaleSum=m.SaleSum-parm.BackCount })
+                    .Where(m=>m.Guid==goodSku.Guid).ExecuteCommand();
+                    //修改订单-商品详情表中的退货数量   增加
+                    orderGoodsModel.BackCounts = orderGoodsModel.BackCounts + parm.BackCount;
+                    Db.Updateable(orderGoodsModel).ExecuteCommand();
                     //增加一条退货信息
                     Db.Insertable(parm).ExecuteCommand();
                 });

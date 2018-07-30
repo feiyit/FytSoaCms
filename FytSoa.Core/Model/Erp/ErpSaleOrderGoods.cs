@@ -45,7 +45,12 @@ namespace FytSoa.Core.Model.Erp
         /// <summary>
         /// 购买数量
         /// </summary>
-        public int Counts { get; set; }
+        public int Counts { get; set; } = 0;
+
+        /// <summary>
+        /// 当前订单的商品退货数
+        /// </summary>
+        public int BackCounts { get; set; } = 0;
 
     }
 }

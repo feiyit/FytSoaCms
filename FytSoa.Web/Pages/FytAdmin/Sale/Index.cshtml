@@ -15,6 +15,14 @@
             left: 400px;
             top: 60px;
         }
+        .layui-card {
+            background-color: #eaedf1;
+            margin-top: 10px;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,.3);
+        }
+        .layui-card-header{    border-bottom: 1px solid #D9DEE4;}
+        .fyt-table{width:100%;}
+        .fyt-table th{width:15%}
     </style>
     <div class="list-wall">
         <div class="layui-form list-search">
@@ -62,8 +70,31 @@
             </li>
         </ul>
     </div>
-    <div class="right-col-body">
+    <div class="right-col-body" id="orders">
         <div class="list-wall">
+            <div class="layui-card">
+                <div class="layui-card-header">订单详情</div>
+                <div class="layui-card-body">
+                    <table class="fyt-table">
+                        <tr>
+                            <th>订单编号：</th>
+                            <td>{{curModel.number}}</td>
+                            <th>下单时间：</th>
+                            <td>{{curModel.addDate}}</td>
+                            <th>数量：</th>
+                            <td>{{curModel.counts}}</td>
+                        </tr>
+                        <tr>
+                            <th>参加活动：</th>
+                            <td>{{curModel.activityName}}</td>
+                            <th>应收金额：</th>
+                            <td><span class="layui-badge layui-bg-cyan">{{curModel.money}}</span></td>
+                            <th>实收金额：</th>
+                            <td><span class="layui-badge layui-bg-blue">{{curModel.realMoney}}</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
             <table class="layui-hide" id="tablist" lay-filter="tool"></table>
         </div>
     </div>
@@ -73,7 +104,6 @@
             el: "#app",
             data: {
                 list: [],
-                curModel: {},
                 activeName: '',
                 parm: {
                     guid: ''
@@ -84,8 +114,18 @@
                     this.activeName = m;
                 },
                 getList: function (m) {
+                    vues.curModel = m;
                     funTool.getGoodsSku(m);
                 }
+            }
+        });
+        var vues = new Vue({
+            el:"#orders",
+            data: {
+                curModel: {
+                    money: 0,
+                    realMoney:0
+                },
             }
         });
         layui.config({
@@ -143,7 +183,7 @@
 
                 funTool = {
                     getGoodsSku: function (obj) {
-                        orderguid = obj.number; console.log(orderguid);
+                        orderguid = obj.number; 
                         active.reload();
                     },
                     orderPage: function () {

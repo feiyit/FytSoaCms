@@ -9,30 +9,34 @@ namespace FytSoa.Core.Model.Erp
     ///</summary>
     public partial class ErpShopSku
     {
-           public ErpShopSku(){
+        public ErpShopSku()
+        {
 
 
-           }
-           /// <summary>
-           /// Desc:条形码的唯一编号
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           public string SkuGuid {get;set;}
+        }
 
-           /// <summary>
-           /// Desc:条形码
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           public string SkuCode {get;set;}
+        public string Guid { get; set; }
 
-           /// <summary>
-           /// Desc:加盟商编号
-           /// Default:
-           /// Nullable:False
-           /// </summary>           
-           public string ShopGuid {get;set;}
+        /// <summary>
+        /// Desc:条形码的唯一编号
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string SkuGuid { get; set; }
+
+        /// <summary>
+        /// Desc:条形码
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string SkuCode { get; set; }
+
+        /// <summary>
+        /// Desc:加盟商编号
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string ShopGuid { get; set; }
 
         /// <summary>
         /// Desc:库存

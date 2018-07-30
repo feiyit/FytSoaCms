@@ -1,0 +1,165 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Report.ShopStockModel
+@{
+    ViewData["Title"] = "报表管理-加盟商库存报表";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <style>
+        .layui-col-220 {
+            width: 388px;
+            top: 80px;
+            left: 12px;
+        }
+
+            .layui-col-220 .layui-nav-title {
+                height: 42px;
+                line-height: 42px;
+            }
+
+        .right-col-body {
+            left: 400px;
+            top: 60px;
+        }
+    </style>
+    <div class="list-wall">
+        <div class="layui-form list-search">
+            <div class="layui-inline">
+                <select id="shops" lay-search="">
+                    <option value="">--可根据店铺搜索--</option>
+                    @{
+                        foreach (var item in Model.shopList)
+                        {
+                            <option value="@item.Guid">@item.ShopName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="layui-inline">
+                <select id="branks">
+                    <option value="">--可根据品牌搜索--</option>
+                    @{
+                        foreach (var item in Model.codeList)
+                        {
+                            <option value="@item.Name">@item.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch">
+                <i class="layui-icon layui-icon-search"></i> 搜索
+            </button>
+        </div>
+    </div>
+    <div class="layui-col-220" id="app">
+        <div class="layui-nav-title">加盟商列表　　　</div>
+        <ul class="fyt-utree">
+            <li v-for="it in list" v-cloak :class="{active: activeName == it.guid}" @@click="selected(it.guid)">
+                <a class="layui-elip title" @@click="getList(it)">{{it.number}}——{{it.shopName}}</a>
+                <a class="layui-elip sums"><span class="layui-badge layui-bg-blue">{{it.counts}}</span></a>
+            </li>
+        </ul>
+    </div>
+    <div class="right-col-body">
+        <div class="list-wall">
+            <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/themes/js/modules/vue.js"></script>
+    <script>
+        var funTool, vm = new Vue({
+            el: "#app",
+            data: {
+                list: [],
+                curModel: {},
+                activeName: '',
+                parm: {
+                    guid: ''
+                }
+            },
+            methods: {
+                selected: function (m) {
+                    console.log(m);
+                    this.activeName = m;
+                },
+                getList: function (m) {
+                    funTool.getGoodsSku(m);
+                }
+            }
+        });
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'form', 'common'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common,
+                    form = layui.form;
+                form.render('select');
+                table.render({
+                    elem: '#tablist',
+                    url: '/api/stock/return/goods',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            { field: 'code', width: 200, title: '条形码', fixed: 'left' },
+                            { field: 'brandName', title: '品牌' },
+                            { field: 'styleName', title: '款式' },
+                            { field: 'seasonName', width: 150, title: '季节' },
+                            { field: 'counts', title: '返货数' },
+                            { field: 'summary', title: '返货原因' }
+                        ]
+                    ],
+                    page: true,
+                    limit: 20,
+                    id: 'tables'
+                });
+
+                var orderguid = '', shopGuid = '', active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    guid: orderguid,
+                                    key: $('#key').val(),
+                                    brank: $('#branks').val(),
+                                    shopGuid: $("#shops").val()
+                                }
+                            });
+                    },
+                    toolSearch: function () {
+                        vm.parm.guid = $("#shops").val();
+                        active.reload();
+                        funTool.orderPage();
+                    }
+                };
+
+                funTool = {
+                    getGoodsSku: function (obj) {
+                        orderguid = obj.guid;
+                        shopGuid = obj.shopGuid;
+                        active.reload();
+                    },
+                    orderPage: function () {
+                        os.ajax('api/stock/return/order', vm.parm, function (res) {
+                            if (res.statusCode === 200) {
+                                vm.list = res.data.items;
+                            } else {
+                                os.error(res.message);
+                            }
+                        });
+                    }
+                }
+                //初始化入库单管理
+                funTool.orderPage();
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+            });
+    </script>
+</div>

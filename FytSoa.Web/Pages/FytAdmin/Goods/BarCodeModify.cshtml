@@ -31,7 +31,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">年份</label>
             <div class="layui-input-inline">
-                <select name="YearGuid" lay-verify="required" lay-search="" lay-verType="tips">
+                <select name="YearGuid" lay-search="">
                     <option value="">请选择，支持搜索</option>
                     @{
                         foreach (var item in Model.codeList.Where(m => m.ParentGuid == "1942d4fd-3203-42b1-a955-4a84a532b2a2").OrderBy(m => m.Sort))
