@@ -1,0 +1,281 @@
+2018-07-31 09:45:38.5516|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Mvc.Razor.Compilation.CompilationFailedException: One or more compilation failures occurred:
+ggdqaef5.bq2(46,61): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+ggdqaef5.bq2(47,67): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+ggdqaef5.bq2(382,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+ggdqaef5.bq2(384,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+ggdqaef5.bq2(386,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+ggdqaef5.bq2(388,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+ggdqaef5.bq2(390,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+ggdqaef5.bq2(91,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+ggdqaef5.bq2(93,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+ggdqaef5.bq2(127,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+ggdqaef5.bq2(136,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+ggdqaef5.bq2(137,72): error CS1503: Argument 2: cannot convert from 'method group' to 'object'
+ggdqaef5.bq2(165,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+ggdqaef5.bq2(167,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+ggdqaef5.bq2(201,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+ggdqaef5.bq2(210,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+ggdqaef5.bq2(211,72): error CS1503: Argument 2: cannot convert from 'method group' to 'object'
+ggdqaef5.bq2(262,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(RazorCodeDocument codeDocument, String generatedCode)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.OnCacheMiss(String normalizedPath)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvokerProvider.OnProvidersExecuting(ActionInvokerProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionInvokerFactory.CreateInvoker(ActionContext actionContext)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcAttributeRouteHandler.<>c__DisplayClass12_0.<RouteAsync>b__0(HttpContext c)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: |action:  |IP: |QueryString: 
+2018-07-31 11:33:59.9387|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Mvc.Razor.Compilation.CompilationFailedException: One or more compilation failures occurred:
+bqt441cm.2cy(46,67): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bqt441cm.2cy(237,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bqt441cm.2cy(239,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bqt441cm.2cy(241,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bqt441cm.2cy(243,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bqt441cm.2cy(245,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bqt441cm.2cy(93,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bqt441cm.2cy(112,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(RazorCodeDocument codeDocument, String generatedCode)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.OnCacheMiss(String normalizedPath)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvokerProvider.OnProvidersExecuting(ActionInvokerProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionInvokerFactory.CreateInvoker(ActionContext actionContext)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcAttributeRouteHandler.<>c__DisplayClass12_0.<RouteAsync>b__0(HttpContext c)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: |action:  |IP: |QueryString: 
+2018-07-31 11:38:04.0982|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Mvc.Razor.Compilation.CompilationFailedException: One or more compilation failures occurred:
+bpoznbwj.tca(55,61): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(56,67): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(457,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(459,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(461,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(463,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(465,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(91,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(93,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(113,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(115,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(135,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(137,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(157,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(159,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(179,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(181,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(201,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(203,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(223,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(225,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(245,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(247,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(267,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(269,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(313,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(332,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(RazorCodeDocument codeDocument, String generatedCode)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.OnCacheMiss(String normalizedPath)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvokerProvider.OnProvidersExecuting(ActionInvokerProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionInvokerFactory.CreateInvoker(ActionContext actionContext)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcAttributeRouteHandler.<>c__DisplayClass12_0.<RouteAsync>b__0(HttpContext c)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: |action:  |IP: |QueryString: 
+2018-07-31 11:38:04.0982|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Mvc.Razor.Compilation.CompilationFailedException: One or more compilation failures occurred:
+bpoznbwj.tca(55,61): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(56,67): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(457,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(459,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(461,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(463,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(465,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(91,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(93,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(113,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(115,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(135,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(137,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(157,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(159,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(179,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(181,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(201,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(203,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(223,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(225,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(245,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(247,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(267,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(269,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+bpoznbwj.tca(313,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+bpoznbwj.tca(332,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(RazorCodeDocument codeDocument, String generatedCode)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.OnCacheMiss(String normalizedPath)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvokerProvider.OnProvidersExecuting(ActionInvokerProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionInvokerFactory.CreateInvoker(ActionContext actionContext)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcAttributeRouteHandler.<>c__DisplayClass12_0.<RouteAsync>b__0(HttpContext c)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: |action:  |IP: |QueryString: 
+2018-07-31 14:19:17.9178|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Mvc.Razor.Compilation.CompilationFailedException: One or more compilation failures occurred:
+qkwcu20b.1wp(55,61): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(56,67): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(473,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(475,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(477,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(479,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(481,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(92,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(94,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+qkwcu20b.1wp(114,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(116,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+qkwcu20b.1wp(136,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(138,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+qkwcu20b.1wp(158,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(160,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+qkwcu20b.1wp(180,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(182,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+qkwcu20b.1wp(202,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(204,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+qkwcu20b.1wp(224,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(226,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+qkwcu20b.1wp(246,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(248,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+qkwcu20b.1wp(268,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(270,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+qkwcu20b.1wp(314,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+qkwcu20b.1wp(333,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(RazorCodeDocument codeDocument, String generatedCode)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.OnCacheMiss(String normalizedPath)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvokerProvider.OnProvidersExecuting(ActionInvokerProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionInvokerFactory.CreateInvoker(ActionContext actionContext)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcAttributeRouteHandler.<>c__DisplayClass12_0.<RouteAsync>b__0(HttpContext c)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: |action:  |IP: |QueryString: 
+2018-07-31 14:34:46.2855|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Mvc.Razor.Compilation.CompilationFailedException: One or more compilation failures occurred:
+sdiw1neb.m4z(55,61): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(56,67): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(477,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(479,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(481,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(483,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(485,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(92,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(94,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(114,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(116,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(136,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(138,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(158,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(160,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(180,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(182,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(202,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(204,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(224,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(226,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(246,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(248,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(268,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(270,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(314,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(333,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(RazorCodeDocument codeDocument, String generatedCode)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.OnCacheMiss(String normalizedPath)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvokerProvider.OnProvidersExecuting(ActionInvokerProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionInvokerFactory.CreateInvoker(ActionContext actionContext)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcAttributeRouteHandler.<>c__DisplayClass12_0.<RouteAsync>b__0(HttpContext c)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvokerProvider.OnProvidersExecuting(ActionInvokerProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionInvokerFactory.CreateInvoker(ActionContext actionContext)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcAttributeRouteHandler.<>c__DisplayClass12_0.<RouteAsync>b__0(HttpContext c)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: |action:  |IP: |QueryString: 
+2018-07-31 14:34:46.2855|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Mvc.Razor.Compilation.CompilationFailedException: One or more compilation failures occurred:
+sdiw1neb.m4z(55,61): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(56,67): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(477,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(479,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(481,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(483,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(485,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(92,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(94,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(114,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(116,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(136,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(138,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(158,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(160,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(180,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(182,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(202,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(204,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(224,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(226,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(246,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(248,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(268,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(270,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+sdiw1neb.m4z(314,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+sdiw1neb.m4z(333,148): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(RazorCodeDocument codeDocument, String generatedCode)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.OnCacheMiss(String normalizedPath)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvokerProvider.OnProvidersExecuting(ActionInvokerProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionInvokerFactory.CreateInvoker(ActionContext actionContext)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcAttributeRouteHandler.<>c__DisplayClass12_0.<RouteAsync>b__0(HttpContext c)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvokerProvider.OnProvidersExecuting(ActionInvokerProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionInvokerFactory.CreateInvoker(ActionContext actionContext)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcAttributeRouteHandler.<>c__DisplayClass12_0.<RouteAsync>b__0(HttpContext c)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: |action:  |IP: |QueryString: 

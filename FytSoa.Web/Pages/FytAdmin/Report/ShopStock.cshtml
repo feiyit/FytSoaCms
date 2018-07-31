@@ -114,6 +114,7 @@
                     ],
                     page: true,
                     limit: 15,
+                    height: 'full-200',
                     id: 'tables'
                 });
 
@@ -133,9 +134,7 @@
                     },
                     toolSearch: function () {
                         vm.parm.guid = $("#shops").val();
-                        if (shopGuid == '') {
-                            shopGuid = $("#shops").val();
-                        }
+                        shopGuid = $("#shops").val();
                         active.reload();
                         funTool.orderPage();
                     }
@@ -144,6 +143,8 @@
                 funTool = {
                     getGoodsSku: function (obj) {
                         shopGuid = obj.shopGuid;
+                        $("#shops").val(shopGuid);
+                        form.render('select');
                         active.reload();
                     },
                     orderPage: function () {

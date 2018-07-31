@@ -1,0 +1,173 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Report.PlatformInStockModel
+@{
+    ViewData["Title"] = "报表中心-平台入库报表";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <style>
+        body {
+            background-color: #f1f4f5;
+        }
+
+        .layui-table td {
+            border-radius: 0px;
+        }
+        .list-search{background-color:#D9DEE4}
+    </style>
+    <div class="list-wall">
+        <div class="layui-form list-search">
+            <div class="layui-inline">
+                <select id="years" lay-search="">
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                </select>
+            </div>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch">
+                <i class="layui-icon layui-icon-search"></i> 搜索
+            </button>
+        </div>
+    </div>
+    <div class="layui-col-md12 list-wall">
+        <div class="layui-card">
+            <div class="layui-card-header">今年数据概览</div>
+            <div class="layui-card-body">
+                <table class="layui-hide" id="tablist"></table>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md12 list-wall">
+        <div class="layui-card">
+            <div class="layui-card-header">年份入库图表概览</div>
+            <div class="layui-card-body">
+                <div id="base-map" style="width: 100%;height:300px;"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/html" id="realMoney">
+        {{d.realMoney-d.backMoney}}
+    </script>
+    <script type="text/javascript" src="~/themes/js/echarts.min.js"></script>
+    <script type="text/javascript" src="~/themes/js/macarons.js"></script>
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'carousel', 'element', 'jquery', 'common', 'form'],
+            function () {
+                var table = layui.table,
+                    carousel = layui.carousel,
+                    $ = layui.jquery,
+                    os = layui.common,
+                    form = layui.form;
+                form.render('select');
+                table.render({
+                    elem: '#tablist',
+                    url: '/api/inventory/packloglist?types=1',
+                    cols: [
+                        [
+                            { field: 'number', width: 200, title: '编号', fixed: 'left' },
+                            { field: 'packName', width: 300, title: '入库单名称' },
+                            { field: 'goodsSum', width: 150, title: '入库数量' }
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables',
+                    height: 300
+                });
+                var key = '', active = {
+                    init: function () {
+                        os.ajax('api/inventory/platforminstock', { key: key }, function (res) {
+                            if (res.statusCode == 200) {
+                                baseChart.hideLoading()
+                                var datas = [], moneys = [], counts = [];
+                                for (var i = 0; i < res.data.length; i++) {
+                                    datas.push(res.data[i].months + '月');
+                                    counts.push(res.data[i].inCounts);
+                                }
+                                baseChart.setOption({
+                                    xAxis: {
+                                        data: datas
+                                    },
+                                    series: [{
+                                        name: '入库数量',
+                                        type: 'line',
+                                        stack: '总量',
+                                        areaStyle: { normal: {} },
+                                        data: counts
+                                    }]
+                                });
+                            } else {
+                                os.error(res.message);
+                            }
+                        });
+                    },
+                    toolSearch: function () {
+                        key = $("#years").val();
+                        active.init();
+                    }
+                };
+                setTimeout(function () {
+                    active.init();
+                }, 1000);
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    baseChart.showLoading();
+                    active[type] ? active[type].call(this) : '';
+                });
+            });
+        var baseChart = echarts.init(document.getElementById('base-map'), 'macarons');
+        baseChart.showLoading();
+        var option = {
+            title: {
+                //show:false,
+                text: '',
+                textStyle: {
+                    color: '#888',
+                    align: 'center',
+                    fontSize: 14,
+                    fontWeight: '400'
+                }
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            toolbox: {
+                feature: {
+                    magicType: {
+                        type: ['line', 'bar', 'stack', 'tiled']
+                    },
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: []
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+            ]
+        };
+        baseChart.setOption(option);
+    </script>
+</div>
+

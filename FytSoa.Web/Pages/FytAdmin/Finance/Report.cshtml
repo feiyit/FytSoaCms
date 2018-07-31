@@ -31,7 +31,7 @@
         </div>
     </div>
     <script type="text/html" id="realMoney">
-        {{d.realMoney-d.backMoney}}
+        {{(d.realMoney-d.backMoney).toFixed(2)}}
     </script>
     <script type="text/javascript" src="~/themes/js/echarts.min.js"></script>
     <script type="text/javascript" src="~/themes/js/macarons.js"></script>
@@ -65,7 +65,7 @@
                         var datas = [], moneys = [], orderCount = [];
                         for (var i = 0; i < res.data.length; i++) {
                             datas.push(res.data[i].months + '月');
-                            moneys.push(res.data[i].realMoney - res.data[i].backMoney);
+                            moneys.push((res.data[i].realMoney - res.data[i].backMoney).toFixed(2));
                             orderCount.push(res.data[i].counts);
                         }
                         baseChart.setOption({

@@ -153,4 +153,19 @@ namespace FytSoa.Service.DtoModel
         /// </summary>
         public int Stock { get; set; }
     }
+
+    /// <summary>
+    /// 平台入库统计报表
+    /// </summary>
+    public class PlatformInStockReport
+    {
+        /// <summary>
+        /// 月份
+        /// </summary>
+        public string Months { get; set; }
+        /// <summary>
+        /// 入库总数
+        /// </summary>
+        public int InCounts { get; set; } = 0;
+    }
 }

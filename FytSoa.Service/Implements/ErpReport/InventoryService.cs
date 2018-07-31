@@ -116,7 +116,7 @@ namespace FytSoa.Service.Implements
                     //本月
                     DateTime now = DateTime.Now;
                     DateTime d1 = new DateTime(now.Year, now.Month, 1);
-                    DateTime d2 = d1.AddMonths(1).AddDays(-1);
+                    DateTime d2 = d1.AddMonths(1);
                     var dayList = ErpSaleOrderGoodsDb.GetList(m => guidList.Contains(m.GoodsGuid) && m.ShopGuid==parm.guid &&
                     SqlFunc.Between(SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.Number == m.OrderNumber).Select(g => g.AddDate), d1, d2));
                     foreach (var item in query.Items)
@@ -155,7 +155,7 @@ namespace FytSoa.Service.Implements
             {                
                 DateTime now = DateTime.Now;
                 DateTime d1 = new DateTime(now.Year, now.Month, 1);
-                DateTime d2 = d1.AddMonths(1).AddDays(-1);
+                DateTime d2 = d1.AddMonths(1);
 
                 DateTime dayTime = Convert.ToDateTime(now.AddDays(1).ToShortDateString() + " 00:00:00");
                 //订单数
@@ -207,7 +207,7 @@ namespace FytSoa.Service.Implements
             {
                 //默认只查询当月的营业额
                 DateTime now = DateTime.Now;
-                DateTime beginTime = new DateTime(now.Year, now.Month, 1), endTime = beginTime.AddMonths(1).AddDays(-1);
+                DateTime beginTime = new DateTime(now.Year, now.Month, 1), endTime = beginTime.AddMonths(1);
                 if (!string.IsNullOrEmpty(parm.time))
                 {
                     var timeRes = Utils.SplitString(parm.time, '-');
@@ -301,6 +301,56 @@ namespace FytSoa.Service.Implements
                     .OrderBy(m=>m.Stock,OrderByType.Desc)
                     .ToList();
                 res.data = query;
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 平台入库统计报表，入库 总数，可根据年份查询
+        /// </summary>
+        /// <returns></returns>
+        public Task<ApiResult<List<PlatformInStockReport>>> GetPlatformInStockReport(PageParm parm)
+        {
+            var res = new ApiResult<List<PlatformInStockReport>>();
+            try
+            {
+                if (string.IsNullOrEmpty(parm.key))
+                {
+                    parm.key = DateTime.Now.Year.ToString();
+                }
+                var strSql = "select date_format(AddDate,'%m') AS `Months`,SUM(GoodsSum) as InCounts from erpinoutlog "
+                    + "where Types=1 and InTypes=1 and date_format(AddDate,'%Y')='"+parm.key+"' "
+                    + "group by months";
+                var query = Db.Ado.SqlQuery<PlatformInStockReport>(strSql);
+                if (query != null && query.Count > 0)
+                {
+                    for (int i = 1; i < 13; i++)
+                    {
+                        var month = "0";
+                        if (i < 10) { month = month + i.ToString(); }
+                        else { month = i.ToString(); }
+                        if (query.Find(m => m.Months == month) == null)
+                        {
+                            query.Add(new PlatformInStockReport() { Months = month });
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < 13; i++)
+                    {
+                        var month = "0";
+                        if (i < 10) { month = month + i.ToString(); }
+                        else { month = i.ToString(); }
+                        query.Add(new PlatformInStockReport() { Months = month });
+                    }
+                }
+                res.data = query.OrderBy(m => m.Months).ToList();
             }
             catch (Exception ex)
             {

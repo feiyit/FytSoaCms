@@ -49,5 +49,11 @@ namespace FytSoa.Service.Interfaces
         /// <returns></returns>
         Task<ApiResult<List<ShopStockReport>>> GetShopStockReport(PageParm parm);
 
+        /// <summary>
+        /// 平台入库统计报表，入库 总数，可根据年份查询
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<List<PlatformInStockReport>>> GetPlatformInStockReport(PageParm parm);
+
     }
 }

@@ -14,10 +14,12 @@ namespace FytSoa.Api.Controllers
     [Produces("application/json")]
     public class InventoryController : Controller
     {
+        private readonly IErpPackLogService _packLogService;
         private readonly IInventoryService _inventoryService;
-        public InventoryController(IInventoryService inventoryService)
+        public InventoryController(IInventoryService inventoryService, IErpPackLogService packLogService)
         {
             _inventoryService = inventoryService;
+            _packLogService = packLogService;
         }
         /// <summary>
         /// 库存盘点
@@ -75,6 +77,29 @@ namespace FytSoa.Api.Controllers
         public async Task<JsonResult> GetStockByShop(PageParm parm, AppSearchParm searchParm)
         {
             var res = await _inventoryService.GetStockNumByShopAsync(parm, searchParm);
+            return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
+        }
+
+        /// <summary>
+        /// 平台入库统计报表，入库 总数，可根据年份查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("platforminstock")]
+        public async Task<ApiResult<List<PlatformInStockReport>>> GetPlatformInStockReport(PageParm parm)
+        {
+            return await _inventoryService.GetPlatformInStockReport(parm);
+        }
+
+        /// <summary>
+        /// 平台入库统计报表，入库单列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("packloglist")]
+        public async Task<JsonResult> GetPackLogPages(PageParm parm)
+        {
+            var res = await _packLogService.GetPagesAsync(parm);
             return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
         }
     }
