@@ -43,7 +43,7 @@ namespace FytSoa.Core.Model.Erp
         public byte Types { get; set; } = 1;
 
         /// <summary>
-        /// Desc:方式(1=打折/2=满减)
+        /// Desc:方式(1=打折/2=满减/3=买一赠一)
         /// Default:1
         /// Nullable:False
         /// </summary>           

@@ -26,7 +26,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">活动方式</label>
                     <div class="layui-input-inline">
-                        <select name="Types">
+                        <select name="Types" id="Types">
                             @{
                                 if (Model.activityModel.Types == 0)
                                 {
@@ -51,7 +51,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">品牌</label>
                     <div class="layui-input-inline">
-                        <select name="BrandGuid" lay-search="">
+                        <select name="BrandGuid" id="BrandGuid" lay-search="">
                             <option value="">--可根据品牌搜索--</option>
                             @{
                                 foreach (var item in Model.codeList)
@@ -77,6 +77,7 @@
             <div class="layui-input-inline">
                 <input type="radio" name="Method" value="1" title="打折" @(Model.activityModel.Method == 1 ? "checked" : "")>
                 <input type="radio" name="Method" value="2" title="满减" @(Model.activityModel.Method == 2 ? "checked" : "")>
+                <input type="radio" name="Method" value="3" title="买一赠一" @(Model.activityModel.Method == 3 ? "checked" : "")>
             </div>
         </div>
         <div class="layui-inline">
@@ -157,11 +158,16 @@
                 , type: 'datetime'
             });
             form.on('radio', function (data) {
-                console.log(data.value);
-                if (data.value === '1') {
-                    $("#full").addClass('layui-hide');
-                } else {
+                if (data.value === '2') {
                     $("#full").removeClass('layui-hide');
+                }
+                else if (data.value === '3') {
+                    $("#Types").val("0");
+                    $("#BrandGuid").val("");
+                    form.render('select');
+                }
+                else {
+                    $("#full").addClass('layui-hide');
                 }
             }); 
             if (@Model.activityModel.Method== 2) {
