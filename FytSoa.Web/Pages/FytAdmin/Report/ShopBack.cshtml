@@ -1,0 +1,101 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Report.ShopBackModel
+@{
+    ViewData["Title"] = "报表管理-加盟商退货统计";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <div class="list-wall">
+        <div class="layui-form list-search">
+            <div class="layui-inline">
+                <select id="shops" lay-search="">
+                    <option value="">--可根据店铺搜索--</option>
+                    @{
+                        foreach (var item in Model.shopList)
+                        {
+                            <option value="@item.Guid">@item.ShopName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="layui-inline">
+                <select id="years" lay-search="">
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                </select>
+            </div>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+        </div>
+    </div>
+    <div class="list-wall" style="padding-top:0px;">
+        <table class="layui-hide" id="tablist"></table>
+    </div>
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'jquery', 'common', 'form'],
+            function () {
+                var table = layui.table,
+                    $ = layui.jquery,
+                    os = layui.common,
+                    form = layui.form;
+                form.render('select');
+                table.render({
+                    elem: '#tablist',
+                    url: '/api/Inventory/shopbackreport',
+                    cols: [
+                        [
+                            { field: 'shopName', width: 240, title: '商家名称', fixed: 'left' },
+                            { field: 'januaryMoney', width: 115, title: '一月' },
+                            { field: 'fFebruaryMoney', width: 115, title: '二月' },
+                            { field: 'marchMoney', width: 115, title: '三月' },
+                            { field: 'aprilMoney', width: 115, title: '四月' },
+                            { field: 'mayMoney', width: 115, title: '五月' },
+                            { field: 'juneMoney', width: 115, title: '六月' },
+                            { field: 'julyMoney', width: 115, title: '七月' },
+                            { field: 'augustMoney', width: 115, title: '八月' },
+                            { field: 'septemberMoney', width: 115, title: '九月' },
+                            { field: 'octoberMoney', width: 115, title: '十月' },
+                            { field: 'novemberMoney', width: 115, title: '十一月' },
+                            { field: 'decemberMoney', width: 115, title: '十二月' },
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables',
+                    height: 'full-200'
+                });
+                var key = '', active = {
+                    tabLoad: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    key: $("#shops").val(),
+                                    time: $("#years").val()
+                                }
+                            });
+                    },
+                    toolSearch: function () {
+                        key = $("#years").val();
+                        active.tabLoad();
+                    }
+                };
+                
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+            });
+        
+    </script>
+</div>
+

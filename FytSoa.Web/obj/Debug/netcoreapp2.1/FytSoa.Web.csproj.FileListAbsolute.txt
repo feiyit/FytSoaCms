@@ -248,3 +248,6 @@ D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pag
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Report\ShopStock.g.cshtml.cs
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Report\PlatformInStock.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Report\PlatformInStock.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Report\platformOutStock.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Report\ShopBack.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Report\ShopReturn.g.cshtml.cs

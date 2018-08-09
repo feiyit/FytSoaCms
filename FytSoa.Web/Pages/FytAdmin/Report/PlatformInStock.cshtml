@@ -82,8 +82,19 @@
                     height: 300
                 });
                 var key = '', active = {
+                    tabLoad: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    time: $("#years").val()
+                                }
+                            });
+                    },
                     init: function () {
-                        os.ajax('api/inventory/platforminstock', { key: key }, function (res) {
+                        os.ajax('api/inventory/platforminstock', { key: key, types:1 }, function (res) {
                             if (res.statusCode == 200) {
                                 baseChart.hideLoading()
                                 var datas = [], moneys = [], counts = [];
@@ -111,6 +122,7 @@
                     toolSearch: function () {
                         key = $("#years").val();
                         active.init();
+                        active.tabLoad();
                     }
                 };
                 setTimeout(function () {

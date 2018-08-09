@@ -86,7 +86,7 @@ namespace FytSoa.Api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("platforminstock")]
-        public async Task<ApiResult<List<PlatformInStockReport>>> GetPlatformInStockReport(PageParm parm)
+        public async Task<ApiResult<List<PlatformInOutStockReport>>> GetPlatformInStockReport(PageParm parm)
         {
             return await _inventoryService.GetPlatformInStockReport(parm);
         }
@@ -101,6 +101,30 @@ namespace FytSoa.Api.Controllers
         {
             var res = await _packLogService.GetPagesAsync(parm);
             return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
+        }
+
+        /// <summary>
+        /// 加盟商退货统计报表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("shopbackreport")]
+        public async Task<JsonResult> GetShopBackReport(PageParm parm)
+        {
+            var res = await _inventoryService.GetShopBackReport(parm);
+            return Json(new { code = 0, msg = "success", count = 1, res.data });
+        }
+
+        /// <summary>
+        /// 加盟商返货统计报表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("shopreturnreport")]
+        public async Task<JsonResult> GetShopReturnReport(PageParm parm)
+        {
+            var res = await _inventoryService.GetShopReturnReport(parm);
+            return Json(new { code = 0, msg = "success", count = 1, res.data });
         }
     }
 }

@@ -155,9 +155,9 @@ namespace FytSoa.Service.DtoModel
     }
 
     /// <summary>
-    /// 平台入库统计报表
+    /// 平台出入库统计报表
     /// </summary>
-    public class PlatformInStockReport
+    public class PlatformInOutStockReport
     {
         /// <summary>
         /// 月份
@@ -167,5 +167,66 @@ namespace FytSoa.Service.DtoModel
         /// 入库总数
         /// </summary>
         public int InCounts { get; set; } = 0;
+    }
+
+    
+
+    /// <summary>
+    /// 平台退货，返货统计报表  商家列表，每个月份总合计
+    /// </summary>
+    public class ShopBackReturnReport
+    {
+        /// <summary>
+        /// 商家名称
+        /// </summary>
+        public string ShopName { get; set; }
+        /// <summary>
+        /// 1月份总金额
+        /// </summary>
+        public decimal JanuaryMoney { get; set; }
+        /// <summary>
+        /// 2月份总金额
+        /// </summary>
+        public decimal FebruaryMoney { get; set; }
+        /// <summary>
+        /// 3月份总金额
+        /// </summary>
+        public decimal MarchMoney { get; set; }
+        /// <summary>
+        /// 4月份总金额
+        /// </summary>
+        public decimal AprilMoney { get; set; }
+        /// <summary>
+        /// 5月份总金额
+        /// </summary>
+        public decimal MayMoney { get; set; }
+        /// <summary>
+        /// 6月份总金额
+        /// </summary>
+        public decimal JuneMoney { get; set; }
+        /// <summary>
+        /// 7月份总金额
+        /// </summary>
+        public decimal JulyMoney { get; set; }
+        /// <summary>
+        /// 8月份总金额
+        /// </summary>
+        public decimal AugustMoney { get; set; }
+        /// <summary>
+        /// 9月份总金额
+        /// </summary>
+        public decimal SeptemberMoney { get; set; }
+        /// <summary>
+        /// 10月份总金额
+        /// </summary>
+        public decimal OctoberMoney { get; set; }
+        /// <summary>
+        /// 11月份总金额
+        /// </summary>
+        public decimal NovemberMoney { get; set; }
+        /// <summary>
+        /// 12月份总金额
+        /// </summary>
+        public decimal DecemberMoney { get; set; }
     }
 }

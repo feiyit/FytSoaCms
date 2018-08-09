@@ -314,9 +314,9 @@ namespace FytSoa.Service.Implements
         /// 平台入库统计报表，入库 总数，可根据年份查询
         /// </summary>
         /// <returns></returns>
-        public Task<ApiResult<List<PlatformInStockReport>>> GetPlatformInStockReport(PageParm parm)
+        public Task<ApiResult<List<PlatformInOutStockReport>>> GetPlatformInStockReport(PageParm parm)
         {
-            var res = new ApiResult<List<PlatformInStockReport>>();
+            var res = new ApiResult<List<PlatformInOutStockReport>>();
             try
             {
                 if (string.IsNullOrEmpty(parm.key))
@@ -324,9 +324,9 @@ namespace FytSoa.Service.Implements
                     parm.key = DateTime.Now.Year.ToString();
                 }
                 var strSql = "select date_format(AddDate,'%m') AS `Months`,SUM(GoodsSum) as InCounts from erpinoutlog "
-                    + "where Types=1 and InTypes=1 and date_format(AddDate,'%Y')='"+parm.key+"' "
+                    + "where Types="+parm.types+" and InTypes=1 and date_format(AddDate,'%Y')='"+parm.key+"' "
                     + "group by months";
-                var query = Db.Ado.SqlQuery<PlatformInStockReport>(strSql);
+                var query = Db.Ado.SqlQuery<PlatformInOutStockReport>(strSql);
                 if (query != null && query.Count > 0)
                 {
                     for (int i = 1; i < 13; i++)
@@ -336,7 +336,7 @@ namespace FytSoa.Service.Implements
                         else { month = i.ToString(); }
                         if (query.Find(m => m.Months == month) == null)
                         {
-                            query.Add(new PlatformInStockReport() { Months = month });
+                            query.Add(new PlatformInOutStockReport() { Months = month });
                         }
                     }
                 }
@@ -347,10 +347,102 @@ namespace FytSoa.Service.Implements
                         var month = "0";
                         if (i < 10) { month = month + i.ToString(); }
                         else { month = i.ToString(); }
-                        query.Add(new PlatformInStockReport() { Months = month });
+                        query.Add(new PlatformInOutStockReport() { Months = month });
                     }
                 }
                 res.data = query.OrderBy(m => m.Months).ToList();
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 加盟商退货统计报表
+        /// </summary>
+        /// <returns></returns>
+        public Task<ApiResult<List<ShopBackReturnReport>>> GetShopBackReport(PageParm parm)
+        {
+            var res = new ApiResult<List<ShopBackReturnReport>>();
+            try
+            {
+                if (string.IsNullOrEmpty(parm.time))
+                {
+                    parm.time = DateTime.Now.Year.ToString();
+                }
+                var strSql = "SELECT ShopName,"
+                    + "MAX(CASE tt.Months WHEN '01' then tt.Money ELSE 0 END) 'JanuaryMoney',"
+                    + "MAX(CASE tt.Months WHEN '02' then tt.Money ELSE 0 END) 'FebruaryMoney',"
+                    + "MAX(CASE tt.Months WHEN '03' then tt.Money ELSE 0 END) 'MarchMoney',"
+                    + "MAX(CASE tt.Months WHEN '04' then tt.Money ELSE 0 END) 'AprilMoney',"
+                    + "MAX(CASE tt.Months WHEN '05' then tt.Money ELSE 0 END) 'MayMoney',"
+                    + "MAX(CASE tt.Months WHEN '06' then tt.Money ELSE 0 END) 'JuneMoney',"
+                    + "MAX(CASE tt.Months WHEN '07' then tt.Money ELSE 0 END) 'JulyMoney',"
+                    + "MAX(CASE tt.Months WHEN '08' then tt.Money ELSE 0 END) 'AugustMoney',"
+                    + "MAX(CASE tt.Months WHEN '09' then tt.Money ELSE 0 END) 'SeptemberMoney',"
+                    + "MAX(CASE tt.Months WHEN '10' then tt.Money ELSE 0 END) 'OctoberMoney',"
+                    + "MAX(CASE tt.Months WHEN '11' then tt.Money ELSE 0 END) 'NovemberMoney',"
+                    + "MAX(CASE tt.Months WHEN '12' then tt.Money ELSE 0 END) 'DecemberMoney'"
+                    + "from ("
+                    + "select s.Guid,s.ShopName,t1.Months,t1.Money,t1.Counts from erpshops as s left JOIN( "
+                    + "select ShopGuid,date_format(AddDate,'%m') AS `Months`,SUM(BackMoney) as Money,sum(BackCount) as Counts "
+                    + "from erpbackgoods  "
+                    + "where date_format(AddDate,'%Y')=" + parm.time + " "
+                    + "group by ShopGuid,Months) as t1 "
+                    + "on s.Guid=t1.ShopGuid"
+                    + ") tt "
+                    + (!string.IsNullOrEmpty(parm.key) ? " where tt.Guid='" + parm.key + "'" : "")
+                    + "group by tt.ShopName";
+                res.data = Db.Ado.SqlQuery<ShopBackReturnReport>(strSql);
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 加盟商返货统计报表
+        /// </summary>
+        /// <returns></returns>
+        public Task<ApiResult<List<ShopBackReturnReport>>> GetShopReturnReport(PageParm parm)
+        {
+            var res = new ApiResult<List<ShopBackReturnReport>>();
+            try
+            {
+                if (string.IsNullOrEmpty(parm.time))
+                {
+                    parm.time = DateTime.Now.Year.ToString();
+                }
+                var strSql = "SELECT ShopName,"
+                    + "MAX(CASE tt.Months WHEN '01' then tt.Money ELSE 0 END) 'JanuaryMoney',"
+                    + "MAX(CASE tt.Months WHEN '02' then tt.Money ELSE 0 END) 'FebruaryMoney',"
+                    + "MAX(CASE tt.Months WHEN '03' then tt.Money ELSE 0 END) 'MarchMoney',"
+                    + "MAX(CASE tt.Months WHEN '04' then tt.Money ELSE 0 END) 'AprilMoney',"
+                    + "MAX(CASE tt.Months WHEN '05' then tt.Money ELSE 0 END) 'MayMoney',"
+                    + "MAX(CASE tt.Months WHEN '06' then tt.Money ELSE 0 END) 'JuneMoney',"
+                    + "MAX(CASE tt.Months WHEN '07' then tt.Money ELSE 0 END) 'JulyMoney',"
+                    + "MAX(CASE tt.Months WHEN '08' then tt.Money ELSE 0 END) 'AugustMoney',"
+                    + "MAX(CASE tt.Months WHEN '09' then tt.Money ELSE 0 END) 'SeptemberMoney',"
+                    + "MAX(CASE tt.Months WHEN '10' then tt.Money ELSE 0 END) 'OctoberMoney',"
+                    + "MAX(CASE tt.Months WHEN '11' then tt.Money ELSE 0 END) 'NovemberMoney',"
+                    + "MAX(CASE tt.Months WHEN '12' then tt.Money ELSE 0 END) 'DecemberMoney'"
+                    + "from ("
+                    + "select s.Guid,s.ShopName,t1.Months,t1.Money from erpshops as s left JOIN( "
+                    + "select ShopGuid,date_format(AddDate,'%m') AS `Months`,SUM(GoodsSum) as Money "
+                    + "from erpreturnorder  "
+                    + "where date_format(AddDate,'%Y')=" + parm.time + " "
+                    + "group by ShopGuid,Months) as t1 "
+                    + "on s.Guid=t1.ShopGuid"
+                    + ") tt "
+                    + (!string.IsNullOrEmpty(parm.key) ? " where tt.Guid='" + parm.key + "'" : "")
+                    + "group by tt.ShopName";
+                res.data = Db.Ado.SqlQuery<ShopBackReturnReport>(strSql);
             }
             catch (Exception ex)
             {

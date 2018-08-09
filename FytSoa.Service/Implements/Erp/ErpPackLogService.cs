@@ -39,7 +39,7 @@ namespace FytSoa.Service.Implements
                         res.statusCode = (int)ApiEnum.Error;
                         res.message = "插入数据失败~";
                     }
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -99,26 +99,26 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<PackLogDto>>();
             try
             {
-                using (Db)
-                {
-                    var query = Db.Queryable<ErpPackLog>()
-                        .Where(m=>!m.IsDel)
-                        .WhereIF(parm.types!=0,m=>m.Types==parm.types)
-                        .WhereIF(!string.IsNullOrEmpty(parm.key),m=>m.PackName.Contains(parm.key) || m.Number==parm.key)
-                        .OrderBy(m=>m.AddDate,OrderByType.Desc).Select(m=>new PackLogDto() {
-                            Guid=m.Guid,
-                            Number=m.Number,
-                            PackName=m.PackName,
-                            ShopGuid=m.ShopGuid,
-                            GoodsSum=m.GoodsSum,
-                            ShopName= SqlFunc.Subqueryable<ErpShops>().Where(g => g.Guid == m.ShopGuid).Select(g => g.ShopName),
-                            AddDate =m.AddDate
+                int years = !string.IsNullOrEmpty(parm.time) ? Convert.ToInt32(parm.time) : DateTime.Now.Year;
+                var query = Db.Queryable<ErpPackLog>()
+                        .Where(m => !m.IsDel)
+                        .WhereIF(parm.types != 0, m => m.Types == parm.types)
+                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.PackName.Contains(parm.key) || m.Number == parm.key)
+                        .WhereIF(!string.IsNullOrEmpty(parm.time), m => m.AddDate.Year == years)
+                        .OrderBy(m => m.AddDate, OrderByType.Desc).Select(m => new PackLogDto()
+                        {
+                            Guid = m.Guid,
+                            Number = m.Number,
+                            PackName = m.PackName,
+                            ShopGuid = m.ShopGuid,
+                            GoodsSum = m.GoodsSum,
+                            ShopName = SqlFunc.Subqueryable<ErpShops>().Where(g => g.Guid == m.ShopGuid).Select(g => g.ShopName),
+                            AddDate = m.AddDate
                         })
-                        .ToPageAsync(parm.page, parm.limit);
-                    res.success = true;
-                    res.message = "获取成功！";
-                    res.data = await query;
-                }
+                .ToPageAsync(parm.page, parm.limit);
+                res.success = true;
+                res.message = "获取成功！";
+                res.data = await query;
             }
             catch (Exception ex)
             {
