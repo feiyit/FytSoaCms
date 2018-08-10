@@ -167,6 +167,7 @@ namespace FytSoa.Service.Implements
                         .WhereIF(!string.IsNullOrEmpty(searchParm.brank), (ebg, eg, es, est) => eg.BrankGuid == searchParm.brank)
                         .WhereIF(!string.IsNullOrEmpty(parm.key), (ebg, eg, es, est) => ebg.Number == parm.key)
                         .WhereIF(!string.IsNullOrEmpty(parm.time), (ebg, eg, es, est) => ebg.AddDate >= Convert.ToDateTime(beginTime) && ebg.AddDate <= Convert.ToDateTime(endTime))
+                        .OrderBy((ebg, eg, es, est) =>ebg.AddDate,OrderByType.Desc)
                         .Select((ebg, eg, es, est) => new BackGoodsDto() {
                             Code=eg.Code,
                             OrderNumber=ebg.OrderNumber,

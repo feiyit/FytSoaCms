@@ -22,7 +22,7 @@
     </div>
     <div class="layui-row">
         <div class="layui-col-xs12 layui-col-sm12 layui-col-md6">
-            <div class="list-wall">
+            <div class="list-wall" style="padding-top:0px; padding-right:6px;">
                 <div class="layui-form list-search">
                     <button type="button" class="layui-btn layui-btn-sm" data-type="toolActAdd"><i class="layui-icon"></i> 添加活动</button>
                     <button type="button" class="layui-btn layui-btn-sm" data-type="toolActDel"><i class="layui-icon"></i> 删除活动</button>
@@ -31,10 +31,10 @@
             </div>
         </div>
         <div class="layui-col-xs12 layui-col-sm12 layui-col-md6">
-            <div class="list-wall">
+            <div class="list-wall" style="padding-top:0px;padding-left:6px;">
                 <div class="layui-form list-search">
-                    <button type="button" class="layui-btn layui-btn-sm" data-type="toolUserAdd"><i class="layui-icon"></i> 添加会员</button>
-                    <button type="button" class="layui-btn layui-btn-sm" data-type="toolUserDel"><i class="layui-icon"></i> 删除会员</button>
+                    <button type="button" class="layui-btn layui-btn-sm" data-type="toolUserAdd"><i class="layui-icon"></i> 添加员工</button>
+                    <button type="button" class="layui-btn layui-btn-sm" data-type="toolUserDel"><i class="layui-icon"></i> 删除员工</button>
                 </div>
                 <table class="layui-hide" id="table-user" lay-filter="usertool"></table>
             </div>
@@ -50,6 +50,7 @@
                     $ = layui.jquery,
                     os = layui.common,
                     form = layui.form;
+                var tabH = $(window).height()-605;
                 table.render({
                     elem: '#tablist',
                     url: '/api/shops/list',
@@ -87,27 +88,29 @@
                     ],
                     page: true,
                     limit: 10,
+                    height: tabH,
                     id: 'act-tables'
                 });
 
                 //会员
                 table.render({
                     elem: '#table-user',
-                    url: '/api/shops/userlist',
+                    url: '/api/shops/stafflist',
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'userName', title: '姓名', sort: true, fixed: 'left' },
+                            { field: 'trueName', title: '姓名', sort: true, fixed: 'left' },
                             { field: 'mobile', title: '手机号码' },
-                            { field: 'points', title: '积分数' },
-                            { field: 'sex', title: '性别', sort: true },
-                            { field: 'regDate', title: '注册时间' },
-                            { title: '操作', templet: '#usertool' }
+                            { field: 'sex', title: '性别' },
+                            { field: 'addDate', title: '注册时间' },
+                            { field: 'lastLoginDate', title: '最后登录时间' }
                         ]
                     ],
                     page: true,
                     limit: 10,
-                    id: 'user-tables'
+                    height: tabH,
+                    id: 'user-tables',
+                    where: {guid:'all'}
                 });
 
                 var shopGuid = '', active = {
@@ -140,7 +143,8 @@
                                     curr: 1
                                 },
                                 where: {
-                                    guid: shopGuid
+                                    guid: shopGuid,
+                                    types: 1
                                 }
                             });
                     },
@@ -196,7 +200,7 @@
                         if (shopGuid === '') {
                             os.warning('请选择店铺~'); return;
                         }
-                        os.Open('添加会员', '/fytadmin/shop/usermodify?shop=' + shopGuid, '600px', '450px', function () {
+                        os.Open('添加员工', '/fytadmin/shop/usermodify?shop=' + shopGuid, '600px', '450px', function () {
                             active.reloadActAndUser();
                         });
                     },
@@ -282,18 +286,18 @@
                         active.reloadActAndUser();
                     }
                     if (obj.event ==='staff') {
-                        var winH = $(window).height();
+                        var winH = $(window).height(),winW=$(window).width()-500;
                         layuiIndex = layer.open({
-                            title: '员工管理'
+                            title: '会员管理'
                             , type: 2
-                            , area: ['700px', winH-60+'px']
+                            , area: [winW+'px', winH-60+'px']
                             , shade: [0.1, '#333']
                             , resize: false
                             , anim: -1
                             , offset: 'rb'
                             , shadeClose: true
                             , skin: 'layer-anim-07'
-                            , content: "/fytadmin/shop/staffindex?shop=" + data.guid
+                            , content: "/fytadmin/member/index/?shop=" + data.guid
                             , end: function () {
                                 
                             }
@@ -326,7 +330,7 @@
     </script>
     <script type="text/html" id="tool">
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
-        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="staff"><i class="layui-icon"></i> 员工管理</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="staff"><i class="layui-icon"></i> 会员管理</a>
     </script>
     <script type="text/html" id="acttool">
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>

@@ -185,3 +185,10 @@ E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\FytSoa.
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Finance\Accounting.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Finance\Report.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Report\ShopStock.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Finance\Accounting.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Finance\Report.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Report\PlatformInStock.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Report\platformOutStock.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Report\ShopBack.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Report\ShopReturn.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Report\ShopStock.g.cshtml.cs

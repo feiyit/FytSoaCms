@@ -138,6 +138,7 @@
                     os = layui.common,
                     form = layui.form;
                 form.render('select');
+                $("ul.fyt-utree").css({ 'height': $(window).height() - 182 });
                 table.render({
                     elem: '#tablist',
                     url: '/api/sale/goods',

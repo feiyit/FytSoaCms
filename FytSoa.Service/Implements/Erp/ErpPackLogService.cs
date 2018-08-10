@@ -103,6 +103,7 @@ namespace FytSoa.Service.Implements
                 var query = Db.Queryable<ErpPackLog>()
                         .Where(m => !m.IsDel)
                         .WhereIF(parm.types != 0, m => m.Types == parm.types)
+                        .WhereIF(!string.IsNullOrEmpty(parm.guid),m=>m.ShopGuid==parm.guid)
                         .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.PackName.Contains(parm.key) || m.Number == parm.key)
                         .WhereIF(!string.IsNullOrEmpty(parm.time), m => m.AddDate.Year == years)
                         .OrderBy(m => m.AddDate, OrderByType.Desc).Select(m => new PackLogDto()

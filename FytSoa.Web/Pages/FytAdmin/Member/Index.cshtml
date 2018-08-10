@@ -2,7 +2,7 @@
 @model FytSoa.Web.Pages.FytAdmin.Member.IndexModel
 @{
     ViewData["Title"] = "会员列表";
-    Layout = AdminLayout.Pjax(HttpContext);
+    Layout = Model.shopGuid=="all" ? AdminLayout.Pjax(HttpContext) : "~/Pages/FytAdmin/_Layout.cshtml";
 }
 <div id="container">
     <div class="list-wall">
@@ -11,8 +11,14 @@
                 <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
             </div>
             <div class="layui-inline">
-                <select id="branks" lay-search="">
-                    <option value="">--可根据品牌搜索--</option>
+                <select id="shops" lay-search="">
+                    <option value="">--可根据店铺搜索--</option>
+                    @{
+                        foreach (var item in Model.shopList)
+                        {
+                            <option value="@item.Guid">@item.ShopName</option>
+                        }
+                    }
                 </select>
             </div>
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
@@ -36,7 +42,7 @@
                 form.render('select');
                 table.render({
                     elem: '#tablist',
-                    url: '/api/shops/userlist?guid=all',
+                    url: '/api/shops/userlist',
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
@@ -50,10 +56,13 @@
                         ]
                     ],
                     page: true,
-                    id: 'tables'
+                    id: 'tables',
+                    where: {
+                        guid:"@Model.shopGuid"
+                    }
                 });
 
-                var guid = '', active = {
+                var shopGuid = '@Model.shopGuid', active = {
                     reload: function () {
                         table.reload('tables',
                             {
@@ -62,7 +71,7 @@
                                 },
                                 where: {
                                     key: $("#key").val(),
-                                    guid: $("#branks").val()
+                                    guid: shopGuid
                                 }
                             });
                     },
@@ -70,8 +79,12 @@
                         active.reload();
                     },
                     toolAdd: function () {
-                        os.Open('添加会员', '/fytadmin/goods/barcodemodify', '750px', '400px', function () {
-                            active.reload();
+                        console.log(shopGuid);
+                        if (shopGuid == 'all' || !shopGuid) {
+                            os.warning('请选择商家~'); return;
+                        }
+                        shopGuid = $("#shops").val();
+                        os.Open('添加会员', '/fytadmin/shop/usermodify?shop=' + shopGuid, '600px', '450px', function () {                            active.reload();
                         });
                     },
                     toolDel: function () {
@@ -90,7 +103,7 @@
                             var loadindex = layer.load(1, {
                                 shade: [0.1, '#000']
                             });
-                            os.ajax('api/goods/delbarcode/', { parm: str }, function (res) {
+                            os.ajax('api/shops/deleteuser/', { parm: str }, function (res) {
                                 layer.close(loadindex);
                                 if (res.statusCode === 200) {
                                     active.reload();
@@ -103,15 +116,20 @@
 
                     }
                 };
+                if (shopGuid != 'all') {
+                    $("#shops").val(shopGuid);
+                    form.render('select');
+                }
                 $('.list-search .layui-btn').on('click', function () {
                     var type = $(this).data('type');
+                    shopGuid = $("#shops").val();
                     active[type] ? active[type].call(this) : '';
                 });
                 //监听工具条
                 table.on('tool(tool)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'edit') {
-                        os.Open('编辑条形码', '/fytadmin/goods/barcodemodify/?guid=' + data.guid, '750px', '400px', function () {
+                        os.Open('编辑会员', '/fytadmin/shop/usermodify/?guid=' + data.guid, '600px', '450px', function () {
                             active.reload();
                         })
                     }
