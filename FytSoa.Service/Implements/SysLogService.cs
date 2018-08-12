@@ -60,7 +60,7 @@ namespace FytSoa.Service.Implements
                     var query = Db.Queryable<SysLog>()
                         .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.LoginName.Contains(parm.key))
                         .WhereIF(!string.IsNullOrEmpty(parm.time), m => m.AddTime>=Convert.ToDateTime(beginTime) && m.AddTime<=Convert.ToDateTime(endTime))
-                        .OrderBy(m => m.AddTime).ToPageAsync(parm.page, parm.limit);
+                        .OrderBy(m => m.AddTime,OrderByType.Desc).ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";
                     res.data = await query;

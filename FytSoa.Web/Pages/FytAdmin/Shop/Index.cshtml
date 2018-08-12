@@ -50,15 +50,15 @@
                     $ = layui.jquery,
                     os = layui.common,
                     form = layui.form;
-                var tabH = $(window).height()-605;
+                var tabH = $(window).height()-705;
                 table.render({
                     elem: '#tablist',
                     url: '/api/shops/list',
-                    height: 300,
+                    height: 400,
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'shopName', title: '店铺名称', sort: true, fixed: 'left', event: 'gotool' },
+                            { field: 'shopName', title: '加盟商名称', sort: true, fixed: 'left', event: 'gotool' },
                             { field: 'loginName', title: '登录账号', event: 'gotool' },
                             { field: 'adminName',  title: '负责人', event: 'gotool' },
                             { field: 'mobile',  title: '联系方式', sort: true, event: 'gotool' },
@@ -99,11 +99,12 @@
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'trueName', title: '姓名', sort: true, fixed: 'left' },
-                            { field: 'mobile', title: '手机号码' },
-                            { field: 'sex', title: '性别' },
+                            { field: 'trueName',width:100, title: '姓名', sort: true, fixed: 'left' },
+                            { field: 'mobile', width: 120, title: '手机号码' },
+                            { field: 'sex', width: 60, title: '性别' },
                             { field: 'addDate', title: '注册时间' },
-                            { field: 'lastLoginDate', title: '最后登录时间' }
+                            { field: 'lastLoginDate', title: '最后登录时间' },
+                            { title: '操作', width: 100, templet: '#usertool' }
                         ]
                     ],
                     page: true,
@@ -114,7 +115,7 @@
                 });
 
                 var shopGuid = '', active = {
-                    //店铺重载
+                    //加盟商重载
                     reload: function () {
                         table.reload('tables',
                             {
@@ -126,7 +127,7 @@
                                 }
                             });
                     },
-                    //点击店铺查询活动和店铺会员
+                    //点击加盟商查询活动和加盟商会员
                     reloadActAndUser: function () {
                         table.reload('act-tables',
                             {
@@ -148,7 +149,7 @@
                                 }
                             });
                     },
-                    //店铺搜索
+                    //加盟商搜索
                     toolSearch: function () {
                         active.reload();
                     },
@@ -158,10 +159,10 @@
                             active.reloadActAndUser();
                         });
                     },
-                    //添加店铺活动
+                    //添加加盟商活动
                     toolActAdd: function () {
                         if (shopGuid === '') {
-                            os.warning('请选择店铺~'); return;
+                            os.warning('请选择加盟商~'); return;
                         }
                         os.Open('添加活动', '/fytadmin/shop/activitymodify?shop=' + shopGuid, '850px', '450px', function () {
                             active.reloadActAndUser();
@@ -198,9 +199,9 @@
                     //添加会员
                     toolUserAdd: function () {
                         if (shopGuid === '') {
-                            os.warning('请选择店铺~'); return;
+                            os.warning('请选择加盟商~'); return;
                         }
-                        os.Open('添加员工', '/fytadmin/shop/usermodify?shop=' + shopGuid, '600px', '450px', function () {
+                        os.Open('添加员工', '/fytadmin/shop/staffmodify?shop=' + shopGuid, '700px', '460px', function () {
                             active.reloadActAndUser();
                         });
                     },
@@ -221,7 +222,7 @@
                             var loadindex = layer.load(1, {
                                 shade: [0.1, '#000']
                             });
-                            os.ajax('api/shops/deleteuser/', { parm: str }, function (res) {
+                            os.ajax('api/shops/deletestaff/', { parm: str }, function (res) {
                                 layer.close(loadindex);
                                 if (res.statusCode === 200) {
                                     active.reloadActAndUser();
@@ -234,7 +235,7 @@
                     },
                     //添加店铺
                     toolAdd: function () {
-                        os.Open('添加店铺', '/fytadmin/shop/shopmodify', '850px', '500px', function () {
+                        os.Open('添加加盟商', '/fytadmin/shop/shopmodify', '850px', '500px', function () {
                             active.reload();
                         });                        
                     },
@@ -277,7 +278,7 @@
                 table.on('tool(tool)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'edit') {
-                        os.Open('编辑店铺', '/fytadmin/shop/shopmodify/?guid=' + data.guid, '850px', '500px', function () {
+                        os.Open('编辑加盟商', '/fytadmin/shop/shopmodify/?guid=' + data.guid, '850px', '500px', function () {
                             active.reload();
                         })
                     }
@@ -295,12 +296,26 @@
                             , resize: false
                             , anim: -1
                             , offset: 'rb'
-                            , shadeClose: true
+                            , shadeClose:false
                             , skin: 'layer-anim-07'
                             , content: "/fytadmin/member/index/?shop=" + data.guid
-                            , end: function () {
-                                
+                            , cancel: function (index) {
+                                var $layero = $('#layui-layer' + layuiIndex);
+                                $layero.animate({
+                                    left: $layero.offset().left + $layero.width()
+                                }, 300, function () {
+                                    layer.close(index);
+                                });
+                                return false;
                             }
+                        });
+                        $("#layui-layer-shade" + layuiIndex).click(function () {
+                            var $layero = $('#layui-layer' + layuiIndex);
+                            $layero.animate({
+                                left: $layero.offset().left + $layero.width()
+                            }, 300, function () {
+                                layer.close(layuiIndex);
+                            });
                         });
                     }
                 });
@@ -321,7 +336,7 @@
                 table.on('tool(usertool)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'edit') {
-                        os.Open('编辑会员', '/fytadmin/shop/usermodify/?guid=' + data.guid + "&shop=" + shopGuid, '600px', '450px', function () {
+                        os.Open('编辑员工', '/fytadmin/shop/staffmodify/?guid=' + data.guid, '700px', '460px', function () {
                             active.reloadActAndUser();
                         })
                     }

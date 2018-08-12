@@ -63,7 +63,7 @@
                     },
                     toolAdd: function () {
                         var winH = $(window).height();
-                        layer.open({
+                        var layIndex=layer.open({
                             title: '添加供应商'
                             , type: 2
                             , area: ['850px', winH - 60 + 'px']
@@ -71,16 +71,31 @@
                             , resize: false
                             , anim: -1
                             , offset: 'rb'
-                            , shadeClose: true
+                            , shadeClose: false
                             , skin: 'layer-anim-07'
                             , content: "/fytadmin/purchase/suppliermodify"
                             , end: function () {
                                 active.reload();
                             }
+                            , cancel: function (index) {
+                                var $layero = $('#layui-layer' + index);
+                                $layero.animate({
+                                    left: $layero.offset().left + $layero.width()
+                                }, 300, function () {
+                                    layer.close(index);
+                                });
+                                return false;
+                            }
                         });
-                        /*os.Open('添加供应商', '/fytadmin/purchase/suppliermodify', '850px', '550px', function () {
-                            active.reload();
-                        });*/
+                        $("#layui-layer-shade" + layIndex).click(function () {
+                            var $layero = $('#layui-layer' + layIndex);
+                            $layero.animate({
+                                left: $layero.offset().left + $layero.width()
+                            }, 300, function () {
+                                layer.close(layIndex);
+                            });
+                        });
+                        
                     },
                     toolDel: function () {
                         var checkStatus = table.checkStatus('tables')

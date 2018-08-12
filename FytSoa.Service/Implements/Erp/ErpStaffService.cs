@@ -230,6 +230,8 @@ namespace FytSoa.Service.Implements
                 ErpStaffDb.Update(m=>new ErpStaff(){
                     TrueName=parm.TrueName,
                     Sex=parm.Sex,
+                    LoginName=parm.LoginName,
+                    Status=parm.Status,
                     Mobile=parm.Mobile,
                     LoginPwd=parm.LoginPwd
                 },m=>m.Guid==parm.Guid);

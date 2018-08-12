@@ -238,7 +238,7 @@
                     , resize: false
                     , anim: -1
                     , offset: 'rb'
-                    , shadeClose: true
+                    , shadeClose: false
                     , skin: 'layer-anim-07'
                     , content: "/fytadmin/purchase/suppliermodify"
                     , end: function () {                       
@@ -247,6 +247,23 @@
                         }         
                         $("#isSave").val('0');
                     }
+                    , cancel: function (index) {
+                        var $layero = $('#layui-layer' + layuiIndex);
+                        $layero.animate({
+                            left: $layero.offset().left + $layero.width()
+                        }, 300, function () {
+                            layer.close(index);
+                        });
+                        return false;
+                    }
+                });
+                $("#layui-layer-shade" + layuiIndex).click(function () {
+                    var $layero = $('#layui-layer' + layuiIndex);
+                    $layero.animate({
+                        left: $layero.offset().left + $layero.width()
+                    }, 300, function () {
+                        layer.close(layuiIndex);
+                    });
                 });
             } else {
                 if (data.value) { 
