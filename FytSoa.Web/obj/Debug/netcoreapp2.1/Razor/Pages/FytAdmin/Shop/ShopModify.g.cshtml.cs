@@ -62,7 +62,7 @@ using FytSoa.Web;
             WriteLiteral("<style>\r\n    .layui-form-item .layui-input-inline{width:280px;}\r\n    .layui-textarea{width:97%; min-height:60px;}\r\n</style>\r\n");
             EndContext();
             BeginContext(276, 4799, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d908785052f04b24bee5f29d44dbe454", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d6ab631effaf468d8113840ff7d7bcc2", async() => {
                 BeginContext(320, 228, true);
                 WriteLiteral("\r\n    <div class=\"layui-form-item\">\r\n        <div class=\"layui-inline\">\r\n            <label class=\"layui-form-label\">登录账号</label>\r\n            <div class=\"layui-input-inline\">\r\n                <input type=\"text\" name=\"LoginName\"");
                 EndContext();
@@ -331,7 +331,7 @@ WriteAttributeValue("", 5034, Model.shopModel.UpLoginDate, 5034, 28, false);
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(5077, 75, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "32060cc6cc54460884f0a5574cb73b48", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "3402b3df61144129b315fd4307fd6369", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

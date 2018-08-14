@@ -52,6 +52,7 @@ namespace FytSoa.Core
         public DbSet<ErpShopSku> ErpShopSkuDb => new DbSet<ErpShopSku>(Db);
         public DbSet<ErpShops> ErpShopsDb => new DbSet<ErpShops>(Db);
         public DbSet<ErpShopUser> ErpShopUserDb => new DbSet<ErpShopUser>(Db);
+        public DbSet<ErpUserGrade> ErpUserGradeDb => new DbSet<ErpUserGrade>(Db);
         public DbSet<ErpStaff> ErpStaffDb => new DbSet<ErpStaff>(Db);
         public DbSet<ErpPush> ErpPushDb => new DbSet<ErpPush>(Db);
         public DbSet<ErpTransfer> ErpTransferDb => new DbSet<ErpTransfer>(Db);

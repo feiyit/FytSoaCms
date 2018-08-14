@@ -62,6 +62,20 @@
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); 
             var r = window.location.search.substr(1).match(reg); 
             if (r != null) return unescape(r[2]); return null;
+        },
+        formatdate: function (str) {
+            if (str) {
+                var d = eval('new ' + str.substr(1, str.length - 2));
+                var ar_date = [
+                    d.getFullYear(), d.getMonth() + 1, d.getDate()
+                ];
+                for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
+                return ar_date.slice(0, 3).join('-') + ' ' + ar_date.slice(3).join(':');
+
+                function dFormat(i) { return i < 10 ? "0" + i.toString() : i; }
+            } else {
+                return "无信息";
+            }
         }
     };
     exports('common', tool);

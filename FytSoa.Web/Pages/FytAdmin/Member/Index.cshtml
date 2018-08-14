@@ -51,7 +51,6 @@
                             { field: 'points', title: '积分数' },
                             { field: 'sex', title: '性别', sort: true },
                             { field: 'regDate', title: '注册时间' },
-                            { title: '操作', templet: '#usertool' },
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
@@ -84,7 +83,8 @@
                             os.warning('请选择商家~'); return;
                         }
                         shopGuid = $("#shops").val();
-                        os.Open('添加会员', '/fytadmin/shop/usermodify?shop=' + shopGuid, '600px', '450px', function () {                            active.reload();
+                        os.Open('添加会员', '/fytadmin/shop/usermodify?shop=' + shopGuid, '600px', '450px', function () {
+                            active.reload();
                         });
                     },
                     toolDel: function () {

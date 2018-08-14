@@ -100,8 +100,10 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<ErpShopUser>>();
             try
             {
+                var dt = new DateTime().Date;
                 var query = Db.Queryable<ErpShopUser>()
                         .WhereIF(parm.guid!="all",m => m.ShopGuid == parm.guid)
+                        .WhereIF(parm.types==1, m => m.RegDate.Year == SqlFunc.ToInt32(dt.Year) && m.RegDate.Month==SqlFunc.ToInt32(dt.Month) && m.RegDate.Day==SqlFunc.ToInt32(dt.Day))
                         .WhereIF(!string.IsNullOrEmpty(parm.key),
                         m => m.Mobile == parm.key
                         || m.UserName == parm.key)

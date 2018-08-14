@@ -20,14 +20,16 @@ namespace FytSoa.Api.Controllers
         private readonly IErpShopUserService _shopUserService;
         private readonly IErpShopActivityService _activityService;
         private readonly IErpPushService _pushService;
+        private readonly IErpUserGradeService _gradeService;
         public ShopsController(IErpShopsService shopsService, IErpStaffService staffService, IErpShopUserService shopUserService,
-            IErpShopActivityService activityService, IErpPushService pushService)
+            IErpShopActivityService activityService, IErpPushService pushService, IErpUserGradeService gradeService)
         {
             _shopsService = shopsService;
             _staffService = staffService;
             _shopUserService = shopUserService;
             _activityService = activityService;
             _pushService = pushService;
+            _gradeService = gradeService;
         }
 
         #region 店铺API
@@ -247,6 +249,50 @@ namespace FytSoa.Api.Controllers
         public async Task<ApiResult<string>> DeletePush(string parm)
         {
             return await _pushService.DeleteAsync(parm);
+        }
+        #endregion
+
+        #region 店铺会员等级API
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("gradelist")]
+        public async Task<JsonResult> GetUserGradePages(PageParm parm)
+        {
+            var res = await _gradeService.GetPagesAsync(parm);
+            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+        }
+
+        /// <summary>
+        /// 添加一条菜单功能
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("addgrade")]
+        public async Task<ApiResult<string>> AddGrade(ErpUserGrade parm)
+        {
+            return await _gradeService.AddAsync(parm);
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("deletegrade")]
+        public async Task<ApiResult<string>> DeleteGrade(string parm)
+        {
+            return await _gradeService.DeleteAsync(parm);
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("editgrade")]
+        public async Task<ApiResult<string>> EditGrade(ErpUserGrade parm)
+        {
+            return await _gradeService.ModifyAsync(parm);
         }
         #endregion
     }

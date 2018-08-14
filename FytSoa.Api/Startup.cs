@@ -24,6 +24,8 @@ namespace FytSoa.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IUserReportServer, UserReportServer>();
+            services.AddTransient<IErpUserGradeService, ErpUserGradeService>();
             services.AddTransient<IErpAppSettingService, ErpAppSettingService>();
             services.AddTransient<IErpSaleOrderService, ErpSaleOrderService>();
             services.AddTransient<IErpSaleOrderGoodsService, ErpSaleOrderGoodsService>();
