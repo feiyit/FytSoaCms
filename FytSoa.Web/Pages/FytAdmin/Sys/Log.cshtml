@@ -36,6 +36,7 @@
                         , range: true
                     });
                     table.render({
+                        toolbar: true,
                         elem: '#tablist',
                         url: '/api/log/getpages',
                         cols: [
@@ -48,7 +49,7 @@
                                 { field: 'addTime', title: '登录时间' }
                             ]
                         ],
-                        page: true,
+                        page: { limits:[10,20,50,100,500,1000,5000,10000]},
                         id: 'tables'
                     });
                     
