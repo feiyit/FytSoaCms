@@ -16,15 +16,17 @@
             </div>
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
         </div>
-        <div class="layui-form list-search" style="margin-top:10px;">
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
-            <button style="margin-left:40px;" type="button" class="layui-btn layui-btn-sm@(Model.Type==1 ? "" :" layui-btn-disabled")" @(Model.Type==1 ? "" :"disabled") data-type="toolStatus"><i class="layui-icon layui-icon-cart"></i> 入库</button>
-            <button type="button" class="layui-btn layui-btn-sm@(Model.Type==2 ? "" :" layui-btn-disabled")" @(Model.Type==2 ? "" :"disabled") data-type="toolStatus"><i class="layui-icon layui-icon-rmb"></i> 付款</button>
-            <button type="button" class="layui-btn layui-btn-sm@(Model.Type==3 ? "" :" layui-btn-disabled")" @(Model.Type==3 ? "" :"disabled") data-type="toolStatus"><i class="layui-icon layui-icon-file-b"></i> 到票</button>
-        </div>
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container list-search">
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolAdd"><i class="layui-icon"></i> 新增</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolDel"><i class="layui-icon"></i> 删除</button>
+            <button style="margin-left:40px;" type="button" class="layui-btn layui-btn-sm@(Model.Type==1 ? "" :" layui-btn-disabled")" @(Model.Type == 1 ? "" : "disabled") lay-event="toolStatus"><i class="layui-icon layui-icon-cart"></i> 入库</button>
+            <button type="button" class="layui-btn layui-btn-sm@(Model.Type==2 ? "" :" layui-btn-disabled")" @(Model.Type == 2 ? "" : "disabled") lay-event="toolStatus"><i class="layui-icon layui-icon-rmb"></i> 付款</button>
+            <button type="button" class="layui-btn layui-btn-sm@(Model.Type==3 ? "" :" layui-btn-disabled")" @(Model.Type == 3 ? "" : "disabled") lay-event="toolStatus"><i class="layui-icon layui-icon-file-b"></i> 到票</button>
+        </div>
+    </script>
     <script>
         layui.config({
             base: '/themes/js/modules/'
@@ -43,6 +45,7 @@
                     , range: true
                 });
                 table.render({
+                    toolbar: '#toolbar',
                     elem: '#tablist',
                     url: '/api/purchase/purchaselist?types=@Model.Type',
                     cols: [
@@ -58,7 +61,7 @@
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
-                    page: true,
+                    page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     id: 'tables'
                 });
 
@@ -75,7 +78,7 @@
                                 }
                             });
                     },
-                    toolStatus: function () { 
+                    toolStatus: function () {
                         var checkStatus = table.checkStatus('tables')
                             , data = checkStatus.data;
                         if (data.length === 0) {
@@ -136,16 +139,15 @@
 
                     }
                 };
-                $('.list-search .layui-btn').on('click', function () {
-                    var type = $(this).data('type');
-                    active[type] ? active[type].call(this) : '';
+                table.on('toolbar(tool)', function (obj) {
+                    active[obj.event] ? active[obj.event].call(this) : '';
                 });
                 //监听工具条
                 table.on('tool(tool)', function (obj) {
                     var data = obj.data;
                     os.Open('修改采购单', '/fytadmin/purchase/modify?guid='+data.guid, '1200px', '700px', function () {
                         active.reload();
-                    });                    
+                    });
                 });
             });
     </script>

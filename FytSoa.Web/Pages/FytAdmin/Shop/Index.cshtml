@@ -6,12 +6,6 @@
 }
 <div id="container">
     <div class="list-wall">
-        <div class="layui-form list-search">
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolExport"><i class="layui-icon layui-icon-component"></i> 导出Excel</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolActivity"><i class="layui-icon layui-icon-app"></i> 添加全局活动</button>
-        </div>
         <div class="layui-form list-search" style="margin-top:10px;">
             <div class="layui-inline">
                 <input class="layui-input" id="shopkey" autocomplete="off" placeholder="请输入关键字查询">
@@ -23,23 +17,34 @@
     <div class="layui-row">
         <div class="layui-col-xs12 layui-col-sm12 layui-col-md6">
             <div class="list-wall" style="padding-top:0px; padding-right:6px;">
-                <div class="layui-form list-search">
-                    <button type="button" class="layui-btn layui-btn-sm" data-type="toolActAdd"><i class="layui-icon"></i> 添加活动</button>
-                    <button type="button" class="layui-btn layui-btn-sm" data-type="toolActDel"><i class="layui-icon"></i> 删除活动</button>
-                </div>
                 <table class="layui-hide" id="table-act" lay-filter="acttool"></table>
             </div>
         </div>
         <div class="layui-col-xs12 layui-col-sm12 layui-col-md6">
             <div class="list-wall" style="padding-top:0px;padding-left:6px;">
-                <div class="layui-form list-search">
-                    <button type="button" class="layui-btn layui-btn-sm" data-type="toolUserAdd"><i class="layui-icon"></i> 添加员工</button>
-                    <button type="button" class="layui-btn layui-btn-sm" data-type="toolUserDel"><i class="layui-icon"></i> 删除员工</button>
-                </div>
                 <table class="layui-hide" id="table-user" lay-filter="usertool"></table>
             </div>
         </div>
     </div>
+    <script type="text/html" id="toolbar-shop">
+        <div class="layui-btn-container list-search">
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolAdd"><i class="layui-icon"></i> 新增</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolDel"><i class="layui-icon"></i> 删除</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolActivity"><i class="layui-icon layui-icon-app"></i> 添加全局活动</button>
+        </div>
+    </script>
+    <script type="text/html" id="toolbar-act">
+        <div class="layui-btn-container list-search">
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolActAdd"><i class="layui-icon"></i> 添加活动</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolActDel"><i class="layui-icon"></i> 删除活动</button>
+        </div>
+    </script>
+    <script type="text/html" id="toolbar-user">
+        <div class="layui-btn-container list-search">
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolUserAdd"><i class="layui-icon"></i> 添加员工</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolUserDel"><i class="layui-icon"></i> 删除员工</button>
+        </div>
+    </script>
     <script>
         layui.config({
             base: '/themes/js/modules/'
@@ -50,36 +55,38 @@
                     $ = layui.jquery,
                     os = layui.common,
                     form = layui.form;
-                var tabH = $(window).height()-705;
+                var tabH = $(window).height() - 645;
                 table.render({
+                    toolbar: '#toolbar-shop',
                     elem: '#tablist',
                     url: '/api/shops/list',
-                    height: 400,
+                    height: 460,
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
                             { field: 'shopName', title: '加盟商名称', sort: true, fixed: 'left', event: 'gotool' },
                             { field: 'loginName', title: '登录账号', event: 'gotool' },
-                            { field: 'adminName',  title: '负责人', event: 'gotool' },
-                            { field: 'mobile',  title: '联系方式', sort: true, event: 'gotool' },
-                            { field: 'shopCity',  title: '所在地区', sort: true, event: 'gotool' },
-                            { field: 'regDate',  title: '添加时间', event: 'gotool' },
+                            { field: 'adminName', title: '负责人', event: 'gotool' },
+                            { field: 'mobile', title: '联系方式', sort: true, event: 'gotool' },
+                            { field: 'shopCity', title: '所在地区', sort: true, event: 'gotool' },
+                            { field: 'regDate', title: '添加时间', event: 'gotool' },
                             { width: 200, title: '操作', templet: '#tool' }
                         ]
                     ],
-                    page: true,
+                    page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     id: 'tables'
                 });
 
                 //活动
                 table.render({
+                    toolbar: '#toolbar-act',
                     elem: '#table-act',
                     url: '/api/shops/actlist',
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'methodName',width:100, title: '活动方式' },
-                            { field: 'countNum',width:80, title: '折扣数' },
+                            { field: 'methodName', width: 100, title: '活动方式' },
+                            { field: 'countNum', width: 80, title: '折扣数' },
                             { field: 'beginDate', title: '开始时间', sort: true },
                             { field: 'endDate', title: '结束时间', sort: true },
                             { field: 'status', width: 100, title: '状态' },
@@ -94,12 +101,13 @@
 
                 //会员
                 table.render({
+                    toolbar: '#toolbar-user',
                     elem: '#table-user',
                     url: '/api/shops/stafflist',
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'trueName',width:100, title: '姓名', sort: true, fixed: 'left' },
+                            { field: 'trueName', width: 100, title: '姓名', sort: true, fixed: 'left' },
                             { field: 'mobile', width: 120, title: '手机号码' },
                             { field: 'sex', width: 60, title: '性别' },
                             { field: 'addDate', title: '注册时间' },
@@ -111,7 +119,7 @@
                     limit: 10,
                     height: tabH,
                     id: 'user-tables',
-                    where: {guid:'all'}
+                    where: { guid: 'all' }
                 });
 
                 var shopGuid = '', active = {
@@ -154,7 +162,7 @@
                         active.reload();
                     },
                     //添加全局活动
-                    toolActivity: function () { 
+                    toolActivity: function () {
                         os.Open('添加活动', '/fytadmin/shop/activitymodify?shop=all', '850px', '450px', function () {
                             active.reloadActAndUser();
                         });
@@ -237,7 +245,7 @@
                     toolAdd: function () {
                         os.Open('添加加盟商', '/fytadmin/shop/shopmodify', '850px', '500px', function () {
                             active.reload();
-                        });                        
+                        });
                     },
                     //删除店铺
                     toolDel: function () {
@@ -269,9 +277,14 @@
 
                     }
                 };
-                $('.list-search .layui-btn').on('click', function () {
-                    var type = $(this).data('type');
-                    active[type] ? active[type].call(this) : '';
+                table.on('toolbar(tool)', function (obj) {
+                    active[obj.event] ? active[obj.event].call(this) : '';
+                });
+                table.on('toolbar(acttool)', function (obj) {
+                    active[obj.event] ? active[obj.event].call(this) : '';
+                });
+                table.on('toolbar(usertool)', function (obj) {
+                    active[obj.event] ? active[obj.event].call(this) : '';
                 });
 
                 //监听工具条
@@ -286,17 +299,17 @@
                         shopGuid = data.guid;
                         active.reloadActAndUser();
                     }
-                    if (obj.event ==='staff') {
-                        var winH = $(window).height(),winW=$(window).width()-500;
+                    if (obj.event === 'staff') {
+                        var winH = $(window).height(), winW = $(window).width() - 500;
                         layuiIndex = layer.open({
                             title: '会员管理'
                             , type: 2
-                            , area: [winW+'px', winH-60+'px']
+                            , area: [winW + 'px', winH - 60 + 'px']
                             , shade: [0.1, '#333']
                             , resize: false
                             , anim: -1
                             , offset: 'rb'
-                            , shadeClose:false
+                            , shadeClose: false
                             , skin: 'layer-anim-07'
                             , content: "/fytadmin/member/index/?shop=" + data.guid
                             , cancel: function (index) {
@@ -322,7 +335,7 @@
                 //监听工具条
                 table.on('tool(acttool)', function (obj) {
                     var data = obj.data;
-                    if (data.types !=1) {
+                    if (data.types != 1) {
                         os.error('全局活动不能修改');
                         return;
                     }
