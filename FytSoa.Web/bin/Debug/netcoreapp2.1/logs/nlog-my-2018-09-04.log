@@ -1,0 +1,79 @@
+2018-09-04 12:25:48.3432|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. System.NullReferenceException: Object reference not set to an instance of an object.
+   at FytSoa.Web.Pages.FytAdmin.Stock.Pages_FytAdmin_Stock_Export.ExecuteAsync() in D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Stock\Export.cshtml:line 43
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeResultAsync(IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResultFilterAsync[TFilter,TFilterAsync]()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResultExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeResultFilters()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: |action:  |IP: |QueryString: 
+2018-09-04 12:25:51.3766||WARN|Microsoft.AspNetCore.Server.Kestrel|Connection processing ended abnormally. Microsoft.AspNetCore.Connections.ConnectionAbortedException: The connection was aborted
+   at System.IO.Pipelines.PipeCompletion.ThrowLatchedException()
+   at System.IO.Pipelines.Pipe.GetReadResult(ReadResult& result)
+   at System.IO.Pipelines.Pipe.GetReadAsyncResult()
+   at System.IO.Pipelines.Pipe.DefaultPipeReader.GetResult(Int16 token)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequestsAsync[TContext](IHttpApplication`1 application)|url: |action:  |IP: |QueryString: 
+2018-09-04 12:26:23.1540||WARN|Microsoft.AspNetCore.Server.Kestrel|Connection processing ended abnormally. Microsoft.AspNetCore.Connections.ConnectionAbortedException: The connection was aborted
+   at System.IO.Pipelines.PipeCompletion.ThrowLatchedException()
+   at System.IO.Pipelines.Pipe.GetReadResult(ReadResult& result)
+   at System.IO.Pipelines.Pipe.GetReadAsyncResult()
+   at System.IO.Pipelines.Pipe.DefaultPipeReader.GetResult(Int16 token)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequestsAsync[TContext](IHttpApplication`1 application)|url: |action:  |IP: |QueryString: 
+2018-09-04 13:25:18.7417|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Mvc.Razor.Compilation.CompilationFailedException: One or more compilation failures occurred:
+o5bimdjp.3s4(44,61): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+o5bimdjp.3s4(256,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+o5bimdjp.3s4(258,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+o5bimdjp.3s4(260,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+o5bimdjp.3s4(262,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+o5bimdjp.3s4(264,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+o5bimdjp.3s4(73,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+o5bimdjp.3s4(75,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+o5bimdjp.3s4(109,129): error CS0433: The type 'OptionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.TagHelpers, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+o5bimdjp.3s4(118,13): error CS1656: Cannot assign to 'Value' because it is a 'method group'
+o5bimdjp.3s4(119,72): error CS1503: Argument 2: cannot convert from 'method group' to 'object'
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(RazorCodeDocument codeDocument, String generatedCode)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.OnCacheMiss(String normalizedPath)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvokerProvider.OnProvidersExecuting(ActionInvokerProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionInvokerFactory.CreateInvoker(ActionContext actionContext)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcAttributeRouteHandler.<>c__DisplayClass12_0.<RouteAsync>b__0(HttpContext c)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: |action:  |IP: |QueryString: 
+2018-09-04 13:38:00.4447|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Mvc.Razor.Compilation.CompilationFailedException: One or more compilation failures occurred:
+jegyj41s.5zf(150,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+jegyj41s.5zf(152,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+jegyj41s.5zf(154,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+jegyj41s.5zf(156,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+jegyj41s.5zf(158,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(RazorCodeDocument codeDocument, String generatedCode)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.OnCacheMiss(String normalizedPath)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.DefaultPageLoader.Load(PageActionDescriptor actionDescriptor)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvokerProvider.OnProvidersExecuting(ActionInvokerProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionInvokerFactory.CreateInvoker(ActionContext actionContext)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcAttributeRouteHandler.<>c__DisplayClass12_0.<RouteAsync>b__0(HttpContext c)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: |action:  |IP: |QueryString: 

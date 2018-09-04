@@ -34,13 +34,13 @@
         </div>
     </script>
     <script type="text/html" id="toolbar-act">
-        <div class="layui-btn-container list-search">
+        <div class="layui-btn-container">
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolActAdd"><i class="layui-icon"></i> 添加活动</button>
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolActDel"><i class="layui-icon"></i> 删除活动</button>
         </div>
     </script>
     <script type="text/html" id="toolbar-user">
-        <div class="layui-btn-container list-search">
+        <div class="layui-btn-container">
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolUserAdd"><i class="layui-icon"></i> 添加员工</button>
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolUserDel"><i class="layui-icon"></i> 删除员工</button>
         </div>
@@ -286,7 +286,10 @@
                 table.on('toolbar(usertool)', function (obj) {
                     active[obj.event] ? active[obj.event].call(this) : '';
                 });
-
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
                 //监听工具条
                 table.on('tool(tool)', function (obj) {
                     var data = obj.data;

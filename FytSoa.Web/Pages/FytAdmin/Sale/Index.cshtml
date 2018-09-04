@@ -8,21 +8,37 @@
     <style>
         .layui-col-220 {
             width: 388px;
-            top: 80px;left:12px;
+            top: 80px;
+            left: 12px;
         }
-        .layui-col-220 .layui-nav-title{height:42px; line-height:42px;}
+
+            .layui-col-220 .layui-nav-title {
+                height: 42px;
+                line-height: 42px;
+            }
+
         .right-col-body {
             left: 400px;
             top: 60px;
         }
+
         .layui-card {
             background-color: #eaedf1;
             margin-top: 10px;
             box-shadow: 0 1px 2px 0 rgba(0,0,0,.3);
         }
-        .layui-card-header{    border-bottom: 1px solid #D9DEE4;}
-        .fyt-table{width:100%;}
-        .fyt-table th{width:15%}
+
+        .layui-card-header {
+            border-bottom: 1px solid #D9DEE4;
+        }
+
+        .fyt-table {
+            width: 100%;
+        }
+
+            .fyt-table th {
+                width: 15%
+            }
     </style>
     <div class="list-wall">
         <div class="layui-form list-search">
@@ -98,6 +114,11 @@
             <table class="layui-hide" id="tablist" lay-filter="tool"></table>
         </div>
     </div>
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <h4>订单商品详情</h4>
+        </div>
+    </script>
     <script type="text/javascript" src="~/themes/js/modules/vue.js"></script>
     <script>
         var funTool, vm = new Vue({
@@ -120,26 +141,33 @@
             }
         });
         var vues = new Vue({
-            el:"#orders",
+            el: "#orders",
             data: {
                 curModel: {
                     money: 0,
-                    realMoney:0
+                    realMoney: 0
                 },
             }
         });
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['table', 'layer', 'jquery', 'form', 'common'],
+        }).use(['table', 'layer', 'jquery', 'form', 'common', 'laydate'],
             function () {
                 var table = layui.table,
                     layer = layui.layer,
                     $ = layui.jquery,
                     os = layui.common,
+                    laydate = layui.laydate,
                     form = layui.form;
                 form.render('select');
                 $("ul.fyt-utree").css({ 'height': $(window).height() - 182 });
+                laydate.render({
+                    elem: '#times'
+                    , theme: '#393D49'
+                    , range: true
+                });
                 table.render({
+                    toolbar: '#toolbar',
                     elem: '#tablist',
                     url: '/api/sale/goods',
                     cols: [
@@ -152,11 +180,11 @@
                             { field: 'counts', title: '销售数' }
                         ]
                     ],
-                    page: true,
-                    limit: 20,
+                    page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
+                    limit: 10,
                     id: 'tables'
                 });
-                
+
 
                 var orderguid = '', shopGuid = '', active = {
                     reload: function () {
@@ -184,7 +212,7 @@
 
                 funTool = {
                     getGoodsSku: function (obj) {
-                        orderguid = obj.number; 
+                        orderguid = obj.number;
                         active.reload();
                     },
                     orderPage: function () {

@@ -19,10 +19,12 @@
 .list-wall{padding:12px 12px 0px 12px;}
 .list-search{ background-color:#f2f2f2; padding:12px 15px;}
 .layui-btn-container.list-search{  padding:0px;}
+.layui-btn-container h4{font-size:16px;}
 .list-search .layui-form-label{width:auto; padding: 5px 15px;}
 .list-search .layui-input, .list-search .layui-input.layui-input-sm {height: 34px;line-height: 34px;padding: 0 10px; }
 .list-search .layui-form-select dl{top:33px;}
 .list-search .layui-btn-sm{font-size:14px;padding: 0 15px;height: 32px;line-height: 31px;}
+.layui-btn-container .layui-btn-sm{font-size:14px;padding: 0 15px;height: 32px;line-height: 31px;}
 .layui-nav-tree .layui-nav-item>a,.layui-nav-tree .layui-nav-child a{font-size:13.3333px;}
 .layui-btn,.layui-input,.layui-table td, .layui-table th,.layui-nav{border-radius:4px;font: 400 13.3333px Arial;}
 .layui-header .layui-nav-bar{top:0px !important; height:2px;}

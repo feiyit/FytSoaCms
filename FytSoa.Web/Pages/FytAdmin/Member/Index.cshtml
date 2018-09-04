@@ -23,12 +23,14 @@
             </div>
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
         </div>
-        <div class="layui-form list-search" style="margin-top:10px;">
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
-        </div>
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolAdd"><i class="layui-icon"></i> 新增</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolDel"><i class="layui-icon"></i> 删除</button>
+        </div>
+    </script>
     <script>
         layui.config({
             base: '/themes/js/modules/'
@@ -41,6 +43,7 @@
                     form = layui.form;
                 form.render('select');
                 table.render({
+                    toolbar: '#toolbar',
                     elem: '#tablist',
                     url: '/api/shops/userlist',
                     cols: [
@@ -54,7 +57,7 @@
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
-                    page: true,
+                    page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     id: 'tables',
                     where: {
                         guid:"@Model.shopGuid"
@@ -78,7 +81,6 @@
                         active.reload();
                     },
                     toolAdd: function () {
-                        console.log(shopGuid);
                         if (shopGuid == 'all' || !shopGuid) {
                             os.warning('请选择商家~'); return;
                         }
@@ -120,6 +122,9 @@
                     $("#shops").val(shopGuid);
                     form.render('select');
                 }
+                table.on('toolbar(tool)', function (obj) {
+                    active[obj.event] ? active[obj.event].call(this) : '';
+                });
                 $('.list-search .layui-btn').on('click', function () {
                     var type = $(this).data('type');
                     shopGuid = $("#shops").val();
@@ -131,7 +136,7 @@
                     if (obj.event === 'edit') {
                         os.Open('编辑会员', '/fytadmin/shop/usermodify/?guid=' + data.guid, '600px', '450px', function () {
                             active.reload();
-                        })
+                        });
                     }
                 });
             });

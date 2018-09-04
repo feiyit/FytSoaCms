@@ -25,26 +25,28 @@
                 </select>
             </div>
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolExport"><i class="layui-icon layui-icon-component"></i> 导出Excel</button>
         </div>
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
     <script>
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['table', 'layer', 'jquery', 'common', 'laydate'],
+        }).use(['table', 'layer', 'jquery', 'common', 'laydate', 'form'],
             function () {
                 var table = layui.table,
                     layer = layui.layer,
                     $ = layui.jquery,
                     os = layui.common,
-                    laydate = layui.laydate;
+                    laydate = layui.laydate,
+                    form = layui.form;
+                form.render('select');
                 laydate.render({
                     elem: '#times'
                     , theme: '#393D49'
                     , range: true
                 });
                 table.render({
+                    toolbar:true,
                     elem: '#tablist',
                     url: '/api/inventory/stock',
                     cols: [
@@ -60,7 +62,7 @@
                             { field: 'sale', title: '销售数', sort: true }
                         ]
                     ],
-                    page: true,
+                    page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     limit: 15,
                     id: 'tables'
                 });
@@ -112,7 +114,7 @@
                 $('.list-search .layui-btn').on('click', function () {
                     var type = $(this).data('type');
                     active[type] ? active[type].call(this) : '';
-                });                
+                });  
             });
     </script>
 </div>

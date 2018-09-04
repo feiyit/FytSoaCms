@@ -56,6 +56,7 @@
                 });
                 form.render('select');
                 table.render({
+                    toolbar:true,
                     elem: '#tablist',
                     url: '/api/inventory/shopturnover',
                     cols: [
@@ -69,7 +70,7 @@
                             { field: 'backCount', width: 200, title: '退货数' }
                         ]
                     ],
-                    page: true,
+                    page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     limit: 15,
                     id: 'tables'
                 });

@@ -6,11 +6,6 @@
 }
 <div id="container">
     <div class="list-wall">
-        <div class="layui-form list-search">
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增调拨单</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除调拨单</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolExport"><i class="layui-icon layui-icon-component"></i> 导出Excel</button>
-        </div>
         <div class="layui-form list-search" style="margin-top:10px;">
             <div class="layui-inline">
                 <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
@@ -31,12 +26,20 @@
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
     <div class="list-wall">
-        <div class="layui-form list-search">
-            <button type="button" class="layui-btn layui-btn-sm" data-type="goodsAdd"><i class="layui-icon"></i> 添加调拨商品</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="goodsDel"><i class="layui-icon"></i> 删除调拨商品</button>
-        </div>
         <table class="layui-hide" id="table-goods" lay-filter="acttool"></table>
     </div>
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolAdd"><i class="layui-icon"></i> 新增调拨单</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolDel"><i class="layui-icon"></i> 删除调拨单</button>
+        </div>
+    </script>
+    <script type="text/html" id="toolshop">
+        <div class="layui-btn-container">
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="goodsAdd"><i class="layui-icon"></i> 添加调拨商品</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="goodsDel"><i class="layui-icon"></i> 删除调拨商品</button>
+        </div>
+    </script>
     <script>
         layui.config({
             base: '/themes/js/modules/'
@@ -47,7 +50,9 @@
                     $ = layui.jquery,
                     os = layui.common,
                     form = layui.form;
+                var tabH = $(window).height() - 600;
                 table.render({
+                    toolbar: '#toolbar',
                     elem: '#tablist',
                     url: '/api/stock/transferlist',
                     height: 400,
@@ -62,21 +67,23 @@
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
-                    page: true,
+                    page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     limit: 1000,
                     id: 'tables'
                 });
 
                 //调拨商品
                 table.render({
+                    toolbar: '#toolshop',
                     elem: '#table-goods',
                     url: '/api/stock/transfergoodslist',
+                    height: tabH,
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
                             { field: 'code', title: '条形码' },
-                            { field: 'brankName',  title: '品牌' },
-                            { field: 'styleName', title: '款式'},
+                            { field: 'brankName', title: '品牌' },
+                            { field: 'styleName', title: '款式' },
                             { field: 'goodsSum', title: '数量', sort: true }
                         ]
                     ],
@@ -85,7 +92,7 @@
                     id: 'tabgoods'
                 });
 
-               
+
 
                 var transferGuid = '', active = {
                     reload: function () {
@@ -110,12 +117,12 @@
                                 where: {
                                     guid: transferGuid
                                 }
-                            });                        
+                            });
                     },
                     //调拨单搜索
                     toolSearch: function () {
                         active.reload();
-                    },                    
+                    },
                     //添加调拨单
                     toolAdd: function () {
                         os.Open('添加调拨单', '/fytadmin/stock/transfermodify', '600px', '450px', function () {
@@ -189,6 +196,12 @@
                         });
                     }
                 };
+                table.on('toolbar(tool)', function (obj) {
+                    active[obj.event] ? active[obj.event].call(this) : '';
+                });
+                table.on('toolbar(acttool)', function (obj) {
+                    active[obj.event] ? active[obj.event].call(this) : '';
+                });
                 $('.list-search .layui-btn').on('click', function () {
                     var type = $(this).data('type');
                     active[type] ? active[type].call(this) : '';
@@ -198,7 +211,7 @@
                 table.on('tool(tool)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'edit') {
-                        os.Open('编辑调拨单', '/fytadmin/stock/transfermodify/?guid='+data.guid, '600px', '450px', function () {
+                        os.Open('编辑调拨单', '/fytadmin/stock/transfermodify/?guid=' + data.guid, '600px', '450px', function () {
                             active.reload();
                         });
                     }

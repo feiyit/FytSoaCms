@@ -18,7 +18,7 @@
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
     <script type="text/html" id="toolbar">
-        <div class="layui-btn-container list-search">
+        <div class="layui-btn-container">
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolDel"><i class="layui-icon"></i> 删除</button>
         </div>
     </script>
@@ -102,6 +102,10 @@
                 };
                 table.on('toolbar(tool)', function (obj) {
                     active[obj.event] ? active[obj.event].call(this) : '';
+                });
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
                 });
             });
     </script>

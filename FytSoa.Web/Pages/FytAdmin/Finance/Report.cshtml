@@ -43,6 +43,7 @@
                 var table = layui.table,
                     carousel = layui.carousel;
                 table.render({
+                    toolbar:true,
                     elem: '#tablist',
                     url: '/api/inventory/monthturnover',
                     cols: [
@@ -58,7 +59,7 @@
                     ],
                     page: false,
                     id: 'tables',
-                    height: 300,
+                    height: 440,
                     done: function (res, curr, count) {
                         baseChart.hideLoading()
                         console.log(res);
