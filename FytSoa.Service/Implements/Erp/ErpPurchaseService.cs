@@ -37,20 +37,14 @@ namespace FytSoa.Service.Implements
                 var list = new List<ErpPurchaseGoods>();
                 if (!string.IsNullOrEmpty(parm.GoodsList))
                 {
-                    list = JsonConvert.DeserializeObject<List<ErpPurchaseGoods>> (parm.GoodsList);
-                    for (int i = 0; i < list.Count; i++)
+                    list = JsonConvert.DeserializeObject<List<ErpPurchaseGoods>> (parm.GoodsList).Where(m=>!string.IsNullOrEmpty(m.Number) && !string.IsNullOrEmpty(m.Name)).ToList();
+                    var jsonCount = list.Count;
+                    for (int i = 0; i < jsonCount; i++)
                     {
                         var item = list[i];
-                        if (string.IsNullOrEmpty(item.Number) && string.IsNullOrEmpty(item.Name))
-                        {
-                            list.Remove(item);
-                        }
-                        else
-                        {
-                            item.Guid= Guid.NewGuid().ToString();
-                            item.PurchaseGuid = parm.Guid;
-                            parm.Money += item.Quantity * item.Price;
-                        }
+                        item.Guid = Guid.NewGuid().ToString();
+                        item.PurchaseGuid = parm.Guid;
+                        parm.Money += item.Quantity * item.Price;
                     }
                 }
                 Db.Ado.BeginTran();

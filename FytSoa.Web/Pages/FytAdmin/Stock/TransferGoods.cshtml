@@ -51,7 +51,7 @@
                         { field: 'goodsSum', width: 120, edit: 'text', title: '<i class="layui-icon layui-icon-edit"></i>调拨数量', style: 'border-color:#409eff' }
                     ]
                 ],
-                page: true,
+                page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                 limit: 10,
                 height:515,
                 id: 'tables'

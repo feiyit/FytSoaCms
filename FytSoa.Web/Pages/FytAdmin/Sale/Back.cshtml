@@ -39,6 +39,11 @@
         </div>
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <h4>退货列表</h4>
+        </div>
+    </script>
     <script>
         layui.config({
             base: '/themes/js/modules/'
@@ -57,6 +62,7 @@
                     , range: true
                 });
                 table.render({
+                    toolbar: '#toolbar',
                     elem: '#tablist',
                     url: '/api/stock/backlist',
                     cols: [
@@ -73,7 +79,7 @@
                             { field: 'addDate', title: '时间', sort: true }
                         ]
                     ],
-                    page: true,
+                    page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     id: 'tables'
                 });
 

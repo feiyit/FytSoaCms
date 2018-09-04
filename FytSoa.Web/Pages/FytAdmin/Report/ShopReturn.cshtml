@@ -37,6 +37,11 @@
     <div class="list-wall" style="padding-top:0px;">
         <table class="layui-hide" id="tablist"></table>
     </div>
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <h4>加盟商月份返货汇总</h4>
+        </div>
+    </script>
     <script>
         layui.config({
             base: '/themes/js/modules/'
@@ -48,6 +53,7 @@
                     form = layui.form;
                 form.render('select');
                 table.render({
+                    toolbar: '#toolbar',
                     elem: '#tablist',
                     url: '/api/Inventory/shopreturnreport',
                     cols: [

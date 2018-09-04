@@ -68,6 +68,11 @@
             <table class="layui-hide" id="tablist" lay-filter="tool"></table>
         </div>
     </div>
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <h4>返货订单详情</h4>
+        </div>
+    </script>
     <script type="text/javascript" src="~/themes/js/modules/vue.js"></script>
     <script>
         var funTool, vm = new Vue({
@@ -102,6 +107,7 @@
                 form.render('select');
                 $("ul.fyt-utree").css({ 'height': $(window).height() - 182 });
                 table.render({
+                    toolbar: '#toolbar',
                     elem: '#tablist',
                     url: '/api/stock/return/goods',
                     cols: [
