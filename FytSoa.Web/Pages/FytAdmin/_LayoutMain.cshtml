@@ -130,6 +130,11 @@
             @RenderBody()
         </div>
     </div>
+    <div class="load-container load8">
+        <div class="load-wall">
+            <div class="loader">Loading...</div>
+        </div>
+    </div>
     <script type="text/javascript" src="~/themes/js/echarts.min.js"></script>
     <script type="text/javascript" src="~/themes/js/macarons.js"></script>
     <script type="text/javascript" src="~/themes/js/nprogress.js"></script>
@@ -139,7 +144,7 @@
         }).use(['element', 'layer', 'jquery', 'common', 'pjax'], function () {
             var os = layui.common
                 , element = layui.element
-                , $ = layui.$;
+                , $ = layui.jquery;
             $(document).pjax('a', '#container',
                 {
                     fragment: "#container",
@@ -148,15 +153,16 @@
                 }
             );
             //定位到菜单
-            $(".layui-bg-black .fyt-nav-tree li a").each(function () { 
+            $(".layui-bg-black .fyt-nav-tree li a").each(function () {
                 if (window.location.pathname === $(this).attr('href')) {
                     $(".layui-bg-black .fyt-nav-tree li").removeClass('layui-nav-itemed');
                     $(this).parents('.layui-nav-item').addClass('layui-nav-itemed');
                     $(this).parent().addClass('layui-this');
                 }
             });
-            $(document).on('pjax:start', function () { NProgress.start(); });
-            $(document).on('pjax:end', function () { NProgress.done(); });
+            $(".load8").fadeOut(200);
+            $(document).on('pjax:start', function () { NProgress.start(); $(".load8").show(); });
+            $(document).on('pjax:end', function () { NProgress.done(); $(".load8").fadeOut(200); });
         });
     </script>
     @RenderSection("Scripts", required: false)

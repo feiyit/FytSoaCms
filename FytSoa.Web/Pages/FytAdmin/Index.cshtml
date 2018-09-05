@@ -120,6 +120,11 @@
 
     </div>
 </div>
+<div class="load-container load8">
+    <div class="load-wall">
+        <div class="loader">Loading...</div>
+    </div>
+</div>
 <script type="text/javascript" src="~/themes/js/echarts.min.js"></script>
 <script type="text/javascript" src="~/themes/js/macarons.js"></script>
 <script type="text/javascript" src="~/themes/js/nprogress.js"></script>
@@ -129,7 +134,7 @@
     }).use(['element', 'layer', 'jquery', 'common', 'pjax'], function () {
         var os = layui.common
             , element = layui.element
-            , $ = layui.$;
+            , $ = layui.jquery;
         $.pjax({
             url: '/fytadmin/default',
             container: '#container',
@@ -142,7 +147,8 @@
                 show: 'fade'
             }
         );
-        $(document).on('pjax:start', function () { NProgress.start(); });
-        $(document).on('pjax:end', function () { NProgress.done(); });
+        $(".load8").fadeOut(200);
+        $(document).on('pjax:start', function () { NProgress.start(); $(".load8").show(); });
+        $(document).on('pjax:end', function () { NProgress.done(); $(".load8").fadeOut(200); });
     });
 </script>
