@@ -1,0 +1,129 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Goods.LossModel
+@{
+    ViewData["Title"] = "报损管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <div class="list-wall">
+        <div class="layui-form list-search">
+            <div class="layui-inline">
+                <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
+            </div>
+            <div class="layui-inline">
+                <select id="branks" lay-search="">
+                    <option value="">--可根据品牌搜索--</option>
+                    @{
+                        foreach (var item in Model.codeList)
+                        {
+                            <option value="@item.Guid">@item.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+        </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolAdd"><i class="layui-icon"></i> 新增</button>
+        </div>
+    </script>
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'common', 'form'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common,
+                    form = layui.form;
+                form.render('select');
+                table.render({
+                    toolbar: '#toolbar',
+                    elem: '#tablist',
+                    url: '/api/goods/loss/list',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            { field: 'code', width: 180, title: '条形码', sort: true, fixed: 'left' },
+                            { field: 'brankName', title: '品牌', sort: true },
+                            { field: 'styleName', title: '款式', sort: true },
+                            { field: 'salePrice', title: '价格', sort: true },
+                            { field: 'disPrice', title: '折扣价', sort: true },
+                            { field: 'stockSum', title: '库存', sort: true },
+                            { field: 'saleSum', title: '报损数', sort: true },
+                            { field: 'addDate', title: '添加时间', sort: true },
+                            { width: 140, title: '操作', templet: '#tool' }
+                        ]
+                    ],
+                    page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
+                    id: 'tables'
+                });
+
+                var guid = '', active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    key: $("#key").val(),
+                                    guid: $("#branks").val()
+                                }
+                            });
+                    },
+                    toolSearch: function () {
+                        active.reload();
+                    },
+                    toolAdd: function () {
+                        os.Open('添加报损', '/fytadmin/goods/lossadd', '750px', '400px', function () {
+                            active.reload();
+                        });
+                    }                    
+                };
+                table.on('toolbar(tool)', function (obj) {
+                    active[obj.event] ? active[obj.event].call(this) : '';
+                });
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+                //监听工具条
+                table.on('tool(tool)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'edit') {
+                        layer.prompt({ title: '请输入恢复的数量', formType: 0, value: data.saleSum }, function (vals, index) {
+                            if (isNaN(vals)) { 
+                                os.error('输入错误~');
+                                return;
+                            }
+                            if (vals > data.saleSum) {
+                                os.error('数量不能大于报损数量~');
+                                return;
+                            }
+                            var loadIndex = layer.load(1, {
+                                shade: [0.1, '#fff']
+                            });
+                            os.ajax('api/goods/modifyloss', { Guid: data.guid, Counts: vals, SkuGuid:data.code }, function (res) { 
+                                layer.close(loadIndex);
+                                if (res.statusCode === 200) {
+                                    layer.close(index);
+                                    active.reload();
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+    </script>
+    <script type="text/html" id="tool">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 恢复库存</a>
+    </script>
+</div>
+

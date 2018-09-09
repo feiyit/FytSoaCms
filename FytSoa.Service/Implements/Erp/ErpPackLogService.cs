@@ -99,13 +99,21 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<PackLogDto>>();
             try
             {
+                string beginTime = string.Empty, endTime = string.Empty;
+                if (!string.IsNullOrEmpty(parm.time) && parm.time.Contains('-'))
+                {
+                    var timeRes = Utils.SplitString(parm.time, '-');
+                    beginTime = timeRes[0].Trim();
+                    endTime = timeRes[1].Trim();
+                }
                 int years = !string.IsNullOrEmpty(parm.time) ? Convert.ToInt32(parm.time) : DateTime.Now.Year;
                 var query = Db.Queryable<ErpPackLog>()
                         .Where(m => !m.IsDel)
                         .WhereIF(parm.types != 0, m => m.Types == parm.types)
                         .WhereIF(!string.IsNullOrEmpty(parm.guid),m=>m.ShopGuid==parm.guid)
                         .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.PackName.Contains(parm.key) || m.Number == parm.key)
-                        .WhereIF(!string.IsNullOrEmpty(parm.time), m => m.AddDate.Year == years)
+                        .WhereIF(!string.IsNullOrEmpty(parm.time) && !parm.time.Contains('-'), m => m.AddDate.Year == years)
+                        .WhereIF(!string.IsNullOrEmpty(parm.time) && parm.time.Contains('-'), m => m.AddDate >= Convert.ToDateTime(beginTime) && m.AddDate <= Convert.ToDateTime(endTime))
                         .OrderBy(m => m.AddDate, OrderByType.Desc).Select(m => new PackLogDto()
                         {
                             Guid = m.Guid,

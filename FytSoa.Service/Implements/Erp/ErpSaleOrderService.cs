@@ -287,13 +287,20 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<SaleOrderDto>>();
             try
             {
+                string beginTime = string.Empty, endTime = string.Empty;
+                if (!string.IsNullOrEmpty(parm.time))
+                {
+                    var timeRes = Utils.SplitString(parm.time, '-');
+                    beginTime = timeRes[0].Trim();
+                    endTime = timeRes[1].Trim();
+                }
                 var query = Db.Queryable<ErpSaleOrder, ErpShops>((eso, es) => new object[] { JoinType.Left, eso.ShopGuid == es.Guid })
                     .WhereIF(!string.IsNullOrEmpty(parm.guid), (eso, es) => eso.ShopGuid == parm.guid)
                     .WhereIF(parm.types != 0, (eso, es) => eso.ActivityTypes == parm.types)
                     .WhereIF(searchParm.saleType != 0, (eso, es) => eso.SaleType == searchParm.saleType)
                     .WhereIF(searchParm.activityTypes != 0, (eso, es) => eso.ActivityTypes == searchParm.activityTypes)
                     .WhereIF(!string.IsNullOrEmpty(searchParm.btime) && !string.IsNullOrEmpty(searchParm.etime),
-                    (eso, es) => eso.AddDate >= Convert.ToDateTime(searchParm.btime) && eso.AddDate <= Convert.ToDateTime(searchParm.etime))
+                    (eso, es) => eso.AddDate >= Convert.ToDateTime(beginTime) && eso.AddDate <= Convert.ToDateTime(endTime))
                     .OrderBy((eso, es) => eso.AddDate, OrderByType.Desc)
                     .Select((eso, es) => new SaleOrderDto()
                     {

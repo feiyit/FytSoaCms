@@ -70,7 +70,8 @@
     </div>
     <script type="text/html" id="toolbar">
         <div class="layui-btn-container">
-            <h4>返货订单详情</h4>
+            <h4 style="display:inline-block; margin-right:50px;">返货订单详情</h4>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolContrast"><i class="layui-icon layui-icon-read"></i> 返货订单对比</button>
         </div>
     </script>
     <script type="text/javascript" src="~/themes/js/modules/vue.js"></script>
@@ -87,7 +88,6 @@
             },
             methods: {
                 selected: function (m) {
-                    console.log(m);
                     this.activeName = m;
                 },
                 getList: function (m) {
@@ -145,6 +145,14 @@
                         vm.parm.guid = $("#shops").val();
                         active.reload();
                         funTool.orderPage();
+                    },
+                    //对比
+                    toolContrast: function () {
+                        if (orderguid == '' || shopGuid == '') {
+                            os.warning('请选择返货订单~');
+                            return;
+                        }
+                        os.Open('返货效验', '/fytadmin/sale/returnvalidation?order=' + orderguid, '1200px', '700px');
                     }
                 };
 
@@ -170,6 +178,10 @@
                     var type = $(this).data('type');
                     active[type] ? active[type].call(this) : '';
                 });
+                table.on('toolbar(tool)', function (obj) {
+                    active[obj.event] ? active[obj.event].call(this) : '';
+                });
+               
             });
     </script>
 </div>

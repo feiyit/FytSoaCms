@@ -1,7 +1,7 @@
 ﻿@page
 @model FytSoa.Web.Pages.FytAdmin.Sale.IndexModel
 @{
-    ViewData["Title"] = "销售明细";
+    ViewData["Title"] = "销售订单明细";
     Layout = AdminLayout.Pjax(HttpContext);
 }
 <div id="container">
@@ -56,6 +56,9 @@
                     }
                 </select>
             </div>
+            <div class="layui-inline lay-time-icon">
+                <input class="layui-input" id="times" autocomplete="off" placeholder="时间区间"><i class="layui-icon layui-icon-date"></i>
+            </div>
             <div class="layui-inline">
                 <select id="branks" lay-search="">
                     <option value="">--可根据品牌搜索--</option>
@@ -67,8 +70,16 @@
                     }
                 </select>
             </div>
-            <div class="layui-inline lay-time-icon">
-                <input class="layui-input" id="times" autocomplete="off" placeholder="时间区间"><i class="layui-icon layui-icon-date"></i>
+            <div class="layui-inline">
+                <select id="size" lay-search="">
+                    <option value="">--可根据尺码搜索--</option>
+                    @{
+                        foreach (var item in Model.sizeCodeList)
+                        {
+                            <option value="@item.Guid">@item.Name</option>
+                        }
+                    }
+                </select>
             </div>
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
         </div>
@@ -127,7 +138,8 @@
                 list: [],
                 activeName: '',
                 parm: {
-                    guid: ''
+                    guid: '',
+                    time:''
                 }
             },
             methods: {
@@ -164,6 +176,7 @@
                 laydate.render({
                     elem: '#times'
                     , theme: '#393D49'
+                    , format: 'yyyy/MM/dd'
                     , range: true
                 });
                 table.render({
@@ -195,7 +208,9 @@
                                 },
                                 where: {
                                     guid: orderguid,
+                                    time: $('#times').val(),
                                     key: $('#key').val(),
+                                    size: $('#size').val(),
                                     brank: $('#branks').val(),
                                     shopGuid: $("#shops").val()
                                 }
@@ -203,6 +218,7 @@
                     },
                     toolSearch: function () {
                         vm.parm.guid = $("#shops").val();
+                        vm.parm.time = $('#times').val();
                         active.reload();
                         if (vm.parm.guid != '') {
                             funTool.orderPage();

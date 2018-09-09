@@ -62,5 +62,6 @@ namespace FytSoa.Service.DtoModel
         public string shopGuid { get; set; }
         public string packGuid { get; set; }
         public string brank { get; set; }
+        public string size { get; set; }
     }
 }

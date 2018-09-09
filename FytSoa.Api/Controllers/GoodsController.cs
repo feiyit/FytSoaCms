@@ -18,11 +18,13 @@ namespace FytSoa.Api.Controllers
     {
         private readonly IErpGoodsSkuService _skuGoodsService;
         private readonly IErpGoodsService _goodsService;
+        private readonly IErpSkuLossService _lossService;
         public GoodsController(IErpGoodsSkuService skuGoodsService,
-            IErpGoodsService goodsService)
+            IErpGoodsService goodsService, IErpSkuLossService lossService)
         {
             _skuGoodsService = skuGoodsService;
             _goodsService = goodsService;
+            _lossService = lossService;
         }
 
         #region 条形码Api
@@ -111,6 +113,41 @@ namespace FytSoa.Api.Controllers
         {
             return await _goodsService.ModifyAsync(parm);
         }
+        #endregion
+
+        #region 报损Api
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("loss/list")]
+        public async Task<JsonResult> GetLossPages(PageParm parm)
+        {
+            var res = await _lossService.GetPagesAsync(parm);
+            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+        }
+
+        /// <summary>
+        /// 添加报损
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("addloss")]
+        public async Task<ApiResult<string>> AddLoss(ErpSkuLoss parm)
+        {
+            return await _lossService.AddAsync(parm);
+        }
+
+        /// <summary>
+        /// 添加报损
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("modifyloss")]
+        public async Task<ApiResult<string>> ModifyLoss(ErpSkuLoss parm)
+        {
+            return await _lossService.ModifyAsync(parm);
+        }
+
         #endregion
     }
 }

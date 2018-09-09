@@ -52,5 +52,10 @@ namespace FytSoa.Core.Model.Erp
         /// </summary>
         public int BackCounts { get; set; } = 0;
 
+        /// <summary>
+        /// 订单商品金额
+        /// </summary>
+        public decimal Money { get; set; } = 0;
+
     }
 }

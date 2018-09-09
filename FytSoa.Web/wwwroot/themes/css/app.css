@@ -1,9 +1,11 @@
 ﻿body{font: 400 13.3333px Arial;}
 .layui-layout-admin .layui-body{bottom:0px;}
-.layui-bg-black{background: #324157 !important;}
+.layui-layout-admin .layui-bg-black{background: #324157 !important; width:220px;}
 .layui-nav{background: #324157;}
-.layui-layout-admin .layui-logo{background: #324157; color:#ffffff;}
-.layui-layout-admin .layui-header{ background-color:#ffffff;box-shadow: 0 2px 1px 1px rgba(100, 100, 100, 0.1);}
+.layui-layout-admin .layui-logo{background: #324157; color:#ffffff; width:220px;}
+.layui-nav-tree{width:220px;}
+.layui-nav .layui-nav-item a{padding-left:25px;}
+.layui-layout-admin .layui-header {background-color: #ffffff; box-shadow: 0 2px 1px 1px rgba(100, 100, 100, 0.1);}
 .layui-header .layui-nav{color:#495060}
 .layui-header .layui-nav .layui-nav-item a{color:#495060}
 .layui-nav-tree .layui-nav-item > a:hover{ background-color: #48576a;}
@@ -14,7 +16,7 @@
 .layui-header .layui-nav .layui-nav-item a{font-size:12px;}
 .layui-nav-tree .layui-nav-child a{color: #9ea7b4;}
 .layui-layout-admin .layui-side .layui-nav-child dd{padding-left:28px;}
-.layui-nav-tree .layui-nav-item a i{margin-right:4px;font-size: 16px;}
+.layui-nav-tree .layui-nav-item a i{margin-right:8px;font-size: 16px;}
 .tab-pane{width:100%; height:99.6%;}
 .list-wall{padding:12px 12px 0px 12px;}
 .list-search{ background-color:#f2f2f2; padding:12px 15px;}
@@ -61,7 +63,7 @@
 .layui-btn-disabled:hover{border:1px solid #e6e7e8 !important;}
 
 /* 弹框优化 */
-.layui-body{z-index:60 !important;}
+.layui-body{z-index:60 !important; left:220px;}
 .layui-layer {
     box-shadow: 0 1px 3px rgba(0,0,0,.3) !important;
 }

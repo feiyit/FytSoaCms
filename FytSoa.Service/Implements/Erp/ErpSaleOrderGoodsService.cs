@@ -45,7 +45,7 @@ namespace FytSoa.Service.Implements
         }
 
         /// <summary>
-        /// 查询多条记录
+        /// 根据订单编号查询多条记录
         /// </summary>
         /// <returns></returns>
         public Task<ApiResult<Page<SaleOrderGoodsDto>>> GetPagesAsync(PageParm parm, SearchParm searchParm)
@@ -57,6 +57,7 @@ namespace FytSoa.Service.Implements
                     .WhereIF(!string.IsNullOrEmpty(parm.guid), (eso, egs) => eso.OrderNumber == parm.guid)
                     .WhereIF(!string.IsNullOrEmpty(searchParm.shopGuid), (eso, egs) => eso.ShopGuid == searchParm.shopGuid)
                     .WhereIF(!string.IsNullOrEmpty(searchParm.brank), (eso, egs) => egs.BrankGuid == searchParm.brank)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.size), (eso, egs) => egs.SizeGuid == searchParm.size)
                     .Select((eso, egs) => new SaleOrderGoodsDto()
                     {
                         Guid=eso.Guid,
@@ -65,6 +66,63 @@ namespace FytSoa.Service.Implements
                         StyleName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.StyleGuid).Select(g => g.Name),
                         Code = egs.Code,
                         Counts = eso.Counts
+                    })
+                    .ToPage(parm.page, parm.limit);
+                res.success = true;
+                res.message = "获取成功！";
+                res.data = query;
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 获得列表
+        /// </summary>
+        /// <returns></returns>
+        public Task<ApiResult<Page<SaleOrderGoodsDto>>> GetPagesListAsync(PageParm parm, SearchSaleOrderGoods searchParm)
+        {
+            var res = new ApiResult<Page<SaleOrderGoodsDto>>();
+            try
+            {
+                string beginTime = string.Empty, endTime = string.Empty;
+                if (!string.IsNullOrEmpty(parm.time))
+                {
+                    var timeRes = Utils.SplitString(parm.time, '-');
+                    beginTime = timeRes[0].Trim();
+                    endTime = timeRes[1].Trim();
+                }
+                var query = Db.Queryable<ErpSaleOrderGoods, ErpGoodsSku,ErpSaleOrder,ErpShops>((eso, egs,so,es) => 
+                new object[] {
+                    JoinType.Left, eso.GoodsGuid == egs.Guid,
+                    JoinType.Left, eso.OrderNumber==so.Number,
+                    JoinType.Left, eso.ShopGuid==es.Guid })
+                    .WhereIF(!string.IsNullOrEmpty(parm.time), (eso, egs, so, es) => so.AddDate >= Convert.ToDateTime(beginTime) && so.AddDate <= Convert.ToDateTime(endTime))
+                    .WhereIF(!string.IsNullOrEmpty(parm.key), (eso, egs, so, es) => eso.OrderNumber == parm.key)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.shopGuid), (eso, egs, so, es) => eso.ShopGuid == searchParm.shopGuid)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.brank), (eso, egs, so, es) => egs.BrankGuid == searchParm.brank)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.size), (eso, egs, so, es) => egs.SizeGuid == searchParm.size)
+                    .WhereIF(searchParm.backStatus!=-1, (eso, egs, so, es) => eso.BackCounts==searchParm.backStatus)
+                    .WhereIF(searchParm.saleType != -1, (eso, egs, so, es) => so.SaleType == searchParm.saleType)
+                    .Select((eso, egs, so, es) => new SaleOrderGoodsDto()
+                    {
+                        Guid = eso.Guid,
+                        OrderNumber=eso.OrderNumber,
+                        ShopName=es.ShopName,
+                        ActivityName=so.ActivityName,
+                        BrandName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.BrankGuid).Select(g => g.Name),
+                        SeasonName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.SeasonGuid).Select(g => g.Name),
+                        StyleName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.StyleGuid).Select(g => g.Name),
+                        Code = egs.Code,
+                        Money=eso.Money,
+                        SaleType=so.SaleType,
+                        BackCounts =eso.BackCounts,
+                        Counts = eso.Counts,
+                        AddDate = so.AddDate
                     })
                     .ToPage(parm.page, parm.limit);
                 res.success = true;

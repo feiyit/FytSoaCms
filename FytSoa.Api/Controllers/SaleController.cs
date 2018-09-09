@@ -35,14 +35,26 @@ namespace FytSoa.Api.Controllers
             return await _orderService.GetPagesNoGoodsAsync(parm, searchParm);
         }
         /// <summary>
-        /// 查询列表
+        /// 根据订单编号查询订单详情
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("goods")]
-        public async Task<JsonResult> GetSaleGoodsPages(PageParm parm, SearchParm searchParm)
+        public async Task<JsonResult> GetSaleGoodsPagesByNumber(PageParm parm, SearchParm searchParm)
         {
             var res = await _goodService.GetPagesAsync(parm, searchParm);
+            return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
+        }
+
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("goods/list")]
+        public async Task<JsonResult> GetSaleGoodsPages(PageParm parm, SearchSaleOrderGoods searchParm)
+        {
+            var res = await _goodService.GetPagesListAsync(parm, searchParm);
             return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
         }
         #endregion

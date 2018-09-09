@@ -85,6 +85,17 @@ namespace FytSoa.Service.DtoModel
         /// 编号
         /// </summary>
         public string Guid { get; set; }
+
+        /// <summary>
+        /// 订单编号
+        /// </summary>
+        public string OrderNumber { get; set; }
+
+        /// <summary>
+        /// 店铺名称
+        /// </summary>
+        public string ShopName { get; set; }
+
         /// <summary>
         /// 品牌名称
         /// </summary>
@@ -98,12 +109,25 @@ namespace FytSoa.Service.DtoModel
         /// </summary>
         public string SeasonName { get; set; }
 
+        /// <summary>
+        /// 商品名称
+        /// </summary>
         public string GoodsName { get; set; }
+
+        /// <summary>
+        /// 活动名称
+        /// </summary>
+        public string ActivityName { get; set; }
 
         /// <summary>
         /// 条形码
         /// </summary>
         public string Code { get; set; }
+
+        /// <summary>
+        /// 是否退单
+        /// </summary>
+        public int BackCounts { get; set; } = 0;
 
         /// <summary>
         /// 金额
@@ -114,6 +138,16 @@ namespace FytSoa.Service.DtoModel
         /// 数量
         /// </summary>
         public int Counts { get; set; }
+
+        /// <summary>
+        /// 销售类型 1=正常销售/2=残次品销售
+        /// </summary>
+        public int SaleType { get; set; } = 0;
+
+        /// <summary>
+        /// 下单时间
+        /// </summary>
+        public DateTime AddDate { get; set; }
     }
 
     /// <summary>
@@ -140,5 +174,33 @@ namespace FytSoa.Service.DtoModel
         /// 数量
         /// </summary>
         public int Counts { get; set; }
+    }
+
+    /// <summary>
+    /// 提供根据订单编号查询的内容
+    /// </summary>
+    public class SearchSaleOrderGoods
+    {
+        /// <summary>
+        /// 店铺编号
+        /// </summary>
+        public string shopGuid { get; set; }
+        /// <summary>
+        /// 品牌
+        /// </summary>
+        public string brank { get; set; }
+        /// <summary>
+        /// 尺码
+        /// </summary>
+        public string size { get; set; }
+        /// <summary>
+        /// 退货状态
+        /// </summary>
+        public int backStatus { get; set; } = -1;
+
+        /// <summary>
+        /// 销售类型
+        /// </summary>
+        public int saleType { get; set; } = -1;
     }
 }

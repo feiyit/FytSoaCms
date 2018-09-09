@@ -30,6 +30,20 @@
                     <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
                 </div>
                 <div class="layui-inline">
+                    <select id="shops" lay-search="">
+                        <option value="">--可根据店铺搜索--</option>
+                        @{
+                            foreach (var item in Model.shopList)
+                            {
+                                <option value="@item.Guid">@item.ShopName</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="layui-inline lay-time-icon">
+                    <input class="layui-input" id="times" autocomplete="off" placeholder="时间区间"><i class="layui-icon layui-icon-date"></i>
+                </div>
+                <div class="layui-inline">
                     <select id="branks">
                         <option value="">--可根据品牌搜索--</option>
                         @{
@@ -82,14 +96,22 @@
         });           
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['table', 'layer', 'jquery', 'common', 'form'],
+        }).use(['table', 'layer', 'jquery', 'common', 'form', 'laydate'],
             function () {
                 var table = layui.table,
                     layer = layui.layer,
                     $ = layui.jquery,
                     os = layui.common,
+                    laydate = layui.laydate,
                     form = layui.form;
                 form.render('select');
+                laydate.render({
+                    elem: '#times'
+                    , theme: '#393D49'
+                    , format: 'yyyy/MM/dd'
+                    , range: true
+                });
+                $("ul.fyt-utree").css({ 'height': $(window).height() - 130 });
                 table.render({
                     toolbar: '#toolbar',
                     elem: '#tablist',
@@ -128,6 +150,7 @@
                                 where: {
                                     packGuid: packguid,
                                     types: 1,
+                                    guid: $('#shops').val(),
                                     key: $('#key').val(),
                                     brank: $('#branks').val()
                                 }
@@ -186,7 +209,7 @@
                         active.reload();
                     },
                     packPage: function () {
-                        os.ajax('api/stock/packloglist', { types: 1 }, function (res) {
+                        os.ajax('api/stock/packloglist', { types: 1, time: $('#times').val(), guid: $('#shops').val(), key: $('#key').val() }, function (res) {
                             if (res.statusCode === 200) {
                                 vm.list = res.data.items;
                             } else {
@@ -242,6 +265,7 @@
                 $('.list-search .layui-btn').on('click', function () {
                     var type = $(this).data('type');
                     active[type] ? active[type].call(this) : '';
+                    funTool.packPage();
                 });
                 //监听工具条
                 table.on('tool(tool)', function (obj) {

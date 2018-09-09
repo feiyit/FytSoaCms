@@ -1,0 +1,165 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Sale.ReturnValidationModel
+@{
+    ViewData["Title"] = "返货效验";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<style>
+    .layui-btn .layui-icon {
+        vertical-align: middle;
+        top: -2px;
+        position: relative;
+    }
+</style>
+<div id="app">
+    <div class="layui-form list-search" style="margin:0px 12px 0 12px;">
+        <form id="from-app" class="layui-form" action="">
+            <div class="layui-inline">
+                <input class="layui-input" id="Code" name="Code" autocomplete="off" placeholder="条形码">
+            </div>
+            <div class="layui-inline">
+                <input class="layui-input" id="Count" name="Count" value="1" autocomplete="off" placeholder="数量">
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                <button type="button" class="layui-btn" @@click="validation" style="margin-left:100px;" v-html="btnHtml"></button>
+            </div>
+        </form>
+    </div>
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md6">
+            <div class="list-wall" style="padding-top:0px; padding-right:6px;">
+                <table class="layui-table fyt-table">
+                    <thead>
+                        <tr>
+                            <th width="40"><span>序号</span></th>
+                            <th><span>条形码</span></th>
+                            <th width="60"><span>数量</span></th>
+                            <th width="100"><span>异常状态</span></th>
+                            <th width="60"><span>操作</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="it,index in tabList">
+                            <td align="center">{{index+1}}</td>
+                            <td>{{it.Code}}</td>
+                            <td><input type="number" v-model="it.Count" class="layui-input" style="height:26px;" /></td>
+                            <td v-html="it.status"></td>
+                            <td><i @@click="delTableRow(index)" class="layui-icon layui-icon-close" style="cursor:pointer"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md6">
+            <div class="list-wall" style="padding-top:0px;padding-left:6px;">
+                <table class="layui-hide" id="tablist" lay-filter="usertool"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="~/themes/js/modules/vue.js"></script>
+<script>
+    var cusFun,vm = new Vue({
+        el: '#app',
+        data: {
+            tabList: [
+                //{ 'Code': 'abc','status':'', 'Count': '1' }
+            ],
+            btnHtml:'<i class="layui-icon layui-icon-read"></i> 确定对比'
+        },
+        methods: {
+            delTableRow: function (index) {
+                this.tabList.splice(index,1);
+            },
+            validation: function () {
+                console.log(this.tabList);
+                cusFun.startValid();
+            }
+        }
+    });
+    layui.config({
+        base: '/themes/js/modules/'
+    }).use(['table','layer', 'jquery', 'common', 'form'], function () {
+        var table = layui.table,form = layui.form, $ = layui.$, os = layui.common,order="@Model.orderGuid",resList;
+        $("#Code").focus();
+        /*$("#Code").keyup(function () {
+            if ($("#Code").val().length == 16) {
+                var isEx = false;
+                for (var i = 0; i < vm.tabList.length; i++) {
+                    if (vm.tabList[i].Code == $("#Code").val()) {
+                        isEx = true;
+                        vm.tabList[i].Count = parseInt(vm.tabList[i].Count) + parseInt($("#Count").val());
+                    }
+                }
+                if (!isEx) {
+                    vm.tabList.push({ 'Code': $("#Code").val(), 'Count': $("#Count").val() });
+                }
+                $("#Code").val('');
+                $("#Code").focus();
+            }
+        });*/
+        table.render({
+            elem: '#tablist',
+            url: '/api/stock/return/goods',
+            cols: [
+                [
+                    { field: 'code', width: 180, title: '条形码', fixed: 'left' },
+                    { field: 'counts', width:80, title: '返货数' },
+                    { field: 'summary', title: '返货原因' }
+                ]
+            ],
+            page: false,
+            limit: 1000,
+            id: 'tables',
+            where: {
+                guid: order,
+            },
+            done: function (res, curr, count) { 
+                resList = res.data;
+            }
+        });
+        cusFun = {
+            startValid: function () {
+                vm.btnHtml = '<i class="layui-icon layui-icon-loading-1 layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i> 正在对比';
+                var resArr = [];
+                $.each(vm.tabList, function (i, item) {
+                    var count = 0, isExist;
+                    $.each(resList, function (j, row) {
+                        if (row.code == item.Code && row.counts == item.Count) {
+                            count++;
+                        }
+                    });
+                    if (count === 0) {
+                        item.status = '<span style="color:red">异常</span>';
+                        resArr.push(item);
+                    }
+                });
+                vm.btnHtml = '<i class="layui-icon layui-icon-read"></i> 确定对比';
+                /*layer.alert(JSON.stringify(resArr), {
+                    title: '最终对比结果'
+                })*/
+            }
+        }
+
+        //对比提交
+        form.on('submit(submit)', function (data) {
+            var isEx = false;
+            for (var i = 0; i < vm.tabList.length; i++) {
+                if (vm.tabList[i].Code == data.field.Code) {
+                    isEx = true;
+                    vm.tabList[i].Count = parseInt(vm.tabList[i].Count) + parseInt($("#Count").val());
+                }
+            }
+            if (!isEx) {
+                vm.tabList.push({ 'Code': data.field.Code, 'status': '<span class="layui-badge-dot layui-bg-green"></span>', 'Count': data.field.Count });
+            }
+            $("#Code").val('');
+            $("#Code").focus();
+            return false;
+        });
+    });
+</script>
+
