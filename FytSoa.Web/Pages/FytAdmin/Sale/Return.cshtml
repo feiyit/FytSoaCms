@@ -71,6 +71,7 @@
     <script type="text/html" id="toolbar">
         <div class="layui-btn-container">
             <h4 style="display:inline-block; margin-right:50px;">返货订单详情</h4>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolAdd"><i class="layui-icon layui-icon-add-circle-fine"></i> 添加返货订单</button>
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolContrast"><i class="layui-icon layui-icon-read"></i> 返货订单对比</button>
         </div>
     </script>
@@ -153,6 +154,15 @@
                             return;
                         }
                         os.Open('返货效验', '/fytadmin/sale/returnvalidation?order=' + orderguid, '1200px', '700px');
+                    },
+                    //添加返货信息同时保存返货单
+                    toolAdd: function () {
+                        var shopid = $('#shops').val();
+                        if (!shopid) {
+                            os.error('请选择返货加盟商~');
+                            return;
+                        }
+                        os.Open('添加返货订单', '/fytadmin/sale/returnadd?shopid=' + shopid, '1200px', '700px');
                     }
                 };
 
