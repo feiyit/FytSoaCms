@@ -15,10 +15,13 @@
     <div class="layui-form list-search" style="margin:0px 12px 0 12px;">
         <form id="from-app" class="layui-form" action="">
             <div class="layui-inline">
-                <input class="layui-input" id="Code" name="Code" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="条形码">
+                <input class="layui-input" id="GoodsGuid" name="GoodsGuid" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="条形码">
             </div>
             <div class="layui-inline">
-                <input class="layui-input" id="Count" name="Count" value="1" autocomplete="off" placeholder="数量">
+                <input class="layui-input" id="Summary" name="Summary"  autocomplete="off" placeholder="（选填）返货描述" style="width:260px;">
+            </div>
+            <div class="layui-inline">
+                <input class="layui-input" id="ReturnCount" name="ReturnCount" value="1" autocomplete="off" placeholder="数量">
             </div>
             <div class="layui-inline">
                 <button class="layui-btn" lay-submit="" lay-filter="submit">添加返货</button>
@@ -34,7 +37,8 @@
                         <tr>
                             <th width="40"><span>序号</span></th>
                             <th><span>条形码</span></th>
-                            <th width="60"><span>数量</span></th>
+                            <th width="100"><span>数量</span></th>
+                            <th width="300"><span>返货原因</span></th>
                             <th width="60"><span>操作</span></th>
                         </tr>
                     </thead>
@@ -42,7 +46,8 @@
                         <tr v-for="it,index in tabList">
                             <td align="center">{{index+1}}</td>
                             <td>{{it.Code}}</td>
-                            <td><input type="number" v-model="it.Count" class="layui-input" style="height:26px;" /></td>
+                            <td><input type="number" v-model="it.ReturnCount" class="layui-input" style="height:26px;" /></td>
+                            <td>{{it.Summary}}</td>
                             <td><i @@click="delTableRow(index)" class="layui-icon layui-icon-close" style="cursor:pointer"></i></td>
                         </tr>
                     </tbody>
@@ -60,9 +65,14 @@
         el: '#app',
         data: {
             tabList: [
-                //{ 'Code': 'abc','Count': '1' }
+                 //{ 'Code': 'abc','summary':'', 'Count': '1' }
             ],
-            btnHtml:'<i class="layui-icon layui-icon-ok"></i> 提交返货信息'
+            btnHtml: '<i class="layui-icon layui-icon-ok"></i> 提交返货信息',
+            parm: {
+                ShopGuid: '@Model.shopGuid',
+                StaffGuid: 'admin',
+                goodsJson:''
+            }
         },
         methods: {
             delTableRow: function (index) {
@@ -76,28 +86,53 @@
     layui.config({
         base: '/themes/js/modules/'
     }).use(['table','layer', 'jquery', 'common', 'form'], function () {
-        var table = layui.table,form = layui.form, $ = layui.$, os = layui.common,shopGuid="@Model.shopGuid",resList;
-        $("#Code").focus();
+        var table = layui.table, form = layui.form, $ = layui.$, os = layui.common, resList;
+        var index = parent.layer.getFrameIndex(window.name);
+        $("#GoodsGuid").focus();
         cusFun = {
             submit: function () {
-                console.log(vm.tabList);
+                if (vm.tabList.length == 0) {
+                    os.error('请添加返货信息~~~');
+                    return;
+                }
+                vm.parm.goodsJson = JSON.stringify(vm.tabList);
+                console.log(vm.parm);
+                os.ajax('api/stock/return/add', vm.parm, function (res) {
+                    if (res.statusCode == 200) {
+                        parent.layer.close(index);
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
             }
         };
 
         //对比提交
         form.on('submit(submit)', function (data) {
-            var isEx = false;
-            for (var i = 0; i < vm.tabList.length; i++) {
-                if (vm.tabList[i].Code == data.field.Code) {
-                    isEx = true;
-                    vm.tabList[i].Count = parseInt(vm.tabList[i].Count) + parseInt($("#Count").val());
+            var digIndex = layer.load(1, {
+                shade: [0.1, '#fff'] 
+            });
+            os.ajax('api/goods/bycode', { shopGuid: vm.parm.ShopGuid, code: data.field.GoodsGuid }, function (res) { 
+                console.log(res);
+                if (res.statusCode == 200) {
+                    var isEx = false;
+                    for (var i = 0; i < vm.tabList.length; i++) {
+                        if (vm.tabList[i].GoodsGuid == res.data.guid) {
+                            isEx = true;
+                            vm.tabList[i].ReturnCount = parseInt(vm.tabList[i].ReturnCount) + parseInt($("#ReturnCount").val());
+                        }
+                    }
+                    if (!isEx) {
+                        vm.tabList.push({ Code: data.field.GoodsGuid, 'GoodsGuid': res.data.guid, 'Summary': data.field.Summary, 'ReturnCount': data.field.ReturnCount });
+                    }
+                } else {
+                    os.error('加盟商下没有该商品信息！');
                 }
-            }
-            if (!isEx) {
-                vm.tabList.push({ 'Code': data.field.Code, 'Count': data.field.Count });
-            }
-            $("#Code").val('');
-            $("#Code").focus();
+                layer.close(digIndex);
+            });   
+            $("#GoodsGuid").val('');
+            $("#GoodsGuid").focus();
             return false;
         });
     });

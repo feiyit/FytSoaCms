@@ -267,3 +267,5 @@ D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\FytSoa.We
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\FytSoa.Web.dll
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\FytSoa.Web.pdb
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Sale\ReturnAdd.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Sale\ReturnAdd.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\ExportValidation.g.cshtml.cs

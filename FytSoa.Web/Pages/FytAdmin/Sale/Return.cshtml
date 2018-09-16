@@ -162,7 +162,10 @@
                             os.error('请选择返货加盟商~');
                             return;
                         }
-                        os.Open('添加返货订单', '/fytadmin/sale/returnadd?shopid=' + shopid, '1200px', '700px');
+                        os.Open('添加返货订单', '/fytadmin/sale/returnadd?shopid=' + shopid, '1200px', '700px', function () { 
+                            active.reload();
+                            funTool.orderPage();
+                        });
                     }
                 };
 

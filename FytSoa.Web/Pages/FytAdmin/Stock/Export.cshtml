@@ -70,10 +70,54 @@
         <div class="layui-btn-container">
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolAdd"><i class="layui-icon"></i> 新增</button>
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolDel"><i class="layui-icon"></i> 删除</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolPrint"><i class="layui-icon layui-icon-print"></i> 打印出库单</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolContrast"><i class="layui-icon layui-icon layui-icon-read"></i> 出库单效验</button>
         </div>
     </script>
+    
+    <div class="os-print layui-hide" id="appprint">
+        <div class="print" style="padding:20px;">            
+            <h4 style="border-bottom:dashed 1px #000; text-align:center; font-size:18px; font-weight:bold; padding-bottom:10px; margin-bottom:10px;">出库单详情</h4>
+            <table id="tab-info" style="width:100%">
+                <tr>
+                    <td style="padding:8px;">加盟商：{{model.shopName}}</td>
+                    <td style="padding:8px;">订单号：{{model.number}}</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px;">名称：{{model.packName}}</td>
+                    <td style="padding:8px;">数量：{{model.goodsSum}}</td>
+                </tr>
+            </table>
+            <p class="lines" style="border-bottom:dashed 1px #000; margin:10px 0;"></p>
+            <table id="tab-list" style="width:100%">
+                <tr>
+                    <td style="padding:8px; border:1px solid #e6e7e8;;">条形码</td>
+                    <td style="padding:8px; border:1px solid #e6e7e8;width:100px">品牌</td>
+                    <td style="padding:8px; border:1px solid #e6e7e8;width:100px">款式</td>
+                    <td style="padding:8px; border:1px solid #e6e7e8;width:80px">数量</td>
+                </tr>
+                <tr v-for="it in list" v-cloak>
+                    <td style="padding:8px; border:1px solid #e6e7e8;">{{it.code}}</td>
+                    <td style="padding:8px; border:1px solid #e6e7e8;">{{it.brankName}}</td>
+                    <td style="padding:8px; border:1px solid #e6e7e8;">{{it.styleName}}</td>
+                    <td style="padding:8px; border:1px solid #e6e7e8;">{{it.stockSum}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
     <script type="text/javascript" src="~/themes/js/modules/vue.js"></script>
     <script>
+        layui.define(['layer', 'printarea'], function (exports) {
+            "use strict";
+            exports('print', null);
+        });
+        var prints = new Vue({
+            el: '#appprint',
+            data: {
+                model: {},
+                list: []
+            }
+        });
         var funTool, vm = new Vue({
             el: "#app",
             data: {
@@ -133,6 +177,7 @@
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
+                    height: $(window).height()-150,
                     page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     limit: 15,
                     id: 'tables'
@@ -204,15 +249,34 @@
                                 }
                             });
                         });
-
-                    }
+                    },
+                    /* 打印出库单 */
+                    toolPrint: function () { 
+                        if (packguid === '') {
+                            os.error('请选择出库单~');
+                            return;
+                        }
+                        $(".print").print();
+                    },
+                    /* 出库单信息核对 */
+                    toolContrast: function () { 
+                        if (packguid === '') {
+                            os.error('请选择出库单~');
+                            return;
+                        }
+                        os.Open('出库单效验', '/fytadmin/stock/exportvalidation?pack=' + packguid, '1200px', '700px');
+                    }                    
                 };
 
                 funTool = {
                     getGoodsSku: function (obj) {
                         packguid = obj.guid;
                         shopGuid = obj.shopGuid;
+                        prints.model = obj;                       
                         active.reload();
+                        os.get('api/stock/inoutlist?types=2', { packGuid: packguid, limit:10000}, function (res) { 
+                            prints.list = res.data;
+                        });
                     },
                     packPage: function () {
                         os.ajax('api/stock/packloglist', { types: 2, time: $('#times').val(), guid: $('#shops').val(), key: $('#key').val() }, function (res) {

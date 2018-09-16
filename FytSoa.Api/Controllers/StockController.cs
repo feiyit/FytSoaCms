@@ -262,6 +262,18 @@ namespace FytSoa.Api.Controllers
             var res = await _returnGoodsService.GetPagesAsync(parm, searchParm);
             return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
         }
+
+        /// <summary>
+        /// 添加返货信息，包括返货订单和返货订单里面的商品
+        /// </summary>
+        /// <param name="parm">订单信息</param>
+        /// <param name="goodsJson">返货订单商品Json字符串</param>
+        /// <returns></returns>
+        [HttpPost("return/add")]
+        public Task<ApiResult<string>> AddReturnOrder(ErpReturnOrder parm, string goodsJson)
+        {
+            return _returnOrderService.AddAsync(parm, goodsJson);
+        }
         #endregion
     }
 }

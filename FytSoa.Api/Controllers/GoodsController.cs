@@ -69,6 +69,16 @@ namespace FytSoa.Api.Controllers
         {
             return await _skuGoodsService.ModifyAsync(parm);
         }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("bycode")]
+        public async Task<ApiResult<GoodsSkuDto>> GetCodeByShopSku(string shopGuid, string code)
+        {
+            return await _skuGoodsService.GetByCodeAsync(shopGuid, code);
+        }
         #endregion
 
         #region 商品管理Api
