@@ -5,9 +5,11 @@ using FytSoa.Core.Model.Erp;
 using FytSoa.Core.Model.Sys;
 using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
+using Newtonsoft.Json;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +17,55 @@ namespace FytSoa.Service.Implements
 {
     public class ErpInOutLogService : DbContext, IErpInOutLogService
     {
+        /// <summary>
+        /// 批量添加数据
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ApiResult<string>> AddBatchAsync(string guid, string json, string adminGuid)
+        {
+            var res = new ApiResult<string>() { data = "1", statusCode = (int)ApiEnum.Error };
+            try
+            {
+                if (string.IsNullOrEmpty(json))
+                {
+                    res.message = "商品不能为空~";
+                    return await Task.Run(() => res);
+                }
+                var packModel = ErpPackLogDb.GetById(guid);
+                //解析字符串转换成List对象
+                var goodsList = JsonConvert.DeserializeObject<List<ErpInOutLog>>(json);
+                foreach (var item in goodsList)
+                {
+                    item.Guid = Guid.NewGuid().ToString();
+                    item.Types = packModel.Types;
+                    item.InTypes = 1;
+                    item.PackGuid = packModel.Guid;
+                    item.ShopGuid = packModel.ShopGuid;
+                    item.AdminGuid = adminGuid;
+                    item.AddDate = DateTime.Now;
+                }
+                packModel.GoodsSum = goodsList.Sum(m=>m.GoodsSum);
+                var result = Db.Ado.UseTran(() =>
+                {
+                    //修改打包的数量
+                    Db.Updateable(packModel).ExecuteCommand();
+                    //添加该打包日志下面的商品
+                    Db.Insertable(goodsList).ExecuteCommand();
+                });
+                res.statusCode = (int)ApiEnum.Status;
+                if (!result.IsSuccess)
+                {
+                    res.statusCode = (int)ApiEnum.Error;
+                    res.message = result.ErrorMessage;
+                }
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+            }
+            return await Task.Run(() => res);
+        }
+
         /// <summary>
         /// 添加一条数据
         /// </summary>

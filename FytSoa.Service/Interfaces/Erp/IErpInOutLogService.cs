@@ -35,6 +35,12 @@ namespace FytSoa.Service.Interfaces
         Task<ApiResult<string>> AddAsync(ErpInOutLog parm);
 
         /// <summary>
+        /// 批量添加数据
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<string>> AddBatchAsync(string guid,string json,string adminGuid);
+
+        /// <summary>
         /// 删除一条或多条数据
         /// </summary>
         /// <returns></returns>

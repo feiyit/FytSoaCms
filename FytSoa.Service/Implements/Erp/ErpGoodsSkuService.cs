@@ -120,7 +120,7 @@ namespace FytSoa.Service.Implements
         /// <returns></returns>
         public async Task<ApiResult<ErpGoodsSku>> GetByGuidAsync(string parm)
         {
-            var model = ErpGoodsSkuDb.GetById(parm);
+            var model = ErpGoodsSkuDb.GetSingle(m=>m.Code==parm);
             var res = new ApiResult<ErpGoodsSku>
             {
                 statusCode = 200,

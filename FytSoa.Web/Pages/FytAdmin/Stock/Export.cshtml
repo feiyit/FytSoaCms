@@ -69,14 +69,15 @@
     <script type="text/html" id="toolbar">
         <div class="layui-btn-container">
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolAdd"><i class="layui-icon"></i> 新增</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolBatchAdd"><i class="layui-icon"></i> 批量新增</button>
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolDel"><i class="layui-icon"></i> 删除</button>
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolPrint"><i class="layui-icon layui-icon-print"></i> 打印出库单</button>
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolContrast"><i class="layui-icon layui-icon layui-icon-read"></i> 出库单效验</button>
         </div>
     </script>
-    
+
     <div class="os-print layui-hide" id="appprint">
-        <div class="print" style="padding:20px;">            
+        <div class="print" style="padding:20px;">
             <h4 style="border-bottom:dashed 1px #000; text-align:center; font-size:18px; font-weight:bold; padding-bottom:10px; margin-bottom:10px;">出库单详情</h4>
             <table id="tab-info" style="width:100%">
                 <tr>
@@ -110,7 +111,8 @@
         layui.define(['layer', 'printarea'], function (exports) {
             "use strict";
             exports('print', null);
-        });
+        });
+
         var prints = new Vue({
             el: '#appprint',
             data: {
@@ -177,7 +179,7 @@
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
-                    height: $(window).height()-150,
+                    height: $(window).height() - 150,
                     page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     limit: 15,
                     id: 'tables'
@@ -219,7 +221,17 @@
                             os.warning('请选择出库单~');
                             return;
                         }
-                        os.Open('添加出库信息', '/fytadmin/stock/exportmodify/?packguid=' + packguid + '&shopguid=' + shopGuid, '600px', '350px', function () {
+                        os.Open('添加出库信息', '/fytadmin/stock/exportmodify/?packguid=' + packguid + '&shopguid=' + shopGuid, '600px', '400px', function () {
+                            active.reload();
+                        });
+                    },
+                    //批量新增出库信息
+                    toolBatchAdd: function () {
+                        if (packguid === '') {
+                            os.warning('请选择出库单~');
+                            return;
+                        }
+                        os.Open('批量添加出库信息', '/fytadmin/stock/exportbatchadd/?packguid=' + packguid + '&shopguid=' + shopGuid, '860px', '600px', function () {
                             active.reload();
                         });
                     },
@@ -251,7 +263,7 @@
                         });
                     },
                     /* 打印出库单 */
-                    toolPrint: function () { 
+                    toolPrint: function () {
                         if (packguid === '') {
                             os.error('请选择出库单~');
                             return;
@@ -259,22 +271,22 @@
                         $(".print").print();
                     },
                     /* 出库单信息核对 */
-                    toolContrast: function () { 
+                    toolContrast: function () {
                         if (packguid === '') {
                             os.error('请选择出库单~');
                             return;
                         }
                         os.Open('出库单效验', '/fytadmin/stock/exportvalidation?pack=' + packguid, '1200px', '700px');
-                    }                    
+                    }
                 };
 
                 funTool = {
                     getGoodsSku: function (obj) {
                         packguid = obj.guid;
                         shopGuid = obj.shopGuid;
-                        prints.model = obj;                       
+                        prints.model = obj;
                         active.reload();
-                        os.get('api/stock/inoutlist?types=2', { packGuid: packguid, limit:10000}, function (res) { 
+                        os.get('api/stock/inoutlist?types=2', { packGuid: packguid, limit: 10000 }, function (res) {
                             prints.list = res.data;
                         });
                     },

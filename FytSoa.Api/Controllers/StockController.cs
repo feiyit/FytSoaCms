@@ -65,6 +65,16 @@ namespace FytSoa.Api.Controllers
         }
 
         /// <summary>
+        /// 批量添加
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("batchaddinout")]
+        public async Task<ApiResult<string>> BatchAddInOutAsync(string guid, string json, string adminGuid)
+        {
+            return await _inOutLogService.AddBatchAsync(guid,json,adminGuid);
+        }
+
+        /// <summary>
         /// 添加
         /// </summary>
         /// <returns></returns>

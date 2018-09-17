@@ -79,6 +79,16 @@ namespace FytSoa.Api.Controllers
         {
             return await _skuGoodsService.GetByCodeAsync(shopGuid, code);
         }
+
+        /// <summary>
+        /// 根据条形码获得条形码信息，不需要根据加盟商
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("getsku")]
+        public async Task<ApiResult<ErpGoodsSku>> GetSkuByCode(string code)
+        {
+            return await _skuGoodsService.GetByGuidAsync(code);
+        }
         #endregion
 
         #region 商品管理Api
