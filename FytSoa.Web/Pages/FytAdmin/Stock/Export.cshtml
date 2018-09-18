@@ -68,7 +68,7 @@
     </div>
     <script type="text/html" id="toolbar">
         <div class="layui-btn-container">
-            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolAdd"><i class="layui-icon"></i> 新增</button>
+            <button type="button" class="layui-btn layui-btn-sm layui-hide" lay-event="toolAdd"><i class="layui-icon"></i> 新增</button>
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolBatchAdd"><i class="layui-icon"></i> 批量新增</button>
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolDel"><i class="layui-icon"></i> 删除</button>
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolPrint"><i class="layui-icon layui-icon-print"></i> 打印出库单</button>
@@ -175,8 +175,8 @@
                             { field: 'brankName', title: '品牌' },
                             { field: 'styleName', title: '款式' },
                             { field: 'stockSum', width: 150, title: '入库数量', sort: true },
-                            { field: 'addDate', title: '添加时间' },
-                            { width: 100, title: '操作', templet: '#tool' }
+                            { field: 'addDate', title: '添加时间' }
+                            //{ width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
                     height: $(window).height() - 150,
@@ -223,6 +223,7 @@
                         }
                         os.Open('添加出库信息', '/fytadmin/stock/exportmodify/?packguid=' + packguid + '&shopguid=' + shopGuid, '600px', '400px', function () {
                             active.reload();
+                            funTool.packPage();
                         });
                     },
                     //批量新增出库信息
@@ -246,7 +247,7 @@
                         $.each(data, function (i, item) {
                             str += item.guid + ",";
                         });
-                        layer.confirm('确定要执行批量删除吗？', function (index) {
+                        layer.confirm('确定要执行批量删除吗？删除后平台库存会增加相应出库数量', function (index) {
                             layer.close(index);
                             var loadindex = layer.load(1, {
                                 shade: [0.1, '#000']
@@ -255,6 +256,7 @@
                                 layer.close(loadindex);
                                 if (res.statusCode === 200) {
                                     active.reload();
+                                    funTool.packPage();
                                     os.success('删除成功！');
                                 } else {
                                     os.error(res.message);
@@ -307,7 +309,8 @@
                     },
                     deletes: function () {
                         $(".fyt-task-menu").addClass('layui-hide');
-                        layer.confirm('确定要执行批量删除吗？', function (index) {
+                        os.error('为了保证数据一致性，不允许删除出库单！');
+                        /*layer.confirm('确定要执行批量删除吗？', function (index) {
                             layer.close(index);
                             var loadindex = layer.load(1, {
                                 shade: [0.1, '#000']
@@ -321,7 +324,7 @@
                                     os.error(res.message);
                                 }
                             });
-                        });
+                        });*/
                     },
                     tool: function (event) {
                         event.stopPropagation();

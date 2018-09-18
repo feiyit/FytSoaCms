@@ -34,6 +34,34 @@ namespace FytSoa.Service.Implements
                 var packModel = ErpPackLogDb.GetById(guid);
                 //解析字符串转换成List对象
                 var goodsList = JsonConvert.DeserializeObject<List<ErpInOutLog>>(json);
+                //根据条形码查询平台库存的数据
+                var codeList = goodsList.Select(m=>m.GoodsGuid).ToList();
+                var skuList = ErpGoodsSkuDb.GetList(m=>codeList.Contains(m.Guid));
+                //定义一个值，判断条形码里面没有的数据数量
+                var noSkuCount = 0;
+                //循环平台数据，减少相应的库存
+                foreach (var item in skuList)
+                {
+                    var goodsModel = goodsList.Find(m=>m.GoodsGuid==item.Guid);
+                    if (goodsModel!=null && packModel.Types==2)
+                    {
+                        item.StockSum = item.StockSum - goodsModel.GoodsSum;
+                    }
+                    else if (goodsModel != null && packModel.Types == 1)
+                    {
+                        item.StockSum = item.StockSum + goodsModel.GoodsSum;
+                    }
+                    else
+                    {
+                        noSkuCount++;
+                    }
+                }
+                if (noSkuCount!=0)
+                {
+                    res.message = "添加的商品在平台没有查询到~";
+                    return await Task.Run(() => res);
+                }
+                //循环构造出入库详情数据
                 foreach (var item in goodsList)
                 {
                     item.Guid = Guid.NewGuid().ToString();
@@ -51,6 +79,8 @@ namespace FytSoa.Service.Implements
                     Db.Updateable(packModel).ExecuteCommand();
                     //添加该打包日志下面的商品
                     Db.Insertable(goodsList).ExecuteCommand();
+                    //修改平台库存数量
+                    Db.Updateable(skuList).ExecuteCommand();
                 });
                 res.statusCode = (int)ApiEnum.Status;
                 if (!result.IsSuccess)
@@ -145,20 +175,63 @@ namespace FytSoa.Service.Implements
         /// <returns></returns>
         public async Task<ApiResult<string>> DeleteAsync(string parm)
         {
-            var res = new ApiResult<string>() { data = "1", statusCode = 200 };
+            var res = new ApiResult<string>() { data = "1", statusCode = (int)ApiEnum.Error };
             try
             {
                 var list = Utils.StrToListString(parm);
-                var dbres = ErpInOutLogDb.Delete(m => list.Contains(m.Guid));
-                if (!dbres)
+                //根据主键查询详细
+                var inoutList = ErpInOutLogDb.GetList(m => list.Contains(m.Guid));
+                //获得条形码数据
+                var codeList = inoutList.Select(m => m.GoodsGuid).ToList();
+                var skuList = ErpGoodsSkuDb.GetList(m => codeList.Contains(m.Guid));
+                //定义一个值，判断条形码里面没有的数据数量
+                var noSkuCount = 0;
+                //获得打包日志的ID
+                var packGuid = "";
+                //循环平台数据，减少相应的库存
+                foreach (var item in skuList)
+                {
+                    var goodsModel = inoutList.Find(m => m.GoodsGuid == item.Guid);
+                    packGuid = goodsModel.PackGuid;
+                    if (goodsModel != null && goodsModel.Types == 2)
+                    {
+                        item.StockSum = item.StockSum + goodsModel.GoodsSum;
+                    }
+                    else if (goodsModel != null && goodsModel.Types == 1)
+                    {
+                        item.StockSum = item.StockSum - goodsModel.GoodsSum;
+                    }
+                    else
+                    {
+                        noSkuCount++;
+                    }
+                }
+                if (noSkuCount != 0)
+                {
+                    res.message = "删除的商品在平台没有查询到~";
+                    return await Task.Run(() => res);
+                }
+
+                var result = Db.Ado.UseTran(() =>
+                {
+                    //删除出入库信息
+                    Db.Deleteable(inoutList).ExecuteCommand();
+                    //修改平台库存数量
+                    Db.Updateable(skuList).ExecuteCommand();
+                    //根据打包ID获得下面商品的总数
+                    var packInOutCount = Db.Queryable<ErpInOutLog>().Where(m => m.PackGuid == packGuid).Sum(m => m.GoodsSum);
+                    //更新打包日志数量
+                    Db.Updateable<ErpPackLog>().UpdateColumns(m => new ErpPackLog() { GoodsSum = packInOutCount }).Where(m => m.Guid == packGuid).ExecuteCommand();
+                });
+                res.statusCode = (int)ApiEnum.Status;
+                if (!result.IsSuccess)
                 {
                     res.statusCode = (int)ApiEnum.Error;
-                    res.message = "删除数据失败~";
+                    res.message = result.ErrorMessage;
                 }
             }
             catch (Exception ex)
             {
-                res.statusCode = (int)ApiEnum.Error;
                 res.message = ApiEnum.Error.GetEnumText() + ex.Message;
             }
             return await Task.Run(() => res);
