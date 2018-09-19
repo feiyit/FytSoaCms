@@ -77,7 +77,7 @@ using FytSoa.Web;
 ");
             EndContext();
             BeginContext(564, 6255, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5dc3f9004263423195ff63ae200e9132", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "057e485a005d4c41a5a1d05395e3a3a8", async() => {
                 BeginContext(608, 2, true);
                 WriteLiteral("\r\n");
                 EndContext();
@@ -107,7 +107,7 @@ using FytSoa.Web;
                 WriteLiteral("                                    ");
                 EndContext();
                 BeginContext(1118, 51, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "173a7fe9e5094d59acc358f4b3ffdad7", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff9c261341e641ce9300bb6c3ec56f2c", async() => {
                     BeginContext(1156, 4, true);
                     WriteLiteral("全部店铺");
                     EndContext();
@@ -140,7 +140,7 @@ using FytSoa.Web;
                 WriteLiteral("                                    ");
                 EndContext();
                 BeginContext(1315, 31, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c311130ee06e4dc9a62115082995c6c9", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "098e49db444c4f15a3c5bb418be23372", async() => {
                     BeginContext(1333, 4, true);
                     WriteLiteral("全部店铺");
                     EndContext();
@@ -172,7 +172,7 @@ using FytSoa.Web;
                 WriteLiteral("                                    ");
                 EndContext();
                 BeginContext(1523, 50, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "91f2263b75604b48badba5c9fb27db29", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "84a2536596764e24b9ec1165e5939e55", async() => {
                     BeginContext(1561, 3, true);
                     WriteLiteral("按品牌");
                     EndContext();
@@ -205,7 +205,7 @@ using FytSoa.Web;
                 WriteLiteral("                                    ");
                 EndContext();
                 BeginContext(1719, 30, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f879c2afba684cf4a698068c2dc09583", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "20caaad7add648a8b602dcc0a55e32ff", async() => {
                     BeginContext(1737, 3, true);
                     WriteLiteral("按品牌");
                     EndContext();
@@ -243,7 +243,7 @@ using FytSoa.Web;
                             ");
                 EndContext();
                 BeginContext(2174, 37, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "97b2e4a8f0e94ff3b95656799a03530f", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "93ea478c3dcb4786b13fee2171112687", async() => {
                     BeginContext(2191, 11, true);
                     WriteLiteral("--可根据品牌搜索--");
                     EndContext();
@@ -277,7 +277,7 @@ using FytSoa.Web;
                 WriteLiteral("                                        ");
                 EndContext();
                 BeginContext(2514, 66, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d79f855d1b8148fb82bdc27d1463f5f0", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ee57aea2d99144cc8d4e7748b998bc05", async() => {
                     BeginContext(2562, 9, false);
 #line 61 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Shop\ActivityModify.cshtml"
                                                                                   Write(item.Name);
@@ -320,7 +320,7 @@ using FytSoa.Web;
                 WriteLiteral("                                        ");
                 EndContext();
                 BeginContext(2706, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "80819e7351814b18860114d9b0a25b8b", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "698b815dac3144f9b4cbba088bdac022", async() => {
                     BeginContext(2734, 9, false);
 #line 64 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Shop\ActivityModify.cshtml"
                                                               Write(item.Name);

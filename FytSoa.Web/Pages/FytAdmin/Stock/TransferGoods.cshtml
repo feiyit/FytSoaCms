@@ -38,23 +38,27 @@
             form.render('select');
             table.render({
                 elem: '#tablist',
-                url: '/api/stock/listbyshopguid?outShopGuid=@Model.TransferModel.OutShopGuid',
+                //url: '/api/stock/listbyshopguid?outShopGuid=@Model.TransferModel.OutShopGuid
+                url: '/api/inventory/stockbyshop',
                 cols: [
                     [
                         { type: 'checkbox', fixed: 'left' },
                         { field: 'code',width:180, title: '条形码', sort: true, fixed: 'left' },
-                        { field: 'brankName', title: '品牌' },
-                        { field: 'styleName', title: '款式' },
-                        { field: 'salePrice', title: '价格' },
-                        { field: 'disPrice', title: '折扣价' },
-                        { field: 'stockSum', title: '库存' },
+                        { field: 'brand', title: '品牌' },
+                        { field: 'style', title: '款式' },
+                        /*{ field: 'salePrice', title: '价格' },
+                        { field: 'disPrice', title: '折扣价' },*/
+                        { field: 'stock', title: '库存' },
                         { field: 'goodsSum', width: 120, edit: 'text', title: '<i class="layui-icon layui-icon-edit"></i>调拨数量', style: 'border-color:#409eff' }
                     ]
                 ],
                 page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                 limit: 10,
                 height:515,
-                id: 'tables'
+                id: 'tables',
+                where: {
+                    guid:'@Model.TransferModel.OutShopGuid'
+                }
             });
             var pIndex = parent.layer.getFrameIndex(window.name);     
             var transferGuid = '@Model.TransferModel.Guid',transferSum=@Model.TransferModel.GoodsSum, active = {

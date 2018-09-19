@@ -61,7 +61,7 @@ using FytSoa.Web;
             WriteLiteral("<style>.layui-form-select dl{max-height:180px;}</style>\r\n");
             EndContext();
             BeginContext(214, 3435, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "aa943549d85a4e32808b5c63350f3854", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9706365694d147139dccea81d3f5390b", async() => {
                 BeginContext(258, 177, true);
                 WriteLiteral("\r\n    <div class=\"layui-form-item\">\r\n        <label class=\"layui-form-label\">调拨单编号</label>\r\n        <div class=\"layui-input-block\">\r\n            <input type=\"text\" name=\"Number\"");
                 EndContext();
@@ -83,7 +83,7 @@ WriteAttributeValue("", 443, Model.TransferModel.Number, 443, 27, false);
                 ");
                 EndContext();
                 BeginContext(861, 44, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "25e63877578b4f7eb5e581653d580d1c", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1e874dd381854d698ecf7ebc1e6f42b7", async() => {
                     BeginContext(878, 18, true);
                     WriteLiteral("--请选择加盟商，支持关键字搜索--");
                     EndContext();
@@ -117,7 +117,7 @@ WriteAttributeValue("", 443, Model.TransferModel.Number, 443, 27, false);
                 WriteLiteral("                            ");
                 EndContext();
                 BeginContext(1133, 70, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "90815c35af944020b179150e3ff98445", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b54d81e9286d445aa66550de1126d2b3", async() => {
                     BeginContext(1181, 13, false);
 #line 25 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Stock\TransferModify.cshtml"
                                                                       Write(item.ShopName);
@@ -161,7 +161,7 @@ WriteAttributeValue("", 443, Model.TransferModel.Number, 443, 27, false);
                 WriteLiteral("                            ");
                 EndContext();
                 BeginContext(1317, 50, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "84aa6804c8b148a5aa35694c2108568f", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3097b4c655eb496bb328e3bbc8eea49d", async() => {
                     BeginContext(1345, 13, false);
 #line 29 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Stock\TransferModify.cshtml"
                                                   Write(item.ShopName);
@@ -211,7 +211,7 @@ WriteAttributeValue("", 443, Model.TransferModel.Number, 443, 27, false);
                 ");
                 EndContext();
                 BeginContext(1749, 44, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "19899813a37146ab85aac1d091631a9f", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5e89ef8e4f2e4d3aa7c8c9e765dcbf0d", async() => {
                     BeginContext(1766, 18, true);
                     WriteLiteral("--请选择加盟商，支持关键字搜索--");
                     EndContext();
@@ -245,7 +245,7 @@ WriteAttributeValue("", 443, Model.TransferModel.Number, 443, 27, false);
                 WriteLiteral("                            ");
                 EndContext();
                 BeginContext(2022, 70, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d39821712fad4b6c85fe377e1166e725", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7208aa933ab448a1bf1ff8da9c8628c1", async() => {
                     BeginContext(2070, 13, false);
 #line 46 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Stock\TransferModify.cshtml"
                                                                       Write(item.ShopName);
@@ -289,7 +289,7 @@ WriteAttributeValue("", 443, Model.TransferModel.Number, 443, 27, false);
                 WriteLiteral("                            ");
                 EndContext();
                 BeginContext(2206, 50, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "782c30bb615d4386a53bfbc277573797", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e57928e5bff242cdadc3286ecc75b086", async() => {
                     BeginContext(2234, 13, false);
 #line 50 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Stock\TransferModify.cshtml"
                                                   Write(item.ShopName);

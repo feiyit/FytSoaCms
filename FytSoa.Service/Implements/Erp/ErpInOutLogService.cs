@@ -72,7 +72,7 @@ namespace FytSoa.Service.Implements
                     item.AdminGuid = adminGuid;
                     item.AddDate = DateTime.Now;
                 }
-                packModel.GoodsSum = goodsList.Sum(m=>m.GoodsSum);
+                packModel.GoodsSum += goodsList.Sum(m=>m.GoodsSum);
                 var result = Db.Ado.UseTran(() =>
                 {
                     //修改打包的数量
