@@ -94,12 +94,14 @@ namespace FytSoa.Service.Implements
                         .WhereIF(!string.IsNullOrEmpty(searchParm.shopGuid), (erg, egs) => erg.ShopGuid == searchParm.shopGuid)
                         .WhereIF(!string.IsNullOrEmpty(searchParm.brank), (erg, egs) => egs.BrankGuid == searchParm.brank)
                         .Select((erg, egs)=>new ReturnGoodsDto() {
+                            Guid=egs.Guid,
                             Code=egs.Code,
                             BrandName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.BrankGuid).Select(g => g.Name),
                             SeasonName=SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.SeasonGuid).Select(g => g.Name),
                             StyleName=SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.StyleGuid).Select(g => g.Name),
                             Counts = erg.ReturnCount,
-                            Summary=erg.Summary
+                            Summary=erg.Summary,
+                            Status=erg.Status
                         })
                         .ToPageAsync(parm.page, parm.limit);
                 res.success = true;

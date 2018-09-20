@@ -9,6 +9,7 @@ namespace FytSoa.Service.DtoModel
     /// </summary>
     public class ReturnGoodsDto
     {
+        public string Guid { get; set; }
         /// <summary>
         /// 商品编号
         /// </summary>
@@ -33,6 +34,11 @@ namespace FytSoa.Service.DtoModel
         /// 原因
         /// </summary>
         public string Summary { get; set; }
+
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public int Status { get; set; }
     }
 
     /// <summary>

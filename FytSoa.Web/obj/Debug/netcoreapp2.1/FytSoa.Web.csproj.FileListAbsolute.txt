@@ -274,3 +274,5 @@ D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pag
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\ExportBatchAdd.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\ImportValidation.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\ImportBatchAdd.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\ImportBatchAdd.g.cshtml.cs
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Debug\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\ImportValidation.g.cshtml.cs

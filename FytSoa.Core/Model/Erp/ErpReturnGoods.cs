@@ -49,6 +49,11 @@ namespace FytSoa.Core.Model.Erp
         /// </summary>           
         public int ReturnCount { get; set; } = 0;
 
+        /// <summary>
+        /// 1=正常  2=作废
+        /// 主要解决返货出现问题后，可以人工干预库存数对不上问题
+        /// </summary>
+        public int Status { get; set; } = 1;
 
         /// <summary>
         /// Desc:返货描述

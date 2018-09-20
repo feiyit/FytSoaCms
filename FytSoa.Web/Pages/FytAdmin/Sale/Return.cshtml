@@ -7,7 +7,7 @@
 <div id="container">
     <style>
         .layui-col-220 {
-            width: 388px;
+            width: 330px;
             top: 80px;
             left: 12px;
         }
@@ -18,7 +18,7 @@
             }
 
         .right-col-body {
-            left: 400px;
+            left: 345px;
             top: 60px;
         }
     </style>
@@ -75,7 +75,9 @@
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolContrast"><i class="layui-icon layui-icon-read"></i> 返货订单对比</button>
         </div>
     </script>
-    <script type="text/javascript" src="~/themes/js/modules/vue.js"></script>
+    <script type="text/html" id="switchTpl">
+        <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="ON|OFF" lay-filter="statusedit" {{ d.status==1?'checked':''}}>
+    </script>
     <script>
         var funTool, vm = new Vue({
             el: "#app",
@@ -119,12 +121,30 @@
                             { field: 'styleName', title: '款式' },
                             { field: 'seasonName', width: 150, title: '季节' },
                             { field: 'counts', title: '返货数' },
-                            { field: 'summary', title: '返货原因' }
+                            { field: 'summary', title: '返货原因' },
+                            { field: 'status', title: '状态', templet: '#switchTpl' }
                         ]
                     ],
                     page: true,
                     limit: 20,
-                    id: 'tables'
+                    id: 'tables',
+                    where: {
+                        shopGuid:'all'
+                    }
+                });
+                //监听状态操作
+                form.on('switch(statusedit)', function (obj) {
+                    var index = layer.load(1, {
+                        shade: [0.1, '#000']
+                    });
+                    os.ajax('api/code/editstatus', { guid: this.value, status: obj.elem.checked }, function (res) {
+                        if (res.statusCode === 200) {
+                            os.success('状态更改成功~');
+                            layer.close(index);
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
                 });
 
                 var orderguid = '', shopGuid = '', active = {
