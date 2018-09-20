@@ -94,7 +94,7 @@ namespace FytSoa.Service.Implements
                         .WhereIF(!string.IsNullOrEmpty(searchParm.shopGuid), (erg, egs) => erg.ShopGuid == searchParm.shopGuid)
                         .WhereIF(!string.IsNullOrEmpty(searchParm.brank), (erg, egs) => egs.BrankGuid == searchParm.brank)
                         .Select((erg, egs)=>new ReturnGoodsDto() {
-                            Guid=egs.Guid,
+                            Guid=erg.Guid,
                             Code=egs.Code,
                             BrandName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.BrankGuid).Select(g => g.Name),
                             SeasonName=SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.SeasonGuid).Select(g => g.Name),
@@ -135,6 +135,89 @@ namespace FytSoa.Service.Implements
             catch (Exception ex)
             {
                 res.statusCode = (int)ApiEnum.Error;
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+            }
+            return await Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 修改一条数据
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ApiResult<string>> ModifyStatusAsync(ErpReturnGoods parm)
+        {
+            var res = new ApiResult<string>() { data = "1", statusCode = (int)ApiEnum.Error };
+            try
+            {
+                var model = ErpReturnGoodsDb.GetSingle(m=>m.Guid== parm.Guid);
+                if (model!=null)
+                {
+                    //查询加盟商库存中，该条商品的信息
+                    var shopGoods = ErpShopSkuDb.GetSingle(m=>m.ShopGuid==model.ShopGuid && m.SkuGuid== model.GoodsGuid);
+                    //查询平台  该条商品的信息
+                    var platformGoods = ErpGoodsSkuDb.GetSingle(m=>m.Guid==model.GoodsGuid);
+                    //查询返货订单信息
+                    var returnOrderModel = ErpReturnOrderDb.GetSingle(m=>m.Guid==model.OrderGuid);
+                    if (model.Status==1)
+                    {
+                        //如果状态修改为非正常   需要增加加盟商库存   减少平台库存
+                        model.Status = 2;
+                        //加盟商增加
+                        shopGoods.Stock += model.ReturnCount;
+                        //需要判断平台库存是否足够
+                        if (platformGoods.StockSum<model.ReturnCount)
+                        {
+                            res.message = "平台库存不足！";
+                            return await Task.Run(() => res);
+                        }
+                        //平台库存减少
+                        platformGoods.StockSum -= model.ReturnCount;
+                        //减少返货订单总数
+                        returnOrderModel.GoodsSum -= model.ReturnCount;
+                    }
+                    else
+                    {
+                        //如果状态修改为非正常   需要减少加盟商库存  增加平台库存
+                        model.Status = 1;
+                        //需要判断加盟商库存是否足够
+                        if (shopGoods.Stock < model.ReturnCount)
+                        {
+                            res.message = "加盟商库存不足！";
+                            return await Task.Run(() => res);
+                        }
+                        //加盟商减少
+                        shopGoods.Stock -= model.ReturnCount;
+                        //平台库存增加
+                        platformGoods.StockSum += model.ReturnCount;
+                        //增加返货订单总数
+                        returnOrderModel.GoodsSum += model.ReturnCount;
+                    }
+                    
+                    var result = Db.Ado.UseTran(() =>
+                    {
+                        //修改加盟商信息
+                        Db.Updateable(shopGoods).ExecuteCommand();
+                        //修改平台库存
+                        Db.Updateable(platformGoods).ExecuteCommand();
+                        //修改返货订单信息
+                        Db.Updateable(returnOrderModel).ExecuteCommand();
+                        //修改返货商品
+                        Db.Updateable(model).ExecuteCommand();
+                    });
+                    if (!result.IsSuccess)
+                    {
+                        res.message = result.ErrorMessage;
+                    }
+                    res.statusCode = (int)ApiEnum.Status;
+
+                }
+                else
+                {
+                    res.message = "没有查询到该条数据~";
+                }
+            }
+            catch (Exception ex)
+            {
                 res.message = ApiEnum.Error.GetEnumText() + ex.Message;
             }
             return await Task.Run(() => res);

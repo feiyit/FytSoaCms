@@ -20,7 +20,7 @@ namespace FytSoa.Service.Implements
     public class InventoryService : DbContext, IInventoryService
     {
         /// <summary>
-        /// 查询多条记录
+        /// 查询多条记录  库存盘点
         /// </summary>
         /// <returns></returns>
         public Task<ApiResult<Page<StockInventory>>> GetPagesAsync(PageParm parm)
@@ -48,8 +48,8 @@ namespace FytSoa.Service.Implements
                         TotalStock = SqlFunc.Subqueryable<ErpInOutLog>().Where(g => g.GoodsGuid == m.Guid && g.Types == 1).Sum(g => g.GoodsSum),
                         OutStock= SqlFunc.Subqueryable<ErpInOutLog>().Where(g => g.GoodsGuid == m.Guid && g.Types == 2).Sum(g => g.GoodsSum),
                         Transfer = SqlFunc.Subqueryable<ErpTransferGoods>().Where(g => g.GoodsGuid == m.Guid).Sum(g => g.GoodsSum),
-                        Return = SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == m.Guid).Sum(g=>g.ReturnCount),
-                        Back = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.GoodsGuid == m.Guid).Sum(g => g.BackCount)
+                        Return = SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == m.Guid && g.Status==1).Sum(g=>g.ReturnCount),
+                        Back = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.GoodsGuid == m.Guid && g.Status==1).Sum(g => g.BackCount)
                     }).ToPage(parm.page, parm.limit);                
                 res.success = true;
                 res.message = "获取成功！";
@@ -86,7 +86,7 @@ namespace FytSoa.Service.Implements
                         Brand = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t2.BrankGuid).Select(g => g.Name),
                         Style = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t2.StyleGuid).Select(g => g.Name),
                         Stock = t1.Stock,
-                        returnSum = SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == t1.SkuGuid && g.ShopGuid == parm.guid).Sum(g => g.ReturnCount)
+                        returnSum = SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == t1.SkuGuid && g.ShopGuid == parm.guid && g.Status==1).Sum(g => g.ReturnCount)
                     }).ToPage(parm.page, parm.limit);
 
                 //根据日期查询
@@ -176,6 +176,7 @@ namespace FytSoa.Service.Implements
                     .Sum(m=>m.RealMoney);
                 //查询退单金额
                 var backMoney=Db.Queryable<ErpBackGoods>()
+                    .Where(m=>m.Status==1)
                     .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.ShopGuid == parm.guid)
                     .WhereIF(!string.IsNullOrEmpty(searchParm.btime) && !string.IsNullOrEmpty(searchParm.btime),
                     m => SqlFunc.Between(m.AddDate, Convert.ToDateTime(searchParm.btime), Convert.ToDateTime(searchParm.etime)))
@@ -222,9 +223,9 @@ namespace FytSoa.Service.Implements
                         Mobile=m.Mobile,
                         OrderCount= SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Count(),
                         Money= SqlFunc.Subqueryable<ErpSaleOrder>().Where(g => g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Sum(g=>g.RealMoney),
-                        ReturnCount = SqlFunc.Subqueryable<ErpReturnOrder>().Where(g => g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Count(),
-                        BackCount = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Count(),
-                        BackMoney = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Sum(g=>g.BackMoney),
+                        ReturnCount = SqlFunc.Subqueryable<ErpReturnOrder>().Where(g => g.Status==1 && g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Count(),
+                        BackCount = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.Status==1 && g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Count(),
+                        BackMoney = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.Status==1 && g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Sum(g=>g.BackMoney),
                     })
                     .OrderBy(m=>m.Money,OrderByType.Desc)
                     .ToPage(parm.page,parm.limit);
@@ -390,7 +391,7 @@ namespace FytSoa.Service.Implements
                     + "select s.Guid,s.ShopName,t1.Months,t1.Money,t1.Counts from erpshops as s left JOIN( "
                     + "select ShopGuid,date_format(AddDate,'%m') AS `Months`,SUM(BackMoney) as Money,sum(BackCount) as Counts "
                     + "from erpbackgoods  "
-                    + "where date_format(AddDate,'%Y')=" + parm.time + " "
+                    + "where date_format(AddDate,'%Y')=" + parm.time + " and erpbackgoods.status=1 "
                     + "group by ShopGuid,Months) as t1 "
                     + "on s.Guid=t1.ShopGuid"
                     + ") tt "

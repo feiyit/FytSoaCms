@@ -18,7 +18,6 @@ E:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\obj\Debug\netcoreapp2.1\Fy
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\obj\Debug\netcoreapp2.1\FytSoa.Extensions.AssemblyInfo.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\obj\Debug\netcoreapp2.1\FytSoa.Extensions.dll
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\obj\Debug\netcoreapp2.1\FytSoa.Extensions.pdb
-E:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\obj\Debug\netcoreapp2.1\FytSoa.Extensions.csprojAssemblyReference.cache
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\bin\Debug\netcoreapp2.1\FytSoa.Extensions.deps.json
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\bin\Debug\netcoreapp2.1\FytSoa.Extensions.runtimeconfig.json
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Extensions\bin\Debug\netcoreapp2.1\FytSoa.Extensions.runtimeconfig.dev.json

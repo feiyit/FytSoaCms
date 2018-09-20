@@ -75,7 +75,7 @@ namespace FytSoa.Core.Model.Erp
         /// Default:1
         /// Nullable:False
         /// </summary>           
-        public byte Status { get; set; } = 0;
+        public byte Status { get; set; } = 1;
 
         /// <summary>
         /// Desc:退货原因

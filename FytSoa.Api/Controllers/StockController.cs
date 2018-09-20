@@ -248,6 +248,16 @@ namespace FytSoa.Api.Controllers
             var res = await _backGoodsService.GetPagesAsync(parm, searchParm);
             return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
         }
+        /// <summary>
+        /// 修改退货状态
+        /// </summary>
+        /// <param name="parm">返货商品信息</param>
+        /// <returns></returns>
+        [HttpPost("back/updatestatus")]
+        public async Task<ApiResult<string>> UpdateBackGoodsStatus(ErpBackGoods parm)
+        {
+            return await _backGoodsService.ModifyStatusAsync(parm);
+        }
         #endregion
 
         #region 返货订单列表
@@ -283,6 +293,17 @@ namespace FytSoa.Api.Controllers
         public Task<ApiResult<string>> AddReturnOrder(ErpReturnOrder parm, string goodsJson)
         {
             return _returnOrderService.AddAsync(parm, goodsJson);
+        }
+
+        /// <summary>
+        /// 修改返货商品状态
+        /// </summary>
+        /// <param name="parm">返货商品信息</param>
+        /// <returns></returns>
+        [HttpPost("return/updatestatus")]
+        public Task<ApiResult<string>> UpdateReturnGoodsStatus(ErpReturnGoods parm)
+        {
+            return _returnGoodsService.ModifyStatusAsync(parm);
         }
         #endregion
     }

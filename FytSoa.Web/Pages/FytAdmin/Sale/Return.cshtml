@@ -121,12 +121,12 @@
                             { field: 'styleName', title: '款式' },
                             { field: 'seasonName', width: 150, title: '季节' },
                             { field: 'counts', title: '返货数' },
-                            { field: 'summary', title: '返货原因' },
-                            { field: 'status', title: '状态', templet: '#switchTpl' }
+                            { field: 'status', width: 100, title: '状态', templet: '#switchTpl' },
+                            { field: 'summary', title: '返货原因' }
                         ]
                     ],
-                    page: true,
                     limit: 20,
+                    page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     id: 'tables',
                     where: {
                         shopGuid:'all'
@@ -137,10 +137,11 @@
                     var index = layer.load(1, {
                         shade: [0.1, '#000']
                     });
-                    os.ajax('api/code/editstatus', { guid: this.value, status: obj.elem.checked }, function (res) {
+                    os.ajax('api/stock/return/updatestatus', { Guid: this.value }, function (res) {
                         if (res.statusCode === 200) {
                             os.success('状态更改成功~');
                             layer.close(index);
+                            funTool.orderPage();
                         } else {
                             os.error(res.message);
                         }

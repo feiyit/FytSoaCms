@@ -38,6 +38,6 @@ namespace FytSoa.Service.Interfaces
         /// 修改一条数据
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<string>> ModifyAsync(ErpBackGoods parm);
+        Task<ApiResult<string>> ModifyStatusAsync(ErpBackGoods parm);
     }
 }

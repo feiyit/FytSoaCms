@@ -169,6 +169,7 @@ namespace FytSoa.Service.Implements
                         .WhereIF(!string.IsNullOrEmpty(parm.time), (ebg, eg, es, est) => ebg.AddDate >= Convert.ToDateTime(beginTime) && ebg.AddDate <= Convert.ToDateTime(endTime))
                         .OrderBy((ebg, eg, es, est) =>ebg.AddDate,OrderByType.Desc)
                         .Select((ebg, eg, es, est) => new BackGoodsDto() {
+                            Number=ebg.Guid,
                             Code=eg.Code,
                             OrderNumber=ebg.OrderNumber,
                             BrandName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == eg.BrankGuid).Select(g => g.Name),
@@ -179,7 +180,8 @@ namespace FytSoa.Service.Implements
                             Mobile=est.Mobile,
                             BackCount =ebg.BackCount,
                             Money=ebg.BackMoney,
-                            Summary=ebg.Summary,
+                            Status=ebg.Status,
+                            Summary =ebg.Summary,
                             AddDate =ebg.AddDate
                         })
                         .ToPage(parm.page, parm.limit);
@@ -199,21 +201,58 @@ namespace FytSoa.Service.Implements
         /// 修改一条数据
         /// </summary>
         /// <returns></returns>
-        public async Task<ApiResult<string>> ModifyAsync(ErpBackGoods parm)
+        public async Task<ApiResult<string>> ModifyStatusAsync(ErpBackGoods parm)
         {
-            var res = new ApiResult<string>() { data = "1", statusCode = 200 };
+            var res = new ApiResult<string>() { data = "1", statusCode = (int)ApiEnum.Error };
             try
             {
-                var dbres = ErpBackGoodsDb.Update(parm);
-                if (!dbres)
+                var model = ErpBackGoodsDb.GetSingle(m => m.Guid == parm.Guid);
+                if (model != null)
                 {
-                    res.statusCode = (int)ApiEnum.Error;
-                    res.message = "修改数据失败~";
+                    //查询加盟商库存中，该条商品的信息
+                    var shopGoods = ErpShopSkuDb.GetSingle(m => m.ShopGuid == model.ShopGuid && m.SkuGuid == model.GoodsGuid);
+                    if (model.Status == 1)
+                    {
+                        //如果状态修改为非正常   需要减少加盟商库存
+                        model.Status = 2;
+                        //需要判断加盟商库存是否足够
+                        if (shopGoods.Stock < model.BackCount)
+                        {
+                            res.message = "加盟商库存不足！";
+                            return await Task.Run(() => res);
+                        }
+                        //加盟商减少
+                        shopGoods.Stock -= model.BackCount;
+                    }
+                    else
+                    {
+                        //如果状态修改为正常   需要增加加盟商库存
+                        model.Status = 1;
+                        //加盟商增加
+                        shopGoods.Stock += model.BackCount;
+                    }
+
+                    var result = Db.Ado.UseTran(() =>
+                    {
+                        //修改加盟商信息
+                        Db.Updateable(shopGoods).ExecuteCommand();
+                        //修改返货商品
+                        Db.Updateable(model).ExecuteCommand();
+                    });
+                    if (!result.IsSuccess)
+                    {
+                        res.message = result.ErrorMessage;
+                    }
+                    res.statusCode = (int)ApiEnum.Status;
+
+                }
+                else
+                {
+                    res.message = "没有查询到该条数据~";
                 }
             }
             catch (Exception ex)
             {
-                res.statusCode = (int)ApiEnum.Error;
                 res.message = ApiEnum.Error.GetEnumText() + ex.Message;
             }
             return await Task.Run(() => res);

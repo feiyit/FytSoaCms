@@ -58,6 +58,12 @@ namespace FytSoa.Service.DtoModel
         /// </summary>
         public string Summary { get; set; }
         /// <summary>
+        /// Desc:退货的状态 1=提交退货 2=受理 3=完成 4=其他
+        /// Default:1
+        /// Nullable:False
+        /// </summary>           
+        public byte Status { get; set; } = 1;
+        /// <summary>
         /// 时间
         /// </summary>
         public DateTime AddDate { get; set; }
