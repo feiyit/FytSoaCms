@@ -43,6 +43,16 @@ namespace FytSoa.Service.DtoModel
         /// 排序方式，可根据数字来判断，
         /// </summary>
         public int orderType { get; set; } = 0;
+
+        /// <summary>
+        /// 排序的字段
+        /// </summary>
+        public string field { get; set; }
+
+        /// <summary>
+        /// 排序的类型 asc  desc
+        /// </summary>
+        public string order { get; set; } = "desc";
     }
 
     public class AppSearchParm

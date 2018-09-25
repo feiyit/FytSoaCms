@@ -50,7 +50,9 @@ namespace FytSoa.Service.Implements
                         Transfer = SqlFunc.Subqueryable<ErpTransferGoods>().Where(g => g.GoodsGuid == m.Guid).Sum(g => g.GoodsSum),
                         Return = SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == m.Guid && g.Status==1).Sum(g=>g.ReturnCount),
                         Back = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.GoodsGuid == m.Guid && g.Status==1).Sum(g => g.BackCount)
-                    }).ToPage(parm.page, parm.limit);                
+                    })
+                    .OrderByIF(!string.IsNullOrEmpty(parm.field) && !string.IsNullOrEmpty(parm.order),parm.field+" "+parm.order)
+                    .ToPage(parm.page, parm.limit);                
                 res.success = true;
                 res.message = "获取成功！";
                 res.data = query;
@@ -215,6 +217,11 @@ namespace FytSoa.Service.Implements
                     beginTime = Convert.ToDateTime(timeRes[0].Trim());
                     endTime = Convert.ToDateTime(timeRes[1].Trim());
                 }
+                if (string.IsNullOrEmpty(parm.field) || string.IsNullOrEmpty(parm.order))
+                {
+                    parm.field = "Money";
+                    parm.order = "desc";
+                }
                 var query = Db.Queryable<ErpShops>()
                     .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.Guid == parm.guid)
                     .Select(m=>new ShopTurnover() {
@@ -227,7 +234,7 @@ namespace FytSoa.Service.Implements
                         BackCount = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.Status==1 && g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Count(),
                         BackMoney = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.Status==1 && g.ShopGuid == m.Guid && SqlFunc.Between(g.AddDate, beginTime, endTime)).Sum(g=>g.BackMoney),
                     })
-                    .OrderBy(m=>m.Money,OrderByType.Desc)
+                    .OrderBy(parm.field + " " + parm.order)
                     .ToPage(parm.page,parm.limit);
 
                 res.data = query;

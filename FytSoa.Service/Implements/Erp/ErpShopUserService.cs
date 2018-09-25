@@ -100,6 +100,11 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<ErpShopUser>>();
             try
             {
+                if (string.IsNullOrEmpty(parm.field) || string.IsNullOrEmpty(parm.order))
+                {
+                    parm.field = "points";
+                    parm.order = "desc";
+                }
                 var dt = new DateTime().Date;
                 var query = Db.Queryable<ErpShopUser>()
                         .WhereIF(parm.guid!="all",m => m.ShopGuid == parm.guid)
@@ -107,7 +112,8 @@ namespace FytSoa.Service.Implements
                         .WhereIF(!string.IsNullOrEmpty(parm.key),
                         m => m.Mobile == parm.key
                         || m.UserName == parm.key)
-                        .OrderBy(m => m.RegDate,OrderByType.Desc).ToPageAsync(parm.page, parm.limit);
+                        .OrderBy(parm.field + " " + parm.order)
+                        .ToPageAsync(parm.page, parm.limit);
                 res.success = true;
                 res.message = "获取成功！";
                 res.data = await query;

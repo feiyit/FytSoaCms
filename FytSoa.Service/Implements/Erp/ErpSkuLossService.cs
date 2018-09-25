@@ -79,7 +79,7 @@ namespace FytSoa.Service.Implements
                     .WhereIF(parm.types == 1, (esl, egs) => egs.StockSum > 0)
                     .WhereIF(!string.IsNullOrEmpty(parm.key), (esl, egs) => egs.Code.Contains(parm.key))
                     .WhereIF(!string.IsNullOrEmpty(parm.guid), (esl, egs) => egs.BrankGuid == parm.guid)
-                    .OrderBy((esl, egs) => esl.AddDate, OrderByType.Desc)
+                    .OrderByIF(string.IsNullOrEmpty(parm.field) || string.IsNullOrEmpty(parm.order),(esl, egs) => esl.AddDate, OrderByType.Desc)
                     .Select((esl, egs) => new GoodsSkuDto()
                     {
                         Guid = esl.Guid,
@@ -93,6 +93,7 @@ namespace FytSoa.Service.Implements
                         SaleSum = esl.Counts,
                         AddDate = egs.AddDate
                     })
+                    .OrderByIF(!string.IsNullOrEmpty(parm.field) && !string.IsNullOrEmpty(parm.order), parm.field + " " + parm.order)
                     .ToPageAsync(parm.page, parm.limit);
                 res.message = "获取成功！";
                 res.data = await query;

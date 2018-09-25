@@ -87,6 +87,22 @@
                     page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     id: 'tables'
                 });
+                table.on('sort(tool)', function (obj) {
+                    var e = layer.load(2, { shade: [.05, '#000'] });
+                    table.reload('tables', {
+                        initSort: obj,
+                        page: {
+                            curr: 1
+                        },
+                        where: {
+                            field: obj.field,
+                            order: obj.type
+                        },
+                        done: function () {
+                            layer.close(e);
+                        }
+                    });
+                });
                 //监听状态操作
                 form.on('switch(statusedit)', function (obj) {
                     var index = layer.load(1, {

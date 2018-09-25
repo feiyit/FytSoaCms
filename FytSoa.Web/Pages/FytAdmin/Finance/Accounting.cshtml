@@ -61,18 +61,36 @@
                     url: '/api/inventory/shopturnover',
                     cols: [
                         [
-                            { field: 'shopName', title: '店铺名称', fixed: 'left' },
-                            { field: 'orderCount', width: 150, title: '订单数' },
-                            { field: 'money', width: 120, title: '应收营业额' },
-                            { field: 'backMoney', width: 120, title: '退货金额'},
-                            { field: 'money', width: 120, title: '实收营业额', style: 'background-color: #D9DEE4;', templet: '#realMoney' },
-                            { field: 'returnCount', width: 200, title: '返货数' },
-                            { field: 'backCount', width: 200, title: '退货数' }
+                            { field: 'shopName', title: '店铺名称', fixed: 'left', sort: true },
+                            { field: 'orderCount', width: 150, title: '订单数', sort: true },
+                            { field: 'money', width: 120, title: '应收营业额', sort: true },
+                            { field: 'backMoney', width: 120, title: '退货金额', sort: true},
+                            { field: 'money', width: 200, title: '实收营业额', sort: true, style: 'background-color: #D9DEE4;', templet: '#realMoney' },
+                            { field: 'returnCount', width: 160, title: '返货数', sort: true },
+                            { field: 'backCount', width: 160, title: '退货数', sort: true }
                         ]
                     ],
                     page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     limit: 15,
                     id: 'tables'
+                });
+                table.on('sort(tool)', function (obj) {
+                    var e = layer.load(2, { shade: [.05, '#000'] });
+                    table.reload('tables', {
+                        initSort: obj,
+                        page: {
+                            curr: 1
+                        },
+                        where: {
+                            field: obj.field,
+                            order: obj.type,
+                            time: $("#times").val(),
+                            guid: $("#shops").val()
+                        },
+                        done: function () {
+                            layer.close(e);
+                        }
+                    });
                 });
                 var active = {
                     reload: function () {

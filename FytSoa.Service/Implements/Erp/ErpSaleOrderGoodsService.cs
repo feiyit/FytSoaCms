@@ -124,6 +124,7 @@ namespace FytSoa.Service.Implements
                         Counts = eso.Counts,
                         AddDate = so.AddDate
                     })
+                    .OrderByIF(!string.IsNullOrEmpty(parm.field) && !string.IsNullOrEmpty(parm.order), parm.field + " " + parm.order)
                     .ToPage(parm.page, parm.limit);
                 res.success = true;
                 res.message = "获取成功！";

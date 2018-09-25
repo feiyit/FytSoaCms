@@ -36,84 +36,22 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree fyt-nav-tree" lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;"><i class="layui-icon"></i>系统管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a data-pjax href="/fytadmin/sys/organize/">部门管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/sys/role/">角色管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/sys/admin/">用户管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/sys/menu/">菜单管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/sys/log/">系统日志</a></dd>
-                        <dd><a data-pjax href="/fytadmin/sys/codes/">字典管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/app/setting/">APP版本更新</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="" href="javascript:;"><i class="layui-icon"></i>采购管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a data-pjax href="/fytadmin/purchase/index/1">未完成入库</a></dd>
-                        <dd><a data-pjax href="/fytadmin/purchase/index/2">未完成付款</a></dd>
-                        <dd><a data-pjax href="/fytadmin/purchase/index/3">未完成到票</a></dd>
-                        <dd><a data-pjax href="/fytadmin/purchase/index/4">已完成采购</a></dd>
-                        <dd><a data-pjax href="/fytadmin/purchase/supplier">供应商管理</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="" href="javascript:;"><i class="layui-icon"></i>加盟商管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a data-pjax href="/fytadmin/shop/index/">加盟商列表</a></dd>
-                        <dd><a data-pjax href="/fytadmin/shop/activityindex/">活动管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/shop/staffindex/">店员管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/shop/push/">消息通知</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="" href="javascript:;"><i class="layui-icon"></i>库存管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a data-pjax href="/fytadmin/goods/barcode/">条形码管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/goods/loss/">报损管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/stock/import/">入库管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/stock/export/">出库管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/stock/transfer/">调拨管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/goods/index/">商品管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/stock/inventory/">库存盘点</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="layui-icon"></i>财务管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a data-pjax href="/fytadmin/finance/accounting/">核算总账</a></dd>
-                        <dd><a data-pjax href="/fytadmin/finance/report/">报表中心</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="layui-icon"></i>会员管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a data-pjax href="/fytadmin/member/index/">会员列表</a></dd>
-                        <dd><a data-pjax href="/fytadmin/member/grade/">会员等级</a></dd>
-                        <dd><a data-pjax href="/fytadmin/member/statistics/">注册统计</a></dd>
-                        <dd><a data-pjax href="/fytadmin/member/birthday/">生日祝福</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="layui-icon"></i>销售管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a data-pjax href="/fytadmin/sale/index/">订单明细</a></dd>
-                        <dd><a data-pjax href="/fytadmin/sale/goods/">商品明细</a></dd>
-                        <dd><a data-pjax href="/fytadmin/sale/back/">退货管理</a></dd>
-                        <dd><a data-pjax href="/fytadmin/sale/return/">返货管理</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="layui-icon"></i>报表管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a data-pjax href="/fytadmin/report/platformInStock/">平台入库报表</a></dd>
-                        <dd><a data-pjax href="/fytadmin/report/platformOutStock/">平台出库报表</a></dd>
-                        <dd><a data-pjax href="/fytadmin/report/shopstock/">加盟商库存报表</a></dd>
-                        <dd><a data-pjax href="/fytadmin/report/shopback/">加盟商退货报表</a></dd>
-                        <dd><a data-pjax href="/fytadmin/report/shopreturn/">加盟商返货报表</a></dd>
-                    </dl>
-                </li>
+                @{
+                    foreach (var item in Model.list.Where(m => m.Layer == 1))
+                    {
+                        <li class="layui-nav-item">
+                            <a class="" href="javascript:;"><i class="layui-icon"></i>@item.Name</a>
+                            <dl class="layui-nav-child">
+                                @{
+                                    foreach (var row in Model.list.Where(m => m.ParentGuid == item.Guid))
+                                    {
+                                        <dd><a data-pjax href="@row.Urls">@row.Name</a></dd>
+                                    }
+                                }
+                            </dl>
+                        </li>
+                    }
+                }
             </ul>
         </div>
     </div>

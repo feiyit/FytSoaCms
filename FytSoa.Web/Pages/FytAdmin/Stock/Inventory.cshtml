@@ -48,7 +48,6 @@
                     , range: true
                 });
                 table.render({
-                    initSort: objOrder,
                     toolbar:true,
                     elem: '#tablist',
                     loading: true,
@@ -71,14 +70,16 @@
                     id: 'tables'
                 });
 
-                table.on('sort(tool)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-                    objOrder.field = obj.field;//当前排序的字段名
-                    objOrder.type = obj.type;//当前排序类型：desc（降序）、asc（升序）、null（空对象，默认排序）
+                table.on('sort(tool)', function (obj) { 
                     var e = layer.load(2, { shade: [.05, '#000']});
                     table.reload('tables', {
                         initSort: obj,
                         page: {
                             curr: 1
+                        },
+                        where: {
+                            field: obj.field,
+                            order: obj.type
                         },
                         done: function () {
                             layer.close(e);

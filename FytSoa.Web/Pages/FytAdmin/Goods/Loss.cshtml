@@ -62,7 +62,24 @@
                     page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     id: 'tables'
                 });
-
+                table.on('sort(tool)', function (obj) {
+                    var e = layer.load(2, { shade: [.05, '#000'] });
+                    table.reload('tables', {
+                        initSort: obj,
+                        page: {
+                            curr: 1
+                        },
+                        where: {
+                            field: obj.field,
+                            order: obj.type,
+                            key: $("#key").val(),
+                            guid: $("#branks").val()
+                        },
+                        done: function () {
+                            layer.close(e);
+                        }
+                    });
+                });
                 var guid = '', active = {
                     reload: function () {
                         table.reload('tables',
