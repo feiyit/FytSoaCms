@@ -40,7 +40,7 @@
                     foreach (var item in Model.list.Where(m => m.Layer == 1))
                     {
                         <li class="layui-nav-item">
-                            <a class="" href="javascript:;"><i class="layui-icon"></i>@item.Name</a>
+                            <a class="" href="javascript:;"><i class="layui-icon @item.Icon"></i>@item.Name</a>
                             <dl class="layui-nav-child">
                                 @{
                                     foreach (var row in Model.list.Where(m => m.ParentGuid == item.Guid))
