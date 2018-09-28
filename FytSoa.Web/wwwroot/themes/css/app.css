@@ -43,6 +43,13 @@
 .layui-nav-tree .layui-nav-bar{background-color:#409eff}
 .fyt-nav-tree .layui-nav-child dd.layui-this,.fyt-nav-tree .layui-nav-child dd.layui-this a{background-color:transparent; color:#409eff}
 
+.layui-first-nav .layui-nav-item a{font-size:14px !important;}
+.layui-first-nav .layui-nav-item i{ vertical-align:middle; margin-right:5px; position:relative; top:-2px; display:inline-block;}
+.layui-first-nav .layui-this:after{height:2px !important; background-color:#409eff}
+.layui-first-nav .layui-nav-bar{top:59px !important;}
+.layui-first-nav .layui-this a{color:#409eff !important;}
+.layui-nav-bar{ background-color:#409eff}
+
 /* layui 按钮默认颜色修改 */
 .layui-btn {background-color: #409eff; border-color: #409eff; color:#ffffff; height:33px; border-radius:100px !important;}
 .layui-btn:hover{ color:#ffffff;border-color: #409eff;background-color: #409eff;}

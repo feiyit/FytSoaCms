@@ -415,7 +415,7 @@ namespace FytSoa.Common
             if (level > 1)
             {
                 string nbsp = " ";
-                for (int i = 1; i < level; i++)
+                for (int i = 0; i < level; i++)
                 {
                     nbsp += "　";
                 }
