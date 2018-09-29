@@ -1,0 +1,362 @@
+2018-09-29 16:07:04.4452|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Mvc.Razor.Compilation.CompilationFailedException: One or more compilation failures occurred:
+su0sodhe.kw1(5,62): error CS0433: The type 'RazorViewAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(28,86): error CS0433: The type 'RazorPage<TModel>' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(63,67): error CS0115: 'Pages_FytAdmin__LayoutMain.ExecuteAsync()': no suitable method found to override
+su0sodhe.kw1(59,67): error CS0433: The type 'HeadTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(60,67): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(61,67): error CS0433: The type 'BodyTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(482,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(484,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(486,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(488,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(490,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(54,135): error CS0103: The name 'StartTagHelperWritingScope' does not exist in the current context
+su0sodhe.kw1(54,163): error CS0103: The name 'EndTagHelperWritingScope' does not exist in the current context
+su0sodhe.kw1(65,13): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(66,13): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(67,13): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(68,13): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(70,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(71,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(72,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(73,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(77,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(77,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(86,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(88,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(89,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(90,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(91,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(92,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(96,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(96,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(105,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(107,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(108,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(109,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(110,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(111,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(115,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(115,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(124,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(126,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(127,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(128,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(129,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(130,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(134,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(134,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(143,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(145,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(146,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(147,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(148,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(149,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(153,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(153,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(162,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(164,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(165,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(166,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(167,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(168,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(172,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(172,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(180,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(182,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(183,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(184,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(185,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(186,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(192,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(193,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(194,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(195,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(198,139): error CS0433: The type 'HeadTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(198,73): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(205,13): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(207,13): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(208,13): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(209,13): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(210,13): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(211,13): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(213,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(214,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(230,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(231,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(232,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(238,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(239,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(240,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(241,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(242,17): error CS0103: The name 'BeginWriteAttribute' does not exist in the current context
+su0sodhe.kw1(248,17): error CS0103: The name 'EndWriteAttribute' does not exist in the current context
+su0sodhe.kw1(249,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(250,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(271,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(285,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(302,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(316,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(333,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(349,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(350,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(351,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(357,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(358,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(359,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(360,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(361,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(365,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(365,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(374,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(376,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(377,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(378,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(379,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(380,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(384,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(384,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(393,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(395,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(396,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(397,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(398,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(399,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(403,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(403,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(412,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(414,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(415,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(416,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(443,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(454,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(455,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(461,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(462,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(463,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(464,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(467,139): error CS0433: The type 'BodyTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(467,73): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(474,13): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(476,13): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(477,13): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(478,13): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(479,13): error CS0103: The name 'EndContext' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(15,7): error CS0103: The name 'Write' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(15,13): error CS0103: The name 'ViewBag' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(36,43): error CS0103: The name 'Write' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(36,49): error CS0103: The name 'User' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(37,1): error CS0103: The name 'WriteAttributeValue' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(37,31): error CS0103: The name 'User' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(135,8): error CS0103: The name 'Write' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(135,14): error CS0103: The name 'RenderBody' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(181,1): error CS0103: The name 'Write' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(181,7): error CS0103: The name 'RenderSection' does not exist in the current context
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(RazorCodeDocument codeDocument, String generatedCode)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.OnCacheMiss(String normalizedPath)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.DefaultRazorPageFactoryProvider.CreateFactory(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorViewEngine.CreateCacheResult(HashSet`1 expirationTokens, String relativePath, Boolean isMainPage)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorViewEngine.LocatePageFromPath(String executingFilePath, String pagePath, Boolean isMainPage)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorViewEngine.GetPage(String executingFilePath, String pagePath)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.GetLayoutPage(ViewContext context, String executingFilePath, String layoutPath)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderLayoutAsync(ViewContext context, ViewBufferTextWriter bodyWriter)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeResultAsync(IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResultFilterAsync[TFilter,TFilterAsync]()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResultExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeResultFilters()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: |action:  |IP: |QueryString: 
+2018-09-29 16:08:35.7548|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Mvc.Razor.Compilation.CompilationFailedException: One or more compilation failures occurred:
+su0sodhe.kw1(5,62): error CS0433: The type 'RazorViewAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(28,86): error CS0433: The type 'RazorPage<TModel>' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(63,67): error CS0115: 'Pages_FytAdmin__LayoutMain.ExecuteAsync()': no suitable method found to override
+su0sodhe.kw1(59,67): error CS0433: The type 'HeadTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(60,67): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(61,67): error CS0433: The type 'BodyTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(482,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(484,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(486,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(488,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(490,58): error CS0433: The type 'RazorInjectAttribute' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(54,135): error CS0103: The name 'StartTagHelperWritingScope' does not exist in the current context
+su0sodhe.kw1(54,163): error CS0103: The name 'EndTagHelperWritingScope' does not exist in the current context
+su0sodhe.kw1(65,13): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(66,13): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(67,13): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(68,13): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(70,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(71,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(72,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(73,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(77,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(77,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(86,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(88,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(89,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(90,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(91,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(92,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(96,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(96,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(105,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(107,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(108,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(109,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(110,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(111,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(115,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(115,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(124,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(126,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(127,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(128,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(129,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(130,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(134,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(134,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(143,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(145,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(146,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(147,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(148,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(149,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(153,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(153,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(162,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(164,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(165,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(166,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(167,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(168,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(172,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(172,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(180,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(182,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(183,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(184,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(185,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(186,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(192,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(193,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(194,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(195,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(198,139): error CS0433: The type 'HeadTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(198,73): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(205,13): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(207,13): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(208,13): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(209,13): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(210,13): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(211,13): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(213,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(214,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(230,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(231,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(232,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(238,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(239,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(240,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(241,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(242,17): error CS0103: The name 'BeginWriteAttribute' does not exist in the current context
+su0sodhe.kw1(248,17): error CS0103: The name 'EndWriteAttribute' does not exist in the current context
+su0sodhe.kw1(249,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(250,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(271,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(285,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(302,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(316,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(333,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(349,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(350,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(351,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(357,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(358,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(359,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(360,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(361,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(365,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(365,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(374,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(376,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(377,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(378,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(379,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(380,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(384,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(384,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(393,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(395,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(396,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(397,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(398,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(399,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(403,152): error CS0433: The type 'UrlResolutionTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(403,86): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(412,17): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(414,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(415,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(416,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(443,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(454,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(455,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(461,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(462,17): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(463,17): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(464,17): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(467,139): error CS0433: The type 'BodyTagHelper' exists in both 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.AspNetCore.Mvc.Razor, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'
+su0sodhe.kw1(467,73): error CS0103: The name 'CreateTagHelper' does not exist in the current context
+su0sodhe.kw1(474,13): error CS0103: The name 'Write' does not exist in the current context
+su0sodhe.kw1(476,13): error CS0103: The name 'EndContext' does not exist in the current context
+su0sodhe.kw1(477,13): error CS0103: The name 'BeginContext' does not exist in the current context
+su0sodhe.kw1(478,13): error CS0103: The name 'WriteLiteral' does not exist in the current context
+su0sodhe.kw1(479,13): error CS0103: The name 'EndContext' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(15,7): error CS0103: The name 'Write' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(15,13): error CS0103: The name 'ViewBag' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(36,43): error CS0103: The name 'Write' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(36,49): error CS0103: The name 'User' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(37,1): error CS0103: The name 'WriteAttributeValue' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(37,31): error CS0103: The name 'User' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(135,8): error CS0103: The name 'Write' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(135,14): error CS0103: The name 'RenderBody' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(181,1): error CS0103: The name 'Write' does not exist in the current context
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\_LayoutMain.cshtml(181,7): error CS0103: The name 'RenderSection' does not exist in the current context
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(RazorCodeDocument codeDocument, String generatedCode)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.CompileAndEmit(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler.OnCacheMiss(String normalizedPath)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Razor.Internal.DefaultRazorPageFactoryProvider.CreateFactory(String relativePath)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorViewEngine.CreateCacheResult(HashSet`1 expirationTokens, String relativePath, Boolean isMainPage)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorViewEngine.LocatePageFromPath(String executingFilePath, String pagePath, Boolean isMainPage)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorViewEngine.GetPage(String executingFilePath, String pagePath)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.GetLayoutPage(ViewContext context, String executingFilePath, String layoutPath)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderLayoutAsync(ViewContext context, ViewBufferTextWriter bodyWriter)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeResultAsync(IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResultFilterAsync[TFilter,TFilterAsync]()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResultExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeResultFilters()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: |action:  |IP: |QueryString: 

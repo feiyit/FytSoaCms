@@ -50,6 +50,10 @@
 .layui-first-nav .layui-this a{color:#409eff !important;}
 .layui-nav-bar{ background-color:#409eff}
 
+[v-cloak] {
+    display: none !important;
+}
+
 /* layui 按钮默认颜色修改 */
 .layui-btn {background-color: #409eff; border-color: #409eff; color:#ffffff; height:33px; border-radius:100px !important;}
 .layui-btn:hover{ color:#ffffff;border-color: #409eff;background-color: #409eff;}

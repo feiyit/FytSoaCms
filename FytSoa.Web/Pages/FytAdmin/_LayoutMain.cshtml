@@ -16,13 +16,11 @@
 </head>
 <body>
     <div class="layui-layout layui-layout-admin">
-        <div class="layui-header">
+        <div class="layui-header" id="mainapp">
             <div class="layui-logo">FytErp-SaaS平台</div>
-            <ul class="layui-nav layui-layout-left layui-first-nav">
-                <li class="layui-nav-item">
-                <li class="layui-nav-item layui-this"><a href="javascript:void(0)"><i class="layui-icon layui-icon-component"></i>ERP进销存</a></li>
-                <li class="layui-nav-item"><a href="javascript:void(0)"><i class="layui-icon layui-icon-website"></i>CMS内容管理</a></li>
-                <li class="layui-nav-item"><a href="javascript:void(0)"><i class="layui-icon layui-icon-login-wechat"></i>微信公众号</a></li></li>
+            <ul class="layui-nav layui-layout-left layui-first-nav" lay-filter="topmenu">
+                <li class="layui-nav-item layui-this" v-for="(it,index) in menulist" v-cloak v-if="it.layer===1 && index===0"><a href="javascript:void(0)" :data-index="index"><i :class="'layui-icon '+it.icon"></i>{{it.name}}</a></li>
+                <li class="layui-nav-item" v-for="(it,index) in menulist" v-cloak v-if="it.layer===1 && index!=0"><a href="javascript:void(0)" :data-index="index"><i :class="'layui-icon '+it.icon"></i>{{it.name}}</a></li>
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
@@ -45,86 +43,13 @@
             </ul>
         </div>
 
-        <div class="layui-side layui-bg-black">
+        <div class="layui-side layui-bg-black" id="rmapp">
             <div class="layui-side-scroll">
-                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree fyt-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item">
-                        <a class="" href="javascript:;"><i class="layui-icon"></i>系统管理</a>
+                <ul class="layui-nav layui-nav-tree fyt-nav-tree layui-hide" v-for="(m,mindex) in tmlist">
+                    <li class="layui-nav-item" v-for="(it,index) in list" v-cloak v-if="it.layer===2 && it.parentGuid===m.guid">
+                        <a class="" href="javascript:;"><i :class="'layui-icon '+it.icon"></i>{{it.name}}</a>
                         <dl class="layui-nav-child">
-                            <dd><a data-pjax href="/fytadmin/sys/organize/">部门管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/sys/role/">角色管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/sys/admin/">用户管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/sys/menu/">菜单管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/sys/log/">系统日志</a></dd>
-                            <dd><a data-pjax href="/fytadmin/sys/codes/">字典管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/app/setting/">APP版本更新</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a class="" href="javascript:;"><i class="layui-icon"></i>采购管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a data-pjax href="/fytadmin/purchase/index/1">未完成入库</a></dd>
-                            <dd><a data-pjax href="/fytadmin/purchase/index/2">未完成付款</a></dd>
-                            <dd><a data-pjax href="/fytadmin/purchase/index/3">未完成到票</a></dd>
-                            <dd><a data-pjax href="/fytadmin/purchase/index/4">已完成采购</a></dd>
-                            <dd><a data-pjax href="/fytadmin/purchase/supplier">供应商管理</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a class="" href="javascript:;"><i class="layui-icon"></i>加盟商管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a data-pjax href="/fytadmin/shop/index/">加盟商列表</a></dd>
-                            <dd><a data-pjax href="/fytadmin/shop/activityindex/">活动管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/shop/staffindex/">店员管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/shop/push/">消息通知</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a class="" href="javascript:;"><i class="layui-icon"></i>库存管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a data-pjax href="/fytadmin/goods/barcode/">条形码管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/goods/loss/">报损管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/stock/import/">入库管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/stock/export/">出库管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/stock/transfer/">调拨管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/goods/index/">商品管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/stock/inventory/">库存盘点</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;"><i class="layui-icon"></i>财务管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a data-pjax href="/fytadmin/finance/accounting/">核算总账</a></dd>
-                            <dd><a data-pjax href="/fytadmin/finance/report/">报表中心</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;"><i class="layui-icon"></i>会员管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a data-pjax href="/fytadmin/member/index/">会员列表</a></dd>
-                            <dd><a data-pjax href="/fytadmin/member/grade/">会员等级</a></dd>
-                            <dd><a data-pjax href="/fytadmin/member/statistics/">注册统计</a></dd>
-                            <dd><a data-pjax href="/fytadmin/member/birthday/">生日祝福</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;"><i class="layui-icon"></i>销售管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a data-pjax href="/fytadmin/sale/index/">订单明细</a></dd>
-                            <dd><a data-pjax href="/fytadmin/sale/goods/">商品明细</a></dd>
-                            <dd><a data-pjax href="/fytadmin/sale/back/">退货管理</a></dd>
-                            <dd><a data-pjax href="/fytadmin/sale/return/">返货管理</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;"><i class="layui-icon"></i>报表管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a data-pjax href="/fytadmin/report/platformInStock/">平台入库报表</a></dd>
-                            <dd><a data-pjax href="/fytadmin/report/platformOutStock/">平台出库报表</a></dd>
-                            <dd><a data-pjax href="/fytadmin/report/shopstock/">加盟商库存报表</a></dd>
-                            <dd><a data-pjax href="/fytadmin/report/shopback/">加盟商退货报表</a></dd>
-                            <dd><a data-pjax href="/fytadmin/report/shopreturn/">加盟商返货报表</a></dd>
+                            <dd v-for="row in list" v-if="row.layer===3 && row.parentGuid===it.guid"><a data-pjax :href="row.urls">{{row.name}}</a></dd>
                         </dl>
                     </li>
                 </ul>
@@ -144,12 +69,55 @@
     <script type="text/javascript" src="~/themes/js/macarons.js"></script>
     <script type="text/javascript" src="~/themes/js/nprogress.js"></script>
     <script>
+        var main_vm = new Vue({
+            el: '#mainapp',
+            data: {
+                menulist: []
+            }
+        });
+        var rm_vm = new Vue({
+            el: '#rmapp',
+            data: {
+                tmlist:[],
+                list: []
+            }
+        });
         layui.config({
             base: '/themes/js/modules/'
         }).use(['element', 'layer', 'jquery', 'common', 'pjax'], function () {
-            var os = layui.common
-                , element = layui.element
-                , $ = layui.jquery;
+            var $ = layui.jquery, os = layui.common, element = layui.element;
+            os.get('api/menu/authmenu', { limit: 10000 }, function (res) {
+                if (res.statusCode === 200) {
+                    $.each(res.data.items, function (index, item) {
+                        if (item.layer === 1) {
+                            main_vm.menulist.push(item);
+                        }
+                    });
+                    rm_vm.tmlist = main_vm.menulist;
+                    rm_vm.list = res.data.items;
+                    main_vm.$nextTick(function () {
+                        element.render();
+                        //定位到菜单
+                        $(".layui-bg-black .fyt-nav-tree li a").each(function () {
+                            if (window.location.pathname === $(this).attr('href')) {
+                                $(".layui-bg-black .fyt-nav-tree li").removeClass('layui-nav-itemed');
+                                $(this).parents('.layui-nav-item').addClass('layui-nav-itemed');
+                                $(this).parent().addClass('layui-this');
+                            }
+                        });
+                        $(".load8").fadeOut(200);
+                        element.on('nav(topmenu)', function (elem) {
+                            var that = $(elem);
+                            var topIndex = that.data('index');
+                            $("#rmapp .layui-side-scroll ul").addClass('layui-hide');
+                            $("#rmapp .layui-side-scroll ul").eq(topIndex).removeClass('layui-hide');
+                        });
+                        $("#rmapp .layui-side-scroll ul").eq(0).removeClass('layui-hide');
+                    });
+                } else {
+                    os.error(res.message);
+                }
+            });
             $(document).pjax('a', '#container',
                 {
                     fragment: "#container",
@@ -157,15 +125,6 @@
                     show: 'fade'
                 }
             );
-            //定位到菜单
-            $(".layui-bg-black .fyt-nav-tree li a").each(function () {
-                if (window.location.pathname === $(this).attr('href')) {
-                    $(".layui-bg-black .fyt-nav-tree li").removeClass('layui-nav-itemed');
-                    $(this).parents('.layui-nav-item').addClass('layui-nav-itemed');
-                    $(this).parent().addClass('layui-this');
-                }
-            });
-            $(".load8").fadeOut(200);
             $(document).on('pjax:start', function () { NProgress.start(); $(".load8").show(); });
             $(document).on('pjax:end', function () { NProgress.done(); $(".load8").fadeOut(200); });
         });

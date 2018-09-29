@@ -51,6 +51,17 @@ namespace FytSoa.Api.Controllers
         }
 
         /// <summary>
+        /// 提供权限查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("authmenu")]
+        public async Task<ApiResult<Page<SysMenu>>> GetAuthMenu(PageParm parm)
+        {
+            return await _sysMenuService.GetPagesAsync(parm);
+        }
+
+        /// <summary>
         /// 获得字典栏目Tree列表
         /// </summary>
         /// <returns></returns>
