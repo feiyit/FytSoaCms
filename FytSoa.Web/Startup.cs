@@ -27,6 +27,7 @@ namespace FytSoa.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IDefaultReportService, DefaultReportService>();
             services.AddTransient<IUserReportServer, UserReportServer>();
             services.AddTransient<IErpSkuLossService, ErpSkuLossService>();
             services.AddTransient<IErpUserGradeService, ErpUserGradeService>();
