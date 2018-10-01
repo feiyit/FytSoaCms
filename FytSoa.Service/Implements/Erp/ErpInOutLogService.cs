@@ -39,14 +39,55 @@ namespace FytSoa.Service.Implements
                 var skuList = ErpGoodsSkuDb.GetList(m=>codeList.Contains(m.Guid));
                 //定义一个值，判断条形码里面没有的数据数量
                 var noSkuCount = 0;
+                //根据条形码，查询商家库存信息
+                var shopSkuList = new List<ErpShopSku>();
+                //一个新的商家库存信息
+                var newShopSkuList = new List<ErpShopSku>();
+                //只有在出库的时候查询，入库不处理
+                if (packModel.Types==2)
+                {
+                    shopSkuList = ErpShopSkuDb.GetList(m=> codeList.Contains(m.SkuGuid) && m.ShopGuid==packModel.ShopGuid);
+                }
                 //循环平台数据，减少相应的库存
                 foreach (var item in skuList)
                 {
                     var goodsModel = goodsList.Find(m=>m.GoodsGuid==item.Guid);
+                    //出库
                     if (goodsModel!=null && packModel.Types==2)
                     {
                         item.StockSum = item.StockSum - goodsModel.GoodsSum;
+                        //根据条形码判断商家库存是否存在，如果存在，修改库存信息，不存在增加一条新的库存信息
+                        if (shopSkuList.Count>0)
+                        {
+                            var shopSkuModel = shopSkuList.Find(m=>m.SkuGuid==item.Guid);
+                            if (shopSkuModel!=null)
+                            {
+                                shopSkuList.Find(m => m.SkuGuid == item.Guid).Stock = shopSkuModel.Stock + goodsModel.GoodsSum;
+                            }
+                            else
+                            {
+                                newShopSkuList.Add(new ErpShopSku() {
+                                    Guid = Guid.NewGuid().ToString(),
+                                    SkuGuid = item.Guid,
+                                    SkuCode = item.Code,
+                                    ShopGuid = packModel.ShopGuid,
+                                    Stock = goodsModel.GoodsSum
+                                });
+                            }
+                        }
+                        else
+                        {
+                            newShopSkuList.Add(new ErpShopSku()
+                            {
+                                Guid = Guid.NewGuid().ToString(),
+                                SkuGuid = item.Guid,
+                                SkuCode = item.Code,
+                                ShopGuid = packModel.ShopGuid,
+                                Stock = goodsModel.GoodsSum
+                            });
+                        }
                     }
+                    //入库
                     else if (goodsModel != null && packModel.Types == 1)
                     {
                         item.StockSum = item.StockSum + goodsModel.GoodsSum;
@@ -81,6 +122,17 @@ namespace FytSoa.Service.Implements
                     Db.Insertable(goodsList).ExecuteCommand();
                     //修改平台库存数量
                     Db.Updateable(skuList).ExecuteCommand();
+                    if (packModel.Types==2)
+                    {
+                        if (shopSkuList.Count>0)
+                        {
+                            Db.Updateable(shopSkuList).ExecuteCommand();
+                        }
+                        if (newShopSkuList.Count>0)
+                        {
+                            Db.Insertable(newShopSkuList).ExecuteCommand();
+                        }
+                    }
                 });
                 res.statusCode = (int)ApiEnum.Status;
                 if (!result.IsSuccess)

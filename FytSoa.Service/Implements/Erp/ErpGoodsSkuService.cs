@@ -138,7 +138,7 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<GoodsSkuDto>();
             try
             {
-                var model = Db.Queryable<ErpGoodsSku, ErpInOutLog>((egs, elog) => new object[] {
+                /*var model = Db.Queryable<ErpGoodsSku, ErpInOutLog>((egs, elog) => new object[] {
                 JoinType.Left,egs.Guid==elog.GoodsGuid
             })
                 .Where((egs, elog) => egs.Code == code && elog.ShopGuid == shopGuid && elog.Types == 2 && elog.GoodsSum > 0)
@@ -160,8 +160,22 @@ namespace FytSoa.Service.Implements
                     .Where((eso, egs) => eso.ShopGuid == shopGuid && egs.Code == code)
                     .Sum((eso, egs) => eso.ReturnCount);
                 model.StockSum = model.StockSum - (saleStock + returnStock);
+                res.data = model;*/
+                var model = Db.Queryable<ErpShopSku, ErpGoodsSku>((ess, egs) => new object[] { JoinType.Left, ess.SkuGuid == egs.Guid })
+                    .Where((ess, egs) => ess.SkuCode == code && ess.ShopGuid == shopGuid)
+                    .Select((ess, egs) => new GoodsSkuDto()
+                    {
+                        Guid=egs.Guid,
+                        Code=egs.Code,
+                        BrankName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.BrankGuid).Select(g => g.Name),
+                        StyleName = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == egs.StyleGuid).Select(g => g.Name),
+                        SalePrice = egs.SalePrice,
+                        DisPrice = egs.DisPrice,
+                        StockSum = ess.Stock,
+                        SaleSum=ess.Sale,
+                        AddDate=ess.AddDate
+                    }).First();
                 res.data = model;
-
             }
             catch (Exception ex)
             {

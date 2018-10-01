@@ -60,7 +60,7 @@ namespace FytSoa.Core.Model.Erp
         public string ActivityName { get; set; }
 
         /// <summary>
-        /// Desc:活动类型 1=普通销售/2=打折销售/3=满减销售
+        /// Desc:活动类型 1=普通销售/2=打折销售/3=满减销售/4=买一赠一
         /// Default:1
         /// Nullable:False
         /// </summary>           

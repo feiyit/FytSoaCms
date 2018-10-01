@@ -544,6 +544,7 @@ namespace FytSoa.Common
             return path + "/uploadothers/";
         }
         #endregion
+
         #region 文件格式
         /// <summary>
         /// 是否为图片
@@ -590,6 +591,41 @@ namespace FytSoa.Common
             return false;
         }
         #endregion
-        
+
+        #region 返回活动名称
+        /// <summary>
+        /// 返回活动名称
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        public static string GetActivityMethod(int method)
+        {
+            var str = "";
+            switch (method)
+            {
+                case 1:str = "打折";break;
+                case 2: str = "满减"; break;
+                case 3: str = "买一赠一"; break;
+                default:str = "无"; break;
+            }
+            return str;
+        }
+        /// <summary>
+        /// 根据方式返回参加活动类型
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        public static byte GetActivityTypes(int method)
+        {
+            byte str = 1;
+            switch (method)
+            {
+                case 1: str = 2; break;
+                case 2: str = 3; break;
+                case 3: str = 4; break;
+            }
+            return str;
+        }
+        #endregion
     }
 }

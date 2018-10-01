@@ -62,7 +62,7 @@
             tabList: [
                  //{ 'Code': 'abc','summary':'', 'Count': '1' }
             ],
-            btnHtml: '<i class="layui-icon layui-icon-ok"></i> 提交出库信息',
+            btnHtml: '<i class="layui-icon layui-icon-ok"></i> 提交入库信息',
             parm: {
                 guid:'@Model.InoutModel.PackGuid',
                 adminGuid: '@Model.InoutModel.AdminGuid',
@@ -87,7 +87,7 @@
         cusFun = {
             submit: function () {
                 if (vm.tabList.length === 0) {
-                    os.error('请添加出库信息~~~');
+                    os.error('请添加入库信息~~~');
                     return;
                 }
                 vm.parm.json = JSON.stringify(vm.tabList);

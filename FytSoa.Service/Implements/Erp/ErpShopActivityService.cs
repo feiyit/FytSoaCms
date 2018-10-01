@@ -121,7 +121,7 @@ namespace FytSoa.Service.Implements
                 res.data = new ShopActivityApp()
                 {
                     Guid= shopActivity.Guid,
-                    Method= (shopActivity.Method == 1 ? "打折" : "满减"),
+                    Method= Utils.GetActivityMethod(shopActivity.Method),
                     CountNum= shopActivity.CountNum,
                     FullBack= shopActivity.FullBack
                 };
@@ -134,7 +134,7 @@ namespace FytSoa.Service.Implements
                 res.data = new ShopActivityApp()
                 {
                     Guid = platformActivity.Guid,
-                    Method = (platformActivity.Method == 1 ? "打折" : "满减"),
+                    Method = Utils.GetActivityMethod(platformActivity.Method),
                     CountNum = platformActivity.CountNum,
                     FullBack = platformActivity.FullBack
                 };
@@ -179,7 +179,7 @@ namespace FytSoa.Service.Implements
                             case 1: item.TypeName = "商铺"; break;
                             case 2: item.TypeName = "品牌"; break;
                         }
-                        item.MethodName = item.MethodName == "1" ? "打折" : "满减";
+                        item.MethodName = Utils.GetActivityMethod(Convert.ToInt32(item.MethodName));
                     }
                 }
                 

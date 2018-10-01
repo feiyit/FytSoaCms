@@ -113,7 +113,7 @@ namespace FytSoa.Service.Implements
                         || m.AdminName.Contains(parm.key)
                         || m.Mobile==parm.key
                         || m.ShopCity.Contains(parm.key))
-                        .OrderBy(m => m.RegDate).ToPageAsync(parm.page, parm.limit);
+                        .OrderBy(m => m.RegDate,OrderByType.Desc).ToPageAsync(parm.page, parm.limit);
                     res.success = true;
                     res.message = "获取成功！";
                     res.data = await query;

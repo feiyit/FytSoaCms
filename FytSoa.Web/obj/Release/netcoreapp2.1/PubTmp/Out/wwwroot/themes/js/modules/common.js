@@ -40,6 +40,26 @@
                 }
             });
         },
+        get: function (url, options, callFun) {
+            var httpUrl = "/";
+            $.ajax(httpUrl + url, {
+                data: options,
+                async: false,
+                dataType: 'json', //服务器返回json格式数据
+                type: 'get', //HTTP请求类型
+                timeout: 50 * 1000, //超时时间设置为50秒；
+                success: function (data) {
+                    callFun(data);
+                },
+                error: function (xhr, type, errorThrown) {
+                    if (type === 'timeout') {
+                        tool.error('连接超时，请稍后重试！');
+                    } else if (type === 'error') {
+                        tool.error('连接异常，请稍后重试！');
+                    }
+                }
+            });
+        },
         Open: function (title, url, width, height, fun) {
             layer.open({
                 type: 2,

@@ -198,3 +198,12 @@ E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\P
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Report\ShopReturn.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Shop\StaffModify.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Member\GradeModify.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Goods\Loss.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Goods\LossAdd.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Sale\Goods.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Sale\ReturnAdd.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Sale\ReturnValidation.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\ExportBatchAdd.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\ExportValidation.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\ImportBatchAdd.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Stock\ImportValidation.g.cshtml.cs

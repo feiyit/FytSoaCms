@@ -389,28 +389,36 @@
                 , height: '180px'
                 , indicator: 'outside'
             });
-            os.ajax('api/default/weeksale', null, function (res) { 
-                if (res.statusCode === 200) {
-                    baseChart.hideLoading()                    var money = [], order = [];                    $.each(res.data.money, function (i, m) {                         money.push(m);                    });                    $.each(res.data.order, function (i, m) {                        order.push(m);                    });                    baseChart.setOption({
-                        series: [
-                            {
-                                name: '订单总数',
-                                type: 'line',
-                                areaStyle: { normal: {} },
-                                data: money
-                            },
-                            {
-                                name: '销售金额',
-                                type: 'line',
-                                areaStyle: { normal: {} },
-                                data: order
-                            }
-                        ]
+            var active = {
+                init: function () { 
+                    os.ajax('api/default/weeksale', null, function (res) {
+                        if (res.statusCode === 200) {
+                            baseChart.hideLoading()                            var money = [], order = [];                            $.each(res.data.money, function (i, m) {                                money.push(m);                            });                            $.each(res.data.order, function (i, m) {                                order.push(m);                            });                            baseChart.setOption({
+                                series: [
+                                    {
+                                        name: '订单总数',
+                                        type: 'line',
+                                        areaStyle: { normal: {} },
+                                        data: money
+                                    },
+                                    {
+                                        name: '销售金额',
+                                        type: 'line',
+                                        areaStyle: { normal: {} },
+                                        data: order
+                                    }
+                                ]
+                            });
+                        } else {
+                            os.error(res.message);
+                        }
                     });
-                } else {
-                    os.error(res.message);
                 }
-            });
+            };
+            setTimeout(function () {
+                active.init();
+            }, 1000);
+            
         });
         var baseChart = echarts.init(document.getElementById('base-map'), 'macarons');
         baseChart.showLoading();        var option = {
@@ -451,20 +459,6 @@
             yAxis: [
                 {
                     type: 'value'
-                }
-            ],
-            series: [
-                {
-                    name: '订单总数',
-                    type: 'line',
-                    areaStyle: { normal: {} },
-                    data: [120, 132, 101, 134, 90, 230, 210]
-                },
-                {
-                    name: '销售金额',
-                    type: 'line',
-                    areaStyle: { normal: {} },
-                    data: [220, 182, 191, 234, 290, 330, 310]
                 }
             ]
         };
