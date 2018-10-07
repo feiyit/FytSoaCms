@@ -43,12 +43,29 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<WeekSaleReport>() { statusCode = (int)ApiEnum.Error };
             try
             {
+                string startWeek = Utils.GetMondayDate().ToShortDateString();
+                string endWeek = Utils.GetSundayDate().AddDays(1).ToShortDateString();
+                var weekCount= Db.Ado.SqlQuery<WeekDayRes>("select DATE_FORMAT(o.AddDate,'%Y-%m-%d') Days,count(1) Counts,SUM(o.RealMoney) as Money from erpsaleorder o where o.AddDate between '" + startWeek+"' and '"+endWeek+ "' group by Days");
                 var moneyList = new List<decimal>();
                 var orderList = new List<int>();
-                for (int i = 0; i < 7; i++)
+                for (int i = 1; i < 8; i++)
                 {
-                    moneyList.Add(i);
-                    orderList.Add(i);
+                    var isEx = false;
+                    foreach (var item in weekCount)
+                    {
+                        var day = Convert.ToDateTime(item.Days).DayOfWeek.ToString();
+                        if (i == Utils.GetWeekByWeekName(day))
+                        {
+                            isEx = true;
+                            orderList.Add(item.Counts);
+                            moneyList.Add(item.Money);
+                        }
+                    }
+                    if (!isEx)
+                    {
+                        orderList.Add(0);
+                        moneyList.Add(0);
+                    }
                 }
                 res.data = new WeekSaleReport() { Money = moneyList, Order= orderList };
                 res.statusCode = (int)ApiEnum.Status;

@@ -135,4 +135,14 @@ namespace FytSoa.Service.DtoModel
         /// </summary>
         public int Sunday { get; set; } = 0;
     }
+
+    /// <summary>
+    /// 根据日期查询，返回的结果
+    /// </summary>
+    public class WeekDayRes
+    {
+        public string Days { get; set; }
+        public int Counts { get; set; }
+        public decimal Money { get; set; }
+    }
 }

@@ -65,7 +65,7 @@ using FytSoa.Web;
             WriteLiteral("<style>.layui-form-select dl{max-height:180px;}</style>\r\n");
             EndContext();
             BeginContext(213, 7718, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "336c903431434841aa033ba5521e0f94", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c0e6622a2fa54e01ae9261be8ddc756a", async() => {
                 BeginContext(257, 293, true);
                 WriteLiteral(@"
     <div class=""layui-form-item"">
@@ -76,7 +76,7 @@ using FytSoa.Web;
                     ");
                 EndContext();
                 BeginContext(550, 34, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "648722d3df4348308576e2b38bda0ca0", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2c5f950605f4490eb75db5e78bcf5614", async() => {
                     BeginContext(567, 8, true);
                     WriteLiteral("请选择，支持搜索");
                     EndContext();
@@ -110,7 +110,7 @@ using FytSoa.Web;
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(922, 66, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1a8bf9d2342343fa867a86277026c5e0", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c42e61c0d73d40779b8de33c7ba42ab8", async() => {
                     BeginContext(970, 9, false);
 #line 20 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Goods\BarCodeModify.cshtml"
                                                                           Write(item.Name);
@@ -154,7 +154,7 @@ using FytSoa.Web;
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(1118, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7e6caa8791a6484f91f3b0d800a6bbdb", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f17f9ec55cb34cee8e75e9158f846d0e", async() => {
                     BeginContext(1146, 9, false);
 #line 24 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Goods\BarCodeModify.cshtml"
                                                       Write(item.Name);
@@ -204,7 +204,7 @@ using FytSoa.Web;
                     ");
                 EndContext();
                 BeginContext(1524, 34, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7aba2f9ca3fc4c6b89da805ac20580d9", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2a3a562fe898445e8cf2c53a003293a9", async() => {
                     BeginContext(1541, 8, true);
                     WriteLiteral("请选择，支持搜索");
                     EndContext();
@@ -238,7 +238,7 @@ using FytSoa.Web;
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(1896, 66, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c0af288f9cfa462c9210b31a96b103e4", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0ac9cde3bab141a5a47851831156ac28", async() => {
                     BeginContext(1944, 9, false);
 #line 41 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Goods\BarCodeModify.cshtml"
                                                                           Write(item.Name);
@@ -282,7 +282,7 @@ using FytSoa.Web;
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(2092, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "516dc97b4e68426d9be6c4f75f57d3b9", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cc2433c139f342b2ab2154997cf70d93", async() => {
                     BeginContext(2120, 9, false);
 #line 45 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Goods\BarCodeModify.cshtml"
                                                       Write(item.Name);
@@ -334,7 +334,7 @@ using FytSoa.Web;
                     ");
                 EndContext();
                 BeginContext(2588, 34, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "597ff5cca06242dc9b9414d56721dcf6", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74c39dd3ba2d4e76ba93eee801ef64eb", async() => {
                     BeginContext(2605, 8, true);
                     WriteLiteral("请选择，支持搜索");
                     EndContext();
@@ -368,7 +368,7 @@ using FytSoa.Web;
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(2961, 66, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "57d3ee8e300a4d8eacfad4b01d6fbb15", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d2a79bebccc1427095d1cd5214da01b3", async() => {
                     BeginContext(3009, 9, false);
 #line 64 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Goods\BarCodeModify.cshtml"
                                                                           Write(item.Name);
@@ -412,7 +412,7 @@ using FytSoa.Web;
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(3157, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a260e346ccb846f284883be88fe89fb8", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "67efe34f79a7473fa1b25216223d6561", async() => {
                     BeginContext(3185, 9, false);
 #line 68 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Goods\BarCodeModify.cshtml"
                                                       Write(item.Name);
@@ -462,7 +462,7 @@ using FytSoa.Web;
                     ");
                 EndContext();
                 BeginContext(3605, 34, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "372f7b6ab2d04a9483aca33331c03220", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0c17fd73b2f446dbb70a2630571f4547", async() => {
                     BeginContext(3622, 8, true);
                     WriteLiteral("请选择，支持搜索");
                     EndContext();
@@ -496,7 +496,7 @@ using FytSoa.Web;
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(3977, 66, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fd82b4c0a720457a8a7f39cc6e1904b2", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "69e5e7d4f6734b5bbfef34ef590861b3", async() => {
                     BeginContext(4025, 9, false);
 #line 85 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Goods\BarCodeModify.cshtml"
                                                                           Write(item.Name);
@@ -540,7 +540,7 @@ using FytSoa.Web;
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(4173, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d7a0719b785d46db89728076339e565e", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8f9e1f0552e84ee0991494cc284a62a6", async() => {
                     BeginContext(4201, 9, false);
 #line 89 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Goods\BarCodeModify.cshtml"
                                                       Write(item.Name);
@@ -592,7 +592,7 @@ using FytSoa.Web;
                     ");
                 EndContext();
                 BeginContext(4668, 34, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "434a8a37d69a4705bcc94bfb263e19ce", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4878985bf05747ab9414709c57a6fe17", async() => {
                     BeginContext(4685, 8, true);
                     WriteLiteral("请选择，支持搜索");
                     EndContext();
@@ -626,7 +626,7 @@ using FytSoa.Web;
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(5040, 66, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dfeece506ae74614abfad969116320a7", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f8c64576a3234d11a851178c2ca05162", async() => {
                     BeginContext(5088, 9, false);
 #line 108 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Goods\BarCodeModify.cshtml"
                                                                           Write(item.Name);
@@ -670,7 +670,7 @@ using FytSoa.Web;
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(5236, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "27a1c0a5cc694516be3e98c733fc76d6", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7401de4843948f69b3298639c976adc", async() => {
                     BeginContext(5264, 9, false);
 #line 112 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Goods\BarCodeModify.cshtml"
                                                       Write(item.Name);
@@ -720,7 +720,7 @@ using FytSoa.Web;
                     ");
                 EndContext();
                 BeginContext(5683, 34, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0c8e15f394f943e2911ee70dbb087fe6", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e0b7955ab67548cbacd6086b42bfa59f", async() => {
                     BeginContext(5700, 8, true);
                     WriteLiteral("请选择，支持搜索");
                     EndContext();
@@ -754,7 +754,7 @@ using FytSoa.Web;
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(6054, 66, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "72c244e32c974053ae2577a22c47dcbe", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d16e4b827c74240879fc3efb6a9f8fa", async() => {
                     BeginContext(6102, 9, false);
 #line 129 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Goods\BarCodeModify.cshtml"
                                                                           Write(item.Name);
@@ -798,7 +798,7 @@ using FytSoa.Web;
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(6250, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1567df0e1aff4cf4a710778b162b4324", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13d0e86dd5b4464b98ba4b43fe83f1b4", async() => {
                     BeginContext(6278, 9, false);
 #line 133 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Goods\BarCodeModify.cshtml"
                                                       Write(item.Name);
@@ -954,7 +954,7 @@ WriteAttributeValue("", 7894, Model.skuModel.StockSum, 7894, 24, false);
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(7933, 91, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "3d000e6a3b2541b1814ee089f8f0ff78", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9d05088daa2f4d9f9757e73189eea731", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

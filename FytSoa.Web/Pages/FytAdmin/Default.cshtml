@@ -393,19 +393,27 @@
                 init: function () { 
                     os.ajax('api/default/weeksale', null, function (res) {
                         if (res.statusCode === 200) {
-                            baseChart.hideLoading()                            var money = [], order = [];                            $.each(res.data.money, function (i, m) {                                money.push(m);                            });                            $.each(res.data.order, function (i, m) {                                order.push(m);                            });                            baseChart.setOption({
+                            baseChart.hideLoading()
+                            var money = [], order = [];
+                            $.each(res.data.money, function (i, m) {
+                                money.push(m);
+                            });
+                            $.each(res.data.order, function (i, m) {
+                                order.push(m);
+                            });
+                            baseChart.setOption({
                                 series: [
                                     {
                                         name: '订单总数',
                                         type: 'line',
                                         areaStyle: { normal: {} },
-                                        data: money
+                                        data: order
                                     },
                                     {
                                         name: '销售金额',
                                         type: 'line',
                                         areaStyle: { normal: {} },
-                                        data: order
+                                        data: money
                                     }
                                 ]
                             });
@@ -417,11 +425,13 @@
             };
             setTimeout(function () {
                 active.init();
-            }, 1000);
+            }, 1000);
+
             
         });
         var baseChart = echarts.init(document.getElementById('base-map'), 'macarons');
-        baseChart.showLoading();        var option = {
+        baseChart.showLoading();
+        var option = {
             title: {
                 //show:false,
                 text: '今日销售金额汇总',

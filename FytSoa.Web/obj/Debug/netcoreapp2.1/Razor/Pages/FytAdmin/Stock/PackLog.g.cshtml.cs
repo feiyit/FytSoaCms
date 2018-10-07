@@ -58,7 +58,7 @@ using FytSoa.Web;
 #line default
 #line hidden
             BeginContext(150, 2617, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cb34d783622d4a34b89c6ef720490fdd", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e758aad2ffa44da899e1500e2c0e5378", async() => {
                 BeginContext(194, 10, true);
                 WriteLiteral("\r\n    <div");
                 EndContext();
@@ -74,7 +74,7 @@ WriteAttributeValue(" ", 227, Model.PackModel.Types==2?"":"layui-hide", 228, 43,
                 WriteLiteral(">\r\n        <label class=\"layui-form-label\">加盟商</label>\r\n        <div class=\"layui-input-block\">\r\n            <select name=\"ShopGuid\" lay-search=\"\">\r\n                ");
                 EndContext();
                 BeginContext(437, 37, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "22eef28fbb3b4f04a48d53544d7a2296", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0a27662a2242447abb5629c8f21f5a7f", async() => {
                     BeginContext(454, 11, true);
                     WriteLiteral("请选择加盟商，支持搜索");
                     EndContext();
@@ -110,7 +110,7 @@ WriteAttributeValue(" ", 227, Model.PackModel.Types==2?"":"layui-hide", 228, 43,
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(808, 70, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ca9d545ceaf243eaa3f5f441376a0bc2", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a4c76f45abbb4a5ab89b94265c994f87", async() => {
                     BeginContext(856, 13, false);
 #line 20 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Stock\PackLog.cshtml"
                                                                           Write(item.ShopName);
@@ -154,7 +154,7 @@ WriteAttributeValue(" ", 227, Model.PackModel.Types==2?"":"layui-hide", 228, 43,
                 WriteLiteral("                                ");
                 EndContext();
                 BeginContext(1008, 50, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "218c02cfa33940aea1e61a496179a74a", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2472d308226c4ede8c0851cf55437f1b", async() => {
                     BeginContext(1036, 13, false);
 #line 24 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Stock\PackLog.cshtml"
                                                       Write(item.ShopName);
