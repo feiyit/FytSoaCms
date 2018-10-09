@@ -39,5 +39,25 @@ namespace FytSoa.Api.Controllers
         {
             return await _defaultService.GetWeekSaleReport();
         }
+
+        /// <summary>
+        /// 查询加盟商销售排行 top 7
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("shoptop")]
+        public async Task<ApiResult<List<ShopSaleTop>>> ShopSaleTopReportAsync()
+        {
+            return await _defaultService.GetShopSaleTopReport();
+        }
+
+        /// <summary>
+        /// 查询品牌销售排行 top 20
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("brandtop")]
+        public async Task<ApiResult<List<BrandSaleTop>>> BrandSaleTopReportAsync()
+        {
+            return await _defaultService.GetBrandSaleTopReport();
+        }
     }
 }

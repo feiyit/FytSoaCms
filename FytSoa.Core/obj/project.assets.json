@@ -3008,7 +3008,7 @@
           "lib/netstandard1.1/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
-      "sqlSugarCore/4.6.4.9": {
+      "sqlSugarCore/4.7.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Data.Sqlite": "2.0.0",
@@ -7591,13 +7591,14 @@
         "sqlitepclraw.provider.e_sqlite3.netstandard11.nuspec"
       ]
     },
-    "sqlSugarCore/4.6.4.9": {
-      "sha512": "BIY0s68mJE/sjdoRSTr8otMTqRq+EHH1KxlifaKevj/DSv93iB4dhVQKfO/3u9eedtrA4GYJdnh/vhTiIbXddQ==",
+    "sqlSugarCore/4.7.0": {
+      "sha512": "zMRVMkBrDyaFVrua/V9/tDQXt1UR+xCpQ3IlAmxIuY9lPc4dgVs6Z4+yUdL8Upxvp+S4F1ZAMFWSDivq8AzYrw==",
       "type": "package",
-      "path": "sqlsugarcore/4.6.4.9",
+      "path": "sqlsugarcore/4.7.0",
       "files": [
+        ".signature.p7s",
         "lib/netstandard2.0/SqlSugar.dll",
-        "sqlsugarcore.4.6.4.9.nupkg.sha512",
+        "sqlsugarcore.4.7.0.nupkg.sha512",
         "sqlsugarcore.nuspec"
       ]
     },
@@ -12018,27 +12019,27 @@
       "Microsoft.AspNetCore.App >= 2.1.0",
       "Microsoft.NETCore.App >= 2.1.0",
       "MySql.Data >= 8.0.12",
-      "sqlSugarCore >= 4.6.4.9"
+      "sqlSugarCore >= 4.7.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\71551\\.nuget\\packages\\": {},
+    "C:\\Users\\fuyu\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Core\\FytSoa.Core.csproj",
+      "projectUniqueName": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Core\\FytSoa.Core.csproj",
       "projectName": "FytSoa.Core",
-      "projectPath": "E:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Core\\FytSoa.Core.csproj",
-      "packagesPath": "C:\\Users\\71551\\.nuget\\packages\\",
-      "outputPath": "E:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Core\\obj\\",
+      "projectPath": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Core\\FytSoa.Core.csproj",
+      "packagesPath": "C:\\Users\\fuyu\\.nuget\\packages\\",
+      "outputPath": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\71551\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\fuyu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12051,8 +12052,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "E:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Extensions\\FytSoa.Extensions.csproj": {
-              "projectPath": "E:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Extensions\\FytSoa.Extensions.csproj"
+            "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Extensions\\FytSoa.Extensions.csproj": {
+              "projectPath": "D:\\2018Project\\ERP项目\\SoaProJect\\FytSoa.Extensions\\FytSoa.Extensions.csproj"
             }
           }
         }
@@ -12082,7 +12083,7 @@
           },
           "sqlSugarCore": {
             "target": "Package",
-            "version": "[4.6.4.9, )"
+            "version": "[4.7.0, )"
           }
         },
         "imports": [

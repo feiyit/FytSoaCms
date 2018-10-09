@@ -23,5 +23,17 @@ namespace FytSoa.Service.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<ApiResult<WeekSaleReport>> GetWeekSaleReport();
+
+        /// <summary>
+        /// 查询店铺销售排行榜
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<List<ShopSaleTop>>> GetShopSaleTopReport();
+
+        /// <summary>
+        /// 查询品牌销售排行榜 前20
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<List<BrandSaleTop>>> GetBrandSaleTopReport();
     }
 }

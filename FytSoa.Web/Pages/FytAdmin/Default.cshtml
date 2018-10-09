@@ -12,7 +12,7 @@
     </style>
     <div class="layui-fluid" id="defaultapp">
         <div class="layui-row layui-col-space15">
-            <div class="layui-col-md8">
+            <div class="layui-col-md12 layui-col-lg8">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <div class="layui-card">
@@ -177,7 +177,7 @@
                     </div>
                 </div>
             </div>
-            <div class="layui-col-md4">
+            <div class="layui-col-lg4 layui-col-md12">
                 <div class="layui-card">
                     <div class="layui-card-header">版本信息</div>
                     <div class="layui-card-body layui-text" style="height:210px;">
@@ -274,73 +274,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>秦皇岛店秦皇岛店</td>
-                                    <td>￥56412.15</td>
-                                    <td>2345</td>
+                                <tr v-for="it in topList" v-cloak>
+                                    <td>{{it.shopName}}</td>
+                                    <td>￥{{it.money}}</td>
+                                    <td>{{it.counts}}</td>
                                     <td>
                                         <div class="layui-progress" lay-showpercent="true">
-                                            <div class="layui-progress-bar" lay-percent="60%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>秦皇岛店秦皇岛店</td>
-                                    <td>￥56412.15</td>
-                                    <td>2345</td>
-                                    <td>
-                                        <div class="layui-progress" lay-showpercent="true">
-                                            <div class="layui-progress-bar" lay-percent="40%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>秦皇岛店秦皇岛店</td>
-                                    <td>￥56412.15</td>
-                                    <td>2345</td>
-                                    <td>
-                                        <div class="layui-progress" lay-showpercent="true">
-                                            <div class="layui-progress-bar" lay-percent="35%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>秦皇岛店秦皇岛店</td>
-                                    <td>￥56412.15</td>
-                                    <td>2345</td>
-                                    <td>
-                                        <div class="layui-progress" lay-showpercent="true">
-                                            <div class="layui-progress-bar" lay-percent="30%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>秦皇岛店秦皇岛店</td>
-                                    <td>￥56412.15</td>
-                                    <td>2345</td>
-                                    <td>
-                                        <div class="layui-progress" lay-showpercent="true">
-                                            <div class="layui-progress-bar" lay-percent="20%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>秦皇岛店秦皇岛店</td>
-                                    <td>￥56412.15</td>
-                                    <td>2345</td>
-                                    <td>
-                                        <div class="layui-progress" lay-showpercent="true">
-                                            <div class="layui-progress-bar" lay-percent="16%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>秦皇岛店秦皇岛店</td>
-                                    <td>￥56412.15</td>
-                                    <td>2345</td>
-                                    <td>
-                                        <div class="layui-progress" lay-showpercent="true">
-                                            <div class="layui-progress-bar" lay-percent="5%"></div>
+                                            <div class="layui-progress-bar" :lay-percent="it.ratio+'%'"></div>
                                         </div>
                                     </td>
                                 </tr>
@@ -357,6 +297,7 @@
         var d_vm = new Vue({
             el: '#defaultapp',
             data: {
+                topList:[],
                 model: []
             }
         });
@@ -390,6 +331,18 @@
                 , indicator: 'outside'
             });
             var active = {
+                loadTop: function () {
+                    os.ajax('api/default/shoptop', null, function (res) {
+                        if (res.statusCode === 200) {
+                            d_vm.topList = res.data;
+                            d_vm.$nextTick(function () {
+                                element.render();
+                            });
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
+                },
                 init: function () { 
                     os.ajax('api/default/weeksale', null, function (res) {
                         if (res.statusCode === 200) {
@@ -421,8 +374,17 @@
                             os.error(res.message);
                         }
                     });
+
+                    os.ajax('api/default/brandtop', null, function (res) {
+                        if (res.statusCode === 200) {
+
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
                 }
             };
+            active.loadTop();
             setTimeout(function () {
                 active.init();
             }, 1000);

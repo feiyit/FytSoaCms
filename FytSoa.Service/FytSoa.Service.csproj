@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="sqlSugarCore" Version="4.6.4.9" />
+    <PackageReference Include="sqlSugarCore" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>

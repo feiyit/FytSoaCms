@@ -40,7 +40,7 @@ namespace FytSoa.Service.DtoModel
         public decimal WeekSaleMoney { get; set; } = 0;
 
         /// <summary>
-        /// 本周销售金额
+        /// 本月销售金额
         /// </summary>
         public decimal MonthSaleMoney { get; set; } = 0;
     }
@@ -53,96 +53,62 @@ namespace FytSoa.Service.DtoModel
         public List<decimal> Money { get; set; }
         public List<int> Order { get; set; }
     }
-
-    /// <summary>
-    /// 本周销售金额报表
-    /// </summary>
-    public class WeekSaleMoneyReport
-    {
-        /// <summary>
-        /// 周一
-        /// </summary>
-        public decimal Monday { get; set; } = 0;
-
-        /// <summary>
-        /// 周二
-        /// </summary>
-        public decimal Tuesday { get; set; } = 0;
-
-        /// <summary>
-        /// 周三
-        /// </summary>
-        public decimal Wednesday { get; set; } = 0;
-
-        /// <summary>
-        /// 周四
-        /// </summary>
-        public decimal Thursday { get; set; } = 0;
-
-        /// <summary>
-        /// 周五
-        /// </summary>
-        public decimal Friday { get; set; } = 0;
-
-        /// <summary>
-        /// 周六
-        /// </summary>
-        public decimal Saturday { get; set; } = 0;
-
-        /// <summary>
-        /// 周日
-        /// </summary>
-        public decimal Sunday { get; set; } = 0;
-    }
-
-    /// <summary>
-    /// 本周销售订单报表
-    /// </summary>
-    public class WeekSaleOrderReport
-    {
-        /// <summary>
-        /// 周一
-        /// </summary>
-        public int Monday { get; set; } = 0;
-
-        /// <summary>
-        /// 周二
-        /// </summary>
-        public int Tuesday { get; set; } = 0;
-
-        /// <summary>
-        /// 周三
-        /// </summary>
-        public int Wednesday { get; set; } = 0;
-
-        /// <summary>
-        /// 周四
-        /// </summary>
-        public int Thursday { get; set; } = 0;
-
-        /// <summary>
-        /// 周五
-        /// </summary>
-        public int Friday { get; set; } = 0;
-
-        /// <summary>
-        /// 周六
-        /// </summary>
-        public int Saturday { get; set; } = 0;
-
-        /// <summary>
-        /// 周日
-        /// </summary>
-        public int Sunday { get; set; } = 0;
-    }
+    
 
     /// <summary>
     /// 根据日期查询，返回的结果
     /// </summary>
     public class WeekDayRes
     {
+        /// <summary>
+        /// 日期
+        /// </summary>
         public string Days { get; set; }
+        /// <summary>
+        /// 订单总数
+        /// </summary>
         public int Counts { get; set; }
+        /// <summary>
+        /// 订单金额
+        /// </summary>
         public decimal Money { get; set; }
+    }
+
+    /// <summary>
+    /// 店铺销售排行榜
+    /// </summary>
+    public class ShopSaleTop
+    {
+        /// <summary>
+        /// 店铺名称
+        /// </summary>
+        public string ShopName { get; set; }
+        /// <summary>
+        /// 订单总数
+        /// </summary>
+        public int Counts { get; set; } = 0;
+        /// <summary>
+        /// 订单金额
+        /// </summary>
+        public decimal Money { get; set; } = 0;
+        /// <summary>
+        /// 占比
+        /// </summary>
+        public decimal Ratio { get; set; } = 0;
+    }
+
+    /// <summary>
+    /// 品牌销售排行榜
+    /// </summary>
+    public class BrandSaleTop
+    {
+        /// <summary>
+        /// 品牌名称
+        /// </summary>
+        public string BrandName { get; set; }
+        /// <summary>
+        /// 销售总数
+        /// </summary>
+        public int Counts { get; set; } = 0;
     }
 }
