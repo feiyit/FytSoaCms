@@ -43,6 +43,21 @@ namespace FytSoa.Service.DtoModel
         /// 本月销售金额
         /// </summary>
         public decimal MonthSaleMoney { get; set; } = 0;
+
+        /// <summary>
+        /// 日同比
+        /// </summary>
+        public double DayOnYear { get; set; } = 0;
+
+        /// <summary>
+        /// 周同比
+        /// </summary>
+        public double WeekOnYear { get; set; } = 0;
+
+        /// <summary>
+        /// 月同比
+        /// </summary>
+        public double MonthOnYear { get; set; } = 0;
     }
 
     /// <summary>

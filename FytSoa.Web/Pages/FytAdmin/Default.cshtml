@@ -169,7 +169,7 @@
                     </div>
                     <div class="layui-col-md12">
                         <div class="layui-card">
-                            <div class="layui-card-header">品牌销售排行榜 Top10</div>
+                            <div class="layui-card-header">品牌销售排行榜 Top20</div>
                             <div class="layui-card-body">
                                 <div id="brand-top" style="width: 100%;height:355px;"></div>
                             </div>
@@ -242,16 +242,16 @@
                     <div class="layui-card-header">销售统计效果</div>
                     <div class="layui-card-body layadmin-takerates">
                         <div class="layui-progress" lay-showpercent="yes">
-                            <h3>转化率（日同比 28% <span class="layui-edge layui-edge-top" lay-tips="增长" lay-offset="-15"></span>）</h3>
-                            <div class="layui-progress-bar" lay-percent="65%"><span class="layui-progress-text">65%</span></div>
+                            <h3>转化率（日同比 {{model.dayOnYear}}% <span class="layui-edge layui-edge-top" lay-tips="增长" lay-offset="-15"></span>）</h3>
+                            <div class="layui-progress-bar" :lay-percent="model.dayOnYear+'%'"><span class="layui-progress-text">{{model.dayOnYear}}%</span></div>
                         </div>
                         <div class="layui-progress" lay-showpercent="yes">
-                            <h3>签到率（周同比 11% <span class="layui-edge layui-edge-bottom" lay-tips="下降" lay-offset="-15"></span>）</h3>
-                            <div class="layui-progress-bar layui-bg-orange" lay-percent="32%"><span class="layui-progress-text">32%</span></div>
+                            <h3>签到率（周同比 {{model.weekOnYear}}% <span class="layui-edge layui-edge-bottom" lay-tips="下降" lay-offset="-15"></span>）</h3>
+                            <div class="layui-progress-bar layui-bg-orange" :lay-percent="model.weekOnYear+'%'"><span class="layui-progress-text">{{model.weekOnYear}}%</span></div>
                         </div>
                         <div class="layui-progress" lay-showpercent="yes">
-                            <h3>签到率（月同比 65% <span class="layui-edge layui-edge-bottom" lay-tips="下降" lay-offset="-15"></span>）</h3>
-                            <div class="layui-progress-bar layui-bg-orange" lay-percent="65%"><span class="layui-progress-text">32%</span></div>
+                            <h3>签到率（月同比 {{model.monthOnYear}}% <span class="layui-edge layui-edge-bottom" lay-tips="下降" lay-offset="-15"></span>）</h3>
+                            <div class="layui-progress-bar layui-bg-orange" :lay-percent="model.monthOnYear+'%'"><span class="layui-progress-text">{{model.monthOnYear}}%</span></div>
                         </div>
                     </div>
                 </div>
@@ -309,7 +309,7 @@
                 , $ = layui.jquery;
             os.ajax('api/default/backlog', null, function (res) { 
                 if (res.statusCode === 200) {
-                    d_vm.model = res.data;
+                    d_vm.model = res.data; 
                 } else {
                     os.error(res.message);
                 }
@@ -334,7 +334,7 @@
                 loadTop: function () {
                     os.ajax('api/default/shoptop', null, function (res) {
                         if (res.statusCode === 200) {
-                            d_vm.topList = res.data;
+                            d_vm.topList = res.data; 
                             d_vm.$nextTick(function () {
                                 element.render();
                             });
@@ -377,7 +377,22 @@
 
                     os.ajax('api/default/brandtop', null, function (res) {
                         if (res.statusCode === 200) {
-
+                            brandChart.hideLoading()
+                            var names = [], counts = [];
+                            $.each(res.data, function (i, m) {
+                                names.push(m.brandName);
+                                counts.push(m.counts);
+                            });
+                            brandChart.setOption({
+                                xAxis: {
+                                    data: names,
+                                },
+                                series: [
+                                    {
+                                        data: counts
+                                    }
+                                ]
+                            });
                         } else {
                             os.error(res.message);
                         }
@@ -444,6 +459,7 @@
             dataShadow.push(yMax);
         }
         var brandChart = echarts.init(document.getElementById('brand-top'), 'macarons');
+        brandChart.showLoading();
         brandChart.setOption({
             title: {
                 show: false,
@@ -495,16 +511,6 @@
                 }
             },
             series: [
-                { // For shadow
-                    type: 'bar',
-                    itemStyle: {
-                        normal: { color: 'rgba(0,0,0,0.05)' }
-                    },
-                    barGap: '-100%',
-                    barCategoryGap: '40%',
-                    data: dataShadow,
-                    animation: false
-                },
                 {
                     type: 'bar',
                     itemStyle: {
