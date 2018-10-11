@@ -30,6 +30,16 @@ namespace FytSoa.Service.Implements
                 DateTime dayTime = Convert.ToDateTime(DateTime.Now.AddDays(1).ToShortDateString() + " 00:00:00");
                 string startWeek = Utils.GetMondayDate().ToShortDateString();
                 string endWeek = Utils.GetSundayDate().AddDays(1).ToShortDateString();
+                //昨天销售额
+                var yesterDayTime = Convert.ToDateTime(DateTime.Now.ToShortDateString() + " 00:00:00");
+                var yesterDay = Db.Queryable<ErpSaleOrder>().Where(m => SqlFunc.DateIsSame(m.AddDate, yesterDayTime)).Sum(m => m.RealMoney);
+                //上周销售额
+                var yesterWeekTimeStart = Utils.GetMondayDate().AddDays(-7).ToShortDateString();
+                var yesterWeekTimeEnd = Utils.GetMondayDate().AddDays(-1).ToShortDateString();
+                var yesterWeek = Db.Queryable<ErpSaleOrder>().Where(m => SqlFunc.Between(m.AddDate, yesterWeekTimeStart, yesterWeekTimeEnd)).Sum(m => m.RealMoney);
+                //上个月销售额
+                var yesterMonthTime = DateTime.Now.AddMonths(-1);
+                var yesterMonth = Db.Queryable<ErpSaleOrder>().Where(m => SqlFunc.DateIsSame(m.AddDate, yesterMonthTime, DateType.Month)).Sum(m => m.RealMoney);
                 var model = new BackLogReport
                 {
                     //今日返货数量
@@ -43,10 +53,17 @@ namespace FytSoa.Service.Implements
                     //今日销售金额
                     DaySaleMoney=Db.Queryable<ErpSaleOrder>().Where(m=> SqlFunc.DateIsSame(m.AddDate, dayTime)).Sum(m=>m.RealMoney),
                     //本周销售金额
-                    WeekSaleMoney= Db.Queryable<ErpSaleOrder>().Where(m => SqlFunc.Between(m.AddDate, Utils.GetMondayDate(),Utils.GetSundayDate().AddDays(1))).Sum(m => m.RealMoney),
+                    WeekSaleMoney= Db.Queryable<ErpSaleOrder>().Where(m => SqlFunc.Between(m.AddDate, Utils.GetMondayDate(), Utils.GetMondayDate().AddDays(7))).Sum(m => m.RealMoney),
                     //本月销售金额
                     MonthSaleMoney= Db.Queryable<ErpSaleOrder>().Where(m => SqlFunc.DateIsSame(m.AddDate, dayTime,DateType.Month)).Sum(m => m.RealMoney)
                 };
+                //日同比  同比增长率=（本年的指标值-去年同期的值）÷去年同期的值*100%
+                model.DayOnYear =yesterDay==0?0:Convert.ToDouble((model.DaySaleMoney - yesterDay) / yesterDay * 100);
+                //周同比
+                model.WeekOnYear = yesterWeek == 0 ? 0 : Convert.ToDouble((model.WeekSaleMoney - yesterWeek) / yesterWeek * 100);
+                //月同比
+                model.MonthOnYear = yesterMonth == 0 ? 0 : Convert.ToDouble((model.MonthSaleMoney - yesterMonth) / yesterMonth * 100);
+
                 res.data = model;
                 res.statusCode = (int)ApiEnum.Status;
             }
