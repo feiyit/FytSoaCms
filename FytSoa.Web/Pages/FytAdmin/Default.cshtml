@@ -346,7 +346,7 @@
                 init: function () { 
                     os.ajax('api/default/weeksale', null, function (res) {
                         if (res.statusCode === 200) {
-                            baseChart.hideLoading()
+                            baseChart.hideLoading();
                             var money = [], order = [];
                             $.each(res.data.money, function (i, m) {
                                 money.push(m);
@@ -377,7 +377,7 @@
 
                     os.ajax('api/default/brandtop', null, function (res) {
                         if (res.statusCode === 200) {
-                            brandChart.hideLoading()
+                            brandChart.hideLoading();
                             var names = [], counts = [];
                             $.each(res.data, function (i, m) {
                                 names.push(m.brandName);
@@ -385,7 +385,7 @@
                             });
                             brandChart.setOption({
                                 xAxis: {
-                                    data: names,
+                                    data: names
                                 },
                                 series: [
                                     {
