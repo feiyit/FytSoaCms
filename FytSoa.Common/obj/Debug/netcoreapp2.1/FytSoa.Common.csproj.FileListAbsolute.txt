@@ -29,3 +29,4 @@ D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\obj\Debug\netcoreapp2.1\FytSoa
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\obj\Debug\netcoreapp2.1\FytSoa.Common.AssemblyInfo.cs
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\obj\Debug\netcoreapp2.1\FytSoa.Common.dll
 D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\obj\Debug\netcoreapp2.1\FytSoa.Common.pdb
+D:\2018Project\ERP项目\SoaProJect\FytSoa.Common\obj\Debug\netcoreapp2.1\FytSoa.Common.csprojAssemblyReference.cache
