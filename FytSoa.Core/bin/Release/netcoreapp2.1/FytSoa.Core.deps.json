@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "78fa724fcbac45338ae609c9cb51c44bc9650698"
+    "signature": "2b7808510e4803b094b10bdf21bd452f322b1262"
   },
   "compilationOptions": {},
   "targets": {
@@ -11,7 +11,7 @@
           "FytSoa.Extensions": "1.0.0",
           "Microsoft.NETCore.App": "2.1.0",
           "MySql.Data": "8.0.12",
-          "sqlSugarCore": "4.6.4.9"
+          "sqlSugarCore": "4.7.0"
         },
         "runtime": {
           "FytSoa.Core.dll": {}
@@ -162,7 +162,7 @@
           }
         }
       },
-      "sqlSugarCore/4.6.4.9": {
+      "sqlSugarCore/4.7.0": {
         "dependencies": {
           "Microsoft.Data.Sqlite": "2.0.0",
           "MySql.Data": "8.0.12",
@@ -170,8 +170,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/SqlSugar.dll": {
-            "assemblyVersion": "4.6.4.9",
-            "fileVersion": "4.6.4.9"
+            "assemblyVersion": "4.7.0.0",
+            "fileVersion": "4.7.0.0"
           }
         }
       },
@@ -335,12 +335,12 @@
       "path": "sqlitepclraw.provider.e_sqlite3.netstandard11/1.1.7",
       "hashPath": "sqlitepclraw.provider.e_sqlite3.netstandard11.1.1.7.nupkg.sha512"
     },
-    "sqlSugarCore/4.6.4.9": {
+    "sqlSugarCore/4.7.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-BIY0s68mJE/sjdoRSTr8otMTqRq+EHH1KxlifaKevj/DSv93iB4dhVQKfO/3u9eedtrA4GYJdnh/vhTiIbXddQ==",
-      "path": "sqlsugarcore/4.6.4.9",
-      "hashPath": "sqlsugarcore.4.6.4.9.nupkg.sha512"
+      "sha512": "sha512-zMRVMkBrDyaFVrua/V9/tDQXt1UR+xCpQ3IlAmxIuY9lPc4dgVs6Z4+yUdL8Upxvp+S4F1ZAMFWSDivq8AzYrw==",
+      "path": "sqlsugarcore/4.7.0",
+      "hashPath": "sqlsugarcore.4.7.0.nupkg.sha512"
     },
     "System.Configuration.ConfigurationManager/4.4.1": {
       "type": "package",

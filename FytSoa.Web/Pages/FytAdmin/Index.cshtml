@@ -78,15 +78,15 @@
         var os = layui.common
             , element = layui.element
             , $ = layui.jquery;
-        os.get('api/menu/authmenu', { limit: 10000 }, function (res) {
+        os.get('api/menu/authmenu', { parm: '@Model.adminGuid' }, function (res) {
             if (res.statusCode === 200) {
-                $.each(res.data.items, function (index, item) {
+                $.each(res.data, function (index, item) {
                     if (item.layer === 1) {
                         main_vm.menulist.push(item);
                     }
                 });
                 rm_vm.tmlist = main_vm.menulist;
-                rm_vm.list = res.data.items;
+                rm_vm.list = res.data;
                 main_vm.$nextTick(function () {
                     element.render();
                     //定位到菜单

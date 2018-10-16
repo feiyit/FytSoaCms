@@ -1,7 +1,0 @@
-2018-10-07 20:55:03.7980||WARN|Microsoft.AspNetCore.Server.Kestrel|Connection processing ended abnormally. Microsoft.AspNetCore.Connections.ConnectionAbortedException: The connection was aborted
-   at System.IO.Pipelines.PipeCompletion.ThrowLatchedException()
-   at System.IO.Pipelines.Pipe.GetReadResult(ReadResult& result)
-   at System.IO.Pipelines.Pipe.GetReadAsyncResult()
-   at System.IO.Pipelines.Pipe.DefaultPipeReader.GetResult(Int16 token)
-   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
-   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequestsAsync[TContext](IHttpApplication`1 application)|url: |action:  |IP: |QueryString: 

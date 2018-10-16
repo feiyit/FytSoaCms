@@ -24,6 +24,7 @@ namespace FytSoa.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ISysAuthorizeService, SysAuthorizeService>();
             services.AddTransient<IDefaultReportService, DefaultReportService>();
             services.AddTransient<IUserReportServer, UserReportServer>();
             services.AddTransient<IErpSkuLossService, ErpSkuLossService>();
@@ -41,6 +42,7 @@ namespace FytSoa.Api
             services.AddTransient<IErpPackLogService, ErpPackLogService>();
             services.AddTransient<IErpReturnOrderService, ErpReturnOrderService>();
             services.AddTransient<IErpReturnGoodsService, ErpReturnGoodsService>();
+            services.AddTransient<IErpReturnLossService, ErpReturnLossService>();
             services.AddTransient<IErpBackGoodsService, ErpBackGoodsService>();
             services.AddTransient<IErpGoodsService, ErpGoodsService>();
             services.AddTransient<IErpGoodsSkuService, ErpGoodsSkuService>();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using FytSoa.Core.Model.Sys;
 using FytSoa.Service.Interfaces;
@@ -20,9 +21,12 @@ namespace FytSoa.Web.Pages.FytAdmin
         }
         [BindProperty]
         public List<SysMenu> list { get; set; }
+        [BindProperty]
+        public string adminGuid { get; set; }
         public void OnGet()
         {
             list = _sysMenuService.GetPagesAsync(new Service.DtoModel.PageParm() { limit = 1000 }).Result.data.Items;
+            adminGuid = User.Identities.First(u => u.IsAuthenticated).FindFirst(ClaimTypes.Sid).Value;
         }
     }
 }

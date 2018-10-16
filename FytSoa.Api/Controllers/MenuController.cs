@@ -16,9 +16,11 @@ namespace FytSoa.Api.Controllers
     public class MenuController : Controller
     {
         private readonly ISysMenuService _sysMenuService;
-        public MenuController(ISysMenuService sysMenuService)
+        private readonly ISysAuthorizeService _authorizeService;
+        public MenuController(ISysMenuService sysMenuService, ISysAuthorizeService authorizeService)
         {
             _sysMenuService = sysMenuService;
+            _authorizeService = authorizeService;
         }
 
         /// <summary>
@@ -56,9 +58,9 @@ namespace FytSoa.Api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("authmenu")]
-        public async Task<ApiResult<Page<SysMenu>>> GetAuthMenu(PageParm parm)
+        public async Task<ApiResult<List<SysMenu>>> GetAuthMenu(string parm)
         {
-            return await _sysMenuService.GetPagesAsync(parm);
+            return await _authorizeService.GetAuthorizeAsync(parm);
         }
 
         /// <summary>

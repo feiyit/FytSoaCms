@@ -19,6 +19,7 @@ namespace FytSoa.Api.Controllers
         private readonly IErpPackLogService _packLogService;
         private readonly IErpBackGoodsService _backGoodsService;
         private readonly IErpReturnOrderService _returnOrderService;
+        private readonly IErpReturnLossService _returnLossService;
         private readonly IErpReturnGoodsService _returnGoodsService;
         private readonly IErpTransferService _transferService;
         private readonly IErpTransferGoodsService _transferGoodsService;
@@ -27,6 +28,7 @@ namespace FytSoa.Api.Controllers
             IErpBackGoodsService backGoodsService,
             IErpReturnOrderService returnOrderService,
             IErpReturnGoodsService returnGoodsService,
+            IErpReturnLossService returnLossService,
             IErpTransferService transferService,
             IErpTransferGoodsService transferGoodsService)
         {
@@ -35,6 +37,7 @@ namespace FytSoa.Api.Controllers
             _backGoodsService = backGoodsService;
             _returnOrderService = returnOrderService;
             _returnGoodsService = returnGoodsService;
+            _returnLossService = returnLossService;
             _transferService = transferService;
             _transferGoodsService = transferGoodsService;
         }
@@ -304,6 +307,50 @@ namespace FytSoa.Api.Controllers
         public Task<ApiResult<string>> UpdateReturnGoodsStatus(ErpReturnGoods parm)
         {
             return _returnGoodsService.ModifyStatusAsync(parm);
+        }
+        #endregion
+
+        #region 返货报损Api
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("returnlosslist")]
+        public async Task<JsonResult> GetReturnLossPages(PageParm parm)
+        {
+            var res = await _returnLossService.GetPagesAsync(parm);
+            return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
+        }
+
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("addreturnloss")]
+        public async Task<ApiResult<string>> AddReturnLoss(ErpReturnLoss parm)
+        {
+            return await _returnLossService.AddAsync(parm);
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("delreturnloss")]
+        public async Task<ApiResult<string>> DeleteReturnLoss(string parm)
+        {
+            return await _returnLossService.DeleteAsync(parm);
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("modifyreturnloss")]
+        public async Task<ApiResult<string>> ModifyReturnLoss(ErpReturnLoss parm)
+        {
+            return await _returnLossService.ModifyStatusAsync(parm);
         }
         #endregion
     }

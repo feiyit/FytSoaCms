@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "65c673d12549f528ca2532a97db44214a347e918"
+    "signature": "eb4a32409ab915cefb958662d03ae936f9c3fef9"
   },
   "compilationOptions": {
     "defines": [
@@ -567,7 +567,7 @@
           "lib/netstandard1.1/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
-      "sqlSugarCore/4.6.4.9": {
+      "sqlSugarCore/4.7.0": {
         "dependencies": {
           "Microsoft.Data.Sqlite": "2.0.0",
           "MySql.Data": "8.0.12",
@@ -578,8 +578,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/SqlSugar.dll": {
-            "assemblyVersion": "4.6.4.9",
-            "fileVersion": "4.6.4.9"
+            "assemblyVersion": "4.7.0.0",
+            "fileVersion": "4.7.0.0"
           }
         },
         "compile": {
@@ -800,7 +800,7 @@
           "FytSoa.Extensions": "1.0.0",
           "Microsoft.AspNetCore.App": "2.1.0",
           "MySql.Data": "8.0.12",
-          "sqlSugarCore": "4.6.4.9"
+          "sqlSugarCore": "4.7.0"
         },
         "runtime": {
           "FytSoa.Core.dll": {}
@@ -826,7 +826,7 @@
           "FytSoa.Core": "1.0.0",
           "Microsoft.AspNetCore.App": "2.1.0",
           "Newtonsoft.Json": "11.0.2",
-          "sqlSugarCore": "4.6.4.9"
+          "sqlSugarCore": "4.7.0"
         },
         "runtime": {
           "FytSoa.Service.dll": {}
@@ -4006,12 +4006,12 @@
       "path": "sqlitepclraw.provider.e_sqlite3.netstandard11/1.1.7",
       "hashPath": "sqlitepclraw.provider.e_sqlite3.netstandard11.1.1.7.nupkg.sha512"
     },
-    "sqlSugarCore/4.6.4.9": {
+    "sqlSugarCore/4.7.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-BIY0s68mJE/sjdoRSTr8otMTqRq+EHH1KxlifaKevj/DSv93iB4dhVQKfO/3u9eedtrA4GYJdnh/vhTiIbXddQ==",
-      "path": "sqlsugarcore/4.6.4.9",
-      "hashPath": "sqlsugarcore.4.6.4.9.nupkg.sha512"
+      "sha512": "sha512-zMRVMkBrDyaFVrua/V9/tDQXt1UR+xCpQ3IlAmxIuY9lPc4dgVs6Z4+yUdL8Upxvp+S4F1ZAMFWSDivq8AzYrw==",
+      "path": "sqlsugarcore/4.7.0",
+      "hashPath": "sqlsugarcore.4.7.0.nupkg.sha512"
     },
     "System.Composition/1.0.31": {
       "type": "package",
