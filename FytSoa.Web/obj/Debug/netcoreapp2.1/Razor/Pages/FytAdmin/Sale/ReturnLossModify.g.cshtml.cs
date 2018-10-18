@@ -59,7 +59,7 @@ using FytSoa.Web;
 #line default
 #line hidden
             BeginContext(162, 1472, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2f69df3bfc664557a8567f02745b2269", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "12003c7970744e4bbba96796c8352f2c", async() => {
                 BeginContext(206, 180, true);
                 WriteLiteral("\r\n    <div class=\"layui-form-item\">\r\n        <label class=\"layui-form-label\">条形码/名称</label>\r\n        <div class=\"layui-input-block\">\r\n            <input type=\"text\" name=\"CodeName\"");
                 EndContext();
@@ -154,7 +154,7 @@ WriteAttributeValue("", 1595, Model.LossModel.AdminGuid, 1595, 26, false);
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(1636, 91, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "88707ab1377b428ab86ac5e08b806431", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "ffdd225ce1d042f394b4f7ea49da9bc3", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

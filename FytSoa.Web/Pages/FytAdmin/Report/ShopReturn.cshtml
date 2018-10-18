@@ -11,9 +11,12 @@
                 <select id="shops" lay-search="">
                     <option value="">--可根据店铺搜索--</option>
                     @{
-                        foreach (var item in Model.shopList)
+                        if (Model.shopList != null)
                         {
-                            <option value="@item.Guid">@item.ShopName</option>
+                            foreach (var item in Model.shopList)
+                            {
+                                <option value="@item.Guid">@item.ShopName</option>
+                            }
                         }
                     }
                 </select>

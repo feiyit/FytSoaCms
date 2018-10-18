@@ -31,9 +31,12 @@
                 <select id="shops" lay-search="">
                     <option value="">--可根据店铺搜索--</option>
                     @{
-                        foreach (var item in Model.shopList)
+                        if (Model.shopList != null)
                         {
-                            <option value="@item.Guid">@item.ShopName</option>
+                            foreach (var item in Model.shopList)
+                            {
+                                <option value="@item.Guid">@item.ShopName</option>
+                            }
                         }
                     }
                 </select>
@@ -42,9 +45,12 @@
                 <select id="branks">
                     <option value="">--可根据品牌搜索--</option>
                     @{
-                        foreach (var item in Model.codeList)
+                        if (Model.codeList != null)
                         {
-                            <option value="@item.Name">@item.Name</option>
+                            foreach (var item in Model.codeList)
+                            {
+                                <option value="@item.Guid">@item.Name</option>
+                            }
                         }
                     }
                 </select>

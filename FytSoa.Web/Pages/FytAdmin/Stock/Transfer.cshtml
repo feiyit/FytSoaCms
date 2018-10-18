@@ -14,9 +14,12 @@
                 <select id="shopGuid">
                     <option value="">--可根据品牌搜索--</option>
                     @{
-                        foreach (var item in Model.List)
+                        if (Model.List != null)
                         {
-                            <option value="@item.Guid">@item.ShopName</option>
+                            foreach (var item in Model.List)
+                            {
+                                <option value="@item.Guid">@item.ShopName</option>
+                            }
                         }
                     }
                 </select>
