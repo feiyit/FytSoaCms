@@ -63,7 +63,7 @@ using FytSoa.Web;
                 ");
             EndContext();
             BeginContext(455, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2bea548d6cf948e0b9007d5ec4908f98", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f6cddf10f67a46dc9e3e55349fce0bb1", async() => {
                 BeginContext(472, 11, true);
                 WriteLiteral("--可根据品牌搜索--");
                 EndContext();
@@ -95,7 +95,7 @@ using FytSoa.Web;
             WriteLiteral("                        ");
             EndContext();
             BeginContext(619, 46, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1e8f4abcc5fe40e8af2ba5a5b854e1b5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b4e979373aea4f1babac8995f9d01ffa", async() => {
                 BeginContext(647, 9, false);
 #line 18 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Stock\TransferGoods.cshtml"
                                               Write(item.Name);

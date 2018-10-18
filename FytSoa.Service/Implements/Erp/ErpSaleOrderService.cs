@@ -115,6 +115,14 @@ namespace FytSoa.Service.Implements
                         parm.RealMoney+= Convert.ToInt32(skuItem.SalePrice) * item.Counts;
                         item.Money = Convert.ToInt32(skuItem.SalePrice);
                     }
+                    else
+                    {
+                        //统计非品牌活动，到下面去处理这个值
+                        if(activityModel.Types!=2 && parm.SaleType == 1)
+                        {
+                            parm.RealMoney += Convert.ToInt32(skuItem.SalePrice) * item.Counts;
+                        }
+                    }
                     //整除销售计算价格，残次品价格是前端传过来的
                     if (activityModel != null && parm.SaleType == 1)
                     {
@@ -231,19 +239,17 @@ namespace FytSoa.Service.Implements
                     }
 
                 }
-                //有活动，并且是正常销售的情况下   全部店铺
-                if (activityModel!=null && parm.SaleType==1)
+                //有活动，并且是正常销售的情况下   非按品牌
+                if (activityModel!=null && parm.SaleType== 1 && activityModel.Types != 2)
                 {
-                    //计算商品实收金额
-                    parm.RealMoney = goodList.Sum(m=>Convert.ToDecimal(m.SalePrice));
                     //====打折/满减
-                    if (activityModel.Method == 1 && activityModel.Types != 2)
+                    if (activityModel.Method == 1)
                     {
                         //全部商铺，也就是所有金额
                         var zhVal = Convert.ToDecimal(activityModel.CountNum) / 100;
                         parm.RealMoney = Convert.ToDecimal(parm.RealMoney * zhVal);
                     }
-                    else if(activityModel.Method== 2 && activityModel.Types != 2)
+                    else if(activityModel.Method== 2)
                     {
                         //循环判断符合满减对象
                         foreach (var item in fullJson.OrderByDescending(m=>m.fullbegin).ToList())
@@ -255,7 +261,7 @@ namespace FytSoa.Service.Implements
                             }
                         }
                     }
-                    else if (activityModel.Method== 3 && activityModel.Types != 2)
+                    else if (activityModel.Method== 3)
                     {
                         //买一增一  循环购买商品，只读取第一件，第二个是赠品
                         for (int i = 0; i < roGoodsList.Count; i++)
@@ -272,11 +278,7 @@ namespace FytSoa.Service.Implements
                 }
 
                 
-                //根据实付金额，计算积分值
-                if (userModel!=null)
-                {
-                    userModel.Points = Convert.ToInt32(parm.RealMoney / 10);
-                }
+                
 
                 //查询今天销售数量
                 var dayCount = ErpSaleOrderDb.Count(m => SqlFunc.DateIsSame(m.AddDate, dayTime));
@@ -302,6 +304,19 @@ namespace FytSoa.Service.Implements
                     Db.Updateable(shopGoodsSkuList).ExecuteCommand();
                     if (userModel!=null)
                     {
+                        //根据实付金额，计算积分值
+                        userModel.Points = Convert.ToInt32(parm.RealMoney / 10);
+                        //构建积分变动记录
+                        var pointLogModel = new ErpUserPointLog()
+                        {
+                            Guid = Guid.NewGuid().ToString(),
+                            UserGuid = userModel.Guid,
+                            OperateGuid=parm.Guid,
+                            Types = 0,
+                            Point = userModel.Points,
+                            Summary = "[增加]-销售商品"
+                        };
+                        Db.Insertable(pointLogModel).ExecuteCommand();
                         //修改用户积分
                         Db.Updateable<ErpShopUser>().UpdateColumns(m => m.Points == m.Points + userModel.Points).Where(m => m.Guid == userModel.Guid).ExecuteCommand();
                     }
@@ -311,7 +326,7 @@ namespace FytSoa.Service.Implements
                 {
                     res.statusCode = (int)ApiEnum.Error;
                     res.message = result.ErrorMessage;
-                }               
+                }              
             }
             catch (Exception ex)
             {
@@ -361,12 +376,16 @@ namespace FytSoa.Service.Implements
                         if (item.Number==row.OrderNumber)
                         {
                             var goodSku = ErpGoodsSkuDb.GetById(row.GoodsGuid);
-                            list.Add(new SaleOrderGoodsDto()
+                            if (goodSku!=null)
                             {
-                                Counts = row.Counts,
-                                Code = goodSku.Code,
-                                GoodsName = SysCodeDb.GetById(goodSku.BrankGuid).Name+ SysCodeDb.GetById(goodSku.StyleGuid).Name
-                            });
+                                list.Add(new SaleOrderGoodsDto()
+                                {
+                                    Counts = row.Counts,
+                                    Code = goodSku.Code,
+                                    GoodsName = SysCodeDb.GetById(goodSku.BrankGuid).Name + SysCodeDb.GetById(goodSku.StyleGuid).Name
+                                });
+                            }
+                            
                         }                        
                     }
                     item.Goods = list;

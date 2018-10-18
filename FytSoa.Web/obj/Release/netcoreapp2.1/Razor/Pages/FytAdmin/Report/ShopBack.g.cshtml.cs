@@ -65,7 +65,7 @@ using FytSoa.Web;
             WriteLiteral("<div id=\"container\">\r\n    <div class=\"list-wall\">\r\n        <div class=\"layui-form list-search\">\r\n            <div class=\"layui-inline\">\r\n                <select id=\"shops\" lay-search=\"\">\r\n                    ");
             EndContext();
             BeginContext(363, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2c030dd2c2dd4bcbba43833c81081929", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cb9167cbdfc9475c8b65f4c74e2b2776", async() => {
                 BeginContext(380, 11, true);
                 WriteLiteral("--可根据店铺搜索--");
                 EndContext();
@@ -97,7 +97,7 @@ using FytSoa.Web;
             WriteLiteral("                            ");
             EndContext();
             BeginContext(543, 50, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff0938ddff9c402293d25034c567da44", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ed4055c6258341389538453c705fee92", async() => {
                 BeginContext(571, 13, false);
 #line 16 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Report\ShopBack.cshtml"
                                                   Write(item.ShopName);
@@ -139,7 +139,7 @@ using FytSoa.Web;
             WriteLiteral("                </select>\r\n            </div>\r\n            <div class=\"layui-inline\">\r\n                <select id=\"years\" lay-search=\"\">\r\n                    ");
             EndContext();
             BeginContext(803, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dd88323bcdad4da4ad40466572314437", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6da5d6848d4741bba2a5bf322a9675d6", async() => {
                 BeginContext(824, 4, true);
                 WriteLiteral("2018");
                 EndContext();
@@ -161,7 +161,7 @@ using FytSoa.Web;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(859, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9f3a1b0dcc154074b2c5edb8d00c27a1", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b98e1548c2b2475cae2ff8075f4277b6", async() => {
                 BeginContext(880, 4, true);
                 WriteLiteral("2019");
                 EndContext();
@@ -183,7 +183,7 @@ using FytSoa.Web;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(915, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "686c362428b84d3b95822f9c6f76c550", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8510596f777b4a75b804a6411c6ed71f", async() => {
                 BeginContext(936, 4, true);
                 WriteLiteral("2020");
                 EndContext();
@@ -205,7 +205,7 @@ using FytSoa.Web;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(971, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c6ad8e4170a466b941f68dbffcd57f2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0787cfa636434eac83d6a5f401a3849f", async() => {
                 BeginContext(992, 4, true);
                 WriteLiteral("2021");
                 EndContext();
@@ -227,7 +227,7 @@ using FytSoa.Web;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(1027, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5f4844f2fd794f3b9a519e0f40c7d0c1", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d102b56d2cbb40d7806bef2130e72555", async() => {
                 BeginContext(1048, 4, true);
                 WriteLiteral("2022");
                 EndContext();
@@ -249,7 +249,7 @@ using FytSoa.Web;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(1083, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a9149456a68f4647b2fc9c800278d209", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d2cd6a837bac46d790951572f0254196", async() => {
                 BeginContext(1104, 4, true);
                 WriteLiteral("2023");
                 EndContext();
@@ -271,7 +271,7 @@ using FytSoa.Web;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(1139, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "49d9eaab25f04a8c9f2a50781d7fde16", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "01779ff99660451f8c86870cb8193f85", async() => {
                 BeginContext(1160, 4, true);
                 WriteLiteral("2024");
                 EndContext();
@@ -293,7 +293,7 @@ using FytSoa.Web;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(1195, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f9802e29b6e8475f832605cc4a5f032c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0b97aadd3c5942ce8038afe8a816f4c3", async() => {
                 BeginContext(1216, 4, true);
                 WriteLiteral("2025");
                 EndContext();
@@ -315,7 +315,7 @@ using FytSoa.Web;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(1251, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d794378171ae4f95a920fc054d119623", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fc815648b9d14ab7b55942d409420378", async() => {
                 BeginContext(1272, 4, true);
                 WriteLiteral("2026");
                 EndContext();

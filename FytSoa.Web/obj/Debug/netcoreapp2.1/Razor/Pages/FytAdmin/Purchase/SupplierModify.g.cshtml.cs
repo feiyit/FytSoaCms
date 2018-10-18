@@ -78,7 +78,7 @@ using FytSoa.Web;
 ");
             EndContext();
             BeginContext(550, 3159, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e28a52129f0f4f29bf5b8d0dee79c3d4", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e0e4c89fde704c719a7088512cad29dc", async() => {
                 BeginContext(603, 175, true);
                 WriteLiteral("\r\n    <div class=\"layui-form-item\">\r\n        <label class=\"layui-form-label\">供应商名称</label>\r\n        <div class=\"layui-input-block\">\r\n            <input type=\"text\" name=\"Name\"");
                 EndContext();

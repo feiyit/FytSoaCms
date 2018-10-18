@@ -59,7 +59,7 @@ using FytSoa.Web;
 #line default
 #line hidden
             BeginContext(158, 2223, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fd29a23ccd8d4851901ce10a8f9e44b1", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fa8768e0e529408bbc951d6622ef2546", async() => {
                 BeginContext(202, 187, true);
                 WriteLiteral("\r\n    <div class=\"layui-form-item\">\r\n        <label class=\"layui-form-label\">安卓版本号</label>\r\n        <div class=\"layui-input-block\">\r\n            <input type=\"number\" name=\"AndroidVersion\"");
                 EndContext();
@@ -176,7 +176,7 @@ WriteAttributeValue("", 2344, Model.SettingModel.Guid, 2344, 24, false);
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(2383, 91, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "61caf276a0cd448b9ce628d189815a63", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "a3e8b7cf03d7465097a5c07502bbe4fe", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

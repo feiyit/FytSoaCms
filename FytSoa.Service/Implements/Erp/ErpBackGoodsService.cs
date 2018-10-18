@@ -30,8 +30,8 @@ namespace FytSoa.Service.Implements
                 var dayCount = ErpBackGoodsDb.Count(m => SqlFunc.DateIsSame(m.AddDate, dayTime));
                 parm.Number = "BO-" + DateTime.Now.ToString("yyyyMMdd") + "-" + (1001 + dayCount);
                 //根据条形码查询唯一编号
-                var goodSku = ErpGoodsSkuDb.GetSingle(m=>m.Code==parm.GoodsGuid);
-                if (goodSku!=null)
+                var goodSku = ErpGoodsSkuDb.GetSingle(m => m.Code == parm.GoodsGuid);
+                if (goodSku != null)
                 {
                     parm.GoodsGuid = goodSku.Guid;
                 }
@@ -41,36 +41,81 @@ namespace FytSoa.Service.Implements
                     return await Task.Run(() => res);
                 }
                 //判断退货商品，金额是否大于订单金额，   以及商品数量，是否大于订单出售数量
-                var orderModel = ErpSaleOrderDb.GetSingle(m=>m.Number==parm.OrderNumber);
-                if (orderModel==null)
+                var orderModel = ErpSaleOrderDb.GetSingle(m => m.Number == parm.OrderNumber);
+                if (orderModel == null)
                 {
                     res.message = "订单不存在~";
                     return await Task.Run(() => res);
                 }
-                if (parm.BackMoney>orderModel.RealMoney)
+                //跨月不允许退货
+                if (orderModel.AddDate.Month!=DateTime.Now.Month)
                 {
-                    res.message = "退货金额不能大于订单金额~";
+                    res.message = "跨月不允许退货~";
                     return await Task.Run(() => res);
                 }
-                //判断是否存在
-                var isExt = ErpBackGoodsDb.IsAny(m => m.ShopGuid == parm.ShopGuid && m.GoodsGuid==parm.GoodsGuid && m.OrderNumber==parm.OrderNumber);
-                if (isExt)
+                //查询活动，是否买一赠一活动，如果是，需要单独处理下
+                var activityModel = new ErpShopActivity();
+                if (!string.IsNullOrEmpty(orderModel.ActivityGuid))
                 {
-                    res.message = "该退货信息已存在~";
-                    return await Task.Run(() => res);
+                    activityModel = ErpShopActivityDb.GetSingle(m => m.Guid == orderModel.ActivityGuid);
+                }
+                //if (parm.BackMoney>orderModel.RealMoney)
+                //{
+                //    res.message = "退货金额不能大于订单金额~";
+                //    return await Task.Run(() => res);
+                //}
+                //判断是否存在
+                var egbCount = ErpBackGoodsDb.Count(m => m.ShopGuid == parm.ShopGuid && m.GoodsGuid == parm.GoodsGuid && m.OrderNumber == parm.OrderNumber);
+                if (egbCount>0)
+                {
+                    //买一增一，最多可以退货2次
+                    if (activityModel!=null && activityModel.Method==3)
+                    {
+                        if (egbCount > 1)
+                        {
+                            res.message = "该退货信息已存在~";
+                            return await Task.Run(() => res);
+                        }
+                    }
+                    else
+                    {
+                        res.message = "该退货信息已存在~";
+                        return await Task.Run(() => res);
+                    }
+                    
                 }
                 //根据订单查询商品数量是否满足
-                var orderGoodsModel = ErpSaleOrderGoodsDb.GetSingle(m=>m.OrderNumber==parm.OrderNumber && m.GoodsGuid== parm.GoodsGuid && m.ShopGuid==parm.ShopGuid);
+                var orderGoodsModel = new ErpSaleOrderGoods();
+                if (activityModel != null && activityModel.Method == 3)
+                {
+                    //如果是买一赠一，第一次差=0的，第二次差！=0的
+                    if (egbCount == 0)
+                    {
+                        orderGoodsModel = ErpSaleOrderGoodsDb.GetSingle(m => m.OrderNumber == parm.OrderNumber && m.GoodsGuid == parm.GoodsGuid && m.ShopGuid == parm.ShopGuid && m.Money==0);
+                    }
+                    else
+                    {
+                        orderGoodsModel = ErpSaleOrderGoodsDb.GetSingle(m => m.OrderNumber == parm.OrderNumber && m.GoodsGuid == parm.GoodsGuid && m.ShopGuid == parm.ShopGuid && m.Money!= 0);
+                    }
+                }
+                else
+                {
+                    orderGoodsModel = ErpSaleOrderGoodsDb.GetSingle(m => m.OrderNumber == parm.OrderNumber && m.GoodsGuid == parm.GoodsGuid && m.ShopGuid == parm.ShopGuid);
+                }
                 if (orderGoodsModel == null)
                 {
                     res.message = "该商品在该订单号中不存在~";
                     return await Task.Run(() => res);
                 }
-                if (orderGoodsModel.Counts<parm.BackCount)
+                if (orderGoodsModel.Counts < parm.BackCount)
                 {
                     res.message = "退货商品数量不能大于订单购买数量~";
                     return await Task.Run(() => res);
                 }
+                //获取订单销售的金额  客户端不需要手动输入， 注意需要判断下是否买一赠一活动
+                parm.BackMoney = orderGoodsModel.Money;
+                //构建积分变动记录
+               
                 var result = Db.Ado.UseTran(() =>
                 {
                     //修改加盟商条形码里面的库存 退货=加盟商库存增加
@@ -86,6 +131,23 @@ namespace FytSoa.Service.Implements
                     Db.Updateable(orderGoodsModel).ExecuteCommand();
                     //增加一条退货信息
                     Db.Insertable(parm).ExecuteCommand();
+                    //判断是否存在用户信息
+                    if (!string.IsNullOrEmpty(orderModel.UserGuid))
+                    {
+                        var pointLogModel = new ErpUserPointLog()
+                        {
+                            Guid = Guid.NewGuid().ToString(),
+                            UserGuid =orderModel.UserGuid,
+                            OperateGuid= parm.Guid,
+                            Types =1,
+                            Point= orderGoodsModel.Money!=0?Convert.ToInt32((orderGoodsModel.Money / orderGoodsModel.Counts) / 10):0,
+                            Summary="[减少]-退货积分变更"
+                        };
+                        Db.Insertable(pointLogModel).ExecuteCommand();
+                        //用户积分减少
+                        Db.Updateable<ErpShopUser>().UpdateColumns(m => m.Points==m.Points - pointLogModel.Point)
+                        .Where(m=>m.Guid==orderModel.UserGuid).ExecuteCommand();
+                    }
                 });
                 res.statusCode = (int)ApiEnum.Status;
                 if (!result.IsSuccess)
@@ -207,6 +269,8 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<string>() { data = "1", statusCode = (int)ApiEnum.Error };
             try
             {
+                //根据退货查询积分变动表里面是否存在用户积分变动信息
+                var pointLogModel = ErpUserPointLogDb.GetSingle(m=>m.OperateGuid==parm.Guid);
                 var model = ErpBackGoodsDb.GetSingle(m => m.Guid == parm.Guid);
                 if (model != null)
                 {
@@ -239,6 +303,18 @@ namespace FytSoa.Service.Implements
                         Db.Updateable(shopGoods).ExecuteCommand();
                         //修改返货商品
                         Db.Updateable(model).ExecuteCommand();
+                        //如果用户存在积分变更，则根据状态，修改积分变更数值
+                        if (pointLogModel!=null)
+                        {
+                            if (model.Status == 1)
+                            {
+                                Db.Updateable<ErpShopUser>().UpdateColumns(m => m.Points == m.Points+pointLogModel.Point).Where(m=>m.Guid==pointLogModel.UserGuid).ExecuteCommand();
+                            }
+                            else
+                            {
+                                Db.Updateable<ErpShopUser>().UpdateColumns(m => m.Points == m.Points-pointLogModel.Point).Where(m => m.Guid == pointLogModel.UserGuid).ExecuteCommand();
+                            }
+                        }
                     });
                     if (!result.IsSuccess)
                     {

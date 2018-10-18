@@ -55,7 +55,7 @@ using FytSoa.Web;
 #line default
 #line hidden
             BeginContext(154, 1421, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "67371e0bba094f31a108b5f66b7c6dd7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a220cb94dcbb4e3f8bfa61f9a409b655", async() => {
                 BeginContext(198, 177, true);
                 WriteLiteral("\r\n    <div class=\"layui-form-item\">\r\n        <label class=\"layui-form-label\">条形码</label>\r\n        <div class=\"layui-input-block\">\r\n            <input type=\"text\" name=\"GoodsSku\"");
                 EndContext();

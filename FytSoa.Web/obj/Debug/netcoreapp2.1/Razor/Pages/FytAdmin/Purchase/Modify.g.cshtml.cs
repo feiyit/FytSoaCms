@@ -86,7 +86,7 @@ using FytSoa.Web;
             WriteLiteral("le select:focus, .fyt-table select:active{border:1px solid #0094ff;}\r\n    .fyt-table samp{color:#ff0000;}\r\n    .addAttr {\r\n        cursor: pointer;\r\n    }\r\n</style>\r\n");
             EndContext();
             BeginContext(1342, 6576, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f5d216c3113c49ab959230946c5b10fb", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1f754888aa2341769132e5bf8502b130", async() => {
                 BeginContext(1395, 190, true);
                 WriteLiteral("\r\n    <div class=\"layui-form-item\">\r\n        <label class=\"layui-form-label\">采购日期</label>\r\n        <div class=\"layui-input-block\">\r\n            <input type=\"text\" id=\"AddDate\" name=\"AddDate\"");
                 EndContext();
@@ -109,7 +109,7 @@ WriteAttributeValue("", 1593, Model.Purchase.AddDate.ToString().Replace("/","-")
                     ");
                 EndContext();
                 BeginContext(2105, 38, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bda6ea816117483591887a881ce3a310", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9404e8c477bd4f0a99555247fd4794ff", async() => {
                     BeginContext(2122, 12, true);
                     WriteLiteral("--可根据关键字搜索--");
                     EndContext();
@@ -131,7 +131,7 @@ WriteAttributeValue("", 1593, Model.Purchase.AddDate.ToString().Replace("/","-")
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(2165, 68, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e7dc6c127c3443f3bc616a0a328ab8f5", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "55062959978d4dce8c96c5ada07b4f1e", async() => {
                     BeginContext(2213, 11, true);
                     WriteLiteral("{{it.name}}");
                     EndContext();
@@ -153,7 +153,7 @@ WriteAttributeValue("", 1593, Model.Purchase.AddDate.ToString().Replace("/","-")
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(2255, 32, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d6dc38a5c9b94ee7a75406f977199d04", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4a92617f9d8743a9841fc4d758545824", async() => {
                     BeginContext(2273, 5, true);
                     WriteLiteral("新建供应商");
                     EndContext();
@@ -280,7 +280,7 @@ WriteAttributeValue("", 3703, Model.Purchase.DeliverDate.ToString().Replace("/",
                 WriteLiteral("                                    ");
                 EndContext();
                 BeginContext(5220, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "00c9230cfbc443f8ba5334356b5de67d", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d3003121c76441d99c587d594d2b0adf", async() => {
                     BeginContext(5248, 9, false);
 #line 101 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Purchase\Modify.cshtml"
                                                           Write(item.Name);
@@ -461,7 +461,7 @@ WriteAttributeValue("", 7829, Model.Purchase.GoodsList, 7829, 25, false);
             WriteLiteral("\r\n<script type=\"text/html\" id=\"selectTpl\">\r\n    <select name=\"Unit\">");
             EndContext();
             BeginContext(7986, 18, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dab7d1cdb0c6481b8125bf0616246468", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c6f8b7b42f2e4be3b3905113cc2f390c", async() => {
                 BeginContext(7994, 1, true);
                 WriteLiteral("件");
                 EndContext();
@@ -478,7 +478,7 @@ WriteAttributeValue("", 7829, Model.Purchase.GoodsList, 7829, 25, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(8004, 18, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bac93d4c2b3f4f09aad43391c53a73b9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0010d3f63f404e9987dc393dd371e5a5", async() => {
                 BeginContext(8012, 1, true);
                 WriteLiteral("个");
                 EndContext();
@@ -498,7 +498,7 @@ WriteAttributeValue("", 7829, Model.Purchase.GoodsList, 7829, 25, false);
             WriteLiteral("</select>\r\n</script>\r\n\r\n");
             EndContext();
             BeginContext(8046, 75, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "671aae2b4776464b8033752967fd20e9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "7a7b8e8b0d51436bacf54fa6bc792d2b", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

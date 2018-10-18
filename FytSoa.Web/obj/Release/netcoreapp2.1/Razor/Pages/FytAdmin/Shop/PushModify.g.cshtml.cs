@@ -61,12 +61,12 @@ using FytSoa.Web;
             WriteLiteral("<style>\r\n    .layui-textarea{min-height:60px;}\r\n</style>\r\n");
             EndContext();
             BeginContext(209, 1305, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2e17c9c6a8a34e2dab093efc67e46f7a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "58fb7c0610d54aefaac456ed2bb6f867", async() => {
                 BeginContext(253, 226, true);
                 WriteLiteral("\r\n    <div class=\"layui-form-item\">\r\n        <label class=\"layui-form-label\">消息类型</label>\r\n        <div class=\"layui-input-block\">\r\n            <select class=\"layui-input\" lay-verify=\"required\" lay-search=\"\">\r\n                ");
                 EndContext();
                 BeginContext(479, 31, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "92f32eee5ce94711bc28bc607d9c94e8", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "74b91337196b45f08bea532c247ac77c", async() => {
                     BeginContext(496, 5, true);
                     WriteLiteral("搜索或选择");
                     EndContext();
@@ -88,7 +88,7 @@ using FytSoa.Web;
                 WriteLiteral("\r\n                ");
                 EndContext();
                 BeginContext(528, 29, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b34102fd73414f47af0235820a9c4e78", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b74e7c619ca4e4fa97473a5619cd751", async() => {
                     BeginContext(546, 2, true);
                     WriteLiteral("全部");
                     EndContext();
