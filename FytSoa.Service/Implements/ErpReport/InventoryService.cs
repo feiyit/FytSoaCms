@@ -23,7 +23,7 @@ namespace FytSoa.Service.Implements
         /// 查询多条记录  库存盘点
         /// </summary>
         /// <returns></returns>
-        public Task<ApiResult<Page<StockInventory>>> GetPagesAsync(PageParm parm)
+        public Task<ApiResult<Page<StockInventory>>> GetPagesAsync(PageParm parm, SearchSaleOrderGoods searchParm)
         {
             var res = new ApiResult<Page<StockInventory>>();
             try
@@ -38,6 +38,9 @@ namespace FytSoa.Service.Implements
                 var query = Db.Queryable<ErpGoodsSku>()
                     .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.Code.Contains(parm.key))
                     .WhereIF(!string.IsNullOrEmpty(parm.guid), m => m.BrankGuid == parm.guid)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.size), m => m.SizeGuid == searchParm.size)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.year), m => m.YearGuid == searchParm.year)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.season), m => m.SeasonGuid == searchParm.season)
                     .WhereIF(!string.IsNullOrEmpty(parm.time), m => m.AddDate >= Convert.ToDateTime(beginTime) && m.AddDate <= Convert.ToDateTime(endTime))
 
                     .PartitionBy(m => new { m.Code, m.Guid })
@@ -49,7 +52,8 @@ namespace FytSoa.Service.Implements
                         OutStock= SqlFunc.Subqueryable<ErpInOutLog>().Where(g => g.GoodsGuid == m.Guid && g.Types == 2).Sum(g => g.GoodsSum),
                         Transfer = SqlFunc.Subqueryable<ErpTransferGoods>().Where(g => g.GoodsGuid == m.Guid).Sum(g => g.GoodsSum),
                         Return = SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == m.Guid && g.Status==1).Sum(g=>g.ReturnCount),
-                        Back = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.GoodsGuid == m.Guid && g.Status==1).Sum(g => g.BackCount)
+                        Back = SqlFunc.Subqueryable<ErpBackGoods>().Where(g => g.GoodsGuid == m.Guid && g.Status==1).Sum(g => g.BackCount),
+                        Loss= SqlFunc.Subqueryable<ErpSkuLoss>().Where(g => g.SkuGuid == m.Code).Sum(g => g.Counts),
                     })
                     .OrderByIF(!string.IsNullOrEmpty(parm.field) && !string.IsNullOrEmpty(parm.order),parm.field+" "+parm.order)
                     .ToPage(parm.page, parm.limit);                

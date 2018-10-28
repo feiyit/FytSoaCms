@@ -14,7 +14,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">手机号码</label>
         <div class="layui-input-block">
-            <input type="text" name="Mobile" value="@Model.userModel.Mobile" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入手机号码" class="layui-input">
+            <input type="text" name="Mobile" value="@Model.userModel.Mobile" lay-verify="phone" lay-verType="tips" autocomplete="off" placeholder="请输入手机号码" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -68,6 +68,11 @@
                 var urls = "api/shops/adduser";
                 if ($("#Guid").val()) {
                     urls = "api/shops/edituser";
+                }
+                if (data.field.Status === '1') {
+                    data.field.status = 1;
+                } else {
+                    data.field.status = 0;
                 }
                 os.ajax(urls, data.field, function(res) {
                     if (res.statusCode === 200) {

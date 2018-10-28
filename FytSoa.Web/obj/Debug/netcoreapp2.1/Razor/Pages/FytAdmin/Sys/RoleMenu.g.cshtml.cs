@@ -91,7 +91,7 @@ using FytSoa.Web;
             WriteLiteral("tablist\" lay-filter=\"tool\"></table>\r\n    </div>\r\n</div>\r\n<div id=\"open-form\">\r\n    ");
             EndContext();
             BeginContext(1259, 1017, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8221842ecd714dbdbe8af3dc5aa64848", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "af7867787d5b49f78393d9d512060867", async() => {
                 BeginContext(1303, 273, true);
                 WriteLiteral(@"
         <div class=""layui-form-item"">
@@ -101,7 +101,7 @@ using FytSoa.Web;
                     ");
                 EndContext();
                 BeginContext(1576, 17, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "aed085738b734bfb9865f9eab209d4cf", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e52b1d33e13c42e689b8dbcc2b0d147f", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper>();
@@ -118,7 +118,7 @@ using FytSoa.Web;
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(1615, 31, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "989d5ebe18ad48ef865966c118b5421a", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f720eeabd161482e9556a009e96d8c20", async() => {
                     BeginContext(1635, 2, true);
                     WriteLiteral("新增");
                     EndContext();
@@ -140,7 +140,7 @@ using FytSoa.Web;
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(1668, 32, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "31a800a2fff9456d8c25e1ddbf5a5f22", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c186d76789ef451d857611eaa27a8d91", async() => {
                     BeginContext(1689, 2, true);
                     WriteLiteral("修改");
                     EndContext();
@@ -162,7 +162,7 @@ using FytSoa.Web;
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(1722, 34, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8ce44555469841ab945d6a91e01b91fb", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "066088c922fc4208b9c46b953b9f61ba", async() => {
                     BeginContext(1745, 2, true);
                     WriteLiteral("删除");
                     EndContext();
@@ -184,7 +184,7 @@ using FytSoa.Web;
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(1778, 33, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4663d0f3649c45639b8bbef5400deb79", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7cceb1e8e1b94bf2bdbe1fd7243b2038", async() => {
                     BeginContext(1800, 2, true);
                     WriteLiteral("审核");
                     EndContext();
@@ -206,7 +206,7 @@ using FytSoa.Web;
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(1833, 34, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d0c71e50ce7349568f10a5f89e036ee3", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "91100ee4982f488195873f1042189cc8", async() => {
                     BeginContext(1856, 2, true);
                     WriteLiteral("导出");
                     EndContext();
@@ -228,7 +228,7 @@ using FytSoa.Web;
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(1889, 34, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d872028b0b4d4cdc81d812782e7660bc", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e19de6d267fc4a38a780fa3dc0f63e74", async() => {
                     BeginContext(1912, 2, true);
                     WriteLiteral("导入");
                     EndContext();
@@ -280,7 +280,7 @@ using FytSoa.Web;
             WriteLiteral("\r\n</div>\r\n");
             EndContext();
             BeginContext(2286, 91, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9571f03360c74b5c969aa3736fdfe594", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "3ecbd57d04a440efa346c694012771e0", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

@@ -39,6 +39,8 @@
             .fyt-table th {
                 width: 15%
             }
+        .fyt-utree{overflow:auto;}
+        .utree-more{padding:15px; text-align:center; cursor:pointer;}
     </style>
     <div class="list-wall">
         <div class="layui-form list-search">
@@ -64,6 +66,7 @@
             </div>
             <div class="layui-inline">
                 <select id="branks" lay-search="">
+                    <option value="">--可根据品牌搜索--</option>
                     @{
                         if (Model.codeList != null)
                         {
@@ -98,11 +101,12 @@
             <li v-for="it in list" v-cloak :class="{active: activeName == it.number}" @@click="selected(it.number)">
                 <a class="layui-elip title" @@click="getList(it)">
                     <span class="layui-badge layui-bg-cyan" v-if="it.saleType==1">正</span>
-                    <span class="layui-badge layui-bg-cyan" v-if="it.saleType==2">残</span>
+                    <span class="layui-badge" v-if="it.saleType==2">残</span>
                     {{it.number}}——{{it.shopName}}
                 </a>
                 <a class="layui-elip sums"><span class="layui-badge layui-bg-blue">{{it.counts}}</span></a>
             </li>
+            <p class="utree-more" @@click="loadMore">{{moreTip}}</p>
         </ul>
     </div>
     <div class="right-col-body" id="orders">
@@ -113,7 +117,7 @@
                     <table class="fyt-table">
                         <tr>
                             <th>订单编号：</th>
-                            <td>{{curModel.number}}</td>
+                            <td>{{curModel.number}}<a href="javascript:void(0)" @@click="showImg()"  v-if="curModel.saleType==2" target="_top" style="display:inline-block; margin-left:10px; position:relative; top:2px;"><i style="color:#ff0000;font-size:20px;" class="layui-icon layui-icon-carousel"></i></a></td>
                             <th>下单时间：</th>
                             <td>{{curModel.addDate}}</td>
                             <th>数量：</th>
@@ -145,9 +149,11 @@
             data: {
                 list: [],
                 activeName: '',
+                moreTip:'点击加载更多',
                 parm: {
                     guid: '',
-                    time:''
+                    time: '',
+                    page: 1
                 }
             },
             methods: {
@@ -155,8 +161,12 @@
                     this.activeName = m;
                 },
                 getList: function (m) {
-                    vues.curModel = m;
+                    vues.curModel = m; 
                     funTool.getGoodsSku(m);
+                },
+                loadMore: function () { 
+                    this.parm.page += 1;
+                    funTool.orderPage();
                 }
             }
         });
@@ -167,6 +177,19 @@
                     money: 0,
                     realMoney: 0
                 },
+            },
+            methods:  { 
+                showImg:function() {
+                    layer.open({
+                        type: 1,
+                        title: false,
+                        closeBtn: 0,
+                        area: '800px',
+                        skin: 'layui-layer-nobg', //没有背景色
+                        shadeClose: true,
+                        content: '<div style="text-align: center;"><img src="' + this.curModel.theImage + '"></div>'
+                    });
+                }
             }
         });
         layui.config({
@@ -236,13 +259,24 @@
 
                 funTool = {
                     getGoodsSku: function (obj) {
-                        orderguid = obj.number;
+                        orderguid = obj.number; console.log(obj);
                         active.reload();
                     },
                     orderPage: function () {
                         os.ajax('api/sale/order', vm.parm, function (res) {
+                            console.log(res);
+                            if (res.data.totalPages == 1 || vm.parm.page == res.data.totalPages) {
+                                vm.moreTip = '';
+                            }
                             if (res.statusCode === 200) {
-                                vm.list = res.data.items;
+                                if (vm.parm.page == 1) {
+                                    vm.list = res.data.items;
+                                } else {
+                                    $.each(res.data.items, function (i, m) { 
+                                        vm.list.push(m);
+                                    });
+                                }
+                                
                             } else {
                                 os.error(res.message);
                             }

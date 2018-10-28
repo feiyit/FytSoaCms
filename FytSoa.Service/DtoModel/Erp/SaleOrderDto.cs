@@ -72,6 +72,13 @@ namespace FytSoa.Service.DtoModel
         /// </summary>           
         public DateTime AddDate { get; set; }
 
+        /// <summary>
+        /// Desc:图片
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string TheImage { get; set; }
+
         public List<SaleOrderGoodsDto> Goods { get; set; }
     }
 
@@ -193,6 +200,14 @@ namespace FytSoa.Service.DtoModel
         /// 尺码
         /// </summary>
         public string size { get; set; }
+        /// <summary>
+        /// 年份
+        /// </summary>
+        public string year { get; set; }
+        /// <summary>
+        /// 季节
+        /// </summary>
+        public string season { get; set; }
         /// <summary>
         /// 退货状态
         /// </summary>

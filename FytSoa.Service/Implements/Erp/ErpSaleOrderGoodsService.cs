@@ -106,6 +106,8 @@ namespace FytSoa.Service.Implements
                     .WhereIF(!string.IsNullOrEmpty(searchParm.shopGuid), (eso, egs, so, es) => eso.ShopGuid == searchParm.shopGuid)
                     .WhereIF(!string.IsNullOrEmpty(searchParm.brank), (eso, egs, so, es) => egs.BrankGuid == searchParm.brank)
                     .WhereIF(!string.IsNullOrEmpty(searchParm.size), (eso, egs, so, es) => egs.SizeGuid == searchParm.size)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.year), (eso, egs, so, es) => egs.YearGuid == searchParm.year)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.season), (eso, egs, so, es) => egs.SeasonGuid == searchParm.season)
                     .WhereIF(searchParm.backStatus!=-1, (eso, egs, so, es) => eso.BackCounts==searchParm.backStatus)
                     .WhereIF(searchParm.saleType != -1, (eso, egs, so, es) => so.SaleType == searchParm.saleType)
                     .Select((eso, egs, so, es) => new SaleOrderGoodsDto()

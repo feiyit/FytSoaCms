@@ -95,6 +95,11 @@ namespace FytSoa.Core.Model.Erp
         public decimal RealMoney { get; set; } = 0;
 
         /// <summary>
+        /// 如果是残次品销售，需要上传图片
+        /// </summary>
+        public string TheImage { get; set; }
+
+        /// <summary>
         /// Desc:下单日期
         /// Default:
         /// Nullable:False

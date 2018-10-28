@@ -10,6 +10,8 @@
         top: -2px;
         position: relative;
     }
+    .fyt-table td{padding:6px 15px;}
+    .fyt-table th{padding:10px 15px;}
 </style>
 <div id="app">
     <div class="layui-form list-search" style="margin:0px 12px 0 12px;">
@@ -123,9 +125,41 @@
             startValid: function () {
                 vm.btnHtml = '<i class="layui-icon layui-icon-loading-1 layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i> 正在效验';
                 var resArr = [];
-                console.log(vm.tabList);
-                console.log(resList);
+                //console.log(vm.tabList);
+                //console.log(resList);
+                //定义临时存放的数组
+                var tempOrderList = [];
+                var noList = [];
+                //先查询不存在右侧内的商品
                 $.each(vm.tabList, function (i, item) {
+                    var arrRes = cusFun.isExArray(resList, item.Code);
+                    if (!arrRes[0]) {
+                        noList.push(item);
+                    }
+                });
+                //已入库单完成为标准开始对比新的列表
+                $.each(resList, function (i, item) {
+                    var arrRes = cusFun.isInArray(vm.tabList, item.code);
+                    //如果新的列表中存在已完成的
+                    if (arrRes[0]) {
+                        if (parseInt(arrRes[1].Count) === item.stockSum) {
+                            tempOrderList.push({ 'Code': item.code, 'status': '<span class="layui-badge-dot layui-bg-green"></span>', 'Count': arrRes[1].Count });
+                        } else {
+                            //如果数量不同，也是差异数据状态
+                            tempOrderList.push({ 'Code': item.code, 'status': '<span style="color:red">数量异常</span>', 'Count': arrRes[1].Count });
+                        }
+                    } else {
+                        //如果不存在，则增加一条差异数据
+                        tempOrderList.push({ 'Code': item.code, 'status': '<span style="color:red">缺少</span>', 'Count': 0 });
+                    }
+                });
+                vm.tabList = tempOrderList;
+                if (noList.length > 0) {
+                    $.each(noList, function (i, item) {
+                        vm.tabList.push({ 'Code': item.Code, 'status': '<span style="color:red">不存在</span>', 'Count': item.Count });
+                    });
+                }
+                /*$.each(vm.tabList, function (i, item) {
                     var count = 0, isExist;
                     $.each(resList, function (j, row) {
                         if (row.code == item.Code && row.stockSum == parseInt(item.Count)) {
@@ -139,10 +173,29 @@
                         item.status = '<span class="layui-badge-dot layui-bg-green"></span>';
                     }
                 });
-                vm.btnHtml = '<i class="layui-icon layui-icon-read"></i> 确定效验';
-                /*layer.alert(JSON.stringify(resArr), {
+                layer.alert(JSON.stringify(resArr), {
                     title: '最终对比结果'
                 })*/
+                vm.btnHtml = '<i class="layui-icon layui-icon-read"></i> 确定效验';
+            },
+            //判断一个值是否在数组中存在，存在返回true  并返回当前数组对象
+            isInArray: function (arr, value) {
+                var arrIndex = 0;
+                for (var i = 0; i < arr.length; i++) {
+                    if (value === arr[i].Code) {
+                        return [true,arr[i]];
+                    }
+                }
+                return [false,null];
+            },
+            isExArray: function (arr, value) {
+                var arrIndex = 0;
+                for (var i = 0; i < arr.length; i++) {
+                    if (value === arr[i].code) {
+                        return [true, arr[i]];
+                    }
+                }
+                return [false, null];
             }
         }
 

@@ -14,12 +14,54 @@
                 <input class="layui-input" id="times" autocomplete="off" placeholder="时间区间"><i class="layui-icon layui-icon-date"></i>
             </div>
             <div class="layui-inline">
+                <select id="years" lay-search="">
+                    <option value="">--可根据年份搜索--</option>
+                    @{
+                        if (Model.yearCodeList != null)
+                        {
+                            foreach (var item in Model.yearCodeList)
+                            {
+                                <option value="@item.Guid">@item.Name</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="layui-inline">
                 <select id="branks">
                     <option value="">--可根据品牌搜索--</option>
                     @{
                         foreach (var item in Model.codeList)
                         {
                             <option value="@item.Guid">@item.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="layui-inline">
+                <select id="seasons" lay-search="">
+                    <option value="">--可根据季节搜索--</option>
+                    @{
+                        if (Model.seasonCodeList != null)
+                        {
+                            foreach (var item in Model.seasonCodeList)
+                            {
+                                <option value="@item.Guid">@item.Name</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="layui-inline">
+                <select id="size" lay-search="">
+                    <option value="">--可根据尺码搜索--</option>
+                    @{
+                        if (Model.sizeCodeList != null)
+                        {
+                            foreach (var item in Model.sizeCodeList)
+                            {
+                                <option value="@item.Guid">@item.Name</option>
+                            }
                         }
                     }
                 </select>
@@ -52,17 +94,19 @@
                     elem: '#tablist',
                     loading: true,
                     url: '/api/inventory/stock',
+                    totalRow: true,
                     cols: [
                         [
-                            { type: 'checkbox', fixed: 'left' },
+                            { type: 'checkbox', fixed: 'left', totalRowText: '合计行' },
                             { field: 'code',width:200, title: '条形码', sort: true, fixed: 'left' },
-                            { field: 'totalStock', title: '总入库数', sort: true },
-                            { field: 'stock', title: '剩余库存', sort: true },
-                            { field: 'outStock', title: '出库数', sort: true },
-                            { field: 'transfer', title: '调拨', sort: true },
-                            { field: 'return', title: '返货', sort: true },
-                            { field: 'back', title: '退货', sort: true },
-                            { field: 'sale', title: '销售数', sort: true }
+                            { field: 'totalStock', title: '总入库数', sort: true, totalRow: true },
+                            { field: 'stock', title: '剩余库存', sort: true, totalRow: true },
+                            { field: 'outStock', title: '出库数', sort: true, totalRow: true },
+                            { field: 'transfer', title: '调拨', sort: true, totalRow: true },
+                            { field: 'return', title: '返货', sort: true, totalRow: true },
+                            { field: 'back', title: '退货', sort: true, totalRow: true },
+                            { field: 'sale', title: '销售数', sort: true, totalRow: true },
+                            { field: 'loss', title: '报损数', sort: true, totalRow: true }
                         ]
                     ],
                     page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
@@ -97,7 +141,10 @@
                                 where: {
                                     key: $("#key").val(),
                                     time: $("#times").val(),
-                                    guid: $("#branks").val()
+                                    guid: $("#branks").val(),
+                                    size: $('#size').val(),
+                                    year: $('#years').val(),
+                                    season: $('#seasons').val(),
                                 }
                             });
                     },

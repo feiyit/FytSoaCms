@@ -1,0 +1,80 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Goods.LossOrderAddModel
+@{
+    ViewData["Title"] = "报损打包销售";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<form class="layui-form form-cus" action="">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">订单编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Number" value="@Model.OrderModel.Number" maxlength="30" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">订单价格</label>
+            <div class="layui-input-inline">
+                <input type="number" name="Money" value="@Model.OrderModel.Money" maxlength="10" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">客户姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="CustomerName" value="@Model.OrderModel.CustomerName" maxlength="20" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">客户电话</label>
+            <div class="layui-input-inline">
+                <input type="number" name="CustomerMobile" value="@Model.OrderModel.CustomerMobile" maxlength="11" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单备注</label>
+        <div class="layui-input-block">
+            <textarea name="Summary" class="layui-textarea">@Model.OrderModel.Summary</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="Guid" id="Guid" value="@Model.OrderModel.Guid" />
+    <input type="hidden" name="SkuList" value="@Model.OrderModel.SkuList" />
+</form>
+<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
+@section Scripts{
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form'], function () {
+            var form = layui.form, $ = layui.jquery, os = layui.common;
+            var index = parent.layer.getFrameIndex(window.name);
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                var urls = "api/goods/addlossorder";
+                if ($("#Guid").val()) {
+                    urls = "api/goods/modifylossorder";
+                }
+                os.ajax(urls, data.field, function (res) {
+                    if (res.statusCode == 200) {
+                        parent.layer.close(index);
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+        });
+    </script>
+}

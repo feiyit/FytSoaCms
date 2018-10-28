@@ -81,7 +81,7 @@ namespace FytSoa.Service.Implements
                 if (!string.IsNullOrEmpty(parm.ActivityName))
                 {
                     //查询活动
-                    activityModel = ErpShopActivityDb.GetById(parm.ActivityName);
+                    activityModel = ErpShopActivityDb.GetSingle(m=>m.Guid== parm.ActivityName && m.Enable && !m.IsDel);
                     if (activityModel != null)
                     {
                         parm.ActivityGuid = parm.ActivityName;
@@ -112,8 +112,15 @@ namespace FytSoa.Service.Implements
                     //如果没有活动直接结算金额
                     if (activityModel==null)
                     {
-                        parm.RealMoney+= Convert.ToInt32(skuItem.SalePrice) * item.Counts;
-                        item.Money = Convert.ToInt32(skuItem.SalePrice);
+                        if (parm.SaleType==1)
+                        {
+                            parm.RealMoney += Convert.ToInt32(skuItem.SalePrice) * item.Counts;
+                            item.Money = Convert.ToInt32(skuItem.SalePrice);
+                        }
+                        else
+                        {
+                            item.Money = parm.RealMoney;
+                        }
                     }
                     else
                     {
@@ -326,7 +333,7 @@ namespace FytSoa.Service.Implements
                 {
                     res.statusCode = (int)ApiEnum.Error;
                     res.message = result.ErrorMessage;
-                }              
+                }         
             }
             catch (Exception ex)
             {
@@ -437,6 +444,7 @@ namespace FytSoa.Service.Implements
                         ActivityName = eso.ActivityName,
                         Money = eso.Money,
                         RealMoney = eso.RealMoney,
+                        TheImage=eso.TheImage,
                         AddDate = eso.AddDate
                     })
                     .ToPage(parm.page, parm.limit);
@@ -475,6 +483,34 @@ namespace FytSoa.Service.Implements
                 ActivityName=!string.IsNullOrEmpty(model.ActivityName)?model.ActivityName:"",
                 Money = model.RealMoney
             };
+            return await Task.Run(() => res);
+        }
+
+        /// <summary>
+        /// 残次品销售，上传图片
+        /// </summary>
+        /// <param name="guid">订单唯一编号Guid</param>
+        /// <param name="imgPath">图片地址</param>
+        /// <returns></returns>
+        public async Task<ApiResult<string>> UpdateOrderAddImage(string guid, string imgPath)
+        {
+            var res = new ApiResult<string>() { statusCode = (int)ApiEnum.Error };
+            try
+            {
+                var isRes=ErpSaleOrderDb.Update(m => new ErpSaleOrder() { TheImage=imgPath }, m => m.Number == guid);
+                if (!isRes)
+                {
+                    res.message = "修改失败";
+                }
+                else
+                {
+                    res.statusCode = (int)ApiEnum.Status;
+                }
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+            }
             return await Task.Run(() => res);
         }
     }

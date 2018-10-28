@@ -19,12 +19,14 @@ namespace FytSoa.Api.Controllers
         private readonly IErpGoodsSkuService _skuGoodsService;
         private readonly IErpGoodsService _goodsService;
         private readonly IErpSkuLossService _lossService;
+        private readonly IErpSkuLossOrderService _lossOrderService;
         public GoodsController(IErpGoodsSkuService skuGoodsService,
-            IErpGoodsService goodsService, IErpSkuLossService lossService)
+            IErpGoodsService goodsService, IErpSkuLossService lossService, IErpSkuLossOrderService lossOrderService)
         {
             _skuGoodsService = skuGoodsService;
             _goodsService = goodsService;
             _lossService = lossService;
+            _lossOrderService = lossOrderService;
         }
 
         #region 条形码Api
@@ -168,6 +170,50 @@ namespace FytSoa.Api.Controllers
             return await _lossService.ModifyAsync(parm);
         }
 
+        #endregion
+
+        #region 报损订单Api
+        /// <summary>
+        /// 查询列表报损订单
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("lossorder/list")]
+        public async Task<JsonResult> GetLossOrderPages(PageParm parm)
+        {
+            var res = await _lossOrderService.GetPagesAsync(parm);
+            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+        }
+
+        /// <summary>
+        /// 添加报损订单
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("addlossorder")]
+        public async Task<ApiResult<string>> AddLossOrder(ErpSkuLossOrder parm)
+        {
+            return await _lossOrderService.AddAsync(parm);
+        }
+
+        /// <summary>
+        /// 修改报损订单
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("modifylossorder")]
+        public async Task<ApiResult<string>> ModifyLossOrder(ErpSkuLossOrder parm)
+        {
+            return await _lossOrderService.ModifyAsync(parm);
+        }
+
+        /// <summary>
+        /// 删除报损订单
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("dellossorder")]
+        public async Task<ApiResult<string>> DeleteLossOrder(string parm)
+        {
+            return await _lossOrderService.DeleteAsync(parm);
+        }
         #endregion
     }
 }

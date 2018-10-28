@@ -43,5 +43,15 @@ namespace FytSoa.Core.Model.Erp
         /// Nullable:False
         /// </summary>           
         public DateTime AddDate { get; set; } = DateTime.Now;
+
+        /// <summary>
+        /// 状态 0=无销售 / 1=已销售
+        /// </summary>
+        public int Types { get; set; } = 0;
+
+        /// <summary>
+        /// 如果销售了，属于订单号的唯一编号
+        /// </summary>
+        public string OrderGuid { get; set; }
     }
 }

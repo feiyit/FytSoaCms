@@ -28,6 +28,7 @@
     <script type="text/html" id="toolbar">
         <div class="layui-btn-container">
             <button type="button" class="layui-btn layui-btn-sm" lay-event="toolAdd"><i class="layui-icon"></i> 新增</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolOrder"><i class="layui-icon layui-icon-cart"></i> 打包销售</button>
         </div>
     </script>
     <script>
@@ -55,12 +56,15 @@
                             { field: 'disPrice', title: '折扣价', sort: true },
                             { field: 'stockSum', title: '库存', sort: true },
                             { field: 'saleSum', title: '报损数', sort: true },
-                            { field: 'addDate', title: '添加时间', sort: true },
-                            { width: 140, title: '操作', templet: '#tool' }
+                            { field: 'addDate', title: '添加时间', sort: true }
+                           // { width: 140, title: '操作', templet: '#tool' }
                         ]
                     ],
                     page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
-                    id: 'tables'
+                    id: 'tables',
+                    where: {
+                        types: 0
+                    }
                 });
                 table.on('sort(tool)', function (obj) {
                     var e = layer.load(2, { shade: [.05, '#000'] });
@@ -73,7 +77,8 @@
                             field: obj.field,
                             order: obj.type,
                             key: $("#key").val(),
-                            guid: $("#branks").val()
+                            guid: $("#branks").val(),
+                            types:0
                         },
                         done: function () {
                             layer.close(e);
@@ -100,7 +105,23 @@
                         os.Open('添加报损', '/fytadmin/goods/lossadd', '750px', '400px', function () {
                             active.reload();
                         });
-                    }                    
+                    },
+                    //打包销售
+                    toolOrder: function () { 
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要打包的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            str += item.guid + ",";
+                        });
+                        os.Open('报损打包销售', '/fytadmin/goods/lossorderadd?sku=' + str, '800px', '400px', function () {
+                            active.reload();
+                        });
+                    }
                 };
                 table.on('toolbar(tool)', function (obj) {
                     active[obj.event] ? active[obj.event].call(this) : '';

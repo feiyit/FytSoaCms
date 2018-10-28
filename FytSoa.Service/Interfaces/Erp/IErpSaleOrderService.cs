@@ -33,5 +33,13 @@ namespace FytSoa.Service.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<ApiResult<SaleOrderApp>> GetByNumberAsync(string parm);
+
+        /// <summary>
+        /// 残次品销售，上传图片
+        /// </summary>
+        /// <param name="guid">订单唯一编号Guid</param>
+        /// <param name="imgPath">图片地址</param>
+        /// <returns></returns>
+        Task<ApiResult<string>> UpdateOrderAddImage(string guid,string imgPath);
     }
 }

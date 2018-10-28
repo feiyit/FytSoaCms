@@ -71,7 +71,7 @@ namespace FytSoa.Service.Implements
         /// <returns></returns>
         public async Task<ApiResult<ErpAppSetting>> GetByGuidAsync(string parm)
         {
-            var model = ErpAppSettingDb.GetById(parm);
+            var model = ErpAppSettingDb.GetSingle(m => m.Guid == parm);
             var res = new ApiResult<ErpAppSetting>
             {
                 statusCode = 200,

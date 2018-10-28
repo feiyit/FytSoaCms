@@ -27,9 +27,9 @@ namespace FytSoa.Api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("stock")]
-        public async Task<JsonResult> GetBarCodePages(PageParm parm)
+        public async Task<JsonResult> GetBarCodePages(PageParm parm, SearchSaleOrderGoods searchParm)
         {
-            var res = await _inventoryService.GetPagesAsync(parm);
+            var res = await _inventoryService.GetPagesAsync(parm,searchParm);
             return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
         }
 

@@ -139,6 +139,7 @@ namespace FytSoa.Service.Implements
                     Mobile=parm.Mobile,
                     UserName=parm.UserName,
                     Sex=parm.Sex,
+                    Status=parm.Status,
                     Birthday=parm.Birthday                    
                 },m=>m.Guid==parm.Guid);
             }

@@ -31,6 +31,7 @@ namespace FytSoa.Web
             services.AddTransient<IDefaultReportService, DefaultReportService>();
             services.AddTransient<IUserReportServer, UserReportServer>();
             services.AddTransient<IErpSkuLossService, ErpSkuLossService>();
+            services.AddTransient<IErpSkuLossOrderService, ErpSkuLossOrderService>();
             services.AddTransient<IErpUserGradeService, ErpUserGradeService>();
             services.AddTransient<IErpAppSettingService, ErpAppSettingService>();
             services.AddTransient<IErpSaleOrderService, ErpSaleOrderService>();

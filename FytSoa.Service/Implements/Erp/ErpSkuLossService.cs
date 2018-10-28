@@ -75,10 +75,11 @@ namespace FytSoa.Service.Implements
             try
             {
                 var query = Db.Queryable<ErpSkuLoss, ErpGoodsSku>((esl,egs)=>new object[] {JoinType.Left,esl.SkuGuid==egs.Code })
-                    .Where((esl, egs) => !egs.IsDel)
-                    .WhereIF(parm.types == 1, (esl, egs) => egs.StockSum > 0)
+                    .Where((esl, egs) => !egs.IsDel && esl.Types==parm.types)
+                    //.WhereIF(parm.types == 1, (esl, egs) => egs.StockSum > 0)
+                    .WhereIF(!string.IsNullOrEmpty(parm.guid) && parm.types==1, (esl, egs) => esl.OrderGuid==parm.guid)
                     .WhereIF(!string.IsNullOrEmpty(parm.key), (esl, egs) => egs.Code.Contains(parm.key))
-                    .WhereIF(!string.IsNullOrEmpty(parm.guid), (esl, egs) => egs.BrankGuid == parm.guid)
+                    .WhereIF(!string.IsNullOrEmpty(parm.guid) && parm.types==0, (esl, egs) => egs.BrankGuid == parm.guid)
                     .OrderByIF(string.IsNullOrEmpty(parm.field) || string.IsNullOrEmpty(parm.order),(esl, egs) => esl.AddDate, OrderByType.Desc)
                     .Select((esl, egs) => new GoodsSkuDto()
                     {

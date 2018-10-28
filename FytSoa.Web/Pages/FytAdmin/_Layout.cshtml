@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/themes/css/app.css">
     <script type="text/javascript" src="~/themes/js/modules/vue.js"></script>
     <script src="~/themes/layui/layui.js"></script>
-    <title>@ViewBag.Title</title>
+    <title>@Html.Raw(ViewBag.Title)</title>
 </head>
 <body>
     @RenderBody()    

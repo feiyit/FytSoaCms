@@ -41,6 +41,10 @@ namespace FytSoa.Service.DtoModel
         /// 销售数
         /// </summary>
         public int Sale { get; set; }
+        /// <summary>
+        /// 报损数
+        /// </summary>
+        public int Loss { get; set; }
     }
 
     /// <summary>

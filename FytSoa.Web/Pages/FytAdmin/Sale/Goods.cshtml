@@ -24,6 +24,38 @@
                     }
                 </select>
             </div>
+            <div class="layui-inline lay-time-icon">
+                <input class="layui-input" id="times" autocomplete="off" placeholder="时间区间"><i class="layui-icon layui-icon-date"></i>
+            </div>
+            <div class="layui-inline lay-time-icon">
+                <select id="backStatus">
+                    <option value="">--退单状态--</option>
+                    <option value="0">无</option>
+                    <option value="1">是</option>
+                </select>
+            </div>
+            <div class="layui-inline lay-time-icon">
+                <select id="saleType">
+                    <option value="">--销售类型--</option>
+                    <option value="1">正常销售</option>
+                    <option value="2">残次品销售</option>
+                </select>
+            </div>
+            <div style="height:5px; width:100%;"></div>
+            <div class="layui-inline">
+                <select id="years" lay-search="">
+                    <option value="">--可根据年份搜索--</option>
+                    @{
+                        if (Model.yearCodeList != null)
+                        {
+                            foreach (var item in Model.yearCodeList)
+                            {
+                                <option value="@item.Guid">@item.Name</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
             <div class="layui-inline">
                 <select id="branks" lay-search="">
                     <option value="">--可根据品牌搜索--</option>
@@ -31,6 +63,20 @@
                         if (Model.codeList != null)
                         {
                             foreach (var item in Model.codeList)
+                            {
+                                <option value="@item.Guid">@item.Name</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="layui-inline">
+                <select id="seasons" lay-search="">
+                    <option value="">--可根据季节搜索--</option>
+                    @{
+                        if (Model.seasonCodeList != null)
+                        {
+                            foreach (var item in Model.seasonCodeList)
                             {
                                 <option value="@item.Guid">@item.Name</option>
                             }
@@ -52,23 +98,7 @@
                     }
                 </select>
             </div>
-            <div class="layui-inline lay-time-icon">
-                <input class="layui-input" id="times" autocomplete="off" placeholder="时间区间"><i class="layui-icon layui-icon-date"></i>
-            </div>
-            <div class="layui-inline lay-time-icon">
-                <select id="backStatus">
-                    <option value="">--退单状态--</option>
-                    <option value="0">无</option>
-                    <option value="1">是</option>
-                </select>
-            </div>
-            <div class="layui-inline lay-time-icon">
-                <select id="saleType">
-                    <option value="">--销售类型--</option>
-                    <option value="1">正常销售</option>
-                    <option value="2">残次品销售</option>
-                </select>
-            </div>
+
             <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
         </div>
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
@@ -101,9 +131,10 @@
                     elem: '#tablist',
                     url: '/api/sale/goods/list',
                     cellMinWidth: 110,
+                    totalRow: true,
                     cols: [
                         [
-                            { type: 'checkbox', fixed: 'left' },
+                            { type: 'checkbox', fixed: 'left', totalRowText: '合计行' },
                             { field: 'orderNumber', width: 160, title: '订单号', fixed: 'left' },
                             { field: 'shopName', width: 200, title: '加盟商', fixed: 'left', sort: true },
                             {
@@ -119,7 +150,7 @@
                                 field: 'brandName', width: 240,title: '商品名称', templet: function (res) { 
                                     return res.brandName + res.styleName + res.seasonName;
                             } },
-                            { field: 'counts', title: '销售数', sort: true },
+                            { field: 'counts', title: '销售数', sort: true, totalRow: true },
                             {
                                 field: 'backCounts', title: '是否退单', sort: true, templet: function (res) { 
                                     return res.backCounts == 0 ? "" : '<span class="layui-badge-dot"></span>';
@@ -130,7 +161,7 @@
                                     return res.saleType == 1 ? '正常销售' : '<span class="layui-badge layui-bg-orange">残次品销售</span>';
                                 }
                             },
-                            { field: 'money', sort: true, title: '商品金额' },
+                            { field: 'money', sort: true, title: '商品金额', totalRow: true },
                             { field: 'addDate', width: 200, title: '下单时间', sort: true}
                         ]
                     ],
@@ -168,6 +199,8 @@
                                     key: $('#key').val(),
                                     brank: $('#branks').val(),
                                     size: $('#size').val(),
+                                    year: $('#years').val(),
+                                    season: $('#seasons').val(),
                                     time: $('#times').val(),
                                     shopGuid: $("#shops").val(),
                                     backStatus: $("#backStatus").val(),
