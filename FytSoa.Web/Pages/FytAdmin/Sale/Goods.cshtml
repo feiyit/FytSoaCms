@@ -109,7 +109,7 @@
         </div>
     </script>
     <script>
-                layui.config({
+        layui.config({
             base: '/themes/js/modules/'
         }).use(['table', 'layer', 'jquery', 'form', 'common', 'laydate'],
             function () {
@@ -126,6 +126,7 @@
                     , format: 'yyyy/MM/dd'
                     , range: true
                 });
+                var e = layer.load(2, { shade: [.05, '#000'] });
                 table.render({
                     toolbar: '#toolbar',
                     elem: '#tablist',
@@ -138,21 +139,23 @@
                             { field: 'orderNumber', width: 160, title: '订单号', fixed: 'left' },
                             { field: 'shopName', width: 200, title: '加盟商', fixed: 'left', sort: true },
                             {
-                                field: 'activityName', width: 120, title: '活动信息', sort: true,templet:function(res) { 
+                                field: 'activityName', width: 120, title: '活动信息', sort: true, templet: function (res) {
                                     if (res.activityName != 'undefined' && res.activityName) {
-                                        return '<span class="layui-badge layui-bg-blue">' + res.activityName+'</span>';
+                                        return '<span class="layui-badge layui-bg-blue">' + res.activityName + '</span>';
                                     } else {
                                         return '<span class="layui-badge-dot layui-bg-cyan"></span>';
                                     }
-                            } },
+                                }
+                            },
                             { field: 'code', width: 200, title: '条形码', sort: true },
                             {
-                                field: 'brandName', width: 240,title: '商品名称', templet: function (res) { 
+                                field: 'brandName', width: 240, title: '商品名称', templet: function (res) {
                                     return res.brandName + res.styleName + res.seasonName;
-                            } },
+                                }
+                            },
                             { field: 'counts', title: '销售数', sort: true, totalRow: true },
                             {
-                                field: 'backCounts', title: '是否退单', sort: true, templet: function (res) { 
+                                field: 'backCounts', title: '是否退单', sort: true, templet: function (res) {
                                     return res.backCounts == 0 ? "" : '<span class="layui-badge-dot"></span>';
                                 }
                             },
@@ -162,12 +165,15 @@
                                 }
                             },
                             { field: 'money', sort: true, title: '商品金额', totalRow: true },
-                            { field: 'addDate', width: 200, title: '下单时间', sort: true}
+                            { field: 'addDate', width: 200, title: '下单时间', sort: true }
                         ]
                     ],
                     page: { limits: [15, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     limit: 15,
-                    id: 'tables'
+                    id: 'tables',
+                    done: function () {
+                        layer.close(e);
+                    }
                 });
 
                 table.on('sort(tool)', function (obj) {
@@ -190,6 +196,7 @@
 
                 var active = {
                     reload: function () {
+                        var e = layer.load(2, { shade: [.05, '#000'] });
                         table.reload('tables',
                             {
                                 page: {
@@ -205,6 +212,9 @@
                                     shopGuid: $("#shops").val(),
                                     backStatus: $("#backStatus").val(),
                                     saleType: $("#saleType").val()
+                                },
+                                done: function () {
+                                    layer.close(e);
                                 }
                             });
                     },
@@ -212,7 +222,7 @@
                         active.reload();
                     }
                 };
-                
+
                 $('.list-search .layui-btn').on('click', function () {
                     var type = $(this).data('type');
                     active[type] ? active[type].call(this) : '';

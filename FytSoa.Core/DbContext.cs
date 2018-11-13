@@ -19,6 +19,10 @@ namespace FytSoa.Core
                 DbType = DbType.MySql,
                 IsAutoCloseConnection = true
             });
+            Db.Aop.OnLogExecuting = (sql, pars) =>
+            {
+                var str = sql;
+            };
         }
         public SqlSugarClient Db;//用来处理事务多表查询和复杂的操作
 

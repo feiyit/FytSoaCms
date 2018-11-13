@@ -40,7 +40,6 @@
                 width: 15%
             }
         .fyt-utree{overflow:auto;}
-        .utree-more{padding:15px; text-align:center; cursor:pointer;}
     </style>
     <div class="list-wall">
         <div class="layui-form list-search">
@@ -106,8 +105,8 @@
                 </a>
                 <a class="layui-elip sums"><span class="layui-badge layui-bg-blue">{{it.counts}}</span></a>
             </li>
-            <p class="utree-more" @@click="loadMore">{{moreTip}}</p>
         </ul>
+        <div id="tree-page"></div>
     </div>
     <div class="right-col-body" id="orders">
         <div class="list-wall">
@@ -163,10 +162,6 @@
                 getList: function (m) {
                     vues.curModel = m; 
                     funTool.getGoodsSku(m);
-                },
-                loadMore: function () { 
-                    this.parm.page += 1;
-                    funTool.orderPage();
                 }
             }
         });
@@ -194,16 +189,17 @@
         });
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['table', 'layer', 'jquery', 'form', 'common', 'laydate'],
+        }).use(['table', 'layer', 'jquery', 'form', 'common', 'laydate', 'laypage'],
             function () {
                 var table = layui.table,
                     layer = layui.layer,
                     $ = layui.jquery,
                     os = layui.common,
                     laydate = layui.laydate,
-                    form = layui.form;
+                    form = layui.form,
+                    laypage = layui.laypage, isFirstLoad = true;
                 form.render('select');
-                $("ul.fyt-utree").css({ 'height': $(window).height() - 182 });
+                $("ul.fyt-utree").css({ 'height': $(window).height() - 245 });
                 laydate.render({
                     elem: '#times'
                     , theme: '#393D49'
@@ -264,19 +260,27 @@
                     },
                     orderPage: function () {
                         os.ajax('api/sale/order', vm.parm, function (res) {
-                            console.log(res);
-                            if (res.data.totalPages == 1 || vm.parm.page == res.data.totalPages) {
-                                vm.moreTip = '';
+                            if (isFirstLoad) {
+                                isFirstLoad = false;
+                                laypage.render({
+                                    elem: 'tree-page'
+                                    , count: res.data.totalItems
+                                    , limit: 15
+                                    , first: '首页'
+                                    , groups: 4
+                                    , last: '尾页'
+                                    , prev: '<em>←</em>'
+                                    , next: '<em>→</em>'
+                                    , jump: function (obj) {
+                                        if (!isFirstLoad) {
+                                            vm.parm.page = obj.curr;
+                                            funTool.orderPage();
+                                        }
+                                    }
+                                });
                             }
                             if (res.statusCode === 200) {
-                                if (vm.parm.page == 1) {
-                                    vm.list = res.data.items;
-                                } else {
-                                    $.each(res.data.items, function (i, m) { 
-                                        vm.list.push(m);
-                                    });
-                                }
-                                
+                                vm.list = res.data.items;
                             } else {
                                 os.error(res.message);
                             }

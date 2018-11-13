@@ -71,6 +71,7 @@
                 <a class="layui-elip sums"><span class="layui-badge layui-bg-blue">{{it.counts}}</span></a>
             </li>
         </ul>
+        <div id="tree-page"></div>
     </div>
     <div class="right-col-body">
         <div class="list-wall">
@@ -95,7 +96,8 @@
                 curModel: {},
                 activeName: '',
                 parm: {
-                    guid: ''
+                    guid: '',
+                    page:1
                 }
             },
             methods: {
@@ -109,15 +111,16 @@
         });
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['table', 'layer', 'jquery', 'form', 'common'],
+        }).use(['table', 'layer', 'jquery', 'form', 'common', 'laypage'],
             function () {
                 var table = layui.table,
                     layer = layui.layer,
                     $ = layui.jquery,
                     os = layui.common,
-                    form = layui.form;
+                    form = layui.form,
+                    laypage = layui.laypage, isFirstLoad = true;
                 form.render('select');
-                $("ul.fyt-utree").css({ 'height': $(window).height() - 182 });
+                $("ul.fyt-utree").css({ 'height': $(window).height() - 212 });
                 table.render({
                     toolbar: '#toolbar',
                     elem: '#tablist',
@@ -134,7 +137,7 @@
                             { field: 'summary', title: '返货原因' }
                         ]
                     ],
-                    limit: 20,
+                    limit: 15,
                     page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
                     id: 'tables',
                     where: {
@@ -207,6 +210,26 @@
                     },
                     orderPage: function () {
                         os.ajax('api/stock/return/order', vm.parm, function (res) {
+                            if (isFirstLoad) {
+                                isFirstLoad = false;
+                                laypage.render({
+                                    elem: 'tree-page'
+                                    , count: res.data.totalItems
+                                    , limit: 15
+                                    , first: '首页'
+                                    , groups: 4
+                                    , last: '尾页'
+                                    , prev: '<em>←</em>'
+                                    , next: '<em>→</em>'
+                                    , jump: function (obj) {
+                                        if (!isFirstLoad) {
+                                            vm.parm.page = obj.curr;
+                                            funTool.orderPage();
+                                        }
+                                    }
+                                });
+
+                            }
                             if (res.statusCode === 200) {
                                 vm.list = res.data.items;
                             } else {

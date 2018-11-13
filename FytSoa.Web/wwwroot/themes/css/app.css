@@ -136,7 +136,8 @@
 .fytui-file button{width:100px; border-radius:0px !important; height:38px;}
 
 /* 出入库diy */
-.fyt-utree li{height:40px; line-height:40px; position:relative;border-bottom:1px solid #e6e6e6;padding-left:15px;}
+.fyt-utree li{height:42px; line-height:42px; position:relative;border-bottom:1px solid #e6e6e6;padding-left:15px;}
+.fyt-utree li::after{display:block; content:"clear"; height:0; clear:both; overflow:hidden; visibility:hidden;}
 .fyt-utree li.active{background-color:#f3f3f3;}
 .fyt-utree li a{display:inline-block;cursor:pointer;}
 .fyt-utree li a.title{ width:75%; overflow:hidden; float:left; padding-right:15px;}
@@ -149,10 +150,22 @@
 .fyt-task-menu a:hover{color:#409eff; background-color:#ecf5ff}
 .fyt-task-menu:after{content:''; position:absolute; width:18px; height:8px;background-color:#ffffff;
                          clip-path: polygon(50% 0%, 0% 100%, 100% 100%); top:-6px; right:10px;}
-
+#tree-page {
+    background-color: #f1f1f1;
+    text-align: center;
+}
+#tree-page .layui-laypage{margin:0px;}
+#tree-page .layui-laypage a,#tree-page .layui-laypage span{margin-bottom:0px;}
 /* 主页loading加载样式 */
-.load-container{position:fixed; z-index:1000; top:0px; left:0px; right:0px; bottom:0; 
-                background:rgba(255,255,255,.4);}
+.load-container {
+    position: fixed;
+    z-index: 1000;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0;
+    background: rgba(255,255,255,.4);
+}
 .load-wall{width:500px; height:300px; position:absolute; left:50%; margin-left:-250px; top:50%;
            margin-top:-150px; overflow:hidden;
 }

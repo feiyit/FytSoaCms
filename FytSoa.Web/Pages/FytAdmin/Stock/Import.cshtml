@@ -13,6 +13,14 @@
         .right-col-body {
             left: 400px;
         }
+        .utree-more {
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .fyt-utree {
+            overflow: auto;
+        }
     </style>
     <div class="layui-col-220" id="app">
         <div class="layui-nav-title">入库单　　　<button class="layui-btn layui-btn-sm" id="addIn"><i class="layui-icon"></i>新增入库单</button></div>
@@ -23,6 +31,7 @@
                 <span class="tool" @@click="tools(it,$event)"><i class="layui-icon layui-icon-more"></i></span>
             </li>
         </ul>
+        <div id="tree-page"></div>
         <dl class="layui-nav-child fyt-task-menu layui-hide">
             <dd><a @@click="edit()">修改</a></dd>
             <dd><a @@click="deletes()">删除</a></dd>
@@ -128,7 +137,11 @@
             data: {
                 list: [],
                 curModel: {},
-                activeName: ''
+                activeName: '',
+                moreTip: '点击加载更多',
+                parm: {
+                    page: 1
+                }
             },
             methods: {
                 selected: function (m) {
@@ -151,22 +164,23 @@
         });
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['table', 'layer', 'jquery', 'common', 'form', 'laydate'],
+        }).use(['table', 'layer', 'jquery', 'common', 'form', 'laydate', 'laypage'],
             function () {
                 var table = layui.table,
                     layer = layui.layer,
                     $ = layui.jquery,
                     os = layui.common,
                     laydate = layui.laydate,
-                    form = layui.form;
+                    form = layui.form,
+                    laypage = layui.laypage,isFirstLoad=true;
                 form.render('select');
                 laydate.render({
                     elem: '#times'
                     , theme: '#393D49'
                     , format: 'yyyy/MM/dd'
                     , range: true
-                });
-                $("ul.fyt-utree").css({ 'height': $(window).height() - 130 });
+                });                
+                $("ul.fyt-utree").css({ 'height': $(window).height() - 170 });
                 table.render({
                     toolbar: '#toolbar',
                     elem: '#tablist',
@@ -296,7 +310,27 @@
                         });
                     },
                     packPage: function () {
-                        os.ajax('api/stock/packloglist', { types: 1, time: $('#times').val(), guid: $('#shops').val(), key: $('#key').val() }, function (res) {
+                        os.ajax('api/stock/packloglist', { page: vm.parm.page, types: 1, time: $('#times').val(), guid: $('#shops').val(), key: $('#key').val() }, function (res) {
+                            if (isFirstLoad) { 
+                                isFirstLoad = false;
+                                laypage.render({
+                                    elem: 'tree-page'
+                                    , count: res.data.totalItems
+                                    , limit: 15
+                                    , first: '首页'
+                                    , groups:4
+                                    , last: '尾页'
+                                    , prev: '<em>←</em>'
+                                    , next: '<em>→</em>'
+                                    , jump: function (obj) {
+                                        if (!isFirstLoad) {
+                                            vm.parm.page = obj.curr;
+                                            funTool.packPage();
+                                        }
+                                    }
+                                });
+                                
+                            }
                             if (res.statusCode === 200) {
                                 vm.list = res.data.items;
                             } else {
@@ -343,6 +377,7 @@
                 };
                 //初始化入库单管理
                 funTool.packPage();
+                
 
                 $("#addIn").on('click', function () {
                     active.addIn();
