@@ -463,5 +463,66 @@ namespace FytSoa.Service.Implements
             }
             return Task.Run(() => res);
         }
+
+        /// <summary>
+        /// 加盟商库存盘点报表
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <param name="searchParm"></param>
+        /// <returns></returns>
+        public Task<ApiResult<Page<ShopInventory>>> GetShopInventoryAsync(PageParm parm, SearchSaleOrderGoods searchParm)
+        {
+            var res = new ApiResult<Page<ShopInventory>>();
+            try
+            {
+                //默认只查询当月的营业额
+                DateTime now = DateTime.Now;
+                DateTime beginTime = new DateTime(now.Year, now.Month, 1), endTime = beginTime.AddMonths(1);
+                if (!string.IsNullOrEmpty(parm.time))
+                {
+                    var timeRes = Utils.SplitString(parm.time, '-');
+                    beginTime = Convert.ToDateTime(timeRes[0].Trim());
+                    endTime = Convert.ToDateTime(timeRes[1].Trim());
+                }
+                if (string.IsNullOrEmpty(parm.field) || string.IsNullOrEmpty(parm.order))
+                {
+                    parm.field = "stock";
+                    parm.order = "desc";
+                }
+                var query = Db.Queryable<ErpShopSku, ErpGoodsSku,ErpShops>((t1, t2,t3) => new object[] { JoinType.Left, t1.SkuGuid == t2.Guid,JoinType.Left,t1.ShopGuid==t3.Guid })
+                    .WhereIF(!string.IsNullOrEmpty(parm.time), (t1, t2, t3) => SqlFunc.Between(t1.AddDate, beginTime, endTime))
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.shopGuid), (t1, t2, t3) => t1.ShopGuid == searchParm.shopGuid)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.brank), (t1, t2, t3) => t2.BrankGuid == searchParm.brank)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.year), (t1, t2, t3) => t2.YearGuid == searchParm.year)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.size), (t1, t2, t3) => t2.SizeGuid == searchParm.size)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.style), (t1, t2, t3) => t2.StyleGuid == searchParm.style)
+                    .WhereIF(!string.IsNullOrEmpty(searchParm.season), (t1, t2, t3) => t2.SeasonGuid == searchParm.season)
+                    .WhereIF(!string.IsNullOrEmpty(parm.key), (t1, t2, t3) => t2.Code.Contains(parm.key))
+                    .OrderByIF(parm.orderType == 1, (t1, t2, t3) => t1.Sale, OrderByType.Desc)
+                    .OrderByIF(parm.orderType == 2, (t1, t2, t3) => t1.Stock, OrderByType.Desc)
+                    .Select((t1, t2, t3) => new ShopInventory()
+                    {
+                        Code = t2.Code,
+                        ShopName=t3.ShopName,
+                        //CollectSum= SqlFunc.Subqueryable<ErpInOutLog>().Where(g => g.Types == 2).Sum(g => g.GoodsSum),
+                        Brand = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t2.BrankGuid).Select(g => g.Name),
+                        Style = SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t2.StyleGuid).Select(g => g.Name),
+                        SeasonName= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t2.SeasonGuid).Select(g => g.Name),
+                        Size= SqlFunc.Subqueryable<SysCode>().Where(g => g.Guid == t2.SizeGuid).Select(g => g.Name),
+                        Stock = t1.Stock,
+                        Sale=t1.Sale,
+                        ReturnSum = SqlFunc.Subqueryable<ErpReturnGoods>().Where(g => g.GoodsGuid == t1.SkuGuid && g.ShopGuid == parm.guid && g.Status == 1).Sum(g => g.ReturnCount)
+                    })
+                    .OrderBy(parm.field + " " + parm.order)
+                    .ToPage(parm.page, parm.limit);
+                res.data = query;
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                res.statusCode = (int)ApiEnum.Error;
+            }
+            return Task.Run(() => res);
+        }
     }
 }

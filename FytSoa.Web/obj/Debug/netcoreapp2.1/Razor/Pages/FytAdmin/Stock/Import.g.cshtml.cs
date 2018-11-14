@@ -103,7 +103,7 @@ using FytSoa.Web;
                         ");
             EndContext();
             BeginContext(1820, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "adf61a9fda6a48bfb582698e3daab9ad", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "911337e8749d43678f41d32dc489f7a9", async() => {
                 BeginContext(1837, 11, true);
                 WriteLiteral("--可根据店铺搜索--");
                 EndContext();
@@ -137,7 +137,7 @@ using FytSoa.Web;
             WriteLiteral("                                    ");
             EndContext();
             BeginContext(2116, 50, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "26c4dfdba93f4938aebc38548eafaedc", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52a1977ed4ba4866a18fd2156ceb74ad", async() => {
                 BeginContext(2144, 13, false);
 #line 54 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Stock\Import.cshtml"
                                                           Write(item.ShopName);
@@ -187,7 +187,7 @@ using FytSoa.Web;
                         ");
             EndContext();
             BeginContext(2648, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1c93f655dffb4bd38510832eaa63e834", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6a5d7b1efbe24f9aa578fdb6f43ef6dc", async() => {
                 BeginContext(2665, 11, true);
                 WriteLiteral("--可根据品牌搜索--");
                 EndContext();
@@ -221,7 +221,7 @@ using FytSoa.Web;
             WriteLiteral("                                    ");
             EndContext();
             BeginContext(2944, 46, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "424377d863344e87a8f245a656543dc5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6944edf0d7c742f98d239af886d9b6db", async() => {
                 BeginContext(2972, 9, false);
 #line 71 "E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\Pages\FytAdmin\Stock\Import.cshtml"
                                                           Write(item.Name);

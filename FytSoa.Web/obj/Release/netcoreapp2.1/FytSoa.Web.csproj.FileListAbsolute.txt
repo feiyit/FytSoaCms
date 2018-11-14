@@ -212,3 +212,4 @@ E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\P
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Goods\LossOrder.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Goods\LossOrderAdd.g.cshtml.cs
 E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Goods\LossOrderInfo.g.cshtml.cs
+E:\2018Project\ERP项目\SoaProJect\FytSoa.Web\obj\Release\netcoreapp2.1\Razor\Pages\FytAdmin\Report\ShopInventory.g.cshtml.cs

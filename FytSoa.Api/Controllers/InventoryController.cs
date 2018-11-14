@@ -34,6 +34,18 @@ namespace FytSoa.Api.Controllers
         }
 
         /// <summary>
+        /// 加盟商库存盘点
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("shop/inventory")]
+        public async Task<JsonResult> GetShopInventory(PageParm parm, SearchSaleOrderGoods searchParm)
+        {
+            var res = await _inventoryService.GetShopInventoryAsync(parm, searchParm);
+            return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
+        }
+
+        /// <summary>
         /// 商家营业额
         /// </summary>
         /// <param name="request"></param>

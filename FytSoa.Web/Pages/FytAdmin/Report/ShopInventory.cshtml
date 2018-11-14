@@ -1,0 +1,200 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Report.ShopInventoryModel
+@{
+    ViewData["Title"] = "报表管理-加盟商盘点报表";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <div class="list-wall">
+        <div class="layui-form list-search">
+            <div class="layui-inline">
+                <input class="layui-input" id="key" autocomplete="off" placeholder="可根据条形码搜索">
+            </div>
+            <div class="layui-inline lay-time-icon">
+                <input class="layui-input" id="times" autocomplete="off" placeholder="时间区间"><i class="layui-icon layui-icon-date"></i>
+            </div>
+            <div class="layui-inline">
+                <select id="shops" lay-search="">
+                    <option value="">--可根据店铺搜索--</option>
+                    @{
+                        if (Model.shopList != null)
+                        {
+                            foreach (var item in Model.shopList)
+                            {
+                                <option value="@item.Guid">@item.ShopName</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="layui-inline">
+                <select id="years" lay-search="">
+                    <option value="">--可根据年份搜索--</option>
+                    @{
+                        if (Model.yearCodeList != null)
+                        {
+                            foreach (var item in Model.yearCodeList)
+                            {
+                                <option value="@item.Guid">@item.Name</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div style="height:5px; width:100%;"></div>
+            <div class="layui-inline">
+                <select id="branks" lay-search="">
+                    <option value="">--可根据品牌搜索--</option>
+                    @{
+                        if (Model.codeList != null)
+                        {
+                            foreach (var item in Model.codeList)
+                            {
+                                <option value="@item.Guid">@item.Name</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="layui-inline">
+                <select id="seasons" lay-search="">
+                    <option value="">--可根据季节搜索--</option>
+                    @{
+                        if (Model.seasonCodeList != null)
+                        {
+                            foreach (var item in Model.seasonCodeList)
+                            {
+                                <option value="@item.Guid">@item.Name</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="layui-inline">
+                <select id="size" lay-search="">
+                    <option value="">--可根据尺码搜索--</option>
+                    @{
+                        if (Model.sizeCodeList != null)
+                        {
+                            foreach (var item in Model.sizeCodeList)
+                            {
+                                <option value="@item.Guid">@item.Name</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+        </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <h4>销售商品明细</h4>
+        </div>
+    </script>
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'form', 'common', 'laydate'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common,
+                    laydate = layui.laydate,
+                    form = layui.form;
+                form.render('select');
+                laydate.render({
+                    elem: '#times'
+                    , theme: '#393D49'
+                    , format: 'yyyy/MM/dd'
+                    , range: true
+                });
+                var e = layer.load(2, { shade: [.05, '#000'] });
+                table.render({
+                    toolbar: '#toolbar',
+                    elem: '#tablist',
+                    url: '/api/inventory/shop/inventory',
+                    cellMinWidth: 110,
+                    totalRow: true,
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left', totalRowText: '合计行' },
+                            { field: 'shopName', width: 200, title: '加盟商', fixed: 'left', sort: true },
+                            {
+                                field: 'goodsname', width: 200, title: '商品名称', templet: function (res) {
+                                    return res.brand + res.seasonName + res.style + res.size;
+                                }
+                            },
+                            { field: 'code', width: 180, title: '条形码', sort: true },
+                            { field: 'brand', title: '品牌', sort: true },
+                            { field: 'style', title: '款式', sort: true },
+                            { field: 'seasonName', title: '季节', sort: true },
+                            { field: 'size', title: '尺码', sort: true },
+                            { field: 'stock', sort: true, title: '库存数', totalRow: true },
+                            { field: 'sale', sort: true, title: '销售数', totalRow: true },
+                            { field: 'returnSum', sort: true, title: '返货数', totalRow: true }
+                        ]
+                    ],
+                    page: { limits: [15, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
+                    limit: 15,
+                    id: 'tables',
+                    done: function () {
+                        layer.close(e);
+                    }
+                });
+
+                table.on('sort(tool)', function (obj) {
+                    var e = layer.load(2, { shade: [.05, '#000'] });
+                    table.reload('tables', {
+                        initSort: obj,
+                        page: {
+                            curr: 1
+                        },
+                        where: {
+                            field: obj.field,
+                            order: obj.type
+                        },
+                        done: function () {
+                            layer.close(e);
+                        }
+                    });
+                });
+
+
+                var active = {
+                    reload: function () {
+                        var e = layer.load(2, { shade: [.05, '#000'] });
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    key: $('#key').val(),
+                                    brank: $('#branks').val(),
+                                    size: $('#size').val(),
+                                    year: $('#years').val(),
+                                    season: $('#seasons').val(),
+                                    time: $('#times').val(),
+                                    shopGuid: $("#shops").val()
+                                },
+                                done: function () {
+                                    layer.close(e);
+                                }
+                            });
+                    },
+                    toolSearch: function () {
+                        active.reload();
+                    }
+                };
+
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+            });
+    </script>
+</div>

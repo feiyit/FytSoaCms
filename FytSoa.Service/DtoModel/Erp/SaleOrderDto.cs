@@ -201,6 +201,10 @@ namespace FytSoa.Service.DtoModel
         /// </summary>
         public string size { get; set; }
         /// <summary>
+        /// 款式
+        /// </summary>
+        public string style { get; set; }
+        /// <summary>
         /// 年份
         /// </summary>
         public string year { get; set; }

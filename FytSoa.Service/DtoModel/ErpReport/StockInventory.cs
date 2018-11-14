@@ -48,6 +48,62 @@ namespace FytSoa.Service.DtoModel
     }
 
     /// <summary>
+    /// 加盟商库存盘点
+    /// </summary>
+    public class ShopInventory
+    {
+        /// <summary>
+        /// 条形码
+        /// </summary>
+        public string Code { get; set; }
+
+        /// <summary>
+        /// 加盟商名称
+        /// </summary>
+        public string ShopName { get; set; }
+
+        /// <summary>
+        /// 商品品牌
+        /// </summary>
+        public string Brand { get; set; }
+
+        /// <summary>
+        /// 商品款式
+        /// </summary>
+        public string Style { get; set; }
+
+        /// <summary>
+        /// 季节名称
+        /// </summary>
+        public string SeasonName { get; set; }
+
+        /// <summary>
+        /// 尺码
+        /// </summary>
+        public string Size { get; set; }
+
+        /// <summary>
+        /// 收货数
+        /// </summary>
+        public int CollectSum { get; set; } = 0;
+
+        /// <summary>
+        /// 商品库存数量
+        /// </summary>
+        public int Stock { get; set; } = 0;
+
+        /// <summary>
+        /// 商品销售数量
+        /// </summary>
+        public int Sale { get; set; }
+
+        /// <summary>
+        /// 返货数量
+        /// </summary>
+        public int ReturnSum { get; set; } = 0;
+    }
+
+    /// <summary>
     /// 库存剩余数量
     /// </summary>
     public class StockSaleNum
