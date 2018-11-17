@@ -31,7 +31,7 @@ namespace FytSoa.Service.Implements
                 //根据角色获得多个菜单
                 var menuList = SysPermissionsDb.GetList(m=>roleList.Contains(m.RoleGuid) && m.Types==1).Select(m=>m.MenuGuid).ToList();
                 //根据权限菜单查询列表
-                res.data = SysMenuDb.GetList(m=>menuList.Contains(m.Guid)).OrderBy(m=>m.Sort).ToList();
+                res.data = SysMenuDb.GetList(m=>menuList.Contains(m.Guid) && m.Status).OrderBy(m=>m.Sort).ToList();
                 res.statusCode = (int)ApiEnum.Status;
             }
             catch (Exception ex)

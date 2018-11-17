@@ -186,7 +186,7 @@
                             os.warning('请选择返货订单~');
                             return;
                         }
-                        os.Open('返货效验', '/fytadmin/sale/returnvalidation?order=' + orderguid, '1200px', '700px');
+                        os.Open('返货效验', '/fytadmin/sale/returnvalidation?order=' + orderguid, '1200px', '600px');
                     },
                     //添加返货信息同时保存返货单
                     toolAdd: function () {
@@ -195,7 +195,7 @@
                             os.error('请选择返货加盟商~');
                             return;
                         }
-                        os.Open('添加返货订单', '/fytadmin/sale/returnadd?shopid=' + shopid, '1200px', '700px', function () { 
+                        os.Open('添加返货订单', '/fytadmin/sale/returnadd?shopid=' + shopid, '1200px', '600px', function () { 
                             active.reload();
                             funTool.orderPage();
                         });

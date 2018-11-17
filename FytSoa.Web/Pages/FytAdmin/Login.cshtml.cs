@@ -55,7 +55,7 @@ namespace FytSoa.Web.Pages.FytAdmin
                     );
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, new AuthenticationProperties
                     {
-                        ExpiresUtc = DateTime.UtcNow.AddMinutes(60),
+                        ExpiresUtc = DateTime.UtcNow.AddDays(1),
                         IsPersistent = true,
                         AllowRefresh = false
                     });

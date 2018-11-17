@@ -115,7 +115,7 @@
             });
             os.ajax('api/goods/bycode', { shopGuid: vm.parm.ShopGuid, code: data.field.GoodsGuid }, function (res) { 
                 console.log(res);
-                if (res.statusCode == 200) {
+                if (res.statusCode == 200 && res.data!==null) {
                     var isEx = false;
                     for (var i = 0; i < vm.tabList.length; i++) {
                         if (vm.tabList[i].GoodsGuid == res.data.guid) {
