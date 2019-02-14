@@ -1,0 +1,66 @@
+﻿@page "{id?}"
+@model FytSoa.Web.Pages.Dynamic.DetailModel
+@{
+    ViewData["Title"] = Model.Article.Title;
+    ViewData["Key"] = Model.Article.Tag;
+    ViewData["Desc"] = Model.Article.Summary;
+    ViewData["Nav"] = 3;
+}
+<div class="case-banner">
+    <div style="background: url(/assets/img/case.jpg) no-repeat center top;"></div>
+</div>
+<div id="pageTarget" class="module">
+    <div class="module_container wrapper">
+        <div class="container_target wow fadeInUp">
+            您的位置：
+            <a href="/">首页</a><i class="glyphicon glyphicon-menu-right"></i>
+            <a href="/dynamic/">新闻</a><i class="glyphicon glyphicon-menu-right"></i>
+            <a href="/dynamic/@Model.ParentColumn.EnTitle/">@Model.ParentColumn.Title</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="nlist-wall wrapper clearfix nwall">
+    <div class="case-left">
+        <div class="postInfo"><p class="title">@Model.Article.Title</p><p class="subtitle">@Model.Article.EditDate</p></div>
+        <div class="n-detail-text">
+            @Html.Raw(Model.Article.Content)
+        </div>
+    </div><!-- end -->
+    <div class="case-right n-detail-right">
+        <div class="tabs">
+            @{
+                var t = Model.Article.Tag;
+                if (!string.IsNullOrEmpty(t))
+                {
+                    if (t.IndexOf(",", StringComparison.Ordinal) > -1)
+                    {
+                        var str = t.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var s in str)
+                        {
+                            <a>@s</a>
+                        }
+                    }
+                    else
+                    {
+                        <a>@t</a>
+                    }
+                }
+            }
+        </div>
+        <ul>
+            @{
+                foreach (var item in Model.ArticleList)
+                {
+                    <li>
+                        <a href="/dynamic/detail/@item.Id" title="@item.Title">
+                            @item.Title
+                        </a>
+                        <p class="description">@item.Summary</p>
+                        <p class="time">@item.EditDate</p>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>

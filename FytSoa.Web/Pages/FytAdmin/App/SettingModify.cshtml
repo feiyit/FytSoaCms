@@ -1,0 +1,103 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.App.SettingModifyModel
+@{
+    ViewData["Title"] = "修改APP版本更新";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<form class="layui-form form-cus" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">安卓版本号</label>
+        <div class="layui-input-block">
+            <input type="number" name="AndroidVersion" value="@Model.SettingModel.AndroidVersion" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">安卓更新文件</label>
+        <div class="layui-input-block fytui-file">
+            <input type="text" id="file1" name="AndroidFile" value="@Model.SettingModel.AndroidFile" autocomplete="off" class="layui-input"><button id="AndroidFile" class="layui-btn layui-btn-normal" type="button">文件上传</button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">Ios版本号</label>
+        <div class="layui-input-block">
+            <input type="number" name="IosVersion" value="@Model.SettingModel.IosVersion" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label fytui-file">Ios更新文件</label>
+        <div class="layui-input-block fytui-file">
+            <input type="text" id="file2" name="IosFile" value="@Model.SettingModel.IosFile" autocomplete="off" class="layui-input"><button id="IosFile" class="layui-btn layui-btn-normal" type="button">文件上传</button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">IOS审核</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="IosAudit" lay-skin="switch" lay-text="开|关" @(Model.SettingModel.IosAudit==1 ? "checked" : "")>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="Guid" id="Guid" value="@Model.SettingModel.Guid" />
+</form>
+<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
+@section Scripts{
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form', 'upload'], function () {
+            var form = layui.form, $ = layui.jquery, os = layui.common, upload = layui.upload;
+            var index = parent.layer.getFrameIndex(window.name);
+            upload.render({
+                elem: '#AndroidFile'
+                , url: '/api/upload/index'
+                , accept: 'file' //普通文件
+                , done: function (res) {
+                    if (res.code == 200) {
+                        $("#file1").val('/' + res.data);
+                    } else { 
+                        os.error(res.msg);
+                    }
+                }
+            });
+            upload.render({
+                elem: '#IosFile'
+                , url: '/api/upload/index'
+                , accept: 'file' //普通文件
+                , done: function (res) {
+                    if (res.code == 200) {
+                        $("#file2").val('/' + res.data);
+                    } else {
+                        os.error(res.msg);
+                    }
+                }
+            });
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                var urls = "api/setting/add";
+                if ($("#Guid").val()) {
+                    urls = "api/setting/edit";
+                }
+                data.field.IosAudit = data.field.IosAudit === 'on' ? 1 : 0;
+                os.ajax(urls, data.field, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode == 200) {
+                        parent.layer.close(index);
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+        });
+    </script>
+}
+

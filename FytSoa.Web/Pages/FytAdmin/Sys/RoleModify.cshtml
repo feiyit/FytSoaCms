@@ -1,0 +1,124 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Sys.RoleModifyModel
+@{
+    ViewData["Title"] = "角色修改/添加";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<style>
+    .organize-tree {
+        position: absolute;
+        background-color: #fff;
+        padding: 5px 15px;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0,0,0,.3);
+        border-radius: 4px;
+        opacity: 0;
+        height: 0;
+        display: none;
+    }
+
+        .organize-tree.active {
+            display: block;
+            opacity: 1;
+            height: auto;
+            max-height: 500px;
+            overflow: auto;
+            transition: all .5s;
+        }
+
+        .organize-tree .ztree li a {
+            height: 22px !important;
+        }
+</style>
+<form class="layui-form form-cus" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属部门</label>
+        <div class="layui-input-block">
+            <input type="text" name="DepartmentName" id="DepartmentName" value="@Model.RoleModel.DepartmentName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请选择所属部门" class="layui-input">
+            <div class="organize-tree">
+                <ul id="tree" class="ztree layui-tree-cus"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="Name" value="@Model.RoleModel.Name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色编号</label>
+        <div class="layui-input-block">
+            <input type="text" name="Codes" value="@Model.RoleModel.Codes" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入角色编号" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <textarea name="Summary" class="layui-textarea">@Html.Raw(Model.RoleModel.Summary)</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="Guid" id="Guid" value="@Model.RoleModel.Guid" />
+    <input type="hidden" name="AddTime" value="@Model.RoleModel.AddTime" />
+    <input type="hidden" name="DepartmentGuid" id="DepartmentGuid" value="@Model.RoleModel.DepartmentGuid" />
+</form>
+<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
+@section Scripts{
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form','ztree'], function () {
+            var form = layui.form, $ = layui.$, os = layui.common;
+            var index = parent.layer.getFrameIndex(window.name);
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                var urls = "api/role/add";
+                if ($("#Guid").val()) {
+                    urls = "api/role/edit";
+                }
+                os.ajax(urls, data.field, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode === 200) {
+                        parent.layer.close(index);
+                    } else {
+                        os.error(res.message);
+                    }   
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+
+            var setting = {
+                async: {
+                    enable: true,
+                    headers: os.getToken(),
+                    url: "/api/organize/gettree"
+                },
+                callback: {
+                    onClick: onClick
+                }
+            };
+            $("#DepartmentName").click(function () {
+                $(".organize-tree").addClass('active');
+            });
+            $(".organize-tree").mouseleave(function () {
+                $(".organize-tree").removeClass('active');
+            });
+            $.fn.zTree.init($("#tree"), setting);
+            function onClick(event, treeId, treeNode, clickFlag) {
+                $("#DepartmentGuid").val(treeNode.guid);
+                $("#DepartmentName").val(treeNode.name);
+                $(".organize-tree").removeClass('active');
+            }
+        });
+    </script>
+}

@@ -1,0 +1,130 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Sys.AdminToRoleModel
+@{
+    ViewData["Title"] = "为用户分配角色";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<style>
+    .layui-table-view {
+        margin-top: 0px;
+    }
+
+    .layui-col-220 {
+        width: 200px;
+    }
+
+    .right-col-body {
+        left: 200px;
+    }
+
+    .list-wall {
+        padding-top: 0px;
+    }
+
+    .fyt-center {
+        text-align: center;
+    }
+
+    #tree {
+        height: 350px;
+        overflow: auto;
+    }
+
+    .layui-layer-loading {
+        box-shadow: 0 0px 0px rgba(0,0,0,.3) !important;
+    }
+</style>
+<div class="layui-col-220">
+    <ul id="tree" class="ztree layui-tree-cus"></ul>
+</div>
+<div class="right-col-body">
+    <div class="list-wall">
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+</div>
+<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
+<script>
+    layui.config({
+        base: '/themes/js/modules/'
+    }).use(['table', 'layer', 'jquery', 'ztree', 'common'],
+        function () {
+            var table = layui.table,
+                layer = layui.layer,
+                $ = layui.jquery,
+                ztree = layui.ztree,
+                os = layui.common,
+                form = layui.form;
+            table.render({
+                elem: '#tablist',
+                headers: os.getToken(),
+                url: '/api/role/torolelist?adminGuid=@Model.adminGuids',
+                cols: [
+                    [
+                        { type: 'checkbox', fixed: 'left' },
+                        { field: 'name', title: '角色名称', fixed: 'left' },
+                        { field: 'codes', title: '编号' },
+                        { width: 100, title: '操作', templet: '#tool' }
+                    ]
+                ],
+                page: true,
+                id: 'tables'
+            });
+            var setting = {
+                async: {
+                    enable: true,
+                    headers: os.getToken(),
+                    url: "/api/organize/gettree"
+                },
+                callback: {
+                    onClick: onClick
+                }
+            };
+            var guid = '', typeName = '', active = {
+                reload: function () {
+                    table.reload('tables',
+                        {
+                            page: {
+                                curr: 1
+                            },
+                            where: {
+                                key: guid
+                            }
+                        });
+                }
+            };
+            $.fn.zTree.init($("#tree"), setting);
+            $('.list-search .layui-btn').on('click', function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+            function onClick(event, treeId, treeNode, clickFlag) {
+                guid = treeNode.guid;
+                active.reload();
+            }
+            //监听授权操作
+            form.on('switch(torole)', function (obj) {
+                var strRole = this.value;
+                //开始提交信息
+                var index = layer.load(1, {
+                    shade: [0.1, '#fff']
+                });
+                os.ajax("api/rolemenu/torole", { AdminGuid: "@Model.adminGuids", RoleGuid: strRole, Types: 2, status: obj.elem.checked }, function (res) {
+                    layer.close(index);
+                    if (res.statusCode === 200) {
+                        if (obj.elem.checked) {
+                            os.success('授权成功~');
+                        }
+                        else {
+                            os.success('取消授权~');
+                        }
+                     } else {
+                         os.error(res.message);
+                     }
+                });
+            });
+        });
+</script>
+<script type="text/html" id="tool">
+    <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="取消|授权" lay-filter="torole" {{ d.status ? 'checked' : '' }}>
+</script>
+

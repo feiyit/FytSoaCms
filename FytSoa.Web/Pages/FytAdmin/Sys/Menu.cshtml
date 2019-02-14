@@ -1,0 +1,145 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Sys.MenuModel
+@{
+    ViewData["Title"] = "菜单管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<style>#tree{overflow:auto;}</style>
+<div id="container">
+    <div class="layui-col-220">
+        <div class="layui-nav-title">菜单管理</div>
+        <ul id="tree" class="ztree layui-tree-cus" style="overflow:auto;"></ul>
+    </div>
+    <div class="right-col-body">
+        <div class="list-wall">
+            <div class="layui-form list-search">
+                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeAdd"><i class="layui-icon"></i> 新增</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i> 删除</button>
+            </div>
+            <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+        </div>
+    </div>
+    <link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'ztree', 'common'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    ztree = layui.ztree,
+                    os = layui.common,
+                    form = layui.form;
+                
+                table.render({
+                    elem: '#tablist',
+                    headers: os.getToken(),
+                    url: '/api/menu/getpages',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            { field: 'name', title: '菜单名称', sort: true, fixed: 'left' },
+                            { field: 'nameCode', title: '编号' },
+                            { field: 'urls', title: 'Url' },
+                            { field: 'sort', width: 150, title: '排序', sort: true },
+                            { field: 'layer', width: 150, title: '层级' },
+                            { width: 100, title: '操作', templet: '#tool' }
+                        ]
+                    ],
+                    height:$(window).height()-150,
+                    page: true,
+                    limit:1000,
+                    id: 'tables'
+                });
+                var setting = {
+                    async: {
+                        enable: true,
+                        headers: os.getToken(),
+                        url: "/api/menu/gettree"
+                    },
+                    callback: {
+                        onClick: onClick,
+                        onAsyncSuccess:onTreeSuccess
+                    }
+                };
+                var guid = '', typeName = '', active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    key: guid
+                                }
+                            });
+                    },
+                    organizeAdd: function () {
+                        os.Open('添加菜单', '/fytadmin/sys/menumodify', '680px', '500px', function () {
+                            active.reload();
+                            var tree = $.fn.zTree.getZTreeObj("tree");
+                            tree.reAsyncChildNodes(null, "refresh");
+                        });
+                    },
+                    organizeDel: function () {
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.warning("请选择要删除的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            str += item.guid + ",";
+                        });
+                        layer.confirm('确定要执行批量删除吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/menu/delete/', { parm: str }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    active.reload();
+                                    var tree = $.fn.zTree.getZTreeObj("tree");
+                                    tree.reAsyncChildNodes(null, "refresh");
+                                    os.success('删除成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+
+                    }
+                };
+                $.fn.zTree.init($("#tree"), setting);
+                function onTreeSuccess() { 
+                    $("#tree").css({ 'height': $(window).height() - 140 });
+                }
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+                function onClick(event, treeId, treeNode, clickFlag) {
+                    guid = treeNode.guid;
+                    active.reload();
+                }
+                //监听工具条
+                table.on('tool(tool)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'edit') {
+                        os.Open('编辑菜单', '/fytadmin/sys/menumodify/?guid=' + data.guid, '680px', '500px', function () {
+                            var tree = $.fn.zTree.getZTreeObj("tree");
+                            tree.reAsyncChildNodes(null, "refresh");
+                            active.reload();
+                        })
+                    }
+                });
+            });
+    </script>
+    <script type="text/html" id="tool">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
+    </script>
+</div>
+

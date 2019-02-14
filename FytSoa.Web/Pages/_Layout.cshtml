@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="~/build/web/css/fyt.min.css" asp-append-version="true" />
+    <title>@Html.Raw(ViewData["Title"])</title>
+    <meta name="keywords" content="@Html.Raw(ViewData["Key"])" />
+    <meta name="description" content="@Html.Raw(ViewData["Desc"])" />
+</head>
+<body>
+    <div class="header">
+        <div class="wrapper">
+            <div class="logo">
+                <a href="/" title="飞易腾-高端网站定制商城开发APP开发服务商"><img src="/cdns/image/logo.png" alt="飞易腾-高端网站定制商城开发APP开发服务商"></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/" title="首页">首页</a></li>
+                    <li class="@(Convert.ToInt32(ViewData["Nav"])==1?"active":"")"><a href="/service/" title="服务">服务</a></li>
+                    <li class="@(Convert.ToInt32(ViewData["Nav"])==2?"active":"")"><a href="/cases/" title="案例">案例</a></li>
+                    <li class="@(Convert.ToInt32(ViewData["Nav"])==3?"active":"")"><a href="/dynamic/" title="新闻">新闻</a></li>
+                    <li class="@(Convert.ToInt32(ViewData["Nav"])==4?"active":"")"><a href="/aboutus/" title="关于">关于</a></li>
+                    <li class="@(Convert.ToInt32(ViewData["Nav"])==5?"active":"")"><a href="/contactus/" title="联系">联系</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    @RenderBody()
+    <partial name="_Footer">
+        <script src="/assets/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/cdns/js/wow.min.js"></script>
+        <script>
+            if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))) {
+                new WOW().init();
+            };
+            $(window)
+                .scroll(function () {
+                    if ($(window).scrollTop() >= 100) {
+                        $('.go-top').fadeIn(300);
+                    } else {
+                        $('.go-top').fadeOut(300);
+                    }
+                });
+            $('.go-top')
+                .click(function () {
+                    $('html,body').animate({ scrollTop: '0px' }, 800);
+                });
+        </script>
+        @RenderSection("Scripts", required: false)
+</body>
+</html>

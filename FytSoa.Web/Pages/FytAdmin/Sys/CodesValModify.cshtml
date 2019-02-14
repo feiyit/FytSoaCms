@@ -1,0 +1,73 @@
+﻿@page
+@model FytAdmin.Sys.CodesValModifyModel
+@{
+    ViewData["Title"] = "CodesValModify";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<form class="layui-form form-cus" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">字典名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="Name" value="@Model.CodeModel.Name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入字典名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">阈值</label>
+        <div class="layui-input-block">
+            <input type="text" name="CodeType" value="@Model.CodeModel.CodeType" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入阈值" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea name="Summary" class="layui-textarea" style="min-height: 60px;" placeholder="（非必填）可以描述字典的说明">@Model.CodeModel.Summary</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否有效</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="status" lay-skin="switch" lay-text="ON|OFF" value="true" @(Model.CodeModel.Status ? "checked" : "")>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="guid" id="guid" value="@Model.CodeModel.Guid" />
+    <input type="hidden" name="parentguid" value="@Model.CodeModel.ParentGuid" />
+    <input type="hidden" name="sort" value="@Model.CodeModel.Sort" />
+</form>
+@section Scripts{
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form'], function () {
+            var form = layui.form, $ = layui.$, os = layui.common;
+            var index = parent.layer.getFrameIndex(window.name);
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                var urls = "api/code/add";
+                if ($("#guid").val()) {
+                    urls = "api/code/edit";
+                }
+                os.ajax(urls, data.field, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode === 200) {
+                        parent.layer.close(index);
+                    } else {
+                        os.error(res.message);
+                    }   
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+
+        });
+    </script>
+}
+

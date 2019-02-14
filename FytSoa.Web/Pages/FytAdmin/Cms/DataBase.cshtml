@@ -1,0 +1,63 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.DataBaseModel
+@{
+    ViewData["Title"] = "数据库备份";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <style>
+        .layui-field-title i {
+            margin-right: 5px;
+            font-size: 25px;
+            position: relative;
+            top: 2px;
+        }
+
+        .layui-form-item {
+            width: 60%;
+        }
+    </style>
+    <form class="layui-form form-cus" action="" style="padding:15px;">
+        <blockquote class="layui-elem-quote">
+            备份SQL格式数据库 → 提示信息
+        </blockquote>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据库名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="SiteName" disabled value="fyt_cms" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称和位置</label>
+            <div class="layui-input-block">
+                <input type="text" name="SiteUrl" disabled value="@Html.Raw(Model.DbSqlPath)" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submit">备份SQL格式数据库</button>
+            </div>
+        </div>
+    </form>
+    @section Scripts{
+        <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form'], function () {
+            var form = layui.form, $ = layui.$, os = layui.common;
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                os.ajax('api/cmssite/backups', null, function (res) { 
+                    if (res.success) {
+                        os.success(res.message);
+                    }
+                    else {
+                        os.error('生成失败~');
+                    }
+                });
+                return false;
+            });
+        });
+        </script>
+    }
+</div>

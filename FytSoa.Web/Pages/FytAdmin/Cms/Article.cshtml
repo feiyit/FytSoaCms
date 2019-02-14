@@ -1,0 +1,340 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.ArticleModel
+@{
+    ViewData["Title"] = "文章管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="content-body">
+    <div class="list-wall">
+        <div class="layui-form list-search">
+            <div class="layui-inline">
+                <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
+            </div>
+            <div class="layui-inline">
+                <select id="attr" lay-search="">
+                    <option value="">全部</option>
+                    <option value="IsTop">推荐</option>
+                    <option value="IsHot">热点</option>
+                    <option value="IsScroll">滚动</option>
+                    <option value="IsSlide">幻灯</option>
+                    <option value="IsComment">是否评论</option>
+                    <option value="IsWap">发布移动端</option>
+                    <option value="IsLink">转向链接</option>
+                </select>
+            </div>
+            <div class="layui-inline" style="width:100px;">
+                <input type="checkbox" checked="checked" name="close" lay-filter="switch" lay-skin="switch" lay-text="已审核|未审核">
+            </div>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+        </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    <div class="copy-wall layui-hide">
+        <form class="layui-form form-cus" action="" style="padding:15px;">
+            <blockquote class="layui-elem-quote">请选择将要把数据转移/复制的指定栏目</blockquote>
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择分类</label>
+                <div class="layui-input-block">
+                    <select name="columnId" lay-verify="required" lay-search="">
+                        @{
+                            if (Model.ColumnList.Any())
+                            {
+                                foreach (var item in Model.ColumnList)
+                                {
+                                    <option value="@item.Id">@item.Title</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                    <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolAdd"><i class="layui-icon"></i> 新增</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolDel"><i class="layui-icon"></i> 删除</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolRecycle"><i class="layui-icon layui-icon-refresh-1"></i> 移动到回收站</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolCopy"><i class="layui-icon layui-icon-templeate-1"></i> 复制</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="tooltransfer"><i class="layui-icon layui-icon-senior"></i> 转移</button>
+        </div>
+    </script>
+    <input type="hidden" id="isSave" value="0" />
+    <script type="text/html" id="switchTpl">
+        <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" disabled lay-text="已审核|未审核" lay-filter="statusedit" {{ d.audit==1?'checked':''}}>
+    </script>
+    <script>
+        var active, layuiIndex;
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'common', 'form'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common,
+                    form = layui.form;
+                form.render();
+                table.render({
+                    elem: '#tablist',
+                    toolbar: '#toolbar',
+                    headers: os.getToken(),
+                    url: '/api/article/getpages',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            {
+                                field: 'title', title: '标题', fixed: 'left', templet: function (res) {
+                                    return '<a href="javascript:void(0)" lay-event="edit" class="text-color">' + res.title + '</a>';
+                                }
+                            },
+                            { field: 'tag', width: 200, title: '标签' },
+                            { field: 'sort', width: 100, title: '权重', sort: true },
+                            {
+                                field: 'iosVersion', width: 200, title: '属性', templet: function (res) {
+                                    return attrHtml(res);
+                                }
+                            },
+                            { field: 'audit', width: 120, title: '审核状态', templet: '#switchTpl' },
+                            { field: 'hits', width: 100, title: '点击量' },
+                            { field: 'editDate', width: 200, title: '更新时间', sort: true }
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables',
+                    where: {
+                        types: 1,
+                        id:'@Model.ColumnId'
+                    }
+                });
+
+                var type = 0, isCopy = 0, selStr = '';
+                active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    types: 1,
+                                    id:'@Model.ColumnId',
+                                    where: $("#attr").val(),
+                                    key: $('#key').val(),
+                                    audit: type
+                                },
+                                done: function () {
+                                }
+                            });
+                    },
+                    //添加栏目
+                    toolAdd: function () {
+                        active.goModify('?column=@Model.ColumnId');
+                    },
+                    goModify: function (parm = '') {
+                        var winH = $(window).height(), winW = $(window).width();
+                        layuiIndex = os.OpenRight('文章管理', "/fytadmin/cms/articlemodify" + parm, winW - 220 + 'px', winH - 61 + 'px', function () {
+                            if (parseInt($("#isSave").val()) === 1) {
+                                $("#isSave").val('0');
+                                active.reload();
+                            }
+                        }, function () {
+                            active.closeCloumnModify();
+                        });
+                    },
+                    closeCloumnModify: function () {
+                        var $layero = $('#layui-layer' + layuiIndex);
+                        $layero.animate({
+                            left: $layero.offset().left + $layero.width()
+                        }, 300, function () {
+                            layer.close(layuiIndex);
+                        });
+                        return false;
+                    },
+                    toolSearch: function () {
+                        active.reload();
+                    },
+                    toolDel: function () {
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要删除的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            str += item.id + ",";
+                        });
+                        layer.confirm('确定要执行批量删除吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/article/delete/', { parm: str }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    active.reload();
+                                    os.success('删除成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+                    },
+                    toolRecycle: function () {
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要转移的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            str += item.id + ",";
+                        });
+                        layer.confirm('确定要执行转移到回收站吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/article/recycle/', { parm: str, type: 0 }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    active.reload();
+                                    os.success('转移成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+                    },
+                    toolCopy: function () {
+                        isCopy = 1;
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要操作的项目~");
+                            return;
+                        }
+                        $.each(data, function (i, item) {
+                            selStr += item.id + ",";
+                        });
+                        layer.open({
+                            type: 1,
+                            title: '批量复制',
+                            shadeClose: true,
+                            shade: 0.2,
+                            area: ['650px', '500px'],
+                            content: $('.copy-wall').html(),
+                            zIndex: "10000",
+                            success: function () {
+                                form.render();
+                                $('.btn-open-close').click(function () {
+                                    os.closeOpen();
+                                });
+                            },
+                            end: function () {
+                                selStr = '';
+                            }
+                        });
+                    },
+                    tooltransfer: function () {
+                        isCopy = 2;
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要操作的项目~");
+                            return;
+                        }
+                        $.each(data, function (i, item) {
+                            selStr += item.id + ",";
+                        });
+                        layer.open({
+                            type: 1,
+                            title: '批量转移',
+                            shadeClose: true,
+                            shade: 0.2,
+                            area: ['650px', '500px'],
+                            content: $('.copy-wall').html(),
+                            zIndex: "10000",
+                            success: function () {
+                                form.render();
+                                $('.btn-open-close').click(function () {
+                                    os.closeOpen();
+                                });
+                            },
+                            end: function () {
+                                selStr = '';
+                            }
+                        });
+                    }
+                };
+                table.on('toolbar(tool)', function (obj) {
+                    active[obj.event] ? active[obj.event].call(this) : '';
+                });
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+                //监听指定开关
+                form.on('switch(switch)', function (data) {
+                    type = this.checked ? 0 : 1;
+                });
+                //监听工具条
+                table.on('tool(tool)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'edit') {
+                        active.goModify('?id=' + data.id);
+                    }
+                });
+                form.on('submit(submit)', function (data) {
+                    if (selStr === '') {
+                        os.error('请选择要操作的项！');
+                        return false;
+                    }
+                    os.log(data.field);
+                    layer.load(1, {
+                        shade: [0.1, '#000']
+                    });
+                    os.ajax('api/article/copyortransfer/', { parm: selStr, type: isCopy, column: data.field.columnId }, function (res) {
+                        os.closeOpen();
+                        if (res.statusCode === 200) {
+                            active.reload();
+                            os.success('操作成功！');
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
+                    return false;
+                });
+            });
+        function attrHtml(e) {
+            var h = '';
+            if (e.isTop) {
+                h += '<span class="layui-badge layui-bg-cyan">推荐</span>';
+            }
+            if (e.isHot) {
+                h += '<span class="layui-badge layui-bg-cyan">热点</span>';
+            }
+            if (e.isScroll) {
+                h += '<span class="layui-badge layui-bg-cyan">滚动</span>';
+            }
+            if (e.isSlide) {
+                h += '<span class="layui-badge layui-bg-cyan">幻灯</span>';
+            }
+            if (e.isComment) {
+                h += '<span class="layui-badge layui-bg-cyan">评论</span>';
+            }
+            if (e.isWap) {
+                h += '<span class="layui-badge layui-bg-cyan">移动端</span>';
+            }
+            return h;
+        }
+    </script>
+</div>

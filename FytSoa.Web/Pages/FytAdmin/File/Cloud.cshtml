@@ -1,0 +1,118 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.File.CloudModel
+@{
+    ViewData["Title"] = "云媒体资源";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<div id="app">
+    <div class="picframe-wall clearfix">
+        <div class="picframe-tab">
+            <span :class="tabActive==0?'active':''" @@click="savetype(0)">本地</span>
+            <span :class="tabActive==1?'active':''" @@click="savetype(1)">云存储</span>
+        </div>
+        <div class="picframe-left" id="fytwall">
+            <div class="pf-title">
+                <strong>图片分类</strong><a class="layui-btn pic-btn pic-right" href="javascript:void(0)" @@click="addType()">+新增</a>
+            </div>
+            <div class="fyt-bran-top fyt-tree">
+                <div class="layui-collapse" lay-accordion="">
+                    <div class="layui-colla-item" v-for="(it,index) in typeMenu" v-if="it.level==0">
+                        <h2 class="layui-colla-title">{{it.name}}</h2>
+                        <div class="layui-colla-content layui-show">
+                            <p v-for="(m,index) in typeMenu" v-if="m.level==1 && m.parentGuid==it.guid" :class="{'active': menuActive == m.enName}" @@click="goTypeList(it,m)">
+                                {{m.name}}
+                                <span class="tool"><a title="编辑" class="layui-icon layui-icon-edit" @@click.stop="editType(m)"></a><a title="删除" class="layui-icon layui-icon-delete" @@click.stop="delType(m)"></a></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end -->
+        <div class="picframe-right">
+            <div class="pf-r-title clearfix">
+                <strong>{{tagName}}<span></span></strong>
+                <div class="pf-t-right clearfix">
+                    <a href="javascript:void(0)" class="layui-btn pic-btn btn-upcloud layui-hide" @@click="upload" id="cloudup">
+                        <i class="layui-icon layui-icon-upload-drag"></i> 上传图片
+                        <input type="file" id="cloudup" value="" />
+                    </a>
+                    <a href="javascript:void(0)" class="layui-btn pic-btn btn-upcloud" id="localup">
+                        <i class="layui-icon layui-icon-upload-drag"></i> 上传图片
+                    </a>
+                    <span class="search"><i class="layui-icon layui-icon-search"></i></span>
+                    <input class="layui-input" placeholder="请输入搜索名称" id="keys" />
+                </div>
+                <div class="pf-t-right clearfix layui-hide">
+                    <a href="javascript:void(0)" class="layui-btn pic-btn hidden"><i class="fa fa fa-trash-o"></i> 删除</a>
+                    <a href="javascript:void(0)" class="layui-btn pic-btn" id="btn-cancel"><i class="fa fa fa-close"></i> 取消</a>
+                </div>
+            </div>
+            <div class="picbox" id="imgwall">
+                <p :class="'nopic '+noShow">
+                    <i class="layui-icon layui-icon-face-smile-fine"></i><span>没有内容...</span>
+                </p>
+                <ul>
+                    <li v-for="(it,index) in list" @@click="selectImg(it)" :class="{'active': active == it.name}">
+                        <i class="sels"></i>
+                        <div class="file-wrapper">
+                            <img v-if="isImage(it.name)" :src="it.name+'?imageView2/1/w/350/h/350/q/75|imageslim'">
+                            <div v-if="!isImage(it.name)"><span class="file-type" v-html="getFileExt(it.name)"></span></div>
+                        </div>
+                        <div class="file-name"><a :href="it.name" target="_blank" :title="it.name" v-html="imgLastUrl(it.name)"></a></div>
+                        <ul class="picbox-view">
+                            <li><a :href="it.name" target="_blank"><i class="layui-icon layui-icon-link"></i></a></li>
+                            <li><a href="javascript:void(0)" @@click.stop="delImg(it)"><i class="layui-icon layui-icon-delete"></i></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="layui-clear"></div>
+                <div :class="'loadmore '+more"><a href="#" @@click="getMore" class="layui-btn pic-btn">加载更多</a></div>
+            </div>
+        </div><!-- end -->
+    </div>
+    <div class="picframe-footer">
+        <button type="button" class="layui-btn layui-btn-primary btn-open-close" @@click="closeDig">取消</button><button type="button" class="layui-btn" @@click="saveSelect">确定</button>
+    </div>
+    <div :class="'up-loading '+upStatus">
+        <div class="layui-progress" lay-showpercent="true" lay-filter="uppro">
+            <div class="layui-progress-bar" lay-percent="0"></div>
+        </div>
+    </div>
+    <div id="c-type-wall" :class="typeOpen" style="display:none;">
+        <div class="layui-layer-title" style="cursor: move;">分类设置</div>
+        <span class="layui-layer-setwin"><a @@click="closeType" class="layui-layer-ico layui-layer-close layui-layer-close1" href="javascript:;"></a></span>
+        <form class="layui-form form-cus" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">上级分类</label>
+                <div class="layui-input-block">
+                    <select id="ParentGuid" name="ParentGuid" lay-filter="ParentGuid" v-model="typeModel.ParentGuid">
+                        <option value="">一级分类</option>
+                        <option :value="it.guid" v-for="(it,index) in typeMenu" v-if="it.level==0">{{it.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">中文名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="Name" v-model="typeModel.Name" maxlength="30" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">英文名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="EnName" v-model="typeModel.EnName" maxlength="50" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary btn-open-close" @@click="closeType">取消</button>
+                </div>
+            </div>
+            <input type="hidden" name="Guid" v-model="typeModel.Guid" />
+        </form>
+    </div>
+</div>
+<input type="hidden" id="localpath" value="/" />
+<script src="https://unpkg.com/qiniu-js@2.5.1/dist/qiniu.min.js"></script>
+<script src="~/themes/js/file/cloud.js"></script>

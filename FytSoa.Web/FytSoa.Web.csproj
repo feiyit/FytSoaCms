@@ -1,0 +1,78 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp2.1\FytSoa.Web.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp2.2\FytSoa.Web.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="logs\**" />
+    <Content Remove="logs\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <None Remove="logs\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Pages\FytAdmin\App\Setting.cshtml" />
+    <None Include="Pages\FytAdmin\App\SettingModify.cshtml" />
+    <None Include="wwwroot\cdns\fonts\iconfont.svg" />
+    <None Include="wwwroot\cdns\js\fyt.js" />
+    <None Include="wwwroot\cdns\js\jquery.bxslider.js" />
+    <None Include="wwwroot\cdns\js\swiper.min.js" />
+    <None Include="wwwroot\cdns\js\wow.min.js" />
+    <None Include="wwwroot\themes\layui\font\iconfont.svg" />
+    <None Include="wwwroot\themes\layui\layui.all.js" />
+    <None Include="wwwroot\themes\layui\layui.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\carousel.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\code.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\colorpicker.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\element.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\flow.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\form.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\jquery.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\laydate.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\layedit.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\layer.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\laypage.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\laytpl.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\mobile.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\rate.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\slider.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\table.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\tree.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\upload.js" />
+    <None Include="wwwroot\themes\layui\lay\modules\util.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="NLog" Version="4.5.11" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.7.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FytSoa.Api\FytSoa.Api.csproj" />
+    <ProjectReference Include="..\FytSoa.Common\FytSoa.Common.csproj" />
+    <ProjectReference Include="..\FytSoa.Core\FytSoa.Core.csproj" />
+    <ProjectReference Include="..\FytSoa.Service\FytSoa.Service.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="nlog.config">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\cdns\files\" />
+    <Folder Include="wwwroot\db_back\" />
+  </ItemGroup>
+</Project>

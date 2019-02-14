@@ -1,0 +1,119 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Sys.OrganizeModifyModel
+@{
+    ViewData["Title"] = "OrganizeModify";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<style>
+    .organize-tree {
+        position: absolute;
+        background-color: #fff;
+        padding: 5px 25px;
+        z-index: 1000;
+        box-shadow: 0 0 24px rgba(0,0,0,.18);
+        opacity: 0;
+        height: 0;
+        display: none;
+    }
+        .organize-tree.active {
+            display:block;
+            opacity: 1;
+            height: auto;
+            max-height:500px;
+            overflow:auto;
+            transition: all .5s;
+        }
+    .organize-tree .ztree li a{height:22px !important;}
+</style>
+<form class="layui-form form-cus" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属部门</label>
+        <div class="layui-input-block">
+            <input type="text" name="ParentName" id="ParentName" value="@Model.OrganizeModel.ParentName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请选择所属部门" class="layui-input">
+            <div class="organize-tree">
+                <ul id="tree" class="ztree layui-tree-cus"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="Name" value="@Model.OrganizeModel.Name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入部门名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text" name="Sort" value="@Model.OrganizeModel.Sort" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入排序" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否有效</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="Status" lay-skin="switch" lay-text="ON|OFF" value="true" @(Model.OrganizeModel.Status ? "checked" : "")>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="Guid" id="Guid" value="@Model.OrganizeModel.Guid" />
+    <input type="hidden" name="ParentGuid" id="ParentGuid" value="@Model.OrganizeModel.ParentGuid" />
+</form>
+<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
+@section Scripts{
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form','ztree'], function () {
+            var form = layui.form, $ = layui.$, os = layui.common;
+            var index = parent.layer.getFrameIndex(window.name);
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                var urls = "api/organize/add";
+                if ($("#Guid").val()) {
+                    urls = "api/organize/edit";
+                }                
+                os.ajax(urls, data.field, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode === 200) {
+                        parent.layer.close(index);
+                    } else {
+                        os.error(res.message);
+                    }   
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+
+            var setting = {
+                async: {
+                    enable: true,
+                    headers: os.getToken(),
+                    url: "/api/organize/gettree"
+                },
+                callback: {
+                    onClick: onClick
+                }
+            };
+            $("#ParentName").click(function () { 
+                $(".organize-tree").addClass('active');
+            });
+            $(".organize-tree").mouseleave(function () {
+                $(".organize-tree").removeClass('active');
+            });
+            $.fn.zTree.init($("#tree"), setting);
+            function onClick(event, treeId, treeNode, clickFlag) {
+                $("#ParentGuid").val(treeNode.guid);
+                $("#ParentName").val(treeNode.name);
+                $(".organize-tree").removeClass('active');
+            }
+        });
+    </script>
+}
+

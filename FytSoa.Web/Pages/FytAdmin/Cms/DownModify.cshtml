@@ -1,0 +1,241 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.DownModifyModel
+@{
+    ViewData["Title"] = "下载管理";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<div id="container">
+    <form class="layui-form form-cus form-back" action="">
+        <div class="panel-body">
+            <div class="panel-addpic">
+                <div class="text">基本属性</div>
+                <div class="form-cur-wall">
+                    <label>适用系统：</label>
+                    <div class="layui-input-block">
+                        <select name="IsSystem" lay-verify="required" lay-search="">
+                            <option value="windows">windows</option>
+                            <option value="lunex">lunex</option>
+                            <option value="Ios">Ios</option>
+                            <option value="Android">Android</option>
+                            <option value="其它系统">其它系统</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>软件类型：</label>
+                    <div class="layui-input-block">
+                        <select name="IsCharge" lay-verify="required" lay-search="">
+                            <option value="免费软件">免费软件</option>
+                            <option value="收费软件">收费软件</option>
+                            <option value="共享软件">共享软件</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>文件大小</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="FileSize" value="@Model.Download.FileSize" placeholder="如20MB" maxlength="50" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>更新时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="EditDate" name="EditDate" value="@Model.Download.EditDate" maxlength="100" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <ul class="addpic-list clearfix">
+                    <li>
+                        <div class="add-photo default">
+                            <input class="imgv" id="ImgUrl" name="ImgUrl" type="hidden" value="@Model.Download.ImgUrl">
+                            <div class="select-newimg fyt-cloud @(!string.IsNullOrEmpty(Model.Download.ImgUrl)?"layui-hide":"")" data-text="ImgUrl" data-img="imgShow" data-type="form">
+                                <i class="icon-addphote"></i>
+                                <span>文件图片</span>
+                            </div>
+                            <div class="add-photo-wall @(!string.IsNullOrEmpty(Model.Download.ImgUrl)?"":"layui-hide")">
+                                <img id="imgShow" src="@Model.Download.ImgUrl">
+                                <div class="phote-edit">
+                                    <a class="photo-tool fyt-cloud" data-text="ImgUrl" data-img="imgShow" data-type="form" href="javascript:void(0)"><i class="layui-icon layui-icon-edit"></i>更换</a>
+                                    <a class="photo-tool last" href="javascript:void(0)" onclick="oc.deleteFile()"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                                </div>
+                                <div class="cover">封面</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="form-cur-wall">
+                    <label style="line-height:inherit;">下载属性：</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="Audit" @(Model.Download.Audit ? "checked=''" : "") lay-skin="primary" title="审核状态">
+                        <input type="checkbox" name="IsTop" @(Model.Download.IsTop ? "checked=''" : "") lay-skin="primary" title="是否推荐">
+                        <input type="checkbox" name="IsComment" @(Model.Download.IsComment ? "checked=''" : "") lay-skin="primary" title="是否允许评论">
+                        <input type="checkbox" name="IsLink" @(Model.Download.IsLink ? "checked=''" : "") lay-skin="primary" title="是否外链">
+                    </div>
+                </div>
+                <div class="form-cur-wall layui-clear">
+                    <label style="line-height:inherit;">权重：</label>
+                    <div class="layui-input-block">
+                        <div id="slideSort" style="top:8px;"></div>
+                    </div>
+                </div>
+                <div class="text else">扩展属性</div>
+                <div class="form-cur-wall">
+                    <label>转向连接：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="LinkUrl" value="@Model.Download.LinkUrl" placeholder="以http开头" maxlength="100" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>下载量</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="DownSum" value="@Model.Download.DownSum" maxlength="50" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>访问量</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="Hits" value="@Model.Download.Hits" maxlength="50" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div style="height:50px;"></div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">下载标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Title" value="@Model.Download.Title" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">副标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="SubTitle" value="@Model.Download.SubTitle" maxlength="500" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">下载文件</label>
+                    <div class="layui-input-block fyt-upfile">
+                        <input type="text" name="FileUrl" id="FileUrl" value="@Model.Download.FileUrl" maxlength="500" autocomplete="off" class="layui-input" lay-verify="required" lay-verType="tips">
+                        <button type="button" class="layui-btn fyt-cloud" data-text="FileUrl" data-type="iframe">选择文件</button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-col-md6 layui-col-xs12">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">SEO关键词</label>
+                        <div class="layui-input-block">
+                            <textarea name="Tag" class="layui-textarea" style="min-height: 60px;" placeholder="（标签）、SEO关键字，填写利于抓取，英文逗号分隔">@Model.Download.Tag</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6 layui-col-xs12">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">SEO描述</label>
+                        <div class="layui-input-block">
+                            <textarea name="Summary" class="layui-textarea" style="min-height: 60px;" placeholder="SEO描述，填写利于抓取，最多200个字">@Model.Download.Summary</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">下载内容</label>
+                    <div class="layui-input-block">
+                        <textarea id="Content" name="Content" placeholder="请输入内容" class="layui-textarea">@Html.Raw(Model.Download.Content)</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                    <button type="button" class="layui-btn layui-btn-primary btn-open-close">返回列表</button>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="Id" id="Id" value="@Model.Download.Id" />
+        <input type="hidden" name="ColumnId" value="@Model.Download.ColumnId" />
+    </form>
+    <script>
+        var oc;
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form', 'layedit', 'laydate', 'slider'], function () {
+            var form = layui.form, $ = layui.jquery, os = layui.common, laydate = layui.laydate, slider = layui.slider,sort=@Model.Download.Sort;
+            var layedit = layui.layedit;
+            var index = layedit.build('Content', { height:400});
+            form.render();
+            laydate.render({
+                elem: '#EditDate'
+                , theme: '#393D49'
+                , type:'datetime'
+            });
+            $('.panel-addpic').css({ 'min-height': $(window).height() - 95 });
+            var sliderIndex=slider.render({
+                elem: '#slideSort'
+                , input: true
+                , change: function (value) {
+                    sort = value;
+                }
+                , theme:'#409eff'
+            });
+            //赋值
+            sliderIndex.setValue(@Model.Download.Sort);
+
+            os.cloudFile();
+            oc = {
+                setContent(v) {
+                    var imgIndex = v.lastIndexOf('/');
+                    var str = v.substring(imgIndex + 1, v.length);
+                    if (os.isExtImage(v)) {
+                        layedit.setCursorText(index, '<img src="' + v + '" alt="' + str+'"/>');
+                    } else {
+                        layedit.setCursorText(index, '<p style="padding:12px 20px;background-color: #edf3f5;"><a href="' + v + '" target="_blank" title="' + str + '">' + str +'</a></p>');
+                    }
+                },
+                fileSave(v) {
+                    $(".select-newimg").addClass('layui-hide');
+                    $(".add-photo-wall").removeClass('layui-hide');
+                    $('#ImgUrl').val(v);
+                    $('#imgShow').attr('src',v);
+                },
+                deleteFile(){
+                    $(".select-newimg").removeClass('layui-hide');
+                    $(".add-photo-wall").addClass('layui-hide');
+                    $('#ImgUrl').val('');
+                    $('#imgShow').attr('src', '');
+                }
+            };
+
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                data.field.Content = layedit.getContent(index);
+                var urls = "api/download/add";
+                if ($("#Id").val()!=='0') {
+                    urls = "api/download/edit";
+                }
+                data.field.Audit = data.field.Audit === 'on' ? true : false;
+                data.field.IsTop = data.field.IsTop === 'on' ? true : false;
+                data.field.IsHot = data.field.IsLink === 'on' ? true : false;
+                data.field.IsComment = data.field.IsComment === 'on' ? true : false;
+                data.field.Sort = sort;
+                //os.log(data.field);
+                os.ajax(urls, data.field, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode === 200) {
+                        var $$ = parent.layui.jquery;
+                        $$("#isSave").val('1');
+                        parent.active.closeCloumnModify();
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.active.closeCloumnModify();
+            });
+        });
+    </script>
+</div>

@@ -1,0 +1,75 @@
+﻿@page
+@model FytSoa.Web.Pages.ContactUsModel
+@{
+    ViewData["Title"] = "联系地址_" + Model.Site.SeoTitle;
+    ViewData["Key"] = Model.Site.SeoKey;
+    ViewData["Desc"] = Model.Site.SeoDescribe;
+    ViewData["Nav"] = 5;
+}
+<div class="case-banner">
+    <div style="background: url(/assets/img/about.jpg) no-repeat center top;"></div>
+</div>
+<!-- top end-->
+<form id="forms"  method="post" action="/index/message/" class="wow fadeInUp">
+    <div class="el-page">
+        <div class="wrapper">
+            <div class="el-header">
+                <p class="title">联系我们</p><p class="subtitle">Contact Us</p>
+            </div>
+            <div id="contactinfo">
+                <h3 class="ellipsis">北京飞易腾科技有限公司</h3>
+                <p class="ellipsis">地址：北京朝阳区四惠东尚8里文创园E座705/901</p>
+                <p class="ellipsis">邮编：100000</p>
+                <p class="ellipsis">电话：010-57178368</p>
+                <p class="ellipsis">手机：135-1008-4034</p>
+                <p class="ellipsis">传真：000-83509698</p>
+                <p class="ellipsis">邮箱：715515390@qq.com</p>
+                <div>
+                    <a class="fl" target="_blank" href="http://weibo.com/feiyt"><i class="icon iconfont icon-weibo" style="font-size:40px"></i></a>
+                    <a class="fl" target="_blank" href="tencent://message/?uin=715515390&amp;Site=uemo&amp;Menu=yes"><i class="icon iconfont icon-qq" style="position: relative; top:-2px"></i></a>
+                    <a id="mpbtn" class="fl" target="_blank" href="javascript:void(0)"><i class="icon iconfont icon-weixin" style="font-size:40px"></i></a>
+                </div>
+            </div>
+            <div id="contactform">
+                <p><input type="text" class="inputtxt" placeholder="姓名" id="Title" name="Title" lay-verify="required" autocomplete="off"></p>
+                <p><input type="text" class="inputtxt" id="Email" name="Email" placeholder="邮箱" autocomplete="off"></p>
+                <p><input type="text" class="inputtxt" id="Mobile" name="Mobile" placeholder="电话" autocomplete="off" lay-verify="required"></p>
+                <p><textarea class="inputtxt" id="Summary" name="Summary" placeholder="内容" autocomplete="off"></textarea></p>
+                <p><input class="inputtxt submit" type="button" value="提交"></p>
+            </div>
+            <div class="el-header">
+                <p class="title">付款方式</p><p class="subtitle">Payment method</p>
+            </div>
+            <div class="clearfix fkfs">
+                <div class="left">
+                    <div class="fkyh">
+                        <img src="/assets/img/jianhang.png" width="183" alt="北京飞易腾公司科技有限公司" height="62">
+                    </div>
+                    <div class="fktxt">
+                        <p>对公账户</p>
+                        <p>开户行:中国建设银行北京华威支行</p>
+                        <p>帐户名称：北京飞易腾科技有限公司</p>
+                        <p>帐号：11001070600053022690</p>
+                    </div>
+                </div>
+                <div class="left rleft">
+                    <div class="fkyh">
+                        <img src="/assets/img/gonghang.png" width="183" alt="北京飞易腾公司科技有限公司" height="62">
+                    </div>
+                    <div class="fktxt">
+                        <p>中国工商银行</p>
+                        <p>开户行:中国工商银行北京万年花城分行</p>
+                        <p>帐户名称：付裕</p>
+                        <p>帐号：6222020200106379544</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+@section scripts
+    {
+    <script src="/assets/js/us.js"></script>
+}

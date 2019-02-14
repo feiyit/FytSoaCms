@@ -1,0 +1,160 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.ColumnModel
+@{
+    ViewData["Title"] = "栏目管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <div class="list-wall">
+        <div class="layui-form list-search" style="margin-top:10px;">
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
+        </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    <input type="hidden" id="isSave" value="0" />
+    <script type="text/html" id="switchTpl">
+        <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="开|关" lay-filter="statusedit" {{ d.isTopShow==1?'checked':''}}>
+    </script>
+    <script>
+        var active, layuiIndex;
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'common'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common;
+                table.render({
+                    elem: '#tablist',
+                    headers: os.getToken(),
+                    url: '/api/column/getpages',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            { field: 'id', width: 100, title: '编号', fixed: 'left' },
+                            {
+                                field: 'title', title: '栏目名称', templet: function (res) {
+                                    return '<a href="javascript:void(0)" lay-event="edit" class="text-color">' + res.title + '</a>';
+                                }
+                            },
+                            { field: 'tempName', width: 150, title: '模板名称' },
+                            {
+                                field: 'sort', width: 120, title: '排序', templet: function (res) {
+                                    return '<a href="javascript:void(0)" class="table-sort text-color" lay-event="sortup" title="向上"><i class="layui-icon layui-icon-return"></i></a><a href="javascript:void(0)"  lay-event="sortdown" class="table-sort text-color" title="向下"><i class="layui-icon layui-icon-return"></i></a>';
+                                }
+                            },
+                            { field: 'classLayer', width: 120, title: '栏目深度' },
+                            { field: 'isTopShow', width: 120, title: '是否顶部显示', templet: '#switchTpl' },
+                            { width: 230, title: '操作', templet: '#tool' }
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables'
+                });
+
+                active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                }
+                            });
+                    },
+                    //添加栏目
+                    toolAdd: function () {
+                        active.goColumnModify();
+                    },
+                    toolDel: function () {
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要删除的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            str += item.id + ",";
+                        });
+                        layer.confirm('确定要执行批量删除吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/column/delete/', { parm: str }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    active.reload();
+                                    os.success('删除成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+                    },
+                    goColumnModify: function (parm = '') {
+                        var winH = $(window).height(), winW = $(window).width();
+                        layuiIndex = os.OpenRight('添加栏目', "/fytadmin/cms/columnmodify" + parm, winW - 220 + 'px', winH - 61 + 'px', function () {
+                            if (parseInt($("#isSave").val()) === 1) {
+                                $("#isSave").val('0');
+                                active.reload();
+                            }
+                        }, function () {
+                            active.closeCloumnModify();
+                        });
+                    },
+                    closeCloumnModify: function () {
+                        var $layero = $('#layui-layer' + layuiIndex);
+                        $layero.animate({
+                            left: $layero.offset().left + $layero.width()
+                        }, 300, function () {
+                            layer.close(layuiIndex);
+                        });
+                        return false;
+                    }
+                };
+
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+                //监听工具条
+                table.on('tool(tool)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'edit') {
+                        active.goColumnModify('?id=' + data.id);
+                    }
+                    if (obj.event === 'AddChild') {
+                        active.goColumnModify('?parent=' + data.id);
+                    }
+                    if (obj.event === 'sortdown') {
+                        os.ajax('api/column/sort', { p: data.parentId, i: data.id, o: 1 }, function (res) {
+                            if (res.statusCode === 200) {
+                                active.reload();
+                            }
+                            else {
+                                os.error(res.message);
+                            }
+                        });
+                    }
+                    if (obj.event === 'sortup') {
+                        os.log(data);
+                        os.ajax('api/column/sort', { p: data.parentId, i: data.id, o: 0 }, function (res) {
+                            if (res.statusCode === 200) {
+                                active.reload();
+                            }
+                            else {
+                                os.error(res.message);
+                            }
+                        });
+                    }
+                });
+            });
+    </script>
+    <script type="text/html" id="tool">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="AddChild"><i class="layui-icon"></i> 添加子栏目</a>
+    </script>
+</div>

@@ -1,0 +1,169 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.SiteModel
+@{
+    ViewData["Title"] = "站点管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+
+<div id="container">
+    <style>
+        .layui-field-title i{margin-right:5px; font-size:25px; position:relative; top:2px;}
+        .layui-form-item{width:60%;}
+    </style>
+    <form class="layui-form form-cus" action="" style="padding:5px 15px;">
+        <div class="layui-tab" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">站点基本信息</li>
+                <li>公司信息</li>
+                <li>第三方</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">站点名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="SiteName" value="@Model.Site.SiteName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入站点名称" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">站点域名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="SiteUrl" value="@Model.Site.SiteUrl" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入站点域名" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">站点Logo</label>
+                        <div class="layui-input-block fyt-upfile">
+                            <input type="text" id="SiteLogo" name="SiteLogo" value="@Model.Site.SiteLogo" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入站点域名" class="layui-input">
+                            <button type="button" class="layui-btn fyt-cloud" data-text="SiteLogo" data-type="sign">选择文件</button>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">版权/其他</label>
+                        <div class="layui-input-block">
+                            <textarea name="SiteCopyright" class="layui-textarea" style="min-height: 60px;" placeholder="版权信息或者备案号信息，支持Html">@Html.Raw(Model.Site.SiteCopyright)</textarea>
+                        </div>
+                    </div>
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend><i class="layui-icon layui-icon-component"></i>SEO</legend>
+                    </fieldset>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">页面标题</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="SeoTitle" value="@Model.Site.SeoTitle" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入页面标题" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">页面关键</label>
+                        <div class="layui-input-block">
+                            <textarea name="SeoKey" class="layui-textarea" style="min-height: 60px;" placeholder="请输入页面关键，最多100个字符，关键字以逗号分隔">@Html.Raw(Model.Site.SeoKey)</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">页面描述</label>
+                        <div class="layui-input-block">
+                            <textarea name="SeoDescribe" class="layui-textarea" style="min-height: 60px;" placeholder="请输入300字以内的网站描述">@Html.Raw(Model.Site.SeoDescribe)</textarea>
+                        </div>
+                    </div>
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend><i class="layui-icon layui-icon-face-cry"></i>关闭网站</legend>
+                    </fieldset>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否关闭</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="Status" @(Model.Site.Status ? "checked" : "") lay-skin="switch" lay-text="是|否">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">关闭原因</label>
+                        <div class="layui-input-block">
+                            <textarea name="CloseInfo" class="layui-textarea" style="min-height: 60px;" placeholder="请输入关闭原因">@Html.Raw(Model.Site.CloseInfo)</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">公司电话</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="SiteTel" value="@Model.Site.SiteTel" autocomplete="off" placeholder="（选填）公司电话" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">公司传真</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="SiteFax" value="@Model.Site.SiteFax" autocomplete="off" placeholder="（选填）公司传真" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">联系邮箱</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="SiteEmail" value="@Model.Site.SiteEmail" autocomplete="off" placeholder="（选填）联系邮箱" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">联系地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="SiteAddress" value="@Model.Site.SiteAddress" autocomplete="off" placeholder="（选填）联系地址" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">客服QQ</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="QQ" value="@Model.Site.QQ" autocomplete="off" placeholder="（选填）客服QQ" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他信息</label>
+                        <div class="layui-input-block">
+                            <textarea name="SiteCode" class="layui-textarea" style="min-height: 60px;" placeholder="（选填）支持Html">@Html.Raw(Model.Site.SiteCode)</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">微信二维码</label>
+                        <div class="layui-input-block fyt-upfile">
+                            <input type="text" name="WeiXin" value="@Model.Site.WeiXin" autocomplete="off" placeholder="（选填）微信二维码" class="layui-input">
+                            <button type="button" class="layui-btn">选择文件</button>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">微博二维码</label>
+                        <div class="layui-input-block fyt-upfile">
+                            <input type="text" name="WeiBo" value="@Model.Site.WeiBo" autocomplete="off" placeholder="（选填）微博二维码/连接" class="layui-input">
+                            <button type="button" class="layui-btn">选择文件</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submit">　　保　存　　</button>
+            </div>
+        </div>
+        <input type="hidden" name="Guid" value="@Model.Site.Guid" />
+    </form>
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form'], function () {
+            var form = layui.form, $ = layui.$, os = layui.common;
+            os.cloudFile();
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                var urls = "api/cmssite/savesite";
+                data.field.Status = data.field.Status === 'on' ? true : false;
+                os.ajax(urls, data.field, function (res) {
+                    if (res.statusCode == 200) {
+                        os.success('保存成功~');
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</div>

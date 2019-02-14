@@ -1,0 +1,478 @@
+﻿@page
+@model IndexModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="~/build/web/css/index.min.css" asp-append-version="true">
+    <title>@Model.Site.SeoTitle</title>
+    <meta name="keywords" content="@Model.Site.SeoKey" />
+    <meta name="description" content="@Model.Site.SeoDescribe" />
+</head>
+<body>
+    <cache>
+        <div class="header">
+            <div class="wrapper">
+                <div class="logo">
+                    <a href="/" title="@Model.Site.SeoTitle"><img src="cdns/image/logo.png" alt="@Model.Site.SeoTitle"></a>
+                </div>
+                <nav>
+                    <ul>
+                        <li class="active"><a href="/" title="首页">首页</a></li>
+                        <li><a href="/service/" title="服务">服务</a></li>
+                        <li><a href="/cases/" title="案例">案例</a></li>
+                        <li><a href="/dynamic/" title="新闻">新闻</a></li>
+                        <li><a href="/aboutus/" title="关于">关于</a></li>
+                        <li><a href="/contactus/" title="联系">联系</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="L-banner">
+            <div class="banner_item_cont">
+                <div class="banner_item banner-one animation-top">
+                    <div class="banner_bg">
+                        <img class="btop" src="cdns/image/banner/bannerr2.png" alt="">
+                        <img class="bleft" src="cdns/image/banner/bannerr5.png" alt="">
+                        <img class="bcenter" src="cdns/image/banner/bannerr4.png" alt="">
+                        <img class="bright" src="cdns/image/banner/bannerr3.png" alt="">
+                    </div>
+                    <div class="awrap">
+                        <div class="banner-row">
+                            <div class="hover-image">
+                                <img class="dot" data-offset="60" src="cdns/image/banner/bannerdot.png" />
+                                <img class="mon" data-offset="30" src="cdns/image/banner/bannerr1.png" />
+                            </div>
+                        </div>
+                        <div class="layer left-header" data-ignore="">
+                            <h3 class="tit">北京飞易腾科技有限公司</h3>
+                            <p class="ellipsis txt">北京飞易腾科技有限公司是一家互联网应用研发服务商</p>
+                            <a href="/service/"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner_item banner-two">
+                    <div class="banner_bg">
+                        <img class="btop" src="cdns/image/banner/banner2-2.png" alt="">
+                        <img class="bleft" src="cdns/image/banner/bannerr5.png" alt="">
+                        <img class="bcenter" src="cdns/image/banner/bannerr4.png" alt="">
+                        <img class="bright" src="cdns/image/banner/bannerr3.png" alt="">
+                    </div>
+                    <div class="awrap">
+                        <div class="banner-row">
+                            <div class="hover-image">
+                                <img data-offset="30" src="cdns/image/banner/banner2-1.png" />
+                            </div>
+                        </div>
+                        <div class="layer left-header" data-ignore="">
+                            <h3 class="tit">智慧园区</h3>
+                            <p class="txt">园区公共管理与服务信息智能化，创造更安全、便捷、绿色的智能化管理系统</p>
+                            <div class="bannerList">
+                                <a href="/service/" target="_blank" class="linkbtn">
+                                    查看详情&nbsp;&nbsp;<i class="iconfont">&#xe763;</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner_item banner-five">
+                    <img src="cdns/image/banner/yuanbn2.jpg" class="banner_bg">
+                    <div class="awrap">
+                        <div class="banner-row">
+                            <div class="hover-image">
+                                <img class="normal" data-offset="10" src="cdns/image/banner/yuanbn3_02.png" />
+                                <img data-offset="30" src="cdns/image/banner/yuanbn3_03.png" />
+                                <img data-offset="20" src="cdns/image/banner/yuanbn3_04.png" />
+                            </div>
+                        </div>
+                        <div class="layer left-header" data-ignore="">
+                            <h3 class="tit">飞易腾科技</h3>
+                            <p class="txt">匠心品质、完美主义者</p>
+                            <div class="bannerList">
+                                <span class="List-Item">
+                                    <img src="cdns/image/banner/yuanbn3_09.png" class="banner-icon" />
+                                    <p>智能防控</p>
+                                </span>
+                                <span class="List-Item">
+                                    <img src="cdns/image/banner/yuanbn3_12.png" class="banner-icon" />
+                                    <p>提高效率</p>
+                                </span>
+                                <span class="List-Item">
+                                    <img src="cdns/image/banner/yuanbn3_06.png" class="banner-icon" />
+                                    <p>节省人力</p>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner_item banner-four">
+                    <img src="cdns/image/banner/yuanbn2.jpg" class="banner_bg" alt="">
+                    <div class="awrap">
+                        <div class="banner-row">
+                            <div class="hover-image">
+                                <img data-offset="30" src="cdns/image/banner/yuanbn2_02.png" />
+                                <img data-offset="10" src="cdns/image/banner/yuanbn2_03.png" />
+                            </div>
+                        </div>
+                        <div class="layer left-header" data-ignore="">
+                            <h3 class="tit">互联网金融</h3>
+                            <p class="txt">金融行业多年经验积累成熟产品解决方案</p>
+                            <div class="bannerList">
+                                <span class="List-Item">
+                                    <img src="cdns/image/banner/yuanbn2_06.png" class="banner-icon" />
+                                    <p>安全稳定</p>
+                                </span>
+                                <span class="List-Item">
+                                    <img src="cdns/image/banner/yuanbn2_11.png" class="banner-icon" />
+                                    <p>便捷快速</p>
+                                </span>
+                                <span class="List-Item">
+                                    <img src="cdns/image/banner/yuanbn2_08.png" class="banner-icon" />
+                                    <p>算法领先</p>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner_item banner-six">
+                    <div class="banner_bg">
+                        <img class="btop" src="cdns/image/banner/bannerr2.png" alt="">
+                        <img class="bleft" src="cdns/image/banner/bannerr5.png" alt="">
+                        <img class="bcenter" src="cdns/image/banner/bannerr4.png" alt="">
+                        <img class="bright" src="cdns/image/banner/bannerr3.png" alt="">
+                    </div>
+                    <div class="awrap">
+                        <div class="banner-row">
+                            <div class="hover-image">
+                                <img data-offset="30" src="cdns/image/banner/bannerr51.png" />
+                            </div>
+                        </div>
+                        <div class="layer left-header" data-ignore="">
+                            <h3 class="tit">北京飞易腾科技有限公司</h3>
+                            <p class="ellipsis txt">互联网应用研发服务商</p>
+                            <div class="bannerList">
+                                <span class="List-Item">
+                                    <img src="cdns/image/banner/house.png" class="banner-icon" />
+                                    <p>智慧园区</p>
+                                </span>
+                                <span class="List-Item">
+                                    <img src="cdns/image/banner/police.png" class="banner-icon" />
+                                    <p>智慧公安</p>
+                                </span>
+                                <span class="List-Item">
+                                    <img src="cdns/image/banner/blockchain.png" class="banner-icon" />
+                                    <p>区块链金融</p>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="num1"></div>
+        </div>
+        <div class="fyt-product clearfix">
+            <div class="pro-item">
+                <a href="/cases/b2c-development/" title="商城【PC+APP+微信】" target="_blank">
+                    <span><i class="iconfont icon-gexingdingzhi"></i></span>
+                    <div class="pro-info">
+                        <h4>商城【PC+APP+微信】</h4>
+                        <p>2012-2018 ，6年商城经验，从公司成立至今，商城建设一直作为公司主营项目，飞易腾为你打造专属的个性商城。</p>
+                    </div>
+                </a>
+            </div>
+            <div class="pro-item active">
+                <a href="/service/" title="SaaS销售平台" target="_blank">
+                    <span><i class="iconfont icon-saasguanli86"></i></span>
+                    <div class="pro-info">
+                        <h4>SaaS销售平台</h4>
+                        <p>Erp销售管理系统，支持加盟商、分店形式销售平台，包括采购，出入库，会员管理等。支持PC、手机、小程序销售以及运营管理系统</p>
+                    </div>
+                </a>
+            </div>
+            <div class="pro-item">
+                <a href="/service/" title="VIP影视大全" target="_blank">
+                    <span><i class="iconfont icon-iconset0129"></i></span>
+                    <div class="pro-info">
+                        <h4>VIP影视大全</h4>
+                        <p>VIP影视网站支挂腾讯、爱奇艺、优酷、乐视、电影网等多家影视资源，赚钱模式。多种运营模式包含广告、会员，收益100%归属运营方。</p>
+                    </div>
+                </a>
+            </div>
+            <div class="pro-item">
+                <a href="/cases/" title="一体化建站" target="_blank">
+                    <span><i class="iconfont icon-chuanzhongjianzhan"></i></span>
+                    <div class="pro-info">
+                        <h4>一体化建站</h4>
+                        <p>飞易腾提供域名注册、虚拟主机、企业邮箱、网站ICP备案等网站服务产品，从网页设计、前端执行到网站程序开发处处体现了高品质与丰富细节。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- home-server begin -->
+        <div class="ht-server">
+            <div class="ht-bg"><img src="cdns/image/server/section.png" alt="飞易腾科技"></div>
+            <div class="wrapper">
+                <div class="server-title">
+                    <h4>客户为本，诚信为魂，结果导向，共生共赢</h4>
+                    <p>用我们的服务，为您的成功增添一份力量</p>
+                </div>
+                <div class="ht-server-list clearfix">
+                    <div class="server-item">
+                        <a href="/service/" title="网站建设" target="_blank">
+                            <i class="iconfont icon-gexingdingzhi"></i>
+                            <h1>定制</h1>
+                            <p>网站建设</p>
+                            <ul>
+                                <li class="active">Saas应用建设</li>
+                                <li>企业&品牌官网</li>
+                                <li>门户网站建设</li>
+                                <li>业务系统定制开发</li>
+                            </ul>
+                        </a>
+                    </div>
+                    <div class="server-item">
+                        <a href="/service/" title="响应式网站建设" target="_blank">
+                            <i class="iconfont icon-h5e"></i>
+                            <h1>H5</h1>
+                            <p>响应式网站建设</p>
+                            <ul>
+                                <li>手机端网站建设</li>
+                                <li>创意H5设计制作</li>
+                                <li>线上推广H5页面</li>
+                                <li>H5响应式网站</li>
+                            </ul>
+                        </a>
+                    </div>
+                    <div class="server-item active">
+                        <a href="/service/" title="手机APP定制开发" target="_blank">
+                            <i class="iconfont icon-APPku"></i>
+                            <h1>APP</h1>
+                            <p>手机APP定制开发</p>
+                            <ul>
+                                <li>APP手机商城</li>
+                                <li>移动端业务定制开发</li>
+                                <li>移动端UI设计</li>
+                                <li>Erp销售终端</li>
+                            </ul>
+                        </a>
+                    </div>
+                    <div class="server-item">
+                        <a href="/service/" title="手机站/微官网" target="_blank">
+                            <i class="iconfont icon-gongzhonghao"></i>
+                            <h1>微信</h1>
+                            <p>开发&运营</p>
+                            <ul>
+                                <li>手机站/微官网</li>
+                                <li class="active">定制小程序</li>
+                                <li>微信公众号建设</li>
+                                <li>定制商城、社区开发</li>
+                            </ul>
+                        </a>
+                    </div>
+                    <div class="server-item">
+                        <a href="/service/" title="视觉设计" target="_blank">
+                            <i class="iconfont icon-brand"></i>
+                            <h1>品牌</h1>
+                            <p>视觉设计</p>
+                            <ul>
+                                <li>品牌Logo设计</li>
+                                <li>标志/VI/导入</li>
+                                <li>画册/包装/宣传册</li>
+                                <li>杂志/广告牌</li>
+                            </ul>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- home-server end -->
+        <!-- case begin -->
+        <div class="wrapper case-wrapper">
+            <div class="fyt_tip wow animated">
+                <p class="title">案例推荐</p>
+                <p class="subtitle">SERVICE</p>
+            </div>
+            <div class="fyt-category wow movedx animated" data-movedx-mid="2" data-movedx-distance="15">
+                <a href="/cases/" class="active" target="_blank"><span>全部</span></a>
+                @{
+                    var cclass = Model.Column.Where(m => m.ParentId == 1015).ToList();
+                    foreach (var item in cclass)
+                    {
+                        <a href="/cases/@item.EnTitle/" title="@item.Title" target="_blank"><span>@item.Title</span></a>
+                    }
+                }
+            </div>
+            <div class="case-list">
+                <ul class="clearfix">
+                    @{
+                        var index = 0;
+                        foreach (var item in Model.Case)
+                        {
+                            <li class="case-row wow fadeInUp" data-wow-delay=".@(index)s">
+                                <a href="/cases/detail/@item.Id/" title="@item.Title" target="_blank">
+                                    <div class="case-row-img">
+                                        <img src="@item.ImgUrl" alt="@item.Title" />
+                                    </div>
+                                    <div class="case-row-info">
+                                        <p class="title">@item.Title</p>
+                                        <p class="subtitle">
+                                            <span>@item.Tag</span>
+                                        </p>
+                                        <p class="description">@item.Summary</p>
+                                    </div>
+                                </a>
+                            </li>
+                            index++;
+                        }
+                    }
+                </ul>
+                <div class="fyt-more wow fadeInUp" data-wow-delay=".7s"><a href="/cases/" title="更多" target="_blank">MORE<i class="glyphicon glyphicon-menu-right"></i></a></div>
+            </div>
+        </div>
+
+        <!-- case end -->
+        <!-- news begin -->
+        <div class="fnews-wall">
+            <div class="wrapper">
+                <div class="fyt_tip wow animated">
+                    <p class="title">最新资讯</p>
+                    <p class="subtitle">NEWS ME</p>
+                </div>
+                <div class="fyt-category">
+                    <a href="/dynamic/" class="active" target="_blank"><span>全部</span></a>
+                    @{
+                        var nclass = Model.Column.Where(m => m.ParentId == 1016).ToList();
+                        foreach (var item in nclass)
+                        {
+                            <a href="/dynamic/@item.EnTitle/" title="@item.Title" target="_blank"><span>@item.Title</span></a>
+                        }
+                    }
+                </div>
+                <div class="fnews-list">
+                    @{
+                        <div class="red-hot">
+                            <a href="/dynamic/detail/@Model.Article[0].Id/" title="@Model.Article[0].Title" target="_blank">
+                                <div class="rh-img">
+                                    <img src="@Model.Article[0].ImgUrl" alt="@Model.Article[0].Title">
+                                </div>
+                                <div class="rh-info">
+                                    <h5 class="ellipsis">@Model.Article[0].Title</h5>
+                                    <p>@Model.Article[0].Summary</p>
+                                    <div class="time"><span>@Model.Article[0].AddDate.Day</span>@Model.Article[0].AddDate.Year-@Model.Article[0].AddDate.Month</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="hot-list">
+                            @{
+                                <div class="hot-top">
+                                    <a href="/dynamic/detail/@Model.Article[1].Id/" title="@Model.Article[1].Title" target="_blank">
+                                        <h5 class="ellipsis">@Model.Article[1].Title</h5>
+                                        <p>@Model.Article[1].Summary</p>
+                                        <div class="time"><span>@Model.Article[7].AddDate.Day</span>@Model.Article[7].AddDate.Year-@Model.Article[7].AddDate.Month</div>
+                                    </a>
+                                </div>
+                            }
+                            <ul>
+                                @{
+                                    for (int i = 2; i < 7; i++)
+                                    {
+                                        <li><a href="/dynamic/detail/@Model.Article[i].Id/" title="@Model.Article[i].Title" target="_blank">@Model.Article[i].Title</a><span>@Model.Article[i].AddDate.ToShortDateString()</span></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <div class="hot-list">
+                            @{
+                                <div class="hot-top">
+                                    <a href="/dynamic/detail/@Model.Article[7].Id/" title="@Model.Article[7].Title" target="_blank">
+                                        <h5 class="ellipsis">@Model.Article[7].Title</h5>
+                                        <p>@Model.Article[7].Summary</p>
+                                        <div class="time"><span>@Model.Article[7].AddDate.Day</span>@Model.Article[7].AddDate.Year-@Model.Article[7].AddDate.Month</div>
+                                    </a>
+                                </div>
+                            }
+                            <ul>
+                                @{
+                                    for (int i = 8; i < 13; i++)
+                                    {
+                                        <li><a href="/dynamic/detail/@Model.Article[i].Id/" title="@Model.Article[i].Title" target="_blank">@Model.Article[i].Title</a><span>@Model.Article[i].AddDate.ToShortDateString()</span></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- news end -->
+        <!-- us end -->
+        <div class="home-cus-server">
+            <div class="wrapper">
+                <div class="server-tip">
+                    <div class="point point-10"></div>
+                    <div class="point point-60"></div>
+                    <div class="point point-100"></div>
+                    <img src="cdns/image/computer.png" alt="">
+                </div>
+                <div class="server-cus">
+                    <h4>互联网应用定制服务商</h4>
+                    <p>飞易腾科技是一家专注于互联网与移动互联网领域的软件研发服务商</p>
+                    <a href="http://wpa.qq.com/msgrd?v=3&uin=715515390&site=qq&menu=yes" title="联系我们" target="_blank">联系我们</a>
+                </div>
+            </div>
+        </div>
+        <!-- us begin -->
+        <div class="wrapper lxindex">
+            <div class="fyt_tip">
+                <p class="title">联系我们</p>
+                <p class="subtitle">CONTACT US</p>
+            </div>
+            <div class="lx-us clearfix">
+                <div class="lx-info wow fadeInUp" data-wow-delay="0s">
+                    <div class="tit">To make an appointment to discuss<span>预约洽谈</span></div>
+                    <div class="brief">提交您的业务需求，我们的客户经理将及时与您取得联系</div>
+                    <div class="fyt-gb">改变从这里开始！</div>
+                </div>
+                <div class="lx-left wow fadeInUp" data-wow-delay=".1s">
+                    <p class="com-p"><i class="glyphicon glyphicon-phone-alt"></i> 电话：010-57178368/010-57101005</p>
+                    <p class="com-p"><i class="glyphicon glyphicon-earphone"></i> 商务：13520966883　　技术：13511084034</p>
+                    <p class="com-p"><i class="glyphicon glyphicon-print"></i> 传真：010-83509698</p>
+                    <p class="com-p"><i class="glyphicon glyphicon-envelope"></i> 邮箱：715515390@qq.com</p>
+                    <p class="com-p"><i class="glyphicon glyphicon-plane"></i> 地址：北京朝阳区四惠东尚8里文创园E座705/901</p>
+                </div>
+                <div class="lx-left blank wow fadeInUp" data-wow-delay=".2s">
+                    <p class="com-p x">建设银行-对公账户</p>
+                    <p class="com-p">开户行：中国建设银行北京华威支行</p>
+                    <p class="com-p">帐户名称：北京飞易腾科技有限公司</p>
+                    <p class="com-p">帐号：11001070600053022690</p>
+                </div>
+                <div class="bottom-b wow fadeInUp" data-wow-delay=".3s">
+                    <div class="bottom-list">
+                        <form id="forms" method="post" action="/index/message/">
+                            <ul class="clearfix">
+                                <li><input id="Title" name="Title" type="text" placeholder="填写姓名" autocomplete="off" lay-verify="required"></li>
+                                <li><input id="Mobile" name="Mobile" type="text" placeholder="回访电话" autocomplete="off" lay-verify="required"></li>
+                            </ul>
+                            <textarea id="Summary" name="Summary" placeholder="详细需求" autocomplete="off"></textarea>
+                            <button class="btn-save" type="button">提&nbsp;&nbsp;交</button>
+                            <div class="mess-tip"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <partial name="_Footer">
+    </cache>
+    @*@await Component.InvokeAsync("Footer", new { maxPriority = 2, isDone = false })*@
+    <script src="http://cdn.feiyit.com/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="cdns/js/wow.min.js"></script>
+    <script src="cdns/js/fyt.js"></script>
+</body>
+</html>

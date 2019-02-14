@@ -1,0 +1,70 @@
+﻿@page
+@using System.Security.Claims;
+@model FytSoa.Web.Pages.FytAdmin.IndexModel
+@{
+    ViewData["Title"] = "管理平台";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header" id="mainapp">
+        <div class="layui-logo">FytErp-SaaS平台</div>
+        <ul class="layui-nav layui-layout-left layui-first-nav" lay-filter="topmenu">
+            <li class="layui-nav-item layui-this" v-for="(it,index) in menulist" v-cloak v-if="it.layer===1 && index===0"><a href="javascript:void(0)" :data-index="index"><i :class="'layui-icon '+it.icon"></i>{{it.name}}</a></li>
+            <li class="layui-nav-item" v-for="(it,index) in menulist" v-cloak v-if="it.layer===1 && index!=0"><a href="javascript:void(0)" :data-index="index"><i :class="'layui-icon '+it.icon"></i>{{it.name}}</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a data-pjax href="/fytadmin/default"><i class="layui-icon"></i></a>
+            </li>
+            <li :class="'layui-nav-item '+[isDown?'show-down':'']" @@click="godown">
+                <a href="javascript:void(0)" id="notificdown"><i id="notificicon" class="layui-icon"></i><span class="layui-badge-dot"></span></a>
+                <div class="layui-downcard down-amimation">
+                    <div class="drop-notific-title"><span>你有<strong>{{messCount}}</strong>条提醒</span><a href="">全部</a></div>
+                    <div class="mess-item" v-for="(it,index) in messList" v-cloak>
+                        <span><i class="layui-icon layui-icon-notice"></i></span>
+                        <h5>{{it.title}}</h5>
+                        <p>{{it.addDate}}</p>
+                    </div>
+                </div>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:void(0)" @@click="clearCache"><i class="layui-icon"></i>清除缓存</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <span class="username">@User.Identities.First(u => u.IsAuthenticated).FindFirst(ClaimTypes.WindowsAccountName).Value <i class="layui-icon"></i></span>
+                    <img src="@User.Identities.First(u => u.IsAuthenticated).FindFirst(ClaimTypes.Thumbprint).Value" class="layui-nav-img">
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/" target="_blank">预览站点</a></dd>
+                    <dd><a data-pjax href="/fytadmin/sys/admin/">个人中心</a></dd>
+                    <hr />
+                    <dd><a href="/fytadmin/logout/">退出登录</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black" id="rmapp">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree fyt-nav-tree layui-hide" v-for="(m,mindex) in tmlist">
+                <li class="layui-nav-item" v-for="(it,index) in list" v-cloak v-if="it.layer===2 && it.parentGuid===m.guid">
+                    <a class="" href="javascript:;"><i :class="'layui-icon '+it.icon"></i>{{it.name}}</a>
+                    <dl class="layui-nav-child">
+                        <dd v-for="row in list" v-if="row.layer===3 && row.parentGuid===it.guid"><a data-pjax :href="row.urls">{{row.name}}</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body" id="main-container"></div>
+</div>
+<div class="load-container load8">
+    <div class="load-wall">
+        <div class="loader">Loading...</div>
+    </div>
+</div>
+<input type="hidden" id="UserGuid" value="@User.Identities.First(u => u.IsAuthenticated).FindFirst(ClaimTypes.Sid).Value" />
+<script type="text/javascript" src="~/themes/js/echarts.min.js"></script>
+<script type="text/javascript" src="~/themes/js/macarons.js"></script>
+<script type="text/javascript" src="~/themes/js/nprogress.js"></script>
+<script type="text/javascript" src="~/themes/js/layout/index.js"></script>

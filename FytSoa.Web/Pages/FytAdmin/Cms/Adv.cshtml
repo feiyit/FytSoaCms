@@ -1,0 +1,227 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.AdvModel
+@{
+    ViewData["Title"] = "广告管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <style>
+        .layui-col-220 {
+            width: 280px;
+        }
+
+        .right-col-body {
+            left: 280px;
+        }
+    </style>
+    <div class="layui-col-220 picframe-wall soa-rtree" id="adv">
+        <div class="layui-nav-title"><span>广告栏位</span><button @@click="classAdd" class="layui-btn layui-btn-sm"><i class="layui-icon"></i>添加栏位</button></div>
+        <div class="layui-collapse" lay-accordion="">
+            <div class="layui-colla-item" v-for="(it,index) in menu" v-if="it.parentGuid==null">
+                <h2 class="layui-colla-title">{{it.title}}</h2>
+                <div class="layui-colla-content layui-show">
+                    <p v-for="(m,index) in menu" v-if="m.parentGuid!=null && m.parentGuid==it.guid" :class="{'active': menuActive.guid == m.guid}" @@click="goAvdList(m)">
+                        {{m.title}}
+                        <span class="tool"><a title="编辑" class="layui-icon layui-icon-edit" @@click.stop="classEdit(m)"></a><a title="删除" class="layui-icon layui-icon-delete" @@click.stop="classDel(m)"></a></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right-col-body" id="content-body">
+        <div class="list-wall" style="padding-top:0px;">
+            <div class="layui-form list-search" style="margin-top:10px;">
+                <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
+            </div>
+            <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+        </div>
+    </div>
+    <script>
+        var active,fun, os, vm = new Vue({
+            el: '#adv',
+            data: {
+                menu: [],
+                menuActive: {}
+            },
+            methods: {
+                classAdd: function () {
+                    os.Open('添加广告栏位', '/fytadmin/cms/advclass', '750px', '550px', function () {
+                        fun.init();
+                    });
+                },
+                classEdit: function (m) {
+                    os.Open('添加广告栏位', '/fytadmin/cms/advclass?guid=' + m.guid, '750px', '550px', function () {
+                        fun.init();
+                    });
+                },
+                classDel: function (m) {
+                    fun.classDel(m);
+                },
+                goAvdList: function (m) {
+                    this.menuActive = m; 
+                    active.reload();
+                }
+            }
+        });
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['element', 'layer', 'jquery', 'common', 'table'],
+            function () {
+                var layer = layui.layer,
+                    table = layui.table,
+                    $ = layui.jquery,
+                    element = layui.element;
+                os = layui.common;
+                table.render({
+                    elem: '#tablist',
+                    headers: os.getToken(),
+                    url: '/api/adv/list/page',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            {
+                                field: 'title', title: '名称', fixed: 'left'},
+                            {
+                                field: 'imgUrl', width: 200, title: '广告图', templet: function (res) {
+                                    return fun.imgHtml(res);
+                                }
+                            },
+                            { field: 'status', width: 100, title: '状态', templet: '#switchTpl' },
+                            { field: 'sort', width: 80, title: '权重' },
+                            { field: 'updateDate', width: 200, title: '更新时间' },
+                            { width: 100, title: '操作', templet: '#tool' }
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables',
+                    where: {
+                        key:""
+                    }
+                });
+                fun = {
+                    init: function () {
+                        os.ajax('api/adv/class/page', null, function (res) {
+                            if (res.statusCode === 200) {
+                                vm.menu = res.data;
+                                vm.$nextTick(function () {
+                                    element.render();
+                                });
+                            } else {
+                                os.error(res.message);
+                            }
+                        });
+                    },
+                    classDel: function (m) {
+                        layer.confirm('确定要执行删除栏位吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/adv/class/delete/', { parm: m.guid }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    fun.init();
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+                    },
+                    imgHtml: function (m) {
+                        var str = '';
+                        if (m.types === 1) {
+                            str = '<a href="' + m.linkUrl + '" target="_blank" class="text-color">';
+                            if (m.linkUrl === "null" || m.linkUrl === null) {
+                                str += "链接";
+                            } else {
+                                str += m.linkUrl;
+                            }
+                            return str;
+                        }
+                        else if (m.types === 0) {
+                            str = '<a href="' + m.imgUrl + '" target="_blank" style="display: inline-block;padding:0px 5px 0 5px">';
+                            if (m.imgUrl === null) {
+                                str += '<i class="layui-icon layui-icon-picture" style="font-size:30px;"></i></a>';
+                            } else {
+                                str += '<img src="' + m.imgUrl + '?imageView2/1/w/110/h/55" width="110" height="55" /></a>';
+                            }
+                            return str;
+                        }
+                        else {                            str = '其它';
+                        }                    }
+                };
+                fun.init();
+
+                active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    key: vm.menuActive.guid
+                                }
+                            });
+                    },
+                    toolAdd: function () {
+                        if (JSON.stringify(vm.menuActive) === '{}') {
+                            os.error('请选择左侧栏位~');
+                            return;
+                        }
+                        os.Open('添加广告位信息', '/fytadmin/cms/advmodify?column=' + vm.menuActive.guid, '900px', '600px', function () {
+                            active.reload();
+                        }); 
+                    },
+                    toolDel: function () {
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要删除的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            str += item.guid + ",";
+                        });
+                        layer.confirm('确定要执行批量删除吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/adv/list/delete/', { parm: str }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    active.reload();
+                                    os.success('删除成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+
+                    }
+                };
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+                //监听工具条
+                table.on('tool(tool)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'edit') {
+                        os.Open('修改广告位信息', '/fytadmin/cms/advmodify/?column='+data.classGuid+'&guid=' + data.guid, '900px', '600px', function () {
+                            active.reload();
+                        });
+                    }
+                });
+            });
+    </script>
+    <script type="text/html" id="tool">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
+    </script>
+    <script type="text/html" id="switchTpl">
+        <input type="checkbox" name="status" value="{{d.guid}}" disabled lay-skin="switch" lay-text="ON|OFF" {{ d.status==1?'checked':''}}>
+    </script>
+</div>

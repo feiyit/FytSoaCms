@@ -1,0 +1,63 @@
+﻿@using FytSoa.Common
+@using FytSoa.Core.Model.Cms
+@using FytSoa.Service.Interfaces
+@inject ICmsAdvListService _advService
+@inject ICacheService _cacheService
+@{
+    Layout = null;
+    List<CmsAdvList> Adv=new List<CmsAdvList>();
+    //获得广告位，友情链接
+    if (_cacheService.Exists(CacheKey.WEBCMSADV))
+    {
+        Adv = _cacheService.GetCache<List<CmsAdvList>>(CacheKey.WEBCMSADV);
+    }
+    else
+    {
+        Adv = _advService.GetListAsync(m => true, m => m.Sort, DbOrderEnum.Asc).Result.data;
+        //加入到缓存
+        _cacheService.SetCache(CacheKey.WEBCMSADV, Adv, DateTimeOffset.Now.AddDays(30));
+    }
+}
+<div class="wrapper link">
+    <div class="title">
+        <span>友情链接</span>
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=715515390&site=qq&menu=yes" target="_blank" title="">友情交换</a>
+    </div>
+    <div class="link-wall">
+        @{
+            var adv = Adv.Where(m => m.ClassGuid == "e8be9aeb-264b-47af-9908-311f52aebe2f").OrderByDescending(m => m.Sort).OrderBy(m => m.UpdateDate).ToList();
+            if (adv.Any())
+            {
+                foreach (var item in adv)
+                {
+                    <a href="@item.LinkUrl" target="@item.Target" title="@item.Title">@item.Title</a>
+                }
+            }
+        }
+    </div>
+</div>
+<!-- footer begin -->
+<div class="footer">
+    <div class="footer-wall clearfix">
+        <div class="foot-left">
+            <div class="foot-nav-list">
+                <a target="_blank" href="/aboutus/" class="first">关于飞易腾</a><span>|</span>
+                <a target="_blank" href="/aboutus/">人才招聘</a><span>|</span>
+                <a target="_blank" href="/contactus/">联系我们</a><span>|</span>
+                <a href="http://wpa.qq.com/msgrd?v=3&uin=530596174&site=qq&menu=yes" target="_blank">意见反馈</a><span>|</span>
+                <a href="/contactus/" target="_blank">需求提交</a><span>|</span>
+                <a href="/dynamic/" target="_blank">最新资讯</a>
+            </div>
+            <p>版权所有 北京飞易腾科技有限公司 © Copyright 2011 - 2016 京ICP备13006710号-1</p>
+        </div>
+        <div class="foot-right">
+            <img src="/cdns/image/follow_img.png" />
+            <div class="cus-tel">
+                <p>客服电话：010-57178368</p>
+                <p>客服QQ：010-57178368</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer end -->
+<div class="go-top"><img src="/cdns/image/gotop.png" alt=""></div>

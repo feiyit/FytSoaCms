@@ -1,0 +1,184 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.MessageModel
+@{
+    ViewData["Title"] = "留言管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <style>
+        .layui-col-220 {
+            width: 350px;
+        }
+
+        .right-col-body {
+            left: 350px;
+        }
+        .layui-colla-content{
+            overflow:auto;
+        }
+        .utree-more{padding:15px; text-align:center; cursor:pointer;}
+
+    </style>
+    <div class="layui-col-220 picframe-wall soa-rtree" id="adv">
+        <div class="layui-nav-title">
+            <div class="layui-btn-group">
+                <button type="button" class="layui-btn" @@click="read(allModel,1)">全部已读</button>
+                <button type="button" class="layui-btn" @@click="del(allModel,1)">全部删除</button>
+            </div>
+        </div>
+        <div class="layui-collapse" lay-accordion="">
+            <div class="layui-colla-item">
+                <div class="layui-colla-content layui-show">
+                    <p v-for="(m,index) in list" :class="{'active': active.id == m.id}" @@click="goModel(m)">
+                        <span class="layui-badge-dot" v-if="!m.status"></span><span class="layui-badge-dot layui-bg-black" v-if="m.status"></span> {{m.title}}
+                        <span class="tool"><a title="标记已读" class="layui-icon layui-icon-ok" @@click.stop="read(m,0)"></a><a title="删除" class="layui-icon layui-icon-delete" @@click.stop="del(m,0)"></a></span>
+                    </p>
+                    <div class="utree-more" @@click="loadMore">{{moreTip}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right-col-body" id="content-body">
+        <div class="list-wall" style="padding-top:0px;" id="app">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>值</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>标题</td>
+                        <td>{{model.title}}</td>
+                    </tr>
+                    <tr>
+                        <td>手机号码</td>
+                        <td>{{model.mobile}}</td>
+                    </tr>
+                    <tr>
+                        <td>邮箱</td>
+                        <td>{{model.email}}</td>
+                    </tr>
+                    <tr>
+                        <td>QQ</td>
+                        <td>{{model.qQ}}</td>
+                    </tr>
+                    <tr>
+                        <td>内容</td>
+                        <td>{{model.content}}</td>
+                    </tr>
+                    <tr>
+                        <td>留言人</td>
+                        <td>{{model.userName}}</td>
+                    </tr>
+                    <tr>
+                        <td>时间</td>
+                        <td>{{model.addDate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                model: {}
+            }
+        });
+        var active,fun, os, vm = new Vue({
+            el: '#adv',
+            data: {
+                list: [],
+                active: {},
+                allModel: { id: 0 },
+                moreTip: '点击加载更多',
+                parm: {
+                    page: 1,
+                    limit:40
+                }
+            },
+            methods: {
+                read: function (m,type) {
+                    if (m.status) {
+                        os.success('已经读过了！');
+                    } else {
+                        fun.read(m,type);
+                    }
+                },
+                del: function (m,type) {
+                    fun.del(m,type);
+                },
+                goModel: function (m) {
+                    this.active = m;
+                    app.model = m;
+                },
+                loadMore: function () {
+                    this.parm.page += 1;
+                    fun.init();
+                }
+            }
+        });
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common'],
+            function () {
+                var layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common;
+                $('.layui-colla-content').css({ 'height': $(window).height()-100 });
+                fun = {
+                    init: function () {
+                        os.ajax('api/message/page', vm.parm, function (res) {
+                            if (res.data.totalPages === 1 || vm.parm.page === res.data.totalPages) {
+                                vm.moreTip = '';
+                            }
+                            if (res.statusCode === 200) {
+                                if (vm.parm.page === 1) {
+                                    vm.list = res.data.items;
+                                } else {
+                                    $.each(res.data.items, function (i, m) {
+                                        vm.list.push(m);
+                                    });
+                                }
+                            } else {
+                                os.error(res.message);
+                            }
+                        });
+                    },
+                    read: function (m,type) {
+                        os.ajax('api/message/read', { parm: m.id,type:type }, function (res) {
+                            if (res.statusCode === 200) {
+                                os.success('标记已读成功~');
+                                fun.init();
+                            } else {
+                                os.error(res.message);
+                            }
+                        });
+                    },
+                    del: function (m,type) {
+                        layer.confirm('确定要执行删除该留言吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/message/delete/', { parm: m.id,type:type }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    fun.init();
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+                    }
+                };
+                fun.init();
+            });
+    </script>
+</div>
