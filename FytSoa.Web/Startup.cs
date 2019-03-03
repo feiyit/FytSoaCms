@@ -45,6 +45,9 @@ namespace FytSoa.Web
         public void ConfigureServices(IServiceCollection services)
         {
             #region ×¢²á·þÎñ
+            services.AddTransient<IWxSettingService, WxSettingService>();
+            services.AddTransient<IWxMaterialService, WxMaterialService>();
+
             services.AddTransient<ICmsSiteService, CmsSiteService>();
             services.AddTransient<ICmsImgTypeService, CmsImgTypeService>();
             services.AddTransient<ICmsImageService, CmsImageService>();

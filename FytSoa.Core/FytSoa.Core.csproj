@@ -16,7 +16,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
     <PackageReference Include="MySql.Data" Version="8.0.13" />
     <PackageReference Include="MySqlBackup.NET" Version="2.1.0" />
-    <PackageReference Include="sqlSugarCore" Version="4.9.7.2" />
+    <PackageReference Include="sqlSugarCore" Version="4.9.9.1" />
   </ItemGroup>
 
   <ItemGroup>

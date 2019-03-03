@@ -225,7 +225,7 @@ namespace FytSoa.Core.Model.Cms
         /// Default:-
         /// Nullable:True
         /// </summary>
-        public DateTime? EditDate { get; set; } = DateTime.Now;
+        public DateTime EditDate { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Desc:添加时间

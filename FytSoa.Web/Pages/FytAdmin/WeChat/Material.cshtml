@@ -1,0 +1,332 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.WeChat.MaterialModel
+@{
+    ViewData["Title"] = "微信管理-素材库管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <style>
+        .list-wall .layui-main {
+            background-color: #f6f8f9;
+            padding: 15px;
+            margin: 0 0px;
+        }
+
+        .layui-card-header {
+            border-top: 1px solid #f1f1f1;
+            border-bottom: none;
+        }
+
+        .card-head-r {
+            float: right;
+        }
+
+            .card-head-r i {
+                font-size: 20px;
+                margin-left: 10px;
+                cursor: pointer;
+            }
+
+        .layui-col-md3 {
+            width: 290px;
+            height: 320px;
+            margin-right:15px;
+        }
+
+        .layui-card-body a {
+            display: block;
+        }
+
+            .layui-card-body a h5 {
+                font-size: 16px;
+                color: #353535;
+            }
+
+            .layui-card-body a p {
+                padding-top: 12px;
+                color: #9A9A9A;
+                text-overflow: -o-ellipsis-lastline;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+
+            .layui-card-body a i {
+                width: 100%;
+                height: auto;
+                background-size: cover;
+                background-position: 50% 50%;
+                background-repeat: no-repeat;
+                background-color: #F6F8F9;
+                padding-bottom: 56.25%;
+                display: block;
+                margin-top: 10px;
+            }
+
+            .layui-card-body a.cover-dark {
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                position: absolute;
+                text-align: center;
+                color: #ffffff;
+                cursor: pointer;
+                font-size: 15px;
+                display: none;
+            }
+
+        .layui-card-body:hover a.cover-dark {
+            display: block;
+        }
+
+            .layui-card-body:hover a.cover-dark:after {
+                content: " ";
+                display: inline-block;
+                vertical-align: middle;
+                width: 0;
+                height: 100%;
+                overflow: hidden;
+            }
+
+        .mater-type-body {
+            padding: 30px;
+        }
+
+            .mater-type-body .item {
+                border: 1px solid #e7e7eb;
+                padding: 20px 20px 0px 160px;
+                height: 135px;
+                position: relative;
+                margin-bottom: 20px;
+                cursor:pointer;
+            }
+                .mater-type-body .item:last-child{margin-bottom:0px;}
+                .mater-type-body .item img {
+                    position: absolute;
+                    width: 110px;
+                    height: 110px;
+                    border-radius: 100%;
+                    top: 20px;
+                    left: 25px;
+                }
+                .mater-type-body .item .text .title {
+                    font-size: 16px;
+                    margin: 20px 0;
+                }
+                .mater-type-body .item .text .state {
+                    color: #999;
+                }
+        .wxmater .layui-layer-title {
+            background-color: #f8f8f8 !important;
+        }
+    </style>
+    <div class="list-wall" id="scdrop">
+        <div class="layui-form list-search" style="margin-top:10px;">
+            <div class="layui-inline">
+                <input class="layui-input" id="key" autocomplete="off" placeholder="搜索图文消息">
+            </div>
+            <div class="layui-inline">
+                <select id="WxId" name="WxId">
+                    <option value="0">--请选择公众号--</option>
+                    <option v-for="it in dropList" :value="it.id">{{it.name}}</option>
+                </select>
+            </div>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd" style="margin-left:50%;"><i class="layui-icon"></i> 新增图文消息</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAsynwx"><i class="layui-icon layui-icon-release"></i> 同步公众号</button>
+        </div>
+        <div class="layui-btn-group" style="margin-top:15px;">
+            <button class="layui-btn" @@click="position(0)">全部</button>
+            <button class="layui-btn" @@click="position(1)">本地</button>
+            <button class="layui-btn" @@click="position(2)">服务器</button>
+        </div>
+        <div class="layui-main" style="margin-top:15px;">
+            <div class="layui-row">
+                <div class="layui-col-md3" v-for="it in list" v-cloak>
+                    <div class="layui-card">
+                        <div class="layui-card-body">
+                            <a class="cover-dark"><span>预览文章</span></a>
+                            <a href="#">
+                                <h5 class="layui-elip">{{it.title}}</h5>
+                                <i :style="'background-image:url('+it.img+')'"></i>
+                                <p>{{it.summary}}</p>
+                            </a>
+                        </div>
+                        <div class="layui-card-header">
+                            {{it.addDate}}
+                            <div class="card-head-r">
+                                <i class="layui-icon layui-icon-delete tips" title="删除" @@click="del(it)"></i>
+                                <i class="layui-icon layui-icon-edit tips" title="修改" @@click="edit(it)"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出图文选择性 -->
+    <div class="wx-mater-wall layui-hide">
+        <div class="mater-type-body">
+            <div class="item" onclick="gotype(0)">
+                <img src="~/themes/img/reply.png" alt="创建公众号图文" />
+                <div class="text">
+                    <div class="title">创建公众号图文</div>
+                    <div class="state">
+                        图文消息会自动同步至公众号素材库，并可以直接群发给粉丝
+                    </div>
+                </div>
+            </div>
+            <div class="item" onclick="gotype(1)">
+                <img src="~/themes/img/link.png" alt="创建图文链接" />
+                <div class="text">
+                    <div class="title">创建图文链接</div>
+                    <div class="state">
+                        点击图文直接跳转至指定链接，可用于自动回复及认证号菜单配置，不能同步至微信素材库。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>     
+        var os,active,wxid=0,wxm = new Vue({
+            el: '#scdrop',
+            data: {
+                dropList: [],
+                list: [],
+                where: {
+                    limit: 20,
+                    types:0
+                },
+            },
+            methods: {
+                position: function (v) { //根据区域选择  0=所有 1=本地 2=服务器
+                    this.where.types = v;
+                    active.Init();
+                },
+                del: function (m) {
+                    active.toolDel(m);
+                },
+                edit: function (m) {
+                    let title = '创建公众号图文';
+                    let murl = '/fytadmin/wechat/materialtext?wxid=' + m.wxId+'&id='+m.id;
+                    if (m.type ===2) {
+                        murl = '/fytadmin/wechat/materiallink?wxid=' + m.wxId + '&id=' + m.id;
+                        title = '创建图文链接';
+                    }
+                    os.Open(title, murl, '1200px', '650px', function () {
+                        active.Init();
+                    });
+                }
+            }
+        });
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'common', 'form'],
+            function () {
+                var form = layui.form, layer = layui.layer,
+                    $ = layui.jquery;
+                    os = layui.common;
+                //查询公众号列表
+                os.get('api/wx/setting/getpages', null, function (res) {
+                    if (res.data.length > 0) {
+                        wxm.dropList = res.data;
+                        wxm.$nextTick(function () {
+                            form.render();
+                        });
+                    } else {
+                        os.error('公众号数据返回为空~');
+                    }
+                });
+                active = {
+                    Init: function () {
+                        os.ajax('api/wx/material/list', wxm.where, function (res) {
+                            console.log(res);
+                            if (res.statusCode === 200) {
+                                wxm.list = res.data.items;
+                                console.log(wxm.list);
+                            } else {
+                                os.error(res.message);
+                            }
+                        });
+                    },
+                    toolAsynwx: function () {
+                        os.success('同步到微信素材库成功~');
+                    },
+                    toolSearch: function () {
+                        wxm.where.key = $('#key').val();
+                        wxm.where.id = $('#WxId').val();
+                        active.Init();
+                    },
+                    toolAdd: function () {
+                        wxid = parseInt($('#WxId').val());
+                        if (wxid === 0) {
+                            os.warning('请选择公众号~');
+                            return;
+                        }
+                        layer.open({
+                            type: 1,
+                            title: '新建图文消息',
+                            area:['700px','450px'],
+                            shadeClose: true,
+                            skin: 'wxmater',
+                            content: $('.wx-mater-wall').html()
+                        });
+                    },
+                    toolDel: function (m) {
+                        layer.confirm('确定要执行删除吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/wx/material/del', { parm: m.id }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    active.Init();
+                                    os.success('删除成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+
+                    }
+                };
+                active.Init();
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+                var tip_index = 0;
+                $(document).on('mouseenter', '.tips', function (e) {
+                    tip_index = layer.tips($(e.target).attr('title'), '.tips', { time: 0, tips: 3 });
+                }).on('mouseleave', '.tips', function () {
+                    layer.close(tip_index);
+                });
+                
+            });
+        function gotype(v) {           
+            layui.use(['layer', 'jquery', 'common'],
+                function () {
+                    let layer = layui.layer,
+                        $ = layui.jquery,
+                        os = layui.common;;
+                    layer.closeAll();
+                    let murl = '/fytadmin/wechat/materialtext?wxid=' + wxid;
+                    let title = '创建公众号图文';
+                    if (v === 1) {
+                        murl = '/fytadmin/wechat/materiallink?wxid=' + wxid;
+                        title = '创建图文链接';
+                    }
+                    os.Open(title, murl, '1200px', '650px', function () {
+                        active.Init();
+                    });
+                });
+        }
+    </script>
+</div>

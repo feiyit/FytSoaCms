@@ -1,0 +1,366 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.WeChat.MaterialTextModel
+@{
+    ViewData["Title"] = "微信管理-素材-图文";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<style>
+    .wxsc-left {
+        width: 240px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background-color: #f6f8f9;
+        overflow:auto;
+        padding:20px;
+        z-index:1;
+    }
+    .wxsc-wall{position:relative; height:608px;}
+    .wxsc-add {
+        background-color: #ffffff;
+        padding: 20px 0;
+        text-align: center;
+        cursor: pointer;
+        border: 1px dotted #d9dadc;
+    }
+        .wxsc-add i {
+            font-size: 30px;
+            color: #979797;
+        }
+    .wxsc-nitem {
+        background-color: #ffffff;
+        padding: 10px;
+        position: relative;
+        padding-left: 176px;
+        cursor: pointer;
+        border: 4px solid rgba(255,255,255,1);
+    }
+        .wxsc-nitem::after{
+            position:absolute;
+            left:-4px;
+            right:0px;
+            width:103%;
+            height:1px;
+            content:'';
+            display:block;
+            background-color:#e7e7eb;
+            bottom:-4px;
+        }
+        .wxsc-nitem.active {
+            border: 4px solid rgba(26,173,25,0.4);
+        }
+            .wxsc-nitem.active::after{
+                display:none;
+            }
+            .wxsc-nitem .nitem-img {
+                width: 50px;
+                height: 50px;
+                background-color: #ececec;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+            .wxsc-nitem .nitem-text {
+                width: 150px;
+                position: absolute;
+                left: 10px;
+                padding-top: 10px;
+                cursor:pointer;
+            }
+        .wxsc-nitem .nitem-tool {
+            position: absolute;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: rgba(0,0,0,0.5) !important;
+            color:#ffffff;
+            text-align:right;
+            padding:6px;
+            display:none;
+        }
+        .wxsc-nitem .nitem-tool i{
+            font-size:20px;
+            cursor:pointer;
+        }
+    .wxsc-nitem:hover .nitem-tool{
+        display:block;
+    }
+    .wxsc-right {
+        padding-left: 278px;
+        height: 607px;
+        width: 621px;
+        border: 1px solid #e7e7eb;
+        border-bottom: none;
+        border-right: none;
+        position: relative;
+    }
+    .wxsc-cover {
+        position: absolute;
+        width: 260px;
+        padding: 20px;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        border-left: 1px solid #e7e7eb;
+        z-index: 1;
+    }
+    .wxsc-cover h5{
+        font-size:15px;
+        color:#333;
+        margin-bottom:15px;
+    }
+        .wxsc-cover h5 span {
+            color: #999;
+            font-size: 13px;
+        }
+        .wxsc-cover p {
+            color: #999;
+            font-size: 13px;
+        }
+        .wxsc-cover .img {
+            background-color: #ececec;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width:100%;
+            height:130px;
+            margin-top:15px;            
+        }
+        .wxsc-cover textarea{
+            min-height:100px;
+        }
+        .wxsc-cover .img-select {
+            margin-bottom: 20px;
+            text-align:center;
+            margin-top:15px;
+        }
+        .wxsc-right .wx-input {
+            border: none;
+            padding: 10px;
+            font-size: 13px;
+            width: 98%;
+        }
+    .wxsc-right .cell{
+        padding:2px 15px;
+    }
+    .wxsc-right .cell:first-child {
+        border-bottom: 1px solid #e7e7eb;
+        padding:15px;
+    }
+        .wxsc-right .cell:first-child .wx-input {
+            font-size: 18px;
+        }
+    .wxsc-right .wxsc-btn {
+        margin-top: 15px;
+        text-align: center;
+        position: absolute;
+        width: 69%;
+        bottom: 0;
+        padding: 20px 0;
+    }
+        .wxsc-right .wxsc-btn .layui-btn {
+            padding: 5px 30px;
+        }
+    .wxsc-nitem:first-child{
+        padding-left:10px;
+    }
+    .wxsc-nitem:first-child .nitem-text{
+        width:95%;
+        bottom:-4px;
+        left:-4px;
+        padding: 10px;
+        color: #ffffff;
+        background: rgba(0,0,0,0.5) !important;
+    }
+    .wxsc-nitem:first-child:hover .nitem-tool{
+        display:none;
+    }
+    .wxsc-nitem:first-child:hover .nitem-text{
+        background: rgba(0,0,0,0.5) !important;
+    }
+    .wxsc-nitem:first-child .nitem-img {
+        background-color: #ececec;
+        height: 120px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+    }
+    .mce-tinymce {
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 0px;
+        border-width: 0px !important;
+        border-bottom:1px solid #e7e7eb !important;
+        margin-top:10px;
+    }
+    .mce-top-part::before {
+        -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    div.mce-edit-area{border-width:0px 0px 0px !important;}
+</style>
+<div class="wxsc-wall" id="wxsc">
+    <div class="wxsc-left">
+       
+        <div class="wxsc-nitem" v-for="(item,index) in scList" @@click="itemActive(index,item)" :class="{active:itemClass==index}">
+            <div class="nitem-text layui-elip">{{item.title}}</div>
+            <div class="nitem-img" :style="'background-image:url('+item.img+')'"></div>
+            <div class="nitem-tool"><i class="layui-icon layui-icon-delete" @@click="del(item)"></i></div>
+        </div>
+        <div class="wxsc-add" @@click="addsc" v-show="addBtnShow">
+            <i class="layui-icon layui-icon-add-1"></i>
+        </div>
+    </div>
+    <div class="wxsc-right">
+        <div class="cell">
+            <input type="text" v-model="scModel.title" placeholder="请在这里输入标题" class="wx-input">
+        </div>
+        <div class="cell">
+            <input type="text"  v-model="scModel.author" placeholder="请输入作者" class="wx-input">
+        </div>
+        <div class="cell">
+            <input type="text" v-model="scModel.link" placeholder="原文链接地址，必须以http开头" class="wx-input">
+        </div>
+        <textarea id="content" v-model="scModel.content" placeholder="请输入内容" class="layui-textarea"></textarea>
+        <div class="wxsc-btn">
+            <button class="layui-btn" @@click="save" v-bind:disabled="saveDisabled">保存</button>
+            <button class="layui-btn">预览</button>
+            <button class="layui-btn">保存并同步到公众号</button>
+        </div>
+    </div>
+    <div class="wxsc-cover">
+        <h5>封面</h5>
+        <p>建议尺寸：</p>
+        <p>大图片：900 * 500（单图文或多图文第一篇）</p>
+        <p>小图片200 * 200（多图文第一篇图文下面）</p>
+        <div class="img" :style="'background-image:url('+scModel.img+')'"></div>
+        <div class="img-select"><button class="layui-btn layui-btn-primary fyt-cloud" data-type="form">选择图片</button></div>
+        <h5>摘要</h5>
+        <textarea name="summary" v-model="scModel.summary" class="layui-textarea" placeholder="选填，如果不填写会默认抓取正文前54个字"></textarea>
+    </div>
+</div>
+<script src="~/themes/tinymce/tinymce.min.js"></script>
+<script src="~/themes/tinymce/langs/zh_CN.js"></script>
+<script>
+    var os,layer,wxid=@Model.WxId,layindex, wxsc = new Vue({
+        el: '#wxsc',
+        data: {
+            scModel: {},
+            saveDisabled:false,
+            scFirstModel: {
+                title: '',
+                img: '',
+                author: '',
+                link: '',
+                content: '',
+                summary: ''
+            },
+            scList: [],
+            addBtnShow: true,
+            itemClass:0,
+            modelObj: {
+                title: '',
+                img: '',
+                author: '',
+                link: '',
+                content: '',
+                summary:''
+            }
+        },
+        created: function () {
+            if (@Model.Id=== 0) {
+                let model = this.initModel();
+                this.scModel = model;
+                this.scList.push(model);
+            }            
+            var that = this;
+            tinymce.init({
+                selector: '#content',
+                height: 340,
+                width: 610,
+                menubar: false,
+                resize: false,
+                statusbar:false,
+                setup: function (editor) {
+                    editor.on('input change undo redo execCommand KeyUp', function (e) {
+                        that.scModel.content = editor.getContent();
+                    })
+                }
+            });
+        },
+        methods: {
+            del: function (m) { //删除一篇文章
+                var that = this;
+                layer.confirm('确定删除此篇图文？', function (index) {
+                    layer.close(index);
+                    that.scList.splice(m, 1);
+                });
+            },
+            addsc: function () {  //添加一篇文章
+                let model = this.initModel(); 
+                this.scList.push(model);
+                this.scModel = model;
+                tinyMCE.activeEditor.setContent(model.content);
+                if (this.scList.length == 7) {
+                    this.addBtnShow = false;
+                }
+            },
+            initModel: function () {
+                return {
+                    title: '',
+                    img: '',
+                    author: '',
+                    link: '',
+                    content: '',
+                    summary: ''
+                };
+            },
+            itemActive: function (index,m) {  //选择要编辑的图文
+                this.itemClass = index;
+                this.scModel = m;
+                tinyMCE.activeEditor.setContent(m.content);
+            },
+            save: function () {
+                let list = this.scList;
+                for (let i = 0; i < list.length; i++) {
+                    if (list[i].title == '') {
+                        os.warning('标题不能为空~');
+                        return;
+                    }
+                }
+                let that = this;
+                that.saveDisabled = true;
+                os.ajax('api/wx/material/add', {Id:@Model.Id, WxId: wxid, TestJson: JSON.stringify(list) }, function (res) {
+                    that.saveDisabled = false;
+                    if (res.statusCode == 200) {
+                        parent.layer.close(layindex);
+                    } else {
+                        os.error(res.message);
+                    }
+                });
+            }
+        }
+    });
+    layui.config({
+        base: '/themes/js/modules/'
+    }).use(['layer', 'jquery', 'common', 'form'], function () {
+        layer = layui.layer;
+        os = layui.common;
+        var form = layui.form, $ = layui.jquery;
+        os.cloudFile();
+        oc = {
+            fileSave(v) {
+                wxsc.scModel.img = v;
+            }
+        };        if (@Model.Id!==0) {
+            os.ajax('api/wx/material/get', { id:@Model.Id}, function (res) {
+                if (res.statusCode === 200) {
+                    wxsc.scModel = res.data;
+                    wxsc.scList.push(wxsc.scModel);
+                    tinyMCE.activeEditor.setContent(wxsc.scModel.content);
+                } else {
+                    os.error(res.message);
+                }
+            });
+        }
+        layindex = parent.layer.getFrameIndex(window.name);
+    });
+</script>

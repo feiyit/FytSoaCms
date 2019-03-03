@@ -17,8 +17,8 @@ namespace FytSoa.Extensions
         private static string Ak = "";
         private static string Sk = "";
         private static string Bucket = "";  //空间名
-        private static readonly string BasePath = "feiyit/";
-        private static string domain = "";
+        private static readonly string BasePath = "/";
+        private static string domain = "http://img.feiyit.com/";
 
         /// <summary>
         /// 根据前缀获得文件列表

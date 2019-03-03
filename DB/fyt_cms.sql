@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-12-22 11:53:05
+Date: 2019-03-03 19:57:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -916,7 +916,7 @@ CREATE TABLE `sys_admin` (
 -- ----------------------------
 -- Records of sys_admin
 -- ----------------------------
-INSERT INTO `sys_admin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,24febdc4-655f-4492-ac8a-4adab18c22c8,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '子恒国际', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-10-09 22:54:47', '2018-12-19 15:57:37', '2018-12-19 15:57:37');
+INSERT INTO `sys_admin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,24febdc4-655f-4492-ac8a-4adab18c22c8,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '子恒国际', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-10-09 22:54:47', '2019-03-03 18:06:27', '2019-03-03 18:06:27');
 INSERT INTO `sys_admin` VALUES ('30d3da88-bb72-4ace-a303-b3aae0ecb732', null, '事业发展部', '4b6ab27f-c0fa-483d-9b5a-55891ee8d727', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,4b6ab27f-c0fa-483d-9b5a-55891ee8d727,', 'testadmin', 'Ycdvj7dGDz45F6Qlw7OMQ904o/xRuq0k', '李四', '1002', '/themes/img/avatar.jpg', '男', null, '\0', null, null, '2018-07-22 00:42:14', '2018-07-22 00:42:14', '2018-07-22 00:42:14');
 
 -- ----------------------------
@@ -1333,15 +1333,19 @@ INSERT INTO `sys_log` VALUES ('02180143-366d-4d40-9eee-5b4c8e6ca1e9', 'admins', 
 INSERT INTO `sys_log` VALUES ('022949f7-2821-4f25-9e0b-54fc00ed231f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 16:38:02');
 INSERT INTO `sys_log` VALUES ('04924303-3684-4470-9714-e0c213c7dd63', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 23:51:15');
 INSERT INTO `sys_log` VALUES ('0595214c-12f5-488c-9ef6-6bbf9dd182ac', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 15:43:50');
+INSERT INTO `sys_log` VALUES ('089bb90d-3ec3-4431-bd67-3e35d5dfc80e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-27 21:31:44');
 INSERT INTO `sys_log` VALUES ('0a37326b-2c99-4aff-9562-4a8cb8638e2a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 11:44:47');
 INSERT INTO `sys_log` VALUES ('103529fb-e4c6-4776-82cd-5753e0dbcc60', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:30:35');
 INSERT INTO `sys_log` VALUES ('10377b45-c23f-471f-b11b-ffb2b14c5524', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 16:46:19');
+INSERT INTO `sys_log` VALUES ('13903a8a-f86f-4ff4-9cd6-57256f540d22', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-03 10:36:06');
 INSERT INTO `sys_log` VALUES ('1622e52c-aafa-40af-8f09-f7fe1b05aa31', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-09 09:32:48');
 INSERT INTO `sys_log` VALUES ('17c6bf8b-7a1e-43f8-bca3-afc15410de9c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-02 10:41:50');
 INSERT INTO `sys_log` VALUES ('1af85365-f263-487c-9453-ae136213fd43', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:47:04');
 INSERT INTO `sys_log` VALUES ('1c73c7d4-0d36-422d-a1c7-b645cffe55c8', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 16:57:09');
+INSERT INTO `sys_log` VALUES ('1cba4871-625f-40b0-a8db-6fae9865402e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-24 09:14:42');
 INSERT INTO `sys_log` VALUES ('1cc1dd0c-6d10-4655-a1ed-f846ebcf76bc', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-25 14:31:59');
 INSERT INTO `sys_log` VALUES ('1cdce534-50f5-4a84-9477-e29a64fe35e0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 17:56:06');
+INSERT INTO `sys_log` VALUES ('1eb091d7-4c23-485c-80a3-ed28be9d4127', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 16:12:02');
 INSERT INTO `sys_log` VALUES ('1f411ac3-cd27-4ee7-9fb3-ecb53a06258a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-25 10:30:56');
 INSERT INTO `sys_log` VALUES ('1fb9cf2b-e215-41d4-8857-a3c237408e0e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-08 11:19:34');
 INSERT INTO `sys_log` VALUES ('212ffed7-d99c-4c02-823d-5d38f5573fac', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 10:55:47');
@@ -1349,8 +1353,10 @@ INSERT INTO `sys_log` VALUES ('24245ffd-61eb-4567-90eb-8b572a09766d', 'admins', 
 INSERT INTO `sys_log` VALUES ('267109cb-6229-4ea3-8d1b-1272dd0ca08e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-06 14:05:56');
 INSERT INTO `sys_log` VALUES ('292de46f-787f-4f7d-ba09-4fdda40abd5a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 14:41:00');
 INSERT INTO `sys_log` VALUES ('2a5022f8-2abf-4260-9c24-61f14f804d80', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-30 14:41:33');
+INSERT INTO `sys_log` VALUES ('2c26d051-b2f0-4f99-98fa-43c23711875e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 09:58:45');
 INSERT INTO `sys_log` VALUES ('2c62098b-123c-4947-aaf0-5b59d7d1c2e0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-15 10:14:13');
 INSERT INTO `sys_log` VALUES ('2ddd0a68-f718-4fdc-bd18-a688d67f281a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 13:40:40');
+INSERT INTO `sys_log` VALUES ('30cecec5-cd22-4668-a647-4228d5cde811', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 12:13:14');
 INSERT INTO `sys_log` VALUES ('30d21205-2f97-4a58-a6cd-894db319f283', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-16 18:28:03');
 INSERT INTO `sys_log` VALUES ('319b812e-5665-4713-935c-efb6a367e6e6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 09:41:24');
 INSERT INTO `sys_log` VALUES ('319c88cd-d0fe-4d03-8e87-73c28618cd4c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 17:57:30');
@@ -1360,6 +1366,7 @@ INSERT INTO `sys_log` VALUES ('35e2b377-4592-48f1-aeea-354a6c0f96ff', 'admins', 
 INSERT INTO `sys_log` VALUES ('35e77d18-3769-4ff0-a474-5007e0a6ed40', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-31 16:51:55');
 INSERT INTO `sys_log` VALUES ('3b988aa9-93b8-409a-bb5e-8f3b2e1e5319', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-23 19:02:36');
 INSERT INTO `sys_log` VALUES ('3d3f746b-9aa2-4510-ab10-90b472c37a0d', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 17:52:35');
+INSERT INTO `sys_log` VALUES ('3d9e7a55-8441-436b-bcb8-d5f354b1d216', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 13:24:05');
 INSERT INTO `sys_log` VALUES ('3f800f2f-07c6-421f-954b-af47b6109031', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:26:35');
 INSERT INTO `sys_log` VALUES ('4082b358-0a03-4d78-bfdf-e322201b377c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 14:38:28');
 INSERT INTO `sys_log` VALUES ('432a8477-adb4-4b38-b38d-bda511ec7edd', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-14 16:13:17');
@@ -1372,6 +1379,7 @@ INSERT INTO `sys_log` VALUES ('5018ee70-bc17-47b6-93e4-9d84949f7c76', 'admins', 
 INSERT INTO `sys_log` VALUES ('50b8e6fa-a375-414a-bf25-6cb12d2e4f97', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-14 11:09:45');
 INSERT INTO `sys_log` VALUES ('52df56c6-8b3b-4c49-850a-34ad90f968f6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:57:47');
 INSERT INTO `sys_log` VALUES ('58ad49f0-2c4a-4d43-9c39-90756bcd9839', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-06 11:48:09');
+INSERT INTO `sys_log` VALUES ('5bc5807c-fcb2-4865-b630-6a3e620943a6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-27 19:31:03');
 INSERT INTO `sys_log` VALUES ('5df86bcf-deb6-4bb3-8527-ac3e49804a44', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 12:01:59');
 INSERT INTO `sys_log` VALUES ('5e1aa40a-aab5-4e70-b050-a6d9e1300db8', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-29 09:40:58');
 INSERT INTO `sys_log` VALUES ('61217f18-c4a0-4117-a800-0a7e02fdca4f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 09:11:51');
@@ -1388,6 +1396,7 @@ INSERT INTO `sys_log` VALUES ('7cea43fc-6fdc-4635-9f15-4522ff964590', 'admins', 
 INSERT INTO `sys_log` VALUES ('7db1cbe5-621d-410e-8d01-af13b789b5cd', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 09:44:08');
 INSERT INTO `sys_log` VALUES ('812e9d62-c31c-4fba-81ac-09eac3f2f8e3', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-01 11:52:46');
 INSERT INTO `sys_log` VALUES ('8323e852-2a2e-4e01-951c-cb1a8d209d12', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-23 12:44:02');
+INSERT INTO `sys_log` VALUES ('8329dd8b-fda7-4fde-b48b-2479f800871a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-22 15:14:59');
 INSERT INTO `sys_log` VALUES ('84130b71-6c67-4bab-84aa-b27662f20b9c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 09:20:52');
 INSERT INTO `sys_log` VALUES ('87be6724-a85e-4cab-8446-0b066fa27a24', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-08 23:00:00');
 INSERT INTO `sys_log` VALUES ('88c688e2-23e0-4b4d-8217-81f544b4c95b', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-18 15:11:30');
@@ -1403,6 +1412,7 @@ INSERT INTO `sys_log` VALUES ('95228b23-ec11-4492-a91d-61af34f8a03f', 'admins', 
 INSERT INTO `sys_log` VALUES ('95e38528-9091-4b8c-aa48-b2b72fac6f2f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-31 18:02:43');
 INSERT INTO `sys_log` VALUES ('96055b13-8f2c-4da0-9cd7-b0d063076905', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 21:42:38');
 INSERT INTO `sys_log` VALUES ('9642e4b9-3a37-4d05-bc48-b07d23ba4aa5', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 14:43:05');
+INSERT INTO `sys_log` VALUES ('992e0351-ea74-4141-8aab-1eb735c46a05', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-03 12:38:35');
 INSERT INTO `sys_log` VALUES ('9a661bd4-efc5-4929-8d5b-e46fa07b75f0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-08 16:07:12');
 INSERT INTO `sys_log` VALUES ('9d29b8bd-e760-4a9e-a5ad-ca83078afbf5', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 17:58:55');
 INSERT INTO `sys_log` VALUES ('a1fb50d2-df9d-4c31-a050-10e30bd76af4', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 15:05:01');
@@ -1412,6 +1422,7 @@ INSERT INTO `sys_log` VALUES ('af0b3001-eddd-4f0f-a805-9c353d0ab511', 'admins', 
 INSERT INTO `sys_log` VALUES ('b10db56b-8653-47e8-8378-022dff1e8616', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 14:17:38');
 INSERT INTO `sys_log` VALUES ('b29430e5-c21d-484f-94d1-47c45d11ae22', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 09:35:38');
 INSERT INTO `sys_log` VALUES ('b2a4126f-c1b6-41eb-a7f6-26d91cf0d45b', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-14 23:14:04');
+INSERT INTO `sys_log` VALUES ('b47c7584-a8c5-48f0-869f-0ea8ebf97886', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 16:12:48');
 INSERT INTO `sys_log` VALUES ('b8ef685e-626c-4627-8b8b-3bc1699c33a6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 11:41:38');
 INSERT INTO `sys_log` VALUES ('b9aff27c-25ac-4f33-92d7-cab5bd88cbe8', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-01 13:46:58');
 INSERT INTO `sys_log` VALUES ('bb60345e-6651-48ec-8d3a-0a08143c85d4', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-06 10:19:25');
@@ -1423,6 +1434,7 @@ INSERT INTO `sys_log` VALUES ('c76a363c-338c-48ad-98b4-e2498d952932', 'admins', 
 INSERT INTO `sys_log` VALUES ('cbe02af8-c1f9-4470-bbd0-173b40865b39', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 16:38:24');
 INSERT INTO `sys_log` VALUES ('cc65f1de-7e41-4482-9b49-90a97d0e0a71', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-19 15:57:37');
 INSERT INTO `sys_log` VALUES ('cd8db28a-dacd-4ba2-8465-7c427328b983', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:50:50');
+INSERT INTO `sys_log` VALUES ('d4b4239c-c11a-4163-aa89-ab435d55332c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 22:58:27');
 INSERT INTO `sys_log` VALUES ('d5a05413-fa32-4be3-ae22-b716e84019a7', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-30 13:38:52');
 INSERT INTO `sys_log` VALUES ('d5a977f4-74d0-421e-a7e4-d46eb9a21a7b', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 10:16:33');
 INSERT INTO `sys_log` VALUES ('dcd8faff-fcc2-4fe2-af78-5e4c0929b167', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 17:54:31');
@@ -1435,6 +1447,10 @@ INSERT INTO `sys_log` VALUES ('e9032a81-49d9-4b21-9f57-9b7e7cc3423a', 'admins', 
 INSERT INTO `sys_log` VALUES ('e9878e5b-6347-4720-a492-18b479a51c30', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 17:44:25');
 INSERT INTO `sys_log` VALUES ('ebf0d7fb-15f7-442f-a689-92d6a7f17ff5', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-18 10:15:14');
 INSERT INTO `sys_log` VALUES ('f0808ca4-d1e0-49ff-8c13-06ff79ec42ad', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 15:34:38');
+INSERT INTO `sys_log` VALUES ('f4b18400-1829-4df1-aa04-86e55a513dc0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 15:27:07');
+INSERT INTO `sys_log` VALUES ('f72abfcf-5a6f-46ce-8496-d81fa8d7372c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-03 18:06:27');
+INSERT INTO `sys_log` VALUES ('faf8acfb-54fd-4c61-be40-687025bd29de', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-03 15:53:11');
+INSERT INTO `sys_log` VALUES ('fb468990-ac49-4d1d-998f-3dbb9eb7518f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-21 22:24:28');
 INSERT INTO `sys_log` VALUES ('fbea55a3-fe5a-4487-8dd0-d569460f861b', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-15 10:13:30');
 INSERT INTO `sys_log` VALUES ('fec1f40d-fa11-4757-81c4-cb51fe4f37a0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-14 16:07:17');
 
@@ -1489,7 +1505,7 @@ INSERT INTO `sys_menu` VALUES ('945de8ba-a13d-4ffc-aa62-c072ea2a3b05', null, '0d
 INSERT INTO `sys_menu` VALUES ('98285095-b35d-458d-9908-355d2e4fddbd', null, '00aaf062-ee50-4844-9b51-80743a65cd4d', '功能组件', '广告管理', '2041', ',a4b3b26f-076a-4267-b03d-613081b13a12,00aaf062-ee50-4844-9b51-80743a65cd4d,98285095-b35d-458d-9908-355d2e4fddbd,', '3', '/fytadmin/cms/adv/', null, '63', '', '2018-10-30 15:16:30', '0001-01-01 00:00:00');
 INSERT INTO `sys_menu` VALUES ('99aa1f66-6b0f-4c9d-ab70-22e92f4f6202', null, '0d65e849-f903-4cf3-b413-9e4e7bbda82e', '内容管理', '内容管理', '2034', ',a4b3b26f-076a-4267-b03d-613081b13a12,0d65e849-f903-4cf3-b413-9e4e7bbda82e,99aa1f66-6b0f-4c9d-ab70-22e92f4f6202,', '3', '/fytadmin/cms/content', null, '79', '', '2018-11-06 16:51:19', '2018-11-06 16:51:19');
 INSERT INTO `sys_menu` VALUES ('a05afbda-1234-4ca0-a160-6dd11ea3bf7d', null, '3d0acfb2-fa3c-4fe6-bd5c-e587c4523978', '消息管理', '消息记录', '3026', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,3d0acfb2-fa3c-4fe6-bd5c-e587c4523978,a05afbda-1234-4ca0-a160-6dd11ea3bf7d,', '3', null, null, '77', '', '2018-09-29 21:59:42', '2018-09-29 21:59:42');
-INSERT INTO `sys_menu` VALUES ('a171bbb0-c65c-4e09-82f5-9ed51169b24d', null, '2a3a4afe-2a51-4858-9c85-df26bb7a7611', '基本设置', '公众平台管理', '3011', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,2a3a4afe-2a51-4858-9c85-df26bb7a7611,a171bbb0-c65c-4e09-82f5-9ed51169b24d,', '3', null, null, '69', '', '2018-09-29 21:56:59', '2018-09-29 21:56:59');
+INSERT INTO `sys_menu` VALUES ('a171bbb0-c65c-4e09-82f5-9ed51169b24d', null, '2a3a4afe-2a51-4858-9c85-df26bb7a7611', '基本设置', '公众平台管理', '3011', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,2a3a4afe-2a51-4858-9c85-df26bb7a7611,a171bbb0-c65c-4e09-82f5-9ed51169b24d,', '3', '/fytadmin/wechat/setting', null, '69', '', '2019-02-21 22:31:49', '0001-01-01 00:00:00');
 INSERT INTO `sys_menu` VALUES ('a280f6e2-3100-445f-871d-77ea443356a9', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '字段管理', '1015', ',5ed17c74-0fff-4f88-8581-3b4f26d005a8,a280f6e2-3100-445f-871d-77ea443356a9,', '3', '/fytadmin/sys/codes/', null, '9', '', '2018-09-28 23:27:32', '2018-09-28 23:27:32');
 INSERT INTO `sys_menu` VALUES ('a4b3b26f-076a-4267-b03d-613081b13a12', null, null, '根目录', 'CMS内容管理', '0002', ',a4b3b26f-076a-4267-b03d-613081b13a12,', '1', null, 'layui-icon-website', '50', '', '2018-09-29 16:18:57', '2018-09-29 16:18:57');
 INSERT INTO `sys_menu` VALUES ('a82ecfbf-b428-4022-b9a3-81ad277fc05c', null, '00aaf062-ee50-4844-9b51-80743a65cd4d', '功能组件', '投票管理', '2042', ',a4b3b26f-076a-4267-b03d-613081b13a12,00aaf062-ee50-4844-9b51-80743a65cd4d,a82ecfbf-b428-4022-b9a3-81ad277fc05c,', '3', '/fytadmin/cms/vote/', null, '64', '\0', '2018-11-08 14:28:44', '0001-01-01 00:00:00');
@@ -1498,7 +1514,8 @@ INSERT INTO `sys_menu` VALUES ('b354ea64-88b6-4032-a26a-fee198e24d9d', null, '5e
 INSERT INTO `sys_menu` VALUES ('b8ede145-b5c2-4339-a3cc-f9808aa0c776', null, '3d0acfb2-fa3c-4fe6-bd5c-e587c4523978', '消息管理', '图文回复', '3024', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,3d0acfb2-fa3c-4fe6-bd5c-e587c4523978,b8ede145-b5c2-4339-a3cc-f9808aa0c776,', '3', null, null, '75', '', '2018-09-29 21:59:10', '2018-09-29 21:59:10');
 INSERT INTO `sys_menu` VALUES ('be526a42-9a48-4221-bc9b-3e1d5ddddf2f', null, 'fe96606e-2b92-4587-8196-e5b4e85ed633', '我的工作台', '站点管理', '2011', ',a4b3b26f-076a-4267-b03d-613081b13a12,fe96606e-2b92-4587-8196-e5b4e85ed633,be526a42-9a48-4221-bc9b-3e1d5ddddf2f,', '3', '/fytadmin/cms/site/', null, '53', '', '2018-10-30 15:14:16', '0001-01-01 00:00:00');
 INSERT INTO `sys_menu` VALUES ('c1f840e9-e822-4d0f-aca2-28365c52a7c4', null, '0d65e849-f903-4cf3-b413-9e4e7bbda82e', '内容管理', '回收站管理', '2032', ',a4b3b26f-076a-4267-b03d-613081b13a12,0d65e849-f903-4cf3-b413-9e4e7bbda82e,c1f840e9-e822-4d0f-aca2-28365c52a7c4,', '3', '/fytadmin/cms/recycle/', null, '60', '', '2018-10-30 15:15:16', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('dad12bae-d3f3-4c0e-a728-2e6af5f40e66', null, '2a3a4afe-2a51-4858-9c85-df26bb7a7611', '基本设置', '自定义菜单', '3012', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,2a3a4afe-2a51-4858-9c85-df26bb7a7611,dad12bae-d3f3-4c0e-a728-2e6af5f40e66,', '3', null, null, '70', '', '2018-09-29 21:57:15', '2018-09-29 21:57:15');
+INSERT INTO `sys_menu` VALUES ('d4c25cb6-3804-49e5-b2c3-70d2a68c4af5', null, '2a3a4afe-2a51-4858-9c85-df26bb7a7611', '基本设置', '公众号素材库', '3013', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,2a3a4afe-2a51-4858-9c85-df26bb7a7611,d4c25cb6-3804-49e5-b2c3-70d2a68c4af5,', '3', '/fytadmin/wechat/material', null, '80', '', '2019-02-23 16:12:41', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('dad12bae-d3f3-4c0e-a728-2e6af5f40e66', null, '2a3a4afe-2a51-4858-9c85-df26bb7a7611', '基本设置', '自定义菜单', '3012', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,2a3a4afe-2a51-4858-9c85-df26bb7a7611,dad12bae-d3f3-4c0e-a728-2e6af5f40e66,', '3', '/fytadmin/wechat/menu', null, '70', '', '2019-02-21 22:46:38', '0001-01-01 00:00:00');
 INSERT INTO `sys_menu` VALUES ('f752cbdb-48b9-4958-bd05-0b8c3602e809', null, null, '根目录', '微信公众号', '0003', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,', '1', null, 'layui-icon-login-wechat', '51', '', '2018-09-29 16:19:10', '2018-09-29 16:19:10');
 INSERT INTO `sys_menu` VALUES ('fe96606e-2b92-4587-8196-e5b4e85ed633', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', 'CMS内容管理', '我的工作台', '2010', ',a4b3b26f-076a-4267-b03d-613081b13a12,fe96606e-2b92-4587-8196-e5b4e85ed633,', '2', null, 'layui-icon-website', '52', '', '2018-09-29 21:43:43', '2018-09-29 21:43:43');
 
@@ -1696,6 +1713,7 @@ INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', nu
 INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '2a3a4afe-2a51-4858-9c85-df26bb7a7611', null, '1');
 INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'a171bbb0-c65c-4e09-82f5-9ed51169b24d', null, '1');
 INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'dad12bae-d3f3-4c0e-a728-2e6af5f40e66', null, '1');
+INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'd4c25cb6-3804-49e5-b2c3-70d2a68c4af5', null, '1');
 INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '3d0acfb2-fa3c-4fe6-bd5c-e587c4523978', null, '1');
 INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '3d4f34cb-b69f-47e1-8abb-2f2b7ae20520', null, '1');
 INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '8cdf2bc4-b5f8-4d6a-9282-5e5f6042d69f', null, '1');
@@ -1727,3 +1745,54 @@ CREATE TABLE `sys_role` (
 -- ----------------------------
 INSERT INTO `sys_role` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', '52523a76-52b3-4c25-a1bd-9123a011f2a8', '商务中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', '客服管理员', '1002', '', '只能查看会员相关功能', '2018-05-17 23:37:56', '2018-07-16 11:24:03');
 INSERT INTO `sys_role` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', 'dcf99638-5db6-4dd7-a485-31df1160d45a', '互联网中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,dcf99638-5db6-4dd7-a485-31df1160d45a,', '财务管理员', '1003', '', '只能查看财务相关功能', '2018-05-17 23:39:01', '2018-05-17 23:39:01');
+
+-- ----------------------------
+-- Table structure for wx_material
+-- ----------------------------
+DROP TABLE IF EXISTS `wx_material`;
+CREATE TABLE `wx_material` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自动增长',
+  `WxId` int(11) NOT NULL COMMENT '所属公众号ID',
+  `Type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '类型，1=图文  2=连接',
+  `Position` tinyint(4) NOT NULL DEFAULT '0' COMMENT '保存位置  1=本地 2=服务器',
+  `Title` varchar(50) NOT NULL COMMENT '标题',
+  `Img` varchar(255) DEFAULT NULL COMMENT '图片',
+  `Summary` varchar(500) DEFAULT NULL COMMENT '描述',
+  `Author` varchar(20) DEFAULT NULL COMMENT '作者',
+  `Link` varchar(255) DEFAULT NULL COMMENT '连接',
+  `Content` text COMMENT '内容',
+  `TestJson` text COMMENT '内容Json',
+  `AddDate` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of wx_material
+-- ----------------------------
+INSERT INTO `wx_material` VALUES ('6', '2', '2', '1', '这里面测试的是连接图文', '/upload/localpc/banner/583bf138e46ad_1024.jpg', 'ddddddddddddddddddddddddd', '', 'sssssssssss', '', '[{\"id\":6,\"wxId\":2,\"type\":2,\"position\":1,\"title\":\"这里面测试的是连接图文\",\"img\":\"/upload/localpc/banner/583bf138e46ad_1024.jpg\",\"summary\":\"ddddddddddddddddddddddddd\",\"author\":\"\",\"link\":\"sssssssssss\",\"content\":\"\",\"testJson\":\"[{\\\"title\\\":\\\"这里面测试的是连接图文\\\",\\\"img\\\":\\\"/upload/localpc/banner/583bf138e46ad_1024.jpg\\\",\\\"author\\\":\\\"\\\",\\\"link\\\":\\\"sssssssssss\\\",\\\"content\\\":\\\"\\\",\\\"summary\\\":\\\"\\\"}]\",\"addDate\":\"2019-03-03T19:31:00\"}]', '2019-03-03 19:43:43');
+INSERT INTO `wx_material` VALUES ('7', '2', '1', '1', '正经的测试标题', 'http://img.feiyit.com/feiyit/website/else/cc.jpg', 'sssdsdsdssddddddddddd', '作者', 'http://www.feiyit.com', '<p>这里面是内容，内容内容</p>\n<p>回车内容</p>', '[{\"id\":7,\"wxId\":2,\"type\":1,\"position\":1,\"title\":\"正经的测试标题\",\"img\":\"http://img.feiyit.com/feiyit/website/else/cc.jpg\",\"summary\":\"sssdsdsdssddddddddddd\",\"author\":\"作者\",\"link\":\"http://www.feiyit.com\",\"content\":\"<p>这里面是内容，内容内容</p>\\n<p>回车内容</p>\",\"testJson\":\"[{\\\"title\\\":\\\"正经的测试标题\\\",\\\"img\\\":\\\"http://img.feiyit.com/feiyit/website/else/cc.jpg\\\",\\\"author\\\":\\\"作者\\\",\\\"link\\\":\\\"http://www.feiyit.com\\\",\\\"content\\\":\\\"<p>这里面是内容，内容内容</p>\\\\n<p>回车内容</p>\\\",\\\"summary\\\":\\\"\\\"}]\",\"addDate\":\"2019-03-03T19:39:15\"}]', '2019-03-03 19:44:13');
+
+-- ----------------------------
+-- Table structure for wx_setting
+-- ----------------------------
+DROP TABLE IF EXISTS `wx_setting`;
+CREATE TABLE `wx_setting` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自动增长',
+  `Name` varchar(50) NOT NULL COMMENT '公众号名称',
+  `Account` varchar(50) NOT NULL COMMENT '公众平台微信号',
+  `OriginalId` varchar(50) NOT NULL COMMENT '公众号原始ID',
+  `AppId` varchar(50) NOT NULL COMMENT 'ToKen',
+  `AppSecret` varchar(255) NOT NULL COMMENT 'AppSecret',
+  `Type` varchar(20) NOT NULL COMMENT '公众号类型',
+  `Cover` varchar(255) DEFAULT NULL COMMENT '公众号图片',
+  `QrCode` varchar(255) DEFAULT NULL COMMENT '公众号二维码',
+  `Status` bit(1) NOT NULL DEFAULT b'1' COMMENT '状态',
+  `MenuJson` varchar(2000) DEFAULT NULL COMMENT '自定义菜单Json',
+  `AddDate` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of wx_setting
+-- ----------------------------
+INSERT INTO `wx_setting` VALUES ('2', '测试公众号', 'wx554654654', 'g_sddwsssss', 'sssdwwe2342', 'sdfsafasafasfsssssssss', '认证订阅号', null, null, '', '[{\"name\":\"一级菜单\",\"url\":\"http://www.soso.com/\",\"mtype\":0,\"sub_button\":[]},{\"name\":\"一级菜单\",\"url\":\"http://demo17.feiyit.com/index.aspx\",\"mtype\":0,\"sub_button\":[]},{\"name\":\"一级菜单\",\"url\":\"\",\"mtype\":0,\"sub_button\":[{\"name\":\"搜索\",\"mtype\":0,\"url\":\"http://www.soso.com/\"},{\"name\":\"视频\",\"mtype\":0,\"url\":\"http://v.qq.com/\"},{\"name\":\"赞一下我们\",\"mtype\":0,\"url\":\"http://www.feiyit.com/\"},{\"name\":\"abc\",\"url\":\"http://www.soso.com/\",\"mtype\":0}]}]', '2019-02-23 13:57:58');

@@ -1,5 +1,6 @@
 ﻿using FytSoa.Core.Model.Cms;
 using FytSoa.Core.Model.Sys;
+using FytSoa.Core.Model.Wx;
 using FytSoa.Extensions;
 using SqlSugar;
 
@@ -32,6 +33,10 @@ namespace FytSoa.Core
         {
             return new DbSet<DbModel>(Db);
         }
+
+        //微信设置
+        public DbSet<WxSetting> WxSettingDb => new DbSet<WxSetting>(Db);
+        public DbSet<WxMaterial> WxMaterialDb => new DbSet<WxMaterial>(Db);
 
         //Cms设置
         public DbSet<CmsImage> CmsImageDb => new DbSet<CmsImage>(Db);

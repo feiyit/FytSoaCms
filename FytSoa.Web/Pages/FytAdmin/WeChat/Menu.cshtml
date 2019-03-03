@@ -1,0 +1,434 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.WeChat.MenuModel
+@{
+    ViewData["Title"] = "微信管理-公众平台账号管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <div id="box" style="width:1150px;">
+        <link rel="stylesheet" href="~/themes/css/menu.css">
+        <div class="custom-menu-edit-con layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择公众号</label>
+                <div class="layui-input-block">
+                    <select name="Type" lay-filter="wxaccount">
+                        <option value="0">请选择公众号</option>
+                        <option v-for="it in wxbaseList" :value="it.id">{{it.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="hbox">
+                <div class="inner-left">
+                    <div class="custom-menu-view-con">
+                        <div class="custom-menu-view">
+                            <div class="custom-menu-view__title">{{wxname}}</div>
+                            <div class="custom-menu-view__body">
+                                <div class="weixin-msg-list"><ul class="msg-con"></ul></div>
+                            </div>
+                            <div id="menuMain" class="custom-menu-view__footer">
+                                <div class="custom-menu-view__footer__left"></div>
+                                <div id="customBtns" class="custom-menu-view__footer__right">
+                                    <div class="custom-menu-view__menu" v-if="menuObj.button.length>0" v-for="(item,index) in menuObj.button" :class="{subbutton__actived:menuIndex[index].isActive}" :style="{width:buttonWidth}">
+                                        <div class="text-ellipsis" @@click="menuTab(index)">{{item.name}}</div>
+                                        <ul class="custom-menu-view__menu__sub">
+                                            <li v-for="(subItem,subIndex) in item.sub_button" class="custom-menu-view__menu__sub__add" :class="{subbutton__actived:subIndex==subBtnIndex[index].num}" @@click="liTab(index,subIndex)">
+                                                {{subItem.name}}
+                                            </li>
+                                            <li v-if="item.sub_button.length<5" @@click="subAddBtn(index)">
+                                                <i class="layui-icon layui-icon-add-1 text-info"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="custom-menu-view__menu" v-if="menuObj.button.length==0" @@click="addBtn(0)" style="width: 100%;">
+                                        <div class="text-ellipsis">
+                                            <i class="layui-icon layui-icon-add-1 text-info iBtn"></i>
+                                        </div>
+                                    </div>
+                                    <div class="custom-menu-view__menu" v-if="menuObj.button.length==1" @@click="addBtn(1)" style="width: 50%;">
+                                        <div class="text-ellipsis">
+                                            <i class="layui-icon layui-icon-add-1 text-info iBtn"></i>
+                                        </div>
+                                    </div>
+                                    <div class="custom-menu-view__menu" v-if="menuObj.button.length==2" @@click="addBtn(2)" style="width: 33.33%;">
+                                        <div class="text-ellipsis">
+                                            <i class="layui-icon layui-icon-add-1 text-info iBtn"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="inner-right">
+                    <div class="cm-edit-after">
+                        <div class="cm-edit-right-header b-b"><span>{{rightTitle}}</span> <a @@click="del()" class="pull-right" href="javascript:;">删除菜单</a></div>
+                        <form class="layui-form wrapper-md" name="custom_form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">菜单名称:</label>
+                                <div class="layui-input-inline" style="width: 300px;">
+                                    <input name="custom_input_title" type="text" class="layui-input" v-model="rightTitle" v-on:input="updateValue()">
+                                </div>
+                                <div class="layui-input-inline help-block" style="width: 200px;">
+                                    <div v-show="isRightTitle"> 字数不超过5个汉字或16个字符</div>
+                                    <div v-show="rightTitle.length==0"> 菜单内容不能为空</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">菜单内容:</label>
+                                <div class="layui-input-block cradio">
+                                    <label><input type="radio" name="mtype" v-model="menuActiveModel.mtype" v-on:input="updateType()" lay-ignore value="1" title="发送消息">发送消息</label>
+                                    <label><input type="radio" name="mtype" v-model="menuActiveModel.mtype" v-on:input="updateType()" lay-ignore value="0" title="跳转网页" checked>跳转网页</label>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="cm-edit-content-con" id="editPage" v-if="urlShow">
+                            <div class="cm-edit-page">
+                                <div class="row">
+                                    <label style="text-align: left;">
+                                        粉丝点击该菜单会跳转到以下链接:
+                                    </label>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" style="text-align: left;">
+                                        页面地址:
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="url" class="layui-input" v-model="url" v-on:input="updateUrl()" placeholder="认证号才可手动输入地址">
+                                        <span class="help-block" v-if="isUrl">必填,必须是正确的URL格式</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cm-edit-content-con" id="editMsg" v-if="msgShow">
+                            <div class="editTab">
+                                <div class="editTab-heading">
+                                    <ul class="msg-panel__tab">
+                                        <li class="msg-tab_item on">
+                                            <span class="msg-icon msg-icon-tuwen"></span>
+                                            图文消息
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="editTab-body">
+                                    <div class="msg-panel__context">
+                                        <div class="msg-context__item">
+                                            <div class="msg-panel__center msg-panel_select" data-toggle="modal" data-target="#selectModal"><span class="message-plus">+</span><br>从素材库中选择</div>
+                                        </div>
+                                        <div class="msg-template"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="cm-edit-before" v-if="menuObj.button.length==0 || operationShow"><h5>点击左侧菜单进行操作</h5></div>
+                </div>
+            </div>
+        </div>
+        <div class="cm-edit-footer">
+            <button @@click="save" type="button" class="layui-btn">保存到本地</button><button @@click="asynwx" type="button" class="layui-btn">同步到公众号</button>
+        </div>
+    </div>
+    <script>
+        var wx=new Vue({
+            el: '#box',
+            data: {
+                id:0,
+                wxname:'公众号名称',
+                wxbaseList: [],
+                menuActiveModel: {mtype:0},
+                menutype: 0,
+                rightTitle: '',
+                url: '',
+                dataIndex: [0, 0, null],
+                operationShow: true,
+                urlShow: true,
+                msgShow:false,
+                isRightTitle: false,
+                isUrl: false,
+                menuIndex: [
+                    { isActive: false },
+                    { isActive: false },
+                    { isActive: false }
+                ],
+                subBtnIndex: [
+                    { num: -1 },
+                    { num: -1 },
+                    { num: -1 }
+                ],
+                menuObj: {
+                    "button": [
+                        //{
+                        //    "name": "一级菜单",
+                        //    "url": "",
+                        //    "mtype":0,
+                        //    "sub_button": []
+                        //},
+                        //{
+                        //    "name": "一级菜单",
+                        //    "url": "",
+                        //    "mtype": 0,
+                        //    "sub_button": []
+                        //},
+                        //{
+                        //    "name": "一级菜单",
+                        //    "url": "",
+                        //    "mtype": 0,
+                        //    "sub_button": [
+                        //        {
+                        //            "name": "搜索",
+                        //            "mtype": 0,
+                        //            "url": "http://www.soso.com/"
+                        //        }
+                        //    ]
+                        //}
+                    ]
+                },
+                buttonObj: {
+                    "name": "新建菜单",
+                    "url": "",
+                    "sub_button": []
+                },
+                subObj: {
+                    "name": "新建子菜单",
+                    "url": ""
+                }
+            },
+            computed: {
+                buttonWidth: function () {
+                    return this.menuObj.button.length == 3 ? '33.33%' : 100 / (this.menuObj.button.length + 1) + '%';
+                }
+            },
+            methods: {
+                del: function () {//删除菜单
+                    let x = this.dataIndex[0];
+                    let y = this.dataIndex[1];
+                    let z = this.dataIndex[2];
+                    z == 0 ? this.menuObj.button.splice(x, 1) : this.menuObj.button[x].sub_button.splice(y, 1);//判断删除一级菜单还是二级菜单
+                    for (let i = 0; i < this.menuObj.button.length; i++) {
+                        this.subBtnIndex[i].num = -1;//重置所有子菜单选中状态
+                        this.menuIndex[i].isActive = false;//重置一级菜单
+                    }
+                    this.operationShow = true;//右侧隐藏操作框
+                },
+                addBtn: function (index) {//添加一级菜单
+                    if (this.wxname == '公众号名称') { os.warning('请选择公众号'); return;}
+                    var button = this.menuObj.button;
+                    button.splice(button.length, 0, JSON.parse(JSON.stringify(this.buttonObj)));//添加菜单按钮
+                    for (let i = 0; i < this.menuObj.button.length; i++) {
+                        this.subBtnIndex[i].num = -1;//重置所有子菜单选中状态
+                        this.menuIndex[i].isActive = false;//重置一级菜单
+                    }
+                    this.menuIndex[index].isActive = true;
+                    let menu_name = this.menuObj.button[index].name;
+                    let menu_url = this.menuObj.button[index].url;
+                    this.getInfo(menu_name, menu_url);
+                    this.urlWindow(index);
+
+                    this.dataIndex.splice(0, 1, index);
+                    this.dataIndex.splice(2, 1, 0);
+                    this.operationShow = false;
+                },
+                subAddBtn: function (index) {//添加子菜单
+                    if (this.wxname == '公众号名称') { os.warning('请选择公众号'); return; }
+                    for (let i = 0; i < this.menuObj.button.length; i++) {
+                        this.subBtnIndex[i].num = -1;//重置所有子菜单选中状态
+                        this.menuIndex[i].isActive = false;//重置一级菜单
+                        if (i == index) {
+                            var sub_button = this.menuObj.button[i].sub_button;
+                            sub_button.splice(this.menuObj.button[i].sub_button.length, 0, JSON.parse(JSON.stringify(this.subObj)));//添加子菜单按钮
+                            if (sub_button.length > 0) {
+                                this.subBtnIndex[index].num = sub_button.length - 2;
+                                this.menuObj.button[i].url = '';//增加子菜单，清空一级菜单url
+                            }
+                            this.subBtnIndex[index].num++;//子菜单选中状态
+                        }
+                    }
+                    let sub_name = this.menuObj.button[index].sub_button[this.subBtnIndex[index].num].name;
+                    let sub_url = this.menuObj.button[index].sub_button[this.subBtnIndex[index].num].url;
+                    this.getInfo(sub_name, sub_url);
+                    this.urlWindow(index, true);
+
+                    this.dataIndex.splice(0, 1, index);
+                    this.dataIndex.splice(1, 1, this.subBtnIndex[index].num);
+                    this.dataIndex.splice(2, 1, 1);
+                    this.operationShow = false;
+                },
+                menuTab: function (index) {//点击一级菜单
+                    if (this.wxname == '公众号名称') { os.warning('请选择公众号'); return; }
+                    for (let i = 0; i < this.menuObj.button.length; i++) {
+                        this.subBtnIndex[i].num = -1;//重置所有子菜单选中状态
+                        this.menuIndex[i].isActive = false;//重置一级菜单
+                    }
+                    this.menuIndex[index].isActive = true;
+                    this.menuActiveModel = this.menuObj.button[index];
+                    let menu_name = this.menuObj.button[index].name;
+                    let menu_url = this.menuObj.button[index].url;
+                    this.getInfo(menu_name, menu_url);
+                    this.urlWindow(index);
+
+                    this.dataIndex.splice(0, 1, index);
+                    this.dataIndex.splice(2, 1, 0);
+                    this.operationShow = false;
+                },
+                liTab: function (index, subIndex) {//点击子菜单
+                    if (this.wxname == '公众号名称') { os.warning('请选择公众号'); return; }
+                    for (let i = 0; i < this.menuObj.button.length; i++) {
+                        this.subBtnIndex[i].num = -1;//重置所有子菜单选中状态
+                        this.menuIndex[i].isActive = false;//重置一级菜单
+                    }
+                    this.subBtnIndex[index].num = subIndex;
+                    let sub_name = this.menuObj.button[index].sub_button[subIndex].name;
+                    let sub_url = this.menuObj.button[index].sub_button[subIndex].url;
+                    this.menuActiveModel = this.menuObj.button[index].sub_button[subIndex];
+                    this.getInfo(sub_name, sub_url);
+                    this.urlWindow(index, true);
+
+                    this.dataIndex.splice(0, 1, index);
+                    this.dataIndex.splice(1, 1, subIndex);
+                    this.dataIndex.splice(2, 1, 1);
+                    this.operationShow = false; 
+                },
+                updateValue: function () {//更新按钮name
+                    let match1 = /^[\u4E00-\u9FA5]{1,5}$/;
+                    let isName1 = match1.test(this.rightTitle);
+                    let match2 = /^[a-zA-Z0-9]{1,16}$/;
+                    let isName2 = match2.test(this.rightTitle);
+
+                    let x = this.dataIndex[0];
+                    let y = this.dataIndex[1];
+                    let z = this.dataIndex[2];
+                    isName1 || isName2 ? this.isRightTitle = false : this.isRightTitle = true;
+                    z == 0 ? this.setmenu(x) : this.setSubmenu(x, y);
+                },
+                updateUrl: function () {//更新按钮url
+                    let match = /^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-\.,@@?^=%&:\/~\+#]*[\w\-\@@?^=%&\/~\+#])?$/;//验证url
+                    let isUrl = match.test(this.url);
+                    let x = this.dataIndex[0];
+                    let y = this.dataIndex[1];
+                    let z = this.dataIndex[2];
+                    isUrl ? this.isUrl = false : this.isUrl = true;
+                    z == 0 ? this.setmenu(x) : this.setSubmenu(x, y);
+                },
+                updateType: function () { //更新类型
+                    let model = this.menuActiveModel;
+                    this.menutype = model.mtype;
+                    if (model.mtype == 1) {
+                        this.msgShow = false;
+                        this.urlShow = true;
+                    } else {
+                        this.msgShow = true;
+                        this.urlShow = false;
+                    }
+                    let x = this.dataIndex[0];
+                    let y = this.dataIndex[1];
+                    let z = this.dataIndex[2];
+                    z == 0 ? this.setmenu(x) : this.setSubmenu(x, y);
+                },
+                getInfo: function (name, url) {//显示name，url
+                    this.rightTitle = name;
+                    this.url = url;
+                },
+                setmenu: function (x) {
+                    this.menuObj.button[x].name = JSON.parse(JSON.stringify(this.rightTitle));//必须用JSON.parse(JSON.stringify(value)
+                    this.menuObj.button[x].url = JSON.parse(JSON.stringify(this.url));
+                    this.menuObj.button[x].mtype = JSON.parse(JSON.stringify(this.menuActiveModel.mtype));
+                },
+                setSubmenu: function (x, y) {
+                    this.menuObj.button[x].sub_button[y].name = JSON.parse(JSON.stringify(this.rightTitle));
+                    this.menuObj.button[x].sub_button[y].url = JSON.parse(JSON.stringify(this.url));
+                    this.menuObj.button[x].sub_button[y].mtype = JSON.parse(JSON.stringify(this.menuActiveModel.mtype));
+                },
+                urlWindow: function (index, subIndex) {//显示右侧url窗口
+                    if (!subIndex && this.menuObj.button[index].sub_button.length > 0) {
+                        this.urlShow = false;
+                    } else {
+                        if (wx.menutype == 0) {
+                            this.urlShow = true;
+                            this.msgShow = false;
+                        }
+                        else {
+                            this.urlShow = false;
+                            this.msgShow = true;
+                        }
+                    }
+                },
+                save: function () {
+                    if (this.wxname == '公众号名称') { os.warning('请选择公众号'); return; }
+                    let button = this.menuObj.button;
+                    for (let i = 0; i < button.length; i++) {//验证url是否为空
+                        if (button[i].sub_button.length == 0) {
+                            if (button[i].url == '' || button[i].name == '') {
+                                os.warning('一级菜单内容不能为空');
+                                return;
+                            }
+                        } else {
+                            for (let j = 0; j < button[i].sub_button.length; j++) {
+                                if (button[i].sub_button[j].url == '' || button[i].sub_button[j].name == '') {
+                                    os.warning('二级菜单内容不能为空');
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    //保存到服务端
+                    os.ajax('api/wx/menu/edit', { id: this.id, menu: JSON.stringify(button) }, function (res) {
+                        if (res.statusCode == 200) {
+                            os.success('保存成功~');
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
+                },
+                asynwx: function () { //同步到公众号
+                    os.success('同步到公众号~');
+                }
+            }
+        })
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form'], function () {
+            var form = layui.form, $ = layui.jquery, os = layui.common;
+            //查询公众号列表
+            os.get('api/wx/setting/getpages', null, function (res) {
+                if (res.data.length > 0) {
+                    wx.wxbaseList = res.data;
+                    wx.$nextTick(function () {
+                        form.render();
+                    });
+                } else {
+                    os.error('公众号数据返回为空~');
+                }
+            });
+            //菜单类型
+            form.on('radio(menutype)', function (data) {
+                wx.menutype = data.value;
+                if (data.value == 0) {
+                    wx.msgShow = false;
+                    wx.urlShow = true;
+                } else {
+                    wx.msgShow = true;
+                    wx.urlShow = false;
+                }
+            });
+            //选择公众号
+            form.on('select(wxaccount)', function (data) {
+                wx.id = parseInt(data.value);
+                if (wx.id === 0) {
+                    os.warning('请选择公众号');
+                    wx.wxname = '公众号名称';
+                } else {
+                    wx.wxname = $(data.elem).find("option:selected").text();
+                    os.ajax('api/wx/menu/model', { id: wx.id }, function (res) {
+                        if (res.statusCode == 200) {
+                            wx.menuObj.button = JSON.parse(res.data.menuJson);
+
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
+                }
+            });  
+        });
+    </script>
+</div>

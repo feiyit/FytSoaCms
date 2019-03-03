@@ -51,10 +51,28 @@
         }).use(['layer', 'jquery', 'common', 'form', 'upload'], function () {
             var form = layui.form, $ = layui.jquery, os = layui.common, upload = layui.upload;
             var index = parent.layer.getFrameIndex(window.name);
+            var xhrOnProgress = function (fun) {
+                xhrOnProgress.onprogress = fun; //绑定监听
+                //使用闭包实现监听绑
+                return function () {
+                    //通过$.ajaxSettings.xhr();获得XMLHttpRequest对象
+                    var xhr = $.ajaxSettings.xhr();
+                    //判断监听函数是否为函数
+                    if (typeof xhrOnProgress.onprogress !== 'function')
+                        return xhr;
+                    //如果有监听函数并且xhr对象支持绑定时就把监听函数绑定上去
+                    if (xhrOnProgress.onprogress && xhr.upload) {
+                        xhr.upload.onprogress = xhrOnProgress.onprogress;
+                    }
+                    return xhr;
+                }
+            }
             upload.render({
                 elem: '#AndroidFile'
                 , url: '/api/upload/index'
                 , accept: 'file' //普通文件
+                , xhr: xhrOnProgress
+                , progress: function (value) { }
                 , done: function (res) {
                     if (res.code == 200) {
                         $("#file1").val('/' + res.data);
@@ -67,6 +85,8 @@
                 elem: '#IosFile'
                 , url: '/api/upload/index'
                 , accept: 'file' //普通文件
+                , xhr: xhrOnProgress
+                , progress: function (value) { }
                 , done: function (res) {
                     if (res.code == 200) {
                         $("#file2").val('/' + res.data);

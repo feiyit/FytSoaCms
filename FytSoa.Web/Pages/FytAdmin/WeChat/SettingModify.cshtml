@@ -1,0 +1,152 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.WeChat.SettingModifyModel
+@{
+    ViewData["Title"] = "微信管理-微信公众号设置";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<form class="layui-form form-cus" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">公众号名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="Name" value="@Model.SettingModel.Name" maxlength="40" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">公众号账号</label>
+        <div class="layui-input-block">
+            <input type="text" name="Account" value="@Model.SettingModel.Account" maxlength="40" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">原始ID</label>
+        <div class="layui-input-block">
+            <input type="text" name="OriginalId" value="@Model.SettingModel.OriginalId" maxlength="40" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">AppId</label>
+        <div class="layui-input-block">
+            <input type="text" name="AppId" value="@Model.SettingModel.AppId" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">AppSecred</label>
+        <div class="layui-input-block">
+            <input type="text" name="AppSecret" value="@Model.SettingModel.AppSecret" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型</label>
+        <div class="layui-input-block">
+            <select name="Type">
+                <option value="普通订阅号">普通订阅号</option>
+                <option value="普通服务号">普通服务号</option>
+                <option value="认证订阅号">认证订阅号</option>
+                <option value="认证服务号/认证媒体/政府订阅号">认证服务号/认证媒体/政府订阅号</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="Status" lay-skin="switch" lay-text="开|关" @(Model.SettingModel.Status ? "checked" : "")>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">公众号头像</label>
+        <div class="layui-input-block fytui-file">
+            <input type="text" id="fileCover" name="Cover" value="@Model.SettingModel.Cover" autocomplete="off" class="layui-input"><button id="Cover" class="layui-btn layui-btn-normal" type="button">文件上传</button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">二维码</label>
+        <div class="layui-input-block fytui-file">
+            <input type="text" id="fileQrCode" name="QrCode" value="@Model.SettingModel.QrCode" autocomplete="off" class="layui-input"><button id="QrCode" class="layui-btn layui-btn-normal" type="button">文件上传</button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="Id" id="Id" value="@Model.SettingModel.Id" />
+    <input type="hidden" name="MenuJson" value="@Model.SettingModel.MenuJson" />
+</form>
+<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
+@section Scripts{
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form', 'upload'], function () {
+            var form = layui.form, $ = layui.jquery, os = layui.common, upload = layui.upload;
+            var index = parent.layer.getFrameIndex(window.name);
+            var xhrOnProgress = function (fun) {
+                xhrOnProgress.onprogress = fun; //绑定监听
+                //使用闭包实现监听绑
+                return function () {
+                    //通过$.ajaxSettings.xhr();获得XMLHttpRequest对象
+                    var xhr = $.ajaxSettings.xhr();
+                    //判断监听函数是否为函数
+                    if (typeof xhrOnProgress.onprogress !== 'function')
+                        return xhr;
+                    //如果有监听函数并且xhr对象支持绑定时就把监听函数绑定上去
+                    if (xhrOnProgress.onprogress && xhr.upload) {
+                        xhr.upload.onprogress = xhrOnProgress.onprogress;
+                    }
+                    return xhr;
+                }
+            }
+            upload.render({
+                elem: '#QrCode'
+                , url: '/api/upload/index'
+                , accept: 'images' //普通文件
+                , xhr: xhrOnProgress
+                , progress: function (value) {}
+                , done: function (res) {
+                    if (res.code == 200) {
+                        $("#fileQrCode").val('/' + res.data);
+                    } else {
+                        os.error(res.msg);
+                    }
+                }
+            });
+            upload.render({
+                elem: '#Cover'
+                , url: '/api/upload/index'
+                , accept: 'images' //普通文件
+                , xhr: xhrOnProgress
+                , progress: function (value) { }
+                , done: function (res) {
+                    if (res.code == 200) {
+                        $("#fileCover").val('/' + res.data);
+                    } else {
+                        os.error(res.msg);
+                    }
+                }
+            });
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                var urls = "api/wx/setting/add";
+                if (parseInt($("#Id").val()) !== 0) {
+                    urls = "api/wx/setting/edit";
+                }
+                data.field.Status = data.field.Status === 'on' ? 1 : 0;
+                os.ajax(urls, data.field, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode == 200) {
+                        parent.layer.close(index);
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+        });
+    </script>
+}
