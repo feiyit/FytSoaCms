@@ -76,8 +76,8 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">菜单内容:</label>
                                 <div class="layui-input-block cradio">
-                                    <label><input type="radio" name="mtype" v-model="menuActiveModel.mtype" v-on:input="updateType()" lay-ignore value="1" title="发送消息">发送消息</label>
-                                    <label><input type="radio" name="mtype" v-model="menuActiveModel.mtype" v-on:input="updateType()" lay-ignore value="0" title="跳转网页" checked>跳转网页</label>
+                                    <label><input type="radio" name="type" v-model="menuActiveModel.type" v-on:input="updateType()" lay-ignore value="1" title="发送消息">发送消息</label>
+                                    <label><input type="radio" name="type" v-model="menuActiveModel.type" v-on:input="updateType()" lay-ignore value="0" title="跳转网页" checked>跳转网页</label>
                                 </div>
                             </div>
                         </form>
@@ -134,9 +134,10 @@
             el: '#box',
             data: {
                 id:0,
-                wxname:'公众号名称',
+                wxname: '公众号名称',
+                wxid:0,
                 wxbaseList: [],
-                menuActiveModel: {mtype:0},
+                menuActiveModel: {type:0},
                 menutype: 0,
                 rightTitle: '',
                 url: '',
@@ -161,23 +162,23 @@
                         //{
                         //    "name": "一级菜单",
                         //    "url": "",
-                        //    "mtype":0,
+                        //    "type":0,
                         //    "sub_button": []
                         //},
                         //{
                         //    "name": "一级菜单",
                         //    "url": "",
-                        //    "mtype": 0,
+                        //    "type": 0,
                         //    "sub_button": []
                         //},
                         //{
                         //    "name": "一级菜单",
                         //    "url": "",
-                        //    "mtype": 0,
+                        //    "type": 0,
                         //    "sub_button": [
                         //        {
                         //            "name": "搜索",
-                        //            "mtype": 0,
+                        //            "type": 0,
                         //            "url": "http://www.soso.com/"
                         //        }
                         //    ]
@@ -312,8 +313,8 @@
                 },
                 updateType: function () { //更新类型
                     let model = this.menuActiveModel;
-                    this.menutype = model.mtype;
-                    if (model.mtype == 1) {
+                    this.menutype = model.type;
+                    if (model.type == 1) {
                         this.msgShow = false;
                         this.urlShow = true;
                     } else {
@@ -332,12 +333,12 @@
                 setmenu: function (x) {
                     this.menuObj.button[x].name = JSON.parse(JSON.stringify(this.rightTitle));//必须用JSON.parse(JSON.stringify(value)
                     this.menuObj.button[x].url = JSON.parse(JSON.stringify(this.url));
-                    this.menuObj.button[x].mtype = JSON.parse(JSON.stringify(this.menuActiveModel.mtype));
+                    this.menuObj.button[x].type = JSON.parse(JSON.stringify(this.menuActiveModel.type));
                 },
                 setSubmenu: function (x, y) {
                     this.menuObj.button[x].sub_button[y].name = JSON.parse(JSON.stringify(this.rightTitle));
                     this.menuObj.button[x].sub_button[y].url = JSON.parse(JSON.stringify(this.url));
-                    this.menuObj.button[x].sub_button[y].mtype = JSON.parse(JSON.stringify(this.menuActiveModel.mtype));
+                    this.menuObj.button[x].sub_button[y].type = JSON.parse(JSON.stringify(this.menuActiveModel.type));
                 },
                 urlWindow: function (index, subIndex) {//显示右侧url窗口
                     if (!subIndex && this.menuObj.button[index].sub_button.length > 0) {
@@ -371,6 +372,7 @@
                             }
                         }
                     }
+                    console.log(JSON.stringify(button));
                     //保存到服务端
                     os.ajax('api/wx/menu/edit', { id: this.id, menu: JSON.stringify(button) }, function (res) {
                         if (res.statusCode == 200) {
@@ -381,7 +383,14 @@
                     });
                 },
                 asynwx: function () { //同步到公众号
-                    os.success('同步到公众号~');
+                    if (this.wxname == '公众号名称') { os.warning('请选择公众号'); return; }
+                    os.ajax('api/wx/menu/synchro', { id: this.wxid }, function (res) {
+                        if (res.statusCode === 200) {
+                            os.success('同步成功~~');
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
                 }
             }
         })
@@ -418,6 +427,7 @@
                     os.warning('请选择公众号');
                     wx.wxname = '公众号名称';
                 } else {
+                    wx.wxid = parseInt(data.value);
                     wx.wxname = $(data.elem).find("option:selected").text();
                     os.ajax('api/wx/menu/model', { id: wx.id }, function (res) {
                         if (res.statusCode == 200) {

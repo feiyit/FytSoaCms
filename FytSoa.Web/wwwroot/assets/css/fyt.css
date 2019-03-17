@@ -175,17 +175,17 @@ transition: all 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
     transition: all 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) 0s; content: "";transform: rotate(45deg); -ms-transform: rotate(45deg);
     -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -o-transform: rotate(45deg); opacity: 0;
 }
-.case-list .case-row:first-child{width:40%;}
+/*.case-list .case-row:first-child{width:40%;}
 .case-list .case-row:first-child a:before{bottom: 175px;}
 .case-list .case-row:first-child .case-row-info{height: 160px;}
-.case-list .case-row:first-child .subtitle{border-bottom: 1px solid #f0f0f0;}
+.case-list .case-row:first-child .subtitle{border-bottom: 1px solid #f0f0f0;}*/
 .case-list .case-row .title{ color: #1c1c1c; margin-top: 0px; height: 40px; line-height: 40px;padding:10px 20px 0px 20px; text-align: left; overflow: hidden;
     white-space: nowrap; text-overflow: ellipsis;}
 .case-list .case-row .subtitle{ margin-top: 0px; color: #8D8D8D; text-align: left; padding:0 20px;
 overflow: hidden;white-space: nowrap;text-overflow: ellipsis; padding-bottom: 20px;}
 .case-list .case-row .description{font-size:12px; color: #8D8D8D; padding: 0 20px;}
 
-.case-list .case-row:first-child:hover a:after{top:35%; opacity: 1;}
+/*.case-list .case-row:first-child:hover a:after{top:35%; opacity: 1;}*/
 .case-list .case-row:hover a:after{top:28%; opacity: 1;}
 .case-list .case-row:hover a:before{border: 1px solid #fff;}
 .case-list .case-row:hover .case-row-info:before{ margin-top: -10px; background-color: #fff;opacity: 1;}

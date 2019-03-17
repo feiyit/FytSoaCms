@@ -1,0 +1,19 @@
+﻿@page
+@model FytSoa.Web.Pages.TestModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+</head>
+<body>
+    <p>access_token:@Model.token.access_token</p>
+    <p>expires_in:@Model.token.expires_in</p>
+    <div>@Html.Raw(Model.Mater)</div>
+</body>
+</html>

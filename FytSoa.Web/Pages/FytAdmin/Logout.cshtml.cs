@@ -14,6 +14,7 @@ namespace FytSoa.Web.Pages.FytAdmin
         public async Task OnGetAsync()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Response.Redirect("/fytadmin/login");
         }
     }
 }

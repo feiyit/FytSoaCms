@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/dist/css/iconfont.css">
+    <link rel="stylesheet" href="/dist/css/bulid.css">
+    <link rel="stylesheet" href="/dist/css/mmenu.css">
+    <link rel="stylesheet" href="/dist/css/animate.min.css">
+    <link rel="stylesheet" href="/dist/css/swiper.min.css">
+    <title>飞易腾科技</title>
+</head>
+
+<body>
+    <div id="page">
+        <!-- #include file="/template/header.html" -->
+        <div class="content">
+            <div class="swiper-container banner">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" v-cloak v-for="it in model.banner">
+                        <a :href="it.linkUrl"><img :data-src="it.imgUrl" alt="" class="swiper-lazy"></a>
+                        <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+            <!-- 我们的服务 -->
+            <div class="server">
+                <div class="ser-wall clearfix">
+                    <div class="item active">
+                        <a href="javascript:void(0)">
+                            <i class="icon iconfont icon-xiangyi"></i>
+                            <span>网站建设</span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="javascript:void(0)">
+                            <i class="icon iconfont icon-socialandroidoutline"></i>
+                            <span>APP开发</span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="javascript:void(0)">
+                            <i class="icon iconfont icon-xiaochengxu"></i>
+                            <span>微信小程序</span>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="javascript:void(0)">
+                            <i class="icon iconfont icon-ERP"></i>
+                            <span>软件开发</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="swiper-container serverSwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide text">
+                            <a href="#">品牌官网</a>
+                            <a href="#" class="cur">SaaS应用平台建设</a>
+                            <a href="#">手机端网站</a>
+                            <a href="#">响应式网站</a>
+                            <a href="#">集团站群</a>
+                        </div>
+                        <div class="swiper-slide text">
+                            <a href="#">H5混合/原生</a>
+                            <a href="#">APP商城</a>
+                            <a href="#" class="cur">APP社区</a>
+                            <a href="#">APP音乐</a>
+                            <a href="#">APP餐饮</a>
+                            <a href="#">业务定制</a>
+                        </div>
+                        <div class="swiper-slide text">
+                            <a href="#">电商小程序</a>
+                            <a href="#">分销小程序</a>
+                            <a href="#">酒店小程序</a>
+                            <a href="#">餐饮小程序</a>
+                            <a href="#" class="cur">小程序定制</a>
+                        </div>
+                        <div class="swiper-slide text">
+                            <a href="#">CRM</a>
+                            <a href="#">OA</a>
+                            <a href="#" class="cur">ERP</a>
+                            <a href="#" class="cur">固定资产管理系统</a>
+                            <a href="#" class="cur">数字档案管理系统</a>
+                            <a href="#" class="cur">技术运维</a>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+            <!-- 我们的案例 -->
+            <div class="case">
+                <div class="title">
+                    <h5>产品/案例</h5>
+                    <p>Project/Case</p>
+                </div>
+                <ul class="clearfix">
+                    <li v-cloak v-for="it in model.cases">
+                        <a :href="'/case.shtml?id='+it.id" :title="it.title">
+                            <div class="case-img"><img :src="it.imgUrl+'?imageMogr2/thumbnail/260x'" :alt="it.title"></div>
+                            <div class="case-info">
+                                <div class="case-title">{{it.title}}</div>
+                                <div class="tag">{{it.tag}}</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <div class="more"><a href="/case-list.shtml">更多</a></div>
+            </div>
+            <!-- 历程 -->
+            <div class="his-about wow slideInUp">
+                <ul class="clearfix">
+                    <li>
+                        <p class="number"><span class="counterDX">8</span><span class="unit">年</span></p>
+                        <p class="title">专注定制开发</p>
+                    </li>
+                    <li>
+                        <p class="number"><span class="counterDX">100</span><span class="unit">+</span></p>
+                        <p class="title">互联网+服务</p>
+                    </li>
+                    <li>
+                        <p class="number"><span class="counterDX">500</span><span class="unit">+</span></p>
+                        <p class="title">服务客户</p>
+                    </li>
+                    <li>
+                        <p class="number"><span class="counterDX">360</span><span class="unit">°</span></p>
+                        <p class="title">全方位生态服务</p>
+                    </li>
+                </ul>
+            </div>
+            <!-- 新闻 -->
+            <div class="news">
+                <div class="title">
+                    <h5>新闻</h5>
+                    <p>News</p>
+                </div>
+                <div class="news-wall wow slideInUp">
+                    <dl class="clearfix wow slideInLeft" v-cloak v-for="it in model.article">
+                        <dd>
+                            <a :href="'/new.shtml?id='+it.id" :title="it.title"><img :src="it.imgUrl" alt=""></a>
+                        </dd>
+                        <dt><a :href="'/new.shtml?id='+it.id">{{it.title}}<p>{{it.addDate}}</p></a></dt>
+                    </dl>
+                </div>
+                <div class="more"><a href="/news-list.shtml">更多</a></div>
+            </div>
+            <!-- #include file="/template/footer.html" -->
+        </div>
+        <!-- #include file="/template/menu.html" -->
+    </div>
+    <script src="http://cdn.feiyit.com/jquery/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.6.8/vue.min.js"></script>
+    <script src="/dist/js/mmenu.min.js"></script>
+    <script src="/dist/js/swiper.min.js"></script>
+    <script src="/dist/js/common.js"></script>
+    <script type="text/javascript ">
+        var app = new Vue({
+            el: '#page',
+            data: {
+                model: []
+            },
+            created: function() {
+                let that = this;
+                os.loading();
+                os.ajax('api/h5/index', null, function(res) {
+                    setTimeout(() => {
+                        os.loadclose();
+                    }, 500);
+                    that.model = res;
+                    document.title = res.site.title;
+                    os.SetSession("$fytSite", res.site);
+                    os.SetSession("$fytNewColumn", res.newcolumn);
+                    os.SetSession("$fytCaseColumn", res.casecolumn);
+                    that.$nextTick(function() {
+                        new Swiper('.banner', {
+                            lazy: true,
+                            loop: true,
+                            pagination: {
+                                el: '.swiper-pagination',
+                            },
+                        });
+                    })
+                });
+            },
+            methods: {
+
+            }
+        });
+        $(function() {
+
+            var mySwiper = new Swiper('.serverSwiper', {
+                loop: true,
+                on: {
+                    transitionEnd: function(swiper) {
+                        $(".ser-wall .item").removeClass('active');
+                        $(".ser-wall .item").eq((this.activeIndex - 1)).addClass('active');
+                    },
+                },
+            });
+            $(".ser-wall .item").on('click', function() {
+                $(this).addClass("active").siblings().removeClass('active');
+                var index = $(this).index();
+                mySwiper.slideToLoop(index, 600, false);
+            });
+            $('nav#menu').mmenu({
+                extensions: ['effect-slide-menu', 'pageshadow'],
+                searchfield: false,
+                counters: true,
+                navbar: {
+                    title: '飞易腾科技'
+                },
+                navbars: [{
+                    position: 'top',
+                    content: ['searchfield']
+                }, {
+                    position: 'top',
+                    content: [
+                        'prev',
+                        'title',
+                        'close'
+                    ]
+                }, {
+                    position: 'bottom',
+                    content: [
+                        ' WordPress plugin '
+                    ]
+                }]
+            });
+        });
+    </script>
+</body>
+
+</html>

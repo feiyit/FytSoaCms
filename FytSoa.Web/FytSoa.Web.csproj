@@ -22,6 +22,16 @@
     <None Include="wwwroot\cdns\js\jquery.bxslider.js" />
     <None Include="wwwroot\cdns\js\swiper.min.js" />
     <None Include="wwwroot\cdns\js\wow.min.js" />
+    <None Include="wwwroot\dist\fonts\iconfont.svg" />
+    <None Include="wwwroot\dist\fonts\iconfont.woff2" />
+    <None Include="wwwroot\dist\js\mmenu.min.js" />
+    <None Include="wwwroot\dist\js\swiper.min.js" />
+    <None Include="wwwroot\dist\js\wow.min.js" />
+    <None Include="wwwroot\h5\case-list.shtml" />
+    <None Include="wwwroot\h5\case.shtml" />
+    <None Include="wwwroot\h5\index.shtml" />
+    <None Include="wwwroot\h5\new.shtml" />
+    <None Include="wwwroot\h5\news-list.shtml" />
     <None Include="wwwroot\themes\layui\font\iconfont.svg" />
     <None Include="wwwroot\themes\layui\layui.all.js" />
     <None Include="wwwroot\themes\layui\layui.js" />

@@ -63,7 +63,7 @@ namespace FytSoa.Web.Pages
 
             //查询案例，按权重和日期排序
             var caseColumn = Column.Where(m => m.ParentId == 1015).Select(m => m.Id).ToList();
-            Case = _articleService.WebGetList(new Service.DtoModel.PageParm() { limit=7, types=1,where="istop=1" }, caseColumn).Items;
+            Case = _articleService.WebGetList(new Service.DtoModel.PageParm() { limit=10, types=1,where="istop=1" }, caseColumn).Items;
 
             //查询新闻，按权重和日期排序
             var articleColumn = Column.Where(m => m.ParentId == 1016).Select(m => m.Id).ToList();

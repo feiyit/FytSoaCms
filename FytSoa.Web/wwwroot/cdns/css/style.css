@@ -950,7 +950,7 @@ li {
     opacity: 0;
 }
 
-.case-list .case-row:first-child {
+/*.case-list .case-row:first-child {
     width: 40%;
     height: 608px;
     overflow: hidden;
@@ -988,7 +988,7 @@ li {
 
 .case-list .case-row:first-child .subtitle {
     border-bottom: 1px solid #f0f0f0;
-}
+}*/
 
 .case-list .case-row .title {
     color: #1c1c1c;

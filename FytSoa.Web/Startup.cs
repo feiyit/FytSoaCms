@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
@@ -44,33 +45,8 @@ namespace FytSoa.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            #region 注册服务
-            services.AddTransient<IWxSettingService, WxSettingService>();
-            services.AddTransient<IWxMaterialService, WxMaterialService>();
-
-            services.AddTransient<ICmsSiteService, CmsSiteService>();
-            services.AddTransient<ICmsImgTypeService, CmsImgTypeService>();
-            services.AddTransient<ICmsImageService, CmsImageService>();
-            services.AddTransient<ICmsColumnService, CmsColumnService>();
-            services.AddTransient<ICmsTemplateService, CmsTemplateService>();
-            services.AddTransient<ICmsArticleService, CmsArticleService>();
-            services.AddTransient<ICmsAdvClassService, CmsAdvClassService>();
-            services.AddTransient<ICmsAdvListService, CmsAdvListService>();
-            services.AddTransient<ICmsMessageService, CmsMessageService>();
-            services.AddTransient<ICmsDownloadService, CmsDownloadService>();
-
-            services.AddTransient<ISysAppSettingService, SysAppSettingService>();
-            services.AddTransient<ISysAuthorizeService, SysAuthorizeService>();
-            services.AddTransient<ISysBtnFunService, SysBtnFunService>();
-            services.AddTransient<ISysPermissionsService, SysPermissionsService>();
-            services.AddTransient<ISysLogService, SysLogService>();
-            services.AddTransient<ISysAdminService, SysAdminService>();
-            services.AddTransient<ISysCodeService, SysCodeService>();
-            services.AddTransient<ISysCodeTypeService, SysCodeTypeService>();
-            services.AddTransient<ISysOrganizeService, SysOrganizeService>();
-            services.AddTransient<ISysMenuService, SysMenuService>();
-            services.AddTransient<ISysRoleService, SysRoleService>();
-            #endregion
+            //自定注册
+            AddAssembly(services, "FytSoa.Service");
 
             //解决视图输出内容中文编码问题
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
@@ -195,15 +171,6 @@ namespace FytSoa.Web
                     .AllowAnyHeader()
                     .AllowCredentials();
                 });
-
-                c.AddPolicy("Limit", policy =>
-                {
-                    policy
-                    .WithOrigins("localhost:4909")
-                    .WithMethods("get", "post", "put", "delete")
-                    //.WithHeaders("Authorization");
-                    .AllowAnyHeader();
-                });
             });
             #endregion
 
@@ -264,6 +231,32 @@ namespace FytSoa.Web
             app.UseCookiePolicy();
             app.UseCors("AllowAll");
             app.UseMvc();
+        }
+
+        /// <summary>  
+        /// 自动注册服务——获取程序集中的实现类对应的多个接口
+        /// </summary>
+        /// <param name="services">服务集合</param>  
+        /// <param name="assemblyName">程序集名称</param>
+        public void AddAssembly(IServiceCollection services, string assemblyName)
+        {
+            if (!String.IsNullOrEmpty(assemblyName))
+            {
+                Assembly assembly = Assembly.Load(assemblyName);
+                List<Type> ts = assembly.GetTypes().Where(u => u.IsClass && !u.IsAbstract && !u.IsGenericType).ToList();
+                foreach (var item in ts.Where(s => !s.IsInterface))
+                {
+                    var interfaceType = item.GetInterfaces();
+                    if (interfaceType.Length == 1)
+                    {
+                        services.AddTransient(interfaceType[0], item);
+                    }
+                    if (interfaceType.Length > 1)
+                    {
+                        services.AddTransient(interfaceType[1], item);
+                    }
+                }
+            }
         }
     }
 }
