@@ -36,9 +36,9 @@ namespace FytSoa.Core.Model.Sys
         public string MenuGuid { get; set; }
 
         /// <summary>
-        /// 按钮功能编号
+        /// 角色-菜单-权限按钮Json
         /// </summary>
-        public string BtnFunGuid { get; set; }
+        public string BtnFunJson { get; set; }
 
         /// <summary>
         /// 授权类型1=角色-菜单 2=用户-角色 3=角色-菜单-按钮功能

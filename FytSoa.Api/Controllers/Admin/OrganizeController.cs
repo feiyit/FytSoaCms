@@ -27,7 +27,7 @@ namespace FytSoa.Api.Controllers
         /// 获得组织结构Tree列表
         /// </summary>
         /// <returns></returns>
-        [HttpPost("gettree")]
+        [HttpPost("gettree"), Log("Organize：gettree", LogType = LogEnum.RETRIEVE)]
         public List<SysOrganizeTree> GetListPage()
         {
             return _sysOrganizeService.GetListTreeAsync().Result.data;
@@ -38,7 +38,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpGet("getpages")]
+        [HttpGet("getpages"), Log("Organize：GetPages", LogType = LogEnum.RETRIEVE)]
         public async Task<JsonResult> GetPages(PageParm parm)
         {
             var res = await _sysOrganizeService.GetPagesAsync(parm);
@@ -49,7 +49,7 @@ namespace FytSoa.Api.Controllers
         /// 获得字典栏目Tree列表
         /// </summary>
         /// <returns></returns>
-        [HttpPost("add")]
+        [HttpPost("add"), ApiAuthorize(Modules = "Department", Methods = "Add", LogType = LogEnum.ADD)]
         public async Task<ApiResult<string>> AddOrganize(SysOrganize parm)
         {
             return await _sysOrganizeService.AddAsync(parm);
@@ -59,7 +59,7 @@ namespace FytSoa.Api.Controllers
         /// 删除
         /// </summary>
         /// <returns></returns>
-        [HttpPost("delete")]
+        [HttpPost("delete"), ApiAuthorize(Modules = "Department", Methods = "Delete", LogType = LogEnum.DELETE)]
         public async Task<ApiResult<string>> DeleteOrganize(string parm)
         {
             return await _sysOrganizeService.DeleteAsync(parm);
@@ -69,7 +69,7 @@ namespace FytSoa.Api.Controllers
         /// 修改
         /// </summary>
         /// <returns></returns>
-        [HttpPost("edit")]
+        [HttpPost("edit"),ApiAuthorize(Modules = "Department", Methods = "Update", LogType = LogEnum.UPDATE)]
         public async Task<ApiResult<string>> EditOrganize(SysOrganize parm)
         {
             return await _sysOrganizeService.ModifyAsync(parm);

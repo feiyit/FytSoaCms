@@ -1,4 +1,4 @@
-﻿using FytIms.Service.Extensions;
+﻿using FytSoa.Service.Extensions;
 using FytSoa.Common;
 using FytSoa.Core;
 using FytSoa.Core.Model.Cms;

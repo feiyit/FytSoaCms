@@ -22,6 +22,16 @@
         },
         godown: function () {
             this.isDown = this.isDown ? false : true;
+        },
+        logout: function () {
+            layer.load(1);
+            os.ajax('api/admin/logout', null, function (res) {
+                if (res.statusCode === 200) {
+                    window.location.href = res.data;
+                } else {
+                    os.error(res.message);
+                }
+            });
         }
     }
 });
@@ -38,15 +48,7 @@ layui.config({
     var element = layui.element
         , $ = layui.jquery;
     os = layui.common;
-    os.ajax('api/message/page', { limit: 5 }, function (res) {
-        if (res.statusCode === 200) {
-            main_vm.messCount = res.data.totalItems;
-            main_vm.messList = res.data.items;
-        } else {
-            os.error(res.message);
-        }
-    });
-    os.get('api/menu/authmenu', { parm: $("#UserGuid").val() }, function (res) {
+    os.get('api/menu/authmenu', null, function (res) {
         if (res.statusCode === 200) {
             $.each(res.data, function (index, item) {
                 if (item.layer === 1) {
@@ -75,6 +77,7 @@ layui.config({
                 $("#rmapp .layui-side-scroll ul").eq(0).removeClass('layui-hide');
             });
         } else {
+            $(".load8").fadeOut(200);
             os.error(res.message);
         }
     });

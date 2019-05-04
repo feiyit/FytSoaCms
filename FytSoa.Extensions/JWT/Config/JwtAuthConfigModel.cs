@@ -29,7 +29,7 @@ namespace FytSoa.Extensions
         /// <summary>
         /// 
         /// </summary>
-        public string JWTSecretKey = "This is JWT Secret Key";
+        public string JWTSecretKey = "lyDqoSIQmyFcUhmmN4KBRGWWzm1ELC7owHVtStOu1YD7wYz";
         /// <summary>
         /// 
         /// </summary>

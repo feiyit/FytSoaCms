@@ -27,6 +27,25 @@ namespace FytSoa.Common
             Default = new Logger(LogManager.GetCurrentClassLogger());
         }
 
+        public void Process(string UserName,string Logger,string msg)
+        {
+            LogEventInfo lei = new LogEventInfo();
+            lei.Properties["UserName"] = UserName;
+            lei.Properties["Logger"] = Logger;
+            lei.Level = LogLevel.Trace;
+            lei.Message = msg;
+            _logger.Log(lei);
+        }
+
+        public void ProcessError(int statusCode, string msg)
+        {            
+            LogEventInfo lei = new LogEventInfo();
+            lei.Properties["Logger"] = Convert.ToString(statusCode);
+            lei.Level = LogLevel.Error;
+            lei.Message = msg;
+            _logger.Log(lei);
+        }
+
         #region Debug
         public void Debug(string msg, params object[] args)
         {

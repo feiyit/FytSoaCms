@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FytIms.Api.Controllers
+namespace FytSoa.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/code")]
@@ -28,7 +28,7 @@ namespace FytIms.Api.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpGet("getpages")]
+        [HttpGet("getpages"), Log("code：getpages", LogType = LogEnum.RETRIEVE)]
         public async Task<JsonResult> GetPages(SysCodePostPage request)
         {
             var res= await _sysCodeService.GetPagesAsync(request);
@@ -39,7 +39,7 @@ namespace FytIms.Api.Controllers
         /// 获得字典栏目Tree列表
         /// </summary>
         /// <returns></returns>
-        [HttpPost("add")]
+        [HttpPost("add"), ApiAuthorize(Modules = "Key", Methods = "Add", LogType = LogEnum.ADD)]
         public async Task<ApiResult<string>> AddCodeType(SysCode parm)
         {
             return await _sysCodeService.AddAsync(parm);
@@ -49,7 +49,7 @@ namespace FytIms.Api.Controllers
         /// 删除
         /// </summary>
         /// <returns></returns>
-        [HttpPost("delete")]
+        [HttpPost("delete"), ApiAuthorize(Modules = "Key", Methods = "Delete", LogType = LogEnum.DELETE)]
         public async Task<ApiResult<string>> DeleteCode(string parm)
         {
             return await _sysCodeService.DeleteAsync(parm);
@@ -59,7 +59,7 @@ namespace FytIms.Api.Controllers
         /// 修改
         /// </summary>
         /// <returns></returns>
-        [HttpPost("edit")]
+        [HttpPost("edit"), ApiAuthorize(Modules = "Key", Methods = "Update", LogType = LogEnum.UPDATE)]
         public async Task<ApiResult<string>> EditCode(SysCode parm)
         {
             return await _sysCodeService.ModifyAsync(parm);
@@ -69,7 +69,7 @@ namespace FytIms.Api.Controllers
         /// 修改
         /// </summary>
         /// <returns></returns>
-        [HttpPost("editstatus")]
+        [HttpPost("editstatus"), ApiAuthorize(Modules = "Key", Methods = "Audit", LogType = LogEnum.AUDIT)]
         public async Task<ApiResult<string>> EditStatusCode(SysCode parm)
         {
             return await _sysCodeService.ModifyStatusAsync(parm);

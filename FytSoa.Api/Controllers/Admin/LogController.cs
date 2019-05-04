@@ -39,6 +39,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
+        [ApiAuthorize(Modules = "Log", Methods = "Delete",IsLog =false)]
         public async Task<ApiResult<string>> DeleteLog(string parm)
         {
             var list = Utils.StrToListString(parm);

@@ -6,11 +6,11 @@
 }
 <style>
     .layui-table-view{margin-top:0px;}
-    .layui-col-220{width:200px;}
-    .right-col-body{left:200px;}
+    .layui-col-220{width:300px;}
+    .right-col-body{left:300px;}
     .list-wall{padding-top:0px;}
     .fyt-center{text-align:center;}
-    #tree{height:350px; overflow:auto;}
+    #tree{height:550px; overflow:auto;}
     .layui-layer-loading{box-shadow: 0 0px 0px rgba(0,0,0,.3) !important;}
     #open-form{display:none;}
     .layui-form-select dl{max-height:150px;}
@@ -21,37 +21,8 @@
 </div>
 <div class="right-col-body fyt-wall">
     <div class="list-wall">
-        <div class="layui-form list-search">
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增</button>
-            <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
-        </div>
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
-</div>
-<div id="open-form">
-    <form class="layui-form form-cus" action="">
-        <div class="layui-form-item">
-            <label class="layui-form-label">功能名称</label>
-            <div class="layui-input-block">
-                <select id="FunType" name="FunType" lay-verify="required" lay-search="" lay-verType="tips">
-                    <option></option>
-                    <option value="Add">新增</option>
-                    <option value="Edit">修改</option>
-                    <option value="Delete">删除</option>
-                    <option value="Audit">审核</option>
-                    <option value="Export">导出</option>
-                    <option value="Import">导入</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
-            </div>
-        </div>
-        <input type="hidden" id="Guid" name="Guid" value="" />
-
-    </form>
 </div>
 <link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
 <script>
@@ -69,12 +40,11 @@
                 table.render({
                     elem: '#tablist',
                     headers: os.getToken(),
-                    url: '/api/btnfun/list?key=@Model.roleGuids',
+                    url: '/api/menu/bycode',
                     cols: [
                         [
-                            { type: 'checkbox', fixed: 'left' },
                             { field: 'name', title: '菜单名称', sort: true, fixed: 'left' },
-                            { field: 'funType', title: '功能值' },
+                            { field: 'codeType', title: '功能值' },
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
@@ -105,18 +75,20 @@
                         table.reload('tables',
                             {
                                 where: {
-                                    menuGuid: guid
+                                    role:'@Model.roleGuids',
+                                    menu: guid
                                 }
                             });
                     },    
                     saveMenu: function () { 
                         var zTree = $.fn.zTree.getZTreeObj("tree");
-                        var nodes = zTree.getChangeCheckedNodes(true); 
+                        var nodes = zTree.getCheckedNodes(true); 
                         if (nodes.length == 0) {
                             os.warning('请选择授权的功能模块~');
                             return;
                         }
                         var strMenu = ''; 
+                        //console.log(nodes);
                         $.each(nodes,function (i, item) {
                             strMenu += item.guid + ",";
                         });
@@ -132,80 +104,15 @@
                                 os.error(res.message);
                             }
                         });
-                    },
-                    toolAdd: function () {
-                        layuiIndex=layer.open({
-                            title: '添加按钮功能'
-                            , type: 1
-                            , area: ['500px', '260px']
-                            , shade: [0.1, '#ffffff']
-                            , resize :false
-                            , content: $("#open-form").html()
-                        }); 
-                        form.render();
-                        form.on('select', function (data) {
-                            selText = $(data.elem).find("option:selected").text();
-                        }); 
-                    },
-                    toolDel: function () {
-                        var checkStatus = table.checkStatus('tables')
-                            , data = checkStatus.data;
-                        if (data.length === 0) {
-                            os.error("请选择要删除的项目~");
-                            return;
-                        }
-                        var str = '';
-                        $.each(data, function (i, item) {
-                            str += item.guid + ",";
-                        });
-                        layer.confirm('确定要执行批量删除吗？', function (index) {
-                            layer.close(index);
-                            var loadindex = layer.load(1, {
-                                shade: [0.1, '#000']
-                            });
-                            os.ajax('api/btnfun/delete/', { parm: str }, function (res) {
-                                layer.close(loadindex);
-                                if (res.statusCode === 200) {
-                                    active.reload();
-                                    os.success('删除成功！');
-                                } else {
-                                    os.error(res.message);
-                                }
-                            });
-                        });
-
                     }
                 };        
 
-                
-                //监听提交
-                form.on('submit(submit)', function (data) {
-                    var urls = "api/btnfun/add";
-                    if ($("#Guid").val()) {
-                        urls = "api/btnfun/edit";
-                    }
-                    if (!guid) {
-                        os.warning('请选择左侧菜单~'); return false;
-                    }
-                    data.field.Name = selText;
-                    data.field.MenuGuid = guid;
-                    os.ajax(urls, data.field, function (res) {
-                        if (res.statusCode == 200) {
-                            layer.close(layuiIndex);
-                            active.reload();
-                        }
-                        else {
-                            os.error(res.message);
-                        }
-                    });
-                    return false;
-                });
-                
                 $('.fyt-wall .layui-btn').on('click', function () {
                     var type = $(this).data('type');
                     active[type] ? active[type].call(this) : '';
                 });
                 function onClick(event, treeId, treeNode, clickFlag) {
+                    console.log(treeNode);
                     guid = treeNode.guid;
                     active.reload();
                 }
@@ -227,7 +134,13 @@
                     var index = layer.load(1, {
                         shade: [0.1, '#fff']
                     });
-                    os.ajax("api/rolemenu/torole", { BtnFunGuid: strRole, MenuGuid: guid, RoleGuid: "@Model.roleGuids", Types: 3, status: obj.elem.checked }, function (res) {
+                    var data = {
+                        role: '@Model.roleGuids',
+                        menu: guid,
+                        btnfun: strRole,
+                        status: obj.elem.checked?1:0
+                    };
+                    os.ajax("api/rolemenu/tubtnfun", data, function (res) {
                         layer.close(index);
                         if (res.statusCode === 200) {
                             if (obj.elem.checked) {
@@ -237,7 +150,12 @@
                                 os.success('取消授权~');
                             }
                          } else {
-                             os.error(res.message);
+                            os.error(res.message);
+                            if (obj.elem.checked) {
+                                obj.elem.checked = false;
+                            } else {
+                                obj.elem.checked = true;
+                            }
                          }
                     });
                 });

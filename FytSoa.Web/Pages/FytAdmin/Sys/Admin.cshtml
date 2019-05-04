@@ -86,13 +86,13 @@
                                 strCount++;
                             });
                             if (strCount > 1) {
-                                os.warning('每次只能选址一个用户~');
+                                os.warning('每次只能选择一个用户~');
                                 return;
                             }
                             os.Open('为用户' + adminName+'分配角色', '/fytadmin/sys/admintorole?roid='+str, '750px', '450px');
                         },
                         organizeAdd: function () {
-                            os.Open('添加用户', '/fytadmin/sys/adminmodify', '750px', '400px', function () {
+                            os.Open('添加用户', '/fytadmin/sys/adminmodify', '750px', '430px', function () {
                                 active.reload();
                                 var tree = $.fn.zTree.getZTreeObj("tree");
                                 tree.reAsyncChildNodes(null, "refresh");
@@ -142,7 +142,7 @@
                     table.on('tool(tool)', function (obj) {
                         var data = obj.data;
                         if (obj.event === 'edit') {
-                            os.Open('编辑用户', '/fytadmin/sys/adminmodify/?guid=' + data.guid, '750px', '400px', function () {
+                            os.Open('编辑用户', '/fytadmin/sys/adminmodify/?guid=' + data.guid, '750px', '430px', function () {
                                 var tree = $.fn.zTree.getZTreeObj("tree");
                                 tree.reAsyncChildNodes(null, "refresh");
                                 active.reload();

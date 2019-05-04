@@ -17,74 +17,64 @@ namespace FytSoa.Core.Model.Sys
 
         }
         /// <summary>
-        /// Desc:唯一标识——Guid
-        /// Default:
-        /// Nullable:False
+        /// Desc:唯一标号Guid
         /// </summary>           
         public string Guid { get; set; }
 
         /// <summary>
-        /// Desc:日志操作ID
-        /// Default:
-        /// Nullable:False
-        /// </summary>           
-        public string LoginName { get; set; }
+        /// 应用程序
+        /// </summary>
+        public string Application { get; set; }
 
         /// <summary>
-        /// Desc:日志操作人所属部门Guid
-        /// Default:
-        /// Nullable:True
-        /// </summary>           
-        public string DepartName { get; set; }
+        /// 时间
+        /// </summary>
+        public DateTime Logged { get; set; }
 
         /// <summary>
-        /// Desc:操作表名
-        /// Default:
-        /// Nullable:True
-        /// </summary>           
-        public string OptionTable { get; set; }
+        /// 日志等级
+        /// </summary>
+        public string Level { get; set; }
 
         /// <summary>
-        /// Desc:日志操作内容
-        /// Default:
-        /// Nullable:False
-        /// </summary>           
-        public string Summary { get; set; }
+        /// 消息内容
+        /// </summary>
+        public string Message { get; set; }
 
         /// <summary>
-        /// Desc:日志操作IP地址
-        /// Default:
-        /// Nullable:False
-        /// </summary>           
+        /// 
+        /// </summary>
+        public string Logger { get; set; }
+
+        /// <summary>
+        /// 请求Url
+        /// </summary>
+        public string Callsite { get; set; }
+
+        /// <summary>
+        /// 异常信息
+        /// </summary>
+        public string Exception { get; set; }
+
+        /// <summary>
+        /// IP地址
+        /// </summary>
         public string IP { get; set; }
 
         /// <summary>
-        /// Desc:日志操作Mac地址
-        /// Default:
-        /// Nullable:True
-        /// </summary>           
-        public string MacUrl { get; set; }
+        /// 认证用户名
+        /// </summary>
+        public string User { get; set; }
 
         /// <summary>
-        /// Desc:日志操作类型
-        /// Default:0
-        /// Nullable:False
-        /// </summary>           
-        public int LogType { get; set; }
+        /// 认证用户名
+        /// </summary>
+        public string UserName { get; set; }
 
         /// <summary>
-        /// Desc:日志操作Url
-        /// Default:
-        /// Nullable:False
-        /// </summary>           
-        public string Urls { get; set; }
-
-        /// <summary>
-        /// Desc:日志添加时间
-        /// Default:
-        /// Nullable:False
-        /// </summary>           
-        public DateTime AddTime { get; set; }
+        /// 浏览器信息
+        /// </summary>
+        public string Browser { get; set; }
 
     }
 }

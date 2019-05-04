@@ -1,0 +1,10 @@
+Y=ErpBackGoods=退货管理
+Y=ErpReturnGoods=返货管理
+Y=ErpGoodsSku=条形码管理
+Y=ErpInOutLog=出入库管理
+Y=ErpPackLog=打包日志管理
+Y=ErpShopActivity=商品活动管理
+Y=ErpShops=店铺管理
+Y=ErpShopUser=店铺会员管理
+Y=ErpStaff=店铺的员工管理
+Y=ErpGoods=商品管理

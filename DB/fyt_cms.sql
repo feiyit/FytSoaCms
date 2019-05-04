@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2019-03-17 18:45:59
+Date: 2019-05-04 21:29:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -680,6 +680,9 @@ CREATE TABLE `cms_image` (
 -- ----------------------------
 -- Records of cms_image
 -- ----------------------------
+INSERT INTO `cms_image` VALUES ('04124288-963b-465a-9e68-e8d4a5e8b20e', null, '0', null, '/upload/localpc/banner/c6.jpg', null, 'jpg', '86462', '\0', '0', '2019-04-29 22:37:51');
+INSERT INTO `cms_image` VALUES ('48121628-d072-42e2-b51a-f96228d2e7ba', null, '0', null, '/upload/localpc/banner/c4.jpg', null, 'jpg', '39102', '\0', '0', '2019-04-30 16:48:13');
+INSERT INTO `cms_image` VALUES ('99bf3ffa-4d52-4a95-8fb9-d4122af89f27', null, '0', null, '/upload/localpc/banner/c1.jpg', null, 'jpg', '147050', '\0', '0', '2019-04-30 16:15:17');
 INSERT INTO `cms_image` VALUES ('c30bfec4-bb75-43cf-960c-868c52d957ef', null, '0', null, '/upload/localpc/banner/583bf138e46ad_1024.jpg', null, 'jpg', '58', '\0', '0', '2018-12-14 22:36:39');
 
 -- ----------------------------
@@ -912,14 +915,14 @@ CREATE TABLE `sys_admin` (
   `AddDate` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
   `LoginDate` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '登录时间',
   `UpLoginDate` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '上次登录时间',
-  PRIMARY KEY (`Guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`Guid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_admin
 -- ----------------------------
-INSERT INTO `sys_admin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '商务中心', '52523a76-52b3-4c25-a1bd-9123a011f2a8', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,24febdc4-655f-4492-ac8a-4adab18c22c8,52523a76-52b3-4c25-a1bd-9123a011f2a8,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '子恒国际', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2018-10-09 22:54:47', '2019-03-17 16:29:27', '2019-03-17 16:29:27');
-INSERT INTO `sys_admin` VALUES ('30d3da88-bb72-4ace-a303-b3aae0ecb732', null, '事业发展部', '4b6ab27f-c0fa-483d-9b5a-55891ee8d727', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,4b6ab27f-c0fa-483d-9b5a-55891ee8d727,', 'testadmin', 'Ycdvj7dGDz45F6Qlw7OMQ904o/xRuq0k', '李四', '1002', '/themes/img/avatar.jpg', '男', null, '\0', null, null, '2018-07-22 00:42:14', '2018-07-22 00:42:14', '2018-07-22 00:42:14');
+INSERT INTO `sys_admin` VALUES ('12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, '互联网中心', 'dcf99638-5db6-4dd7-a485-31df1160d45a', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,dcf99638-5db6-4dd7-a485-31df1160d45a,', 'admins', 'pPo9vFeTWOCF0oLKKdX9Jw==', '张三', '1101', '/themes/img/avatar.jpg', '男', '13888888888', '', null, null, '2019-03-12 11:27:40', '2019-05-04 21:23:55', '2019-05-04 21:23:55');
+INSERT INTO `sys_admin` VALUES ('30d3da88-bb72-4ace-a303-b3aae0ecb732', null, '互联网中心', 'dcf99638-5db6-4dd7-a485-31df1160d45a', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,dcf99638-5db6-4dd7-a485-31df1160d45a,', 'demo', 'pPo9vFeTWOCF0oLKKdX9Jw==', '李四', '1002', '/themes/img/avatar.jpg', '男', null, '', null, null, '2019-04-10 09:38:56', '2019-04-10 09:39:05', '2019-04-10 09:39:05');
 
 -- ----------------------------
 -- Table structure for sys_appsetting
@@ -934,8 +937,8 @@ CREATE TABLE `sys_appsetting` (
   `IosAudit` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Ios审核开关  0=关/1=开',
   `IsDel` bit(1) NOT NULL DEFAULT b'0' COMMENT '删除 0=不删除/1=删除',
   `UpdateDate` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`Guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`Guid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_appsetting
@@ -952,8 +955,8 @@ CREATE TABLE `sys_btnfun` (
   `Name` varchar(20) NOT NULL COMMENT '功能名称',
   `FunType` varchar(20) NOT NULL COMMENT '功能标识名称',
   `Summary` varchar(500) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`Guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`Guid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_btnfun
@@ -980,306 +983,49 @@ CREATE TABLE `sys_code` (
   `Summary` varchar(1000) DEFAULT NULL COMMENT '字典值——描述',
   `AddTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '字典值——添加时间',
   `EditTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '字典值——修改时间',
-  PRIMARY KEY (`Guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`Guid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_code
 -- ----------------------------
-INSERT INTO `sys_code` VALUES ('0042c8e2-60dc-44b9-a637-d98d6e4c6d1a', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BLZ', 'BLZ百禄姿', null, '317', '', 'BLZ百禄姿', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('0086fdc0-1718-4dae-96de-4eb56f94be83', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YZB', 'YZB伊姿百瑞', null, '261', '', 'YZB伊姿百瑞', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('00bc1e1a-1ed3-4b89-9b20-707715652148', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'P', '皮草', null, '155', '', '皮草', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('00e579a7-7766-401e-a9a3-24636e8e5895', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SDP', 'SDP皮衣三', null, '169', '', '皮衣三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('0409f43c-f999-4ef2-a5be-9405ba5ba7e9', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'M46', 'M46曼紫46羽绒服三', null, '182', '', '曼紫46羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('06256d8f-5206-4282-b206-b82d4ace5565', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HNS', 'HNS海宁双面尼', null, '288', '', 'HNS海宁双面尼', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('064aac2c-1bee-4cad-9f86-1486159d20be', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'DDZ', '吊带杂DDZ', null, '225', '', '吊带杂DDZ', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('089b20ed-c712-4b10-839c-06b574c7f35d', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'XHX', 'XHX雪鸿羽绒服', null, '149', '', '雪鸿羽绒服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('0915806a-5315-4bcb-bcda-402b272d9f27', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'JJX', 'JJX晶晶薇琪', null, '198', '', 'JJX晶晶薇琪', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('09c453df-df66-4b8d-9324-d74db78a385b', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YFL', 'YFL音非', null, '278', '', 'YFL音非', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('0b9abd29-a571-40eb-95ba-afb591f3412c', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'JLY', '佳澜依尔JLY', null, '210', '', '佳澜依尔JLY', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('0ccd9c0e-4df4-401e-b40a-531ca53ae849', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HSX', 'HSX花色', null, '308', '', 'HSX花色', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('0ceee612-c739-49ff-a635-b4f67f3e1ffd', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'CSL', 'CSL尘色', null, '44', '', '尘色', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('0e425b2d-9549-45d5-abbf-f95cbd52cb72', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'G', '半裙', null, '143', '', '半裙', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('0e56f826-a388-4472-beb6-f8539b5e2883', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ZGP', 'ZGP专供皮衣', null, '189', '', 'ZGP专供皮衣', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('0e6a54df-6fb9-4e5a-b0a9-61de5eab1f7a', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'JWN', 'JWN杰文妮', null, '123', '', '杰文妮', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('0eb83125-cfb4-4062-9e23-1b1a1a90aee7', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SKL', 'SKL萨酷睿L', null, '117', '', 'SKL', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('1050bee3-8a02-441b-977a-537b4e060e6a', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'DMX', '麦之林DMX', null, '239', '', '麦之林DMX', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('1083421d-2cc4-47c7-aad3-534e877a71cb', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'DRD', 'DRD貂绒打底毛衫', null, '258', '', 'DRD貂绒打底毛衫', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('10bdbd39-c147-4131-9903-b540b6e96121', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'XMX', 'XMX绚萌', null, '124', '', '绚萌', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('11c2d713-43b6-45b1-8338-50342ac23b62', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YNX', '依诺YNX', null, '224', '', '依诺YNX', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('12738a20-2ae0-4a30-bee5-9922efaf964a', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SNY', 'SNY圣娜依儿', null, '197', '', 'SNY圣娜依儿', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('12f73730-5e4d-4ae8-bb10-e62f08749dd7', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ZYX', 'ZYX甄妍', null, '302', '', 'ZYX甄妍', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('14dc428c-6d46-4c3d-ac59-b16c68b8e358', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BFN', 'BFN贝芙妮', null, '75', '', '贝芙妮', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('15b25377-72ad-4087-83ad-ca28a8cedfdf', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HEL', 'HEL禾尔美', null, '69', '', '禾尔美', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('15bc0cdb-a28b-4784-b7f7-8dbd76d6416a', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'DSY', 'DSY迪丝雅', null, '265', '', 'DSY迪丝雅', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('1913afc4-0c1e-4e0e-9f4f-19788e8aac35', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MEN', 'MEN沐恩真丝', null, '217', '', 'MEN沐恩真丝', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('1970b666-7b15-481d-8702-1368e2380c3f', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'H', '四季装', null, '12', '', '四季装-H', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('1b87910f-d007-4d33-afbe-98ffda089589', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'AYX', 'AYX艾燕春装', null, '259', '', 'AYX艾燕春装', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('1cffd0c2-f35c-42d8-bd77-265f5e282fe8', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'PYX', 'PYX皮衣', null, '236', '', 'PYX皮衣', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('1d164b70-f91b-41bb-b348-62cfd6ae75fb', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HXX', 'HXX鸿秀双面妮', null, '147', '', '鸿秀双面妮', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('1da78dc4-908e-4cd8-aa0c-0cd5172365fc', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'NKS', 'NKS男款双面尼', null, '267', '', 'NKS男款双面尼', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('1dd9460a-ca52-4016-80f9-c56c0434654f', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'IKL', 'IK', null, '67', '', 'IK', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('1efed59b-232f-4c80-867a-8ddc925848e3', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'AWL', 'AWL艾薇儿awl', null, '72', '', '艾薇儿', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2011a2a0-e5aa-4dd0-b0e7-8fb1a429cdcd', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HYY', 'HYY韩以羽绒服', null, '315', '', 'HYY韩以羽绒服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2169b09a-8b58-4376-b1c4-3f56839d2304', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MSL', 'MSL曼丝L秀登', null, '119', '', 'MSL', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('22c6f678-cd30-4248-92a2-e9baa6b6f117', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'O', '羊绒大衣', null, '141', '', '羊绒大衣', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('22f7bd06-33f6-45d6-8c21-6290e098ceb2', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'XFZ', '西服杂XFZ', null, '228', '', '西服杂XFZ', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2418bfca-9640-4382-a665-f6fd5ffcc017', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YBL', 'YBL伊百丽', null, '142', '', '伊百丽', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2474293b-a3b0-41a3-baa4-1b2a75257b97', '7b664e3e-f58a-4e66-8c0f-be1458541d14', '137', '137高圆圆同款三', null, '190', '', '137高圆圆同款三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('24f9efe2-b80e-4ab1-833c-f02a61948b95', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YMR', 'YMR依目了然', null, '132', '', '依目了然', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('25b47163-315e-4c63-abed-8412f537a516', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'JXL', 'JXL杰西伍', null, '70', '', '杰西伍', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2628b747-9986-4a5c-9a30-abf89b6a8742', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ZNW', 'ZNW珍妮文', null, '216', '', 'ZNW珍妮文', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('273309c3-34d0-4cf4-8abe-7b83ddd22fe6', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'FZL', 'FZL梵姿', null, '55', '', '梵姿', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('27fe6c17-2e1d-4f3e-8416-074e9033a53d', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'XDZ', 'XDZ雪丹枝', null, '275', '', 'XDZ雪丹枝', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('28245b5c-9205-4084-99aa-c34a5e695c9c', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'A', '春装', null, '5', '', '春装-A', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('28d7c022-5749-40e2-8b3d-fed90cf2e02e', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'M53', 'M53曼紫53 三', null, '203', '', 'M53曼紫53 三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('28ffb566-5247-41cf-bcd3-725d305b19be', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'OSL', 'OSL欧时力', null, '73', '', '欧时力', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2963ff16-26fe-4754-98f6-332d33b91dc5', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'XYY', 'XYY夏映颗粒绒', null, '316', '', 'XYY夏映颗粒绒', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('29c41b94-4b92-4676-a1d2-2cf89abb8c90', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'T', '夹克', null, '298', '', '机车夹克', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2a3aa0f8-c5b3-4570-a8a2-e04e0f05d6ef', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MQX', 'MQX玛琪雅朵', null, '87', '', '玛琪雅朵', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2a64211c-e0c0-40a5-a291-7e44dec9f681', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YZM', 'YZM羽绒服三', null, '178', '', 'YZM羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2afd1417-9b6f-4842-afca-ae72805609a1', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BJS', 'BJS北京双面尼', null, '243', '', 'BJS北京双面尼', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2b2cf889-6245-4a21-9454-35c9e882ace5', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'WYL', 'WYL唯依', null, '93', '', '唯依', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2bdac142-528e-433f-9a7e-3aa02ccea7fe', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'RFY', 'RFY人佛缘', null, '164', '', '人佛缘', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2e6da0d5-3f35-4093-a442-d9d1b50c3a07', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'AWR', 'AWR艾薇儿awr', null, '125', '', '艾薇儿', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2ea653ab-1a18-4c84-a872-cf873ab11f5d', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BSK', 'BSK百思寇', null, '251', '', 'BSK百思寇', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2eaf5d0f-3010-46ef-96c3-0d79ea17f9b2', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MMW', 'MMW棉麻围巾', null, '146', '', '棉麻围巾', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('2fa78c1b-40d0-4eb7-a1a8-b44de4e64589', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YZK', 'YZK依庄可人', null, '246', '', 'YZK依庄可人', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('3035f671-abca-437b-96ff-990225cb6f28', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '2', '2', null, '135', '', '2', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('32ceaa41-dea6-4cff-bb95-11f2789870db', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HNX', 'HNX亨奴', null, '226', '', 'HNX亨奴', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('333ba8b5-d2ba-4901-97fd-6edd6e761736', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '0', '0', null, '172', '', '0', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('33ec687b-e773-4a8c-a644-43821e63e7ff', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YYY', 'YYY依艺缘', null, '276', '', 'YYY依艺缘', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('3681512b-3fc7-458e-a9db-b15990b922fb', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YSD', 'YSD依莎蒂妮', null, '230', '', 'YSD依莎蒂妮', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('38e51871-1eac-4201-89d4-06533623fb2e', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'H', '50以上休闲', null, '151', '', '50以上休闲', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('39d525ac-0df2-4c36-919c-301d2af15127', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HBN', 'HBN韩版连衣裙', null, '289', '', 'HBN韩版连衣裙', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('3a0c2c57-5b29-42ea-900e-ba751772128e', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'NYN', 'NYN诺喑呢', null, '188', '', 'NYN诺喑呢', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('3c92c5b5-a74c-4483-b053-b7061d2ed8a5', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YDA', 'YDA雅蒂安娜', null, '173', '', 'YDA雅蒂安娜', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('3c95046e-b1b3-4a39-8006-9987056e84be', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YFX', 'YFX佑芙妮', null, '231', '', 'YFX佑芙妮', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('3d6bb971-13e5-4c50-a0b2-4d7f1c5643b4', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'PXL', '飘宣PXL', null, '159', '', '飘宣PXL', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('3ddeae38-b336-4450-b5d9-5e9e90115e98', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'QTM', 'QTM晴天明月', null, '43', '', '晴天明月', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('400920ee-9e41-4a9a-8561-9abeff8f26a5', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'JXW', 'JXW 杰西伍', null, '200', '', 'JXW 杰西伍', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('40f67656-6b9c-49ab-b8c3-377ebcde16c7', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'I', 'XXXXL', null, '40', '', 'XXXXL', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('41bc4e6d-25a8-462a-b8b4-b6079ae2a57d', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'NRS', 'NRS女人时报', null, '85', '', '女人时报', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('429f8ceb-69a4-42ef-a3e4-c907389e97d3', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YRT', 'YRT羽绒服三', null, '171', '', 'YRT羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('433885fa-b07d-40f1-b175-f3475ab744fb', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'DZK', 'DZK 2017定制款', null, '235', '', 'DZK 2017定制款', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('43854363-22b0-4176-a0bc-66dd612f660d', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SSN', 'SSN似水年华', null, '53', '', '似水年华', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('443df199-e5f2-4509-894f-cf1ec1d57a9d', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'LSQ', 'LSQ陆氏青云', null, '56', '', '陆氏青云', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('450562e4-3293-4d71-8f82-ecb5889a74a4', '1942d4fd-3203-42b1-a955-4a84a532b2a2', '19', '2019', null, '319', '', '2019', '2018-10-19 13:07:22', '2018-10-19 13:07:22');
-INSERT INTO `sys_code` VALUES ('45744b0c-a792-4ea8-8490-1cf5ae7556fa', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'FMY', 'FMY风媚衣坊 晨贝 靡曼', null, '290', '', 'FMY风媚衣坊 晨贝 靡曼', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('45f44976-7856-4e34-b12c-8e7d568b1aaa', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'WHZ', '武汉杂2017WHZ', null, '238', '', '武汉杂2017WHZ', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('463ad549-3d7b-4a87-8b13-5878f84eb035', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MZY', 'MZY曼紫羽绒服三', null, '166', '', '曼紫羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('46ac0b25-660b-48cc-a3ec-ff8dd47864cd', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'WBB', 'WBB 武汉彬彬 ', null, '205', '', 'WBB 武汉彬彬 ', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('46c3f4a1-aea3-4df6-a8c4-1e65ae626335', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'G', 'XXL', null, '38', '', 'XXL', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('477b792f-fee7-46af-9547-55f7684ce5cd', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SMR', '双面尼三楼SMR', null, '174', '', '双面尼三楼SMR', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('489ed30a-12c7-4c71-8871-1031681f9a5c', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'M52', 'M52曼紫52羽绒服三', null, '184', '', '曼紫52羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('495ccc11-f0a3-452c-b401-ecc91794350d', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SYS', 'SYS似水映', null, '214', '', 'SYS似水映', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('4987917b-062e-4e21-8f4d-36df5cf7c76e', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'C', '上衣', null, '15', '', '上衣-C', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('4a32b9c5-fae7-462c-aec4-93d5fdf6812d', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MQY', 'MQY玛琪雅朵', null, '129', '', '玛琪雅朵', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('4b48af91-e964-4d82-b18b-50589db0dbda', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YDM', 'YDM雅蒂安娜毛呢', null, '209', '', 'YDM雅蒂安娜毛呢', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('4b9f096f-c053-41fb-9477-ce52375b7ef5', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MLM', 'MLM梅丽摩尔', null, '291', '', 'MLM梅丽摩尔', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('4be990a5-d6a3-4e75-a43b-65731c44e3bf', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '1', '1', null, '134', '', '1', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('4c249ebc-20ef-40ee-b00c-9c63aec3f74c', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'F', 'XL', null, '37', '', 'XL', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('4c882546-9e1f-425c-a807-78e15ce4e526', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'S', '围巾', null, '145', '', '围巾', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('4dbb2a64-36a4-4f43-89f9-ed7da48aa193', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HJY', 'HJY惠景媛', null, '204', '', 'HJY惠景媛', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('4e20068b-63be-4d2c-9e38-6cdbe02391b2', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'B', 'XS', null, '33', '', 'XS', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('4e6f026b-3eb0-47ad-9184-854c5199e5d8', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'U', '马甲', null, '299', '', '马甲', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('4f075839-9804-4998-8659-a919391e561f', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YSY', 'YSY羽绒服三', null, '170', '', 'YSY羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('4f4d3428-fd3c-48c2-85fa-57db17a7fe3f', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'D', '冬装', null, '8', '', '冬装-D', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('500fb1ae-1861-4a5a-9f77-ee6b69bd5375', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'V', '内衣', null, '312', '', '内衣-V', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('50523d77-235a-4c30-b033-be84259b2ff2', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YML', 'YML依美瑞', null, '63', '', 'YML依美瑞', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('5057e97d-cdc2-413b-8e50-a3fddfb5b822', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BFL', 'BFL贝芙妮', null, '212', '', 'BFL贝芙妮', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('51957ec1-e8b2-4f9e-8f27-39a4cf261266', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HTF', 'HTF红头发风衣', null, '222', '', 'HTF红头发风衣', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('55ba863c-664c-40df-8199-7d06992274ac', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BZM', 'BZM宝姿毛衣', null, '140', '', '宝姿毛衣', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('570b6e38-0333-4bd5-b857-89f6ba8da34a', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MNL', 'MNL沐恩冬装', null, '122', '', 'MNL', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('5aee6bfc-dae4-4616-b129-cb63528570d2', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', 'A', 'A', null, '28', '', 'A', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('5b39701e-285c-4bd9-b080-3eeaf70190d5', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SKR', 'SKR萨酷睿', null, '57', '', '萨酷睿', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('5b3ea153-d6e6-42bd-a82e-8497af8f7f0e', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'K', '年轻处理', null, '154', '', '年轻处理', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('5b406c33-4552-4d03-809f-20a147523893', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'F', '秋冬装', null, '10', '', '秋冬装-F', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('5d24cddd-de94-4602-921e-c8e4b14e8172', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'LZL', 'LZL朗姿丽', null, '286', '', 'LZL朗姿丽', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('5e5b962f-362f-4a94-9846-81e6db713be7', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'TZD', '童装冬棉服TZD', null, '207', '', '童装冬棉服TZD', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('61fa64da-07f7-4067-9ded-cd8d106e7ba6', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SRN', 'SRN赛睿娜', null, '59', '', '赛睿娜', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('62413bf5-d888-4594-8c50-225d3554f085', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YZD', 'YZD艺之蝶', null, '54', '', '艺之蝶', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('6300ace3-6443-4d78-bbc3-cdea2c3f57a8', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ZTG', 'ZTG紫藤谷', null, '273', '', 'ZTG紫藤谷', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('65590d1d-1c7c-44ae-a328-481a6b5dc2cc', '1942d4fd-3203-42b1-a955-4a84a532b2a2', '20', '2020', null, '320', '', '2020', '2018-10-19 13:07:31', '2018-10-19 13:07:31');
-INSERT INTO `sys_code` VALUES ('65d6afad-2c99-4bf7-a4f8-64824562ba97', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SYX', 'SYX水映', null, '181', '', '水映', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('69471576-93bb-473d-a301-204193219f52', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'WYX', 'WYX唯依', null, '202', '', 'WYX唯依', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('6948a911-3034-45ca-8a17-7797e1a63641', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SMM', 'SMM双面呢三', null, '168', '', '双面呢三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('6befc43f-e491-4a84-bc31-756c008707f3', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'H', 'XXXL', null, '39', '', 'XXXL', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('6c28ecc7-f193-498c-b314-0315b321de95', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'FRL', 'FRL妃萱', null, '64', '', '妃萱', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('6c67c5d6-fc73-4dec-8754-b5cf242de955', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'A', 'T恤', null, '13', '', 'T恤-A', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('6c9da850-84fb-4f3a-a0a4-a0822b7cef7b', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'OBY', 'OBY欧版羽绒服', null, '133', '', '欧版羽绒服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('6cf31787-0a53-419d-be61-b32847b6df79', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ZGY', 'ZGY专供羽绒服', null, '187', '', 'ZGY专供羽绒服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('6d4c33ba-05d9-4238-a9b8-c82fc290d393', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'AML', 'AML艾米拉羽绒服三', null, '167', '', '艾米拉羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('6e838a10-94c3-4089-8766-3b4bfe85c24d', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BYM', 'BYM倍艺蒙', null, '272', '', 'BYM倍艺蒙', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('6ed694c7-6efa-47ff-8425-de995b1953fb', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'TPN', 'TPN太平鸟', null, '271', '', 'TPN太平鸟', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('709c8230-b39f-442f-872f-1f38bae53e4e', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'DRX', 'DRX貂绒', null, '128', '', '貂绒', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('711c4b57-8336-4f31-b421-80c83e996dbc', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'D', 'M', null, '35', '', 'M', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('717c1829-0ec6-46b2-bfa9-40e0aef20871', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'M61', 'M61曼紫M61羽绒服三', null, '185', '', '曼紫M61羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('71bee291-1391-4cb3-b533-f8f1e78e485e', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SJL', '世纪蓝天SJL', null, '211', '', '世纪蓝天SJL', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('71f3252a-638d-43a7-ad79-f9eee672f019', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'J', '均码', null, '41', '', '均码', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('75c3b9b1-beb5-42e1-aa10-26a1962a76fb', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'AXX', 'AXX暗香', null, '282', '', 'AXX暗香', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('76b32e1f-ddd7-43b0-a589-0298bfcfcbe5', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MZL', 'MZL曼紫mzl', null, '71', '', '曼紫', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('775401f9-f43f-4bdf-a253-bb2717ddf4b2', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'FXX', 'FXX妃萱', null, '46', '', '妃萱', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('7794ac40-1385-43d2-be28-8db183207a67', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'G', '春秋装', null, '11', '', '春秋装-G', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('77b25de4-731c-4f16-a5f0-a463f1cc2ad7', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'LZW', 'LZW靓姿屋', null, '232', '', 'LZW靓姿屋', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('7835dbc9-9a6f-4ea4-8326-1889779cf28e', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'DDL', 'DDL迪迪欧', null, '68', '', '迪迪欧', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('784dc39b-90bd-431c-895f-e9de04564181', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '4', '4', null, '137', '', '4', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('79f45c74-7492-4816-869c-66b59bb5f0ba', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YMM', 'YMM怡梦情缘棉服', null, '257', '', 'YMM怡梦情缘棉服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('7b03a3f5-cd03-400d-876d-70b367f6a24f', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YKD', 'YKD羽绒服三', null, '186', '', 'YKD羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('7b79b747-56b1-4d81-842d-99715e94b12a', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'E', '风衣', null, '17', '', '风衣-E', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('7bcf0dbe-6f54-4231-967e-1a0513f85f23', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'DDK', 'DDK打底裤 ', null, '191', '', 'DDK打底裤 ', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('7d209f2e-e7b8-4a91-819e-a955c593ec85', '7088d9b9-6692-4fc7-a83c-da580f1407c3', '1006', '包', null, '78', '', null, '2018-06-30 19:29:11', '2018-06-30 19:29:11');
-INSERT INTO `sys_code` VALUES ('7e3f1f8a-7b58-4de2-9326-ddd08f2196f1', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YFQ', '依芳秋水双面尼YFQ', null, '206', '', '依芳秋水双面尼YFQ', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('7f2375e8-c387-4c8d-9934-b6833edaf4a0', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SJS', 'SJS世纪蓝天双面尼', null, '245', '', 'SJS世纪蓝天双面尼', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('804ee952-3f85-4e4a-aa8e-1ba37b5ac486', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'TKY', 'TKY挑款羽绒服', null, '255', '', 'TKY挑款羽绒服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('80994916-bf65-49ff-8529-9e8796bd46dd', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'A', 'XXL', null, '32', '', 'XXL', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('80ce475a-781e-4e58-a506-a77dc9648fca', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YHM', 'YHM羽绒服三', null, '179', '', 'YHM羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('81d70b21-ee20-48eb-b254-6b456517833b', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'NRL', 'NRL女人屋', null, '103', '', '女人屋', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('8383ab1c-18ee-4039-8e2c-33ce68ee1615', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'PXM', 'PXM飘轩', null, '74', '', '飘轩', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('867a05c8-ebf8-460a-9de9-9d2e1e4aae73', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'I', '50以下休闲', null, '152', '', '50以下休闲', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('86a900ad-98c8-40d6-8a00-c7fd2cf2f568', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'DRN', 'DRN貂绒打底', null, '144', '', '貂绒打底', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('88b76b27-e764-4421-965e-822b8640e155', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'TRY', '条绒羽绒服', null, '307', '', '条绒羽绒服TRY', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('8913777b-bfc5-41db-8c38-91c8b4956fe5', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', 'B', 'B', null, '29', '', 'B', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('8994730c-0ae1-45f6-a1a8-38b609a46252', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BJY', 'BJY北京羽绒服', null, '256', '', 'BJY北京羽绒服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('8bb35887-5ff6-4b85-b700-ff49e830e3d1', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SJZ', 'SJZ世纪蓝天真丝', null, '215', '', 'SJZ世纪蓝天真丝', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('8dda6501-f1a4-4ede-99df-98731ac37648', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'WMZ', 'WMZ外贸真丝', null, '285', '', 'WMZ外贸真丝', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('8f67ee08-799f-4369-ad56-ee25066da0cd', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'XCX', 'XCX炫彩', null, '283', '', 'XCX炫彩', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('8fccca92-1f94-4bc3-b74a-40ef7f8f109c', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MXX', 'MXX茉希', null, '277', '', 'MXX茉希', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('8ff8c4e9-ad53-438d-84fb-11d0ed3207fd', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YDW', '依丁物语YDW', null, '218', '', '依丁物语YDW', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('93321313-2711-40e6-b7c2-d469bb54eec6', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'KDM', 'KDM凯蒂梅露羊剪绒', null, '294', '', 'KDM凯蒂梅露羊剪绒', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('93a26353-fd83-4c17-832f-7724a35a5490', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'STS', 'STS尚缇诗', null, '244', '', 'STS尚缇诗', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('93e7d972-b6c8-403e-86ad-2fec6ae63de4', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'TKX', 'TKX唐卡', null, '281', '', 'TKX唐卡', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('94a7cbb7-b07e-4a77-b5c8-0674993548a3', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'PKF', 'PKF派克服', null, '240', '', 'PKF派克服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('95a7e559-2714-4b06-b776-18dd3860841e', '7b664e3e-f58a-4e66-8c0f-be1458541d14', '5ZY', '5ZY5字羽绒服三', null, '192', '', '5ZY5字羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('966afc63-956e-4900-86a0-61c811ec1e30', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YBX', 'YBX约布', null, '295', '', 'YBX约布', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('96e356fa-5b68-49d0-9fcd-aba2f0222303', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'PJN', 'PJN帕佳妮', null, '304', '', 'PJN帕佳妮', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('96e43f17-ef09-4e55-a61e-34292b2753f3', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MXM', 'MXM莫西莫', null, '66', '', '莫西莫', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('98d45a4c-3035-4583-8040-5c1821c7ca97', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BHX', 'BHX鋇禾春装', null, '266', '', 'BHX鋇禾春装', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('98dda8cf-0193-4431-9a8e-dea7524dfca4', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ZSL', 'ZSL真丝连衣裙', null, '227', '', 'ZSL真丝连衣裙', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('99bb643f-99d1-4d58-9b0e-887a774877b8', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'XRX', 'XRX熙然', null, '241', '', 'XRX熙然', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('9a838347-2e8d-4acb-ac6d-2615ce15fc0c', '1942d4fd-3203-42b1-a955-4a84a532b2a2', '18', '2018', null, '318', '', '2018', '2018-10-19 13:07:14', '2018-10-19 13:07:14');
-INSERT INTO `sys_code` VALUES ('9b8d73b7-e51c-469c-a035-b9c634f44c24', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'NSQ', 'NSQ诺诗琪', null, '220', '', 'NSQ诺诗琪', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('9b91b963-d46a-463b-814b-c47805146050', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', 'D', ' D', null, '31', '', 'D', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('9ba942ed-37ac-457e-9cad-5ae962762242', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MXY', 'MXY魔犀羽绒服', null, '165', '', '魔犀羽绒服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('9cdfcb80-3647-4b59-b4ec-9e88bc1dbf36', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SDX', 'SDX天格双面呢', null, '120', '', 'SDX', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('9d414f7d-1213-4409-af54-1efe4a14a87a', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'L', '棉服', null, '150', '', '棉服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('9dd88a48-9522-46f6-b676-af1ff37afa36', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '6', '6', null, '24', '', '6', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('9e283ca6-df02-485a-840f-4b37918ebaba', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'NIK', 'NIK耐克', null, '2', '', '耐克-NIK', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('9e420c91-320e-44bc-ab99-c9cc95b8c69f', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'TRG', 'TRG唐人阁', null, '76', '', '唐人阁', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('9e4d15d3-c0d2-456d-8da3-a873d89181d0', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'WYS', 'WYS连衣裙', null, '314', '', 'WYS连衣裙', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('9f2edffa-aea8-4014-bd9e-546a3094c54b', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'FMX', 'FMX纷漫', null, '42', '', '纷漫', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('9f784c92-22e1-434e-8792-43d1829d9009', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '5', '5', null, '23', '', '5', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a0664601-d919-4dec-a1ea-28e90edcd0c2', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YFN', 'YFN妍妃霓', null, '126', '', '妍妃霓', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a092d9a4-da9f-44e5-8850-6b3b9bdd5a7d', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YGX', 'YGX雅阁', null, '121', '', 'YGX', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a1034ce4-d115-4496-b161-64eb5c69d45e', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '9', '9', null, '27', '', '9', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a1332c02-4c8f-4bbe-88de-52e5f9a09166', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YBB', 'YBB一布百布', null, '250', '', 'YBB一布百布', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a143fe9d-480c-4486-b20d-a572ba40e510', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ADI', 'ADI阿迪', null, '1', '', '阿迪-ADI', '2018-10-19 13:06:29', '2018-10-19 13:06:29');
-INSERT INTO `sys_code` VALUES ('a15d5b75-7f13-4f23-b2a5-20cfe7941f44', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ZSW', 'ZSW真丝围巾', null, '305', '', 'ZSW真丝围巾', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a1aa0583-bae7-4e85-b71f-6b3f871fa118', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'B', '夏装', null, '6', '', '夏装-B', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a29395f1-cbb6-4d3f-bd86-b83c4db15c69', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'LGS', 'LGS爱女孩', null, '116', '', '爱女孩', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a30fb363-6976-4232-b9c6-b154170e3dc0', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ZGM', 'ZGM专供棉服', null, '201', '', 'ZGM专供棉服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a36dfd28-f130-4d84-83a7-e9d15d5682a3', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YRW', 'YRW羊绒围巾', null, '138', '', '羊绒围巾', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a50b6cb4-560f-41af-906a-ef5f43b19186', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SSL', 'SSL桑索', null, '51', '', '桑索', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a5d04a95-7fd7-4e6a-8962-4f8889c3d431', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YXX', 'YXX羽希', null, '58', '', '羽希', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a8d9bd2e-8a0f-4235-8d93-4b5909c945b4', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MDX', 'MDX漫多', null, '223', '', 'MDX漫多', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('a97b8fa7-c260-4df6-a1bb-d5314d398baa', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'JNX', 'JNX邂逅江南', null, '310', '', 'JNX邂逅江南', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ab170ed2-56c5-467e-8630-02db6910ab44', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'JJW', 'JJW晶晶旗威', null, '161', '', '晶晶旗威', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ad5cff15-ab87-4ad6-9ea1-89503d2f1832', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '8', '8', null, '26', '', '8', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ad80fbf8-7db6-40e7-8c88-32a1abb1eee4', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'FZX', '梵姿FZX', null, '79', '', '梵姿', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ade7d3e9-0026-43e7-83fe-96c1be30122c', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'CRZ', 'CR\'Z', null, '52', '', 'CR\'Z', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('af8c9140-12ec-44e2-9691-c08adbb4b8de', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'W', '卫衣', null, '297', '', '卫衣', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('b1b5f177-0fff-4574-b90f-2ae0fdf3d8bd', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YJR', 'YJR羊剪绒', null, '237', '', 'YJR羊剪绒', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('b2229e38-a32d-4373-831d-0c3c438365ec', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MZX', 'MZX曼紫秋mzx', null, '130', '', '曼紫秋', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('b289b54a-9362-4db5-941f-886b9519e5ed', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'F', '裤子', null, '18', '', '裤子-F', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('b2f81d20-4274-41ee-bbee-0adf5994b401', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'DDM', '打底毛衫DDM', null, '162', '', '打底毛衫DDM', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('b34e3d29-f2e2-4fe4-81cd-a5b4347d44d8', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'C', '秋装', null, '7', '', '秋装-C', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('b444ae4e-244d-401a-b3d3-37f1c71c4ee6', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YMX', 'YMX翼美', null, '97', '', '翼美', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('b614c223-d776-4045-a729-dc18294b190e', '7088d9b9-6692-4fc7-a83c-da580f1407c3', '1004', '公斤', null, '76', '', null, '2018-06-30 19:28:56', '2018-06-30 19:28:56');
-INSERT INTO `sys_code` VALUES ('b61e977f-6162-4443-97c3-0d0473aa281b', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'JZK', 'JZK羽绒服三', null, '180', '', 'JZK羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('b87554b5-541d-48ec-9978-49f422fd7ac0', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'LYR', 'LYR蓝雅绒', null, '160', '', '蓝雅绒', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ba90d75a-5d8a-4dac-9458-f46d12511d57', '7088d9b9-6692-4fc7-a83c-da580f1407c3', '1003', '条', null, '75', '', null, '2018-06-30 19:28:50', '2018-06-30 19:28:50');
-INSERT INTO `sys_code` VALUES ('baab9800-b7db-4ea3-8b89-1f4ae38ea822', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'GFN', 'GFN哥芙妮羽绒服', null, '177', '', '哥芙妮羽绒服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('bc2d7429-eb0b-4f24-aa70-f40d7589aa81', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'C', 'S', null, '34', '', 'S', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('bc6ba969-a659-4e1c-8dee-d29608324b33', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'WHY', 'WHY王后羽绒服', null, '176', '', '王后羽绒服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('be8c4b17-e786-4441-ab9e-7f1dbeb4a776', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HHS', 'HHS黄鹤双面尼', null, '248', '', 'HHS黄鹤双面尼', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('c0d871ba-0670-466c-8586-e02ce2c65c02', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'DDO', 'DDO迪迪欧秋', null, '92', '', '迪迪欧秋', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('c0e51b55-671b-480a-b864-69c23a81fc0b', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'DBQ', 'DBQ迪碧茜毛衣', null, '303', '', 'DBQ迪碧茜', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('c1d2b3f8-032a-4410-bf05-249053a825e3', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'XKL', 'XKL茜可可', null, '50', '', '茜可可', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('c203be2e-2873-4d0a-9faf-68e894e1e2f3', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HZZ', 'HZZ杭州杂', null, '247', '', 'HZZ杭州杂', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('c2abdd8e-2eae-47eb-a694-4714da6137fe', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BBL', 'BBL播', null, '65', '', '播', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('c2e89f09-04f6-4645-95fc-c480bd551714', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HHJ', 'HHJ红火家人', null, '234', '', 'HHJ红火家人', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('c2ff2b85-e617-4e71-95c0-3b9638b606d6', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'JOR', 'JOR乔丹', null, '4', '', '乔丹-JOR', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('c36abb33-00ac-42c6-8cdc-45fca59bb9f1', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'QCX', '千禅QCX', null, '208', '', '千禅女装', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('c7f0ea3d-42c1-4e7f-8102-402ac55c0b01', '7088d9b9-6692-4fc7-a83c-da580f1407c3', '1007', '套', null, '79', '', null, '2018-06-30 19:29:26', '2018-06-30 19:29:26');
-INSERT INTO `sys_code` VALUES ('c8ee7d8b-1f25-423d-b9ec-d557805d6b67', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'R', '衬衣', null, '157', '', '衬衣', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ca73d117-461c-4a3f-aacb-36a8570abd48', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SRL', 'SRL赛睿娜L', null, '118', '', 'SRL', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('caf2b551-3599-4b86-be78-f540d3ef5dcc', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'CZM', 'CZM粗针毛衫', null, '263', '', 'CZM粗针毛衫', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('cb500968-e8ab-4494-bc64-76b338fff965', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'QLS', 'QLS琦丽莎', null, '213', '', 'QLS琦丽莎', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('cc708b6c-a96d-4c5d-9241-0bbb6af11f26', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'PSB', 'PSB帕斯宝', null, '279', '', 'PSB帕斯宝', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ccf9a0cc-aba8-4e05-81ce-9585686b6643', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'FRX', 'FRX芙瑞宣', null, '62', '', '芙瑞宣', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ce01577b-f8f7-4619-994b-968235c42ad2', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ZRS', 'ZRS绽然双面尼', null, '287', '', 'ZRS绽然', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('cecc6dc2-76ed-4737-99b9-870c42ca03e6', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'PYY', 'PYY球球款三', null, '194', '', 'PYY球球款三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('cf054a61-9bdc-4508-9567-585060f067e5', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'IKX', 'IKX', null, '158', '', 'IKX', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('cf992e05-e8c5-451a-b95b-8b4735903082', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MQL', 'MQL玛琪雅朵', null, '60', '', '玛琪雅朵', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('d16848b9-60d2-48db-a746-79c082aa6578', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'M03', 'M03曼紫03羽绒服三', null, '182', '', '曼紫03羽绒服三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('d16d0a0d-c884-412c-b32d-c1912b0c7f41', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MZR', 'MZR曼紫三', null, '195', '', 'MZR曼紫三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('d2ef5490-f39b-4652-b9f2-a4ba87369750', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MEX', 'MEX沐恩', null, '48', '', '沐恩', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('d34c7cb9-68d6-4875-bc0b-75a2b93000de', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '3', '3', null, '136', '', '3', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('d36d28d3-2054-44cb-9817-a1a43ac4d5c6', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HEM', 'HEM和尔美', null, '196', '', 'HEM和尔美', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('d4c6125c-558d-406e-a4dc-3cf8d72f92b8', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MEL', 'MEL沐恩L', null, '163', '', '沐恩L', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('d56ddc33-ebb7-44ad-a7a2-cc0efe4589ff', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SNL', 'SNL圣娜依儿', null, '100', '', '圣娜依儿', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('d6c64f0a-dc6d-4cab-b51f-b7db35a3eb02', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ZLX', 'ZLX庄丽欣', null, '45', '', '庄丽欣', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('d7acb442-d4dd-4745-af1e-6fd6ec69fae6', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SWX', '述忘SWX', null, '219', '', '述忘SWX', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('d7c945e2-3917-44db-999c-e7a51b9ddd99', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'QSX', 'QSX强缩绒', null, '309', '', 'QSX强缩绒', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('d7e140c1-0a74-4829-8e97-c0a378172f2c', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ZHG', 'ZHG子恒国际双面尼', null, '293', '', 'ZHG子恒国际双面尼', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('d844e30b-5eb6-4800-a449-061dd4c56af5', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MSX', 'MSX曼丝秀登', null, '90', '', '曼丝秀登', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('dab7d485-278d-460f-a722-ee6311d51d23', '7088d9b9-6692-4fc7-a83c-da580f1407c3', '1001', '件', null, '73', '', null, '2018-06-30 19:28:37', '2018-06-30 19:28:37');
-INSERT INTO `sys_code` VALUES ('daea1534-8f45-4dd3-8344-42c7cd41a636', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BBX', 'BBX播', null, '199', '', 'BBX播', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('db09e1fc-40b6-4e06-b754-5f217b6b5262', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ARB', 'ARB阿尔巴卡双面尼', null, '264', '', 'ARB阿尔巴卡双面尼', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('dbbf8787-343c-4962-bdf2-e5e36944f51f', '7088d9b9-6692-4fc7-a83c-da580f1407c3', '1005', '箱', null, '77', '', null, '2018-06-30 19:29:06', '2018-06-30 19:29:06');
-INSERT INTO `sys_code` VALUES ('dbda1090-2471-47d8-a32d-765f9eb08910', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'KWN', 'KWN柯文娜', null, '242', '', 'KWN柯文娜', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('dcb6bd5a-4057-444b-8edd-e2355aa36954', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'N', '毛衫', null, '139', '', '', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('dd0abc85-f78f-421c-843b-a6959a08c105', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', 'C', 'C', null, '30', '', 'C', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('dd272d8b-9a09-4672-a4dd-5f740b17a363', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'APM', 'APM艾普玛', null, '296', '', 'APM艾普玛', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('deb3a772-884d-4fd9-a555-1b8b7b05d124', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'XKM', 'XKM2017新款毛衣', null, '252', '', 'XKM2017新款毛衣', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('df908b0c-c2c4-41ed-bdc5-2fe97889b344', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'FAR', 'FAR F.艾人', null, '270', '', ' F.艾人', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('e00ae7bb-c23d-4326-b050-4986e5138c5a', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'NRW', 'NRW女人屋', null, '61', '', '女人屋', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('e064b9a9-924d-488b-8e5d-00b751d2821b', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'XPP', 'XPP溆牌', null, '269', '', '溆牌', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('e1ee070b-1932-43e3-a7c4-20f05d672ba1', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '7', '7', null, '25', '', '7', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('e2d9b374-1c31-4260-bafa-717c4bda88cb', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'ZTL', 'ZTL紫藤罗', null, '49', '', '紫藤罗', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('e48f49c9-626c-4bcb-be1f-70a9e17765a1', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'HZS', 'HZS杭州双面尼', null, '254', '', 'HZS杭州双面尼', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('e5d71e81-9e0c-4d58-93ab-cdad615f5edf', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'AGW', 'AGW昂购物', null, '311', '', 'AGW昂购物', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('e6b2a41e-37d1-4104-a79f-ef3927bf73bd', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'M', '羽绒服', null, '148', '', '羽绒服', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('e6f0fce3-37da-4731-a08d-c0e07e086938', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'E', '春夏装', null, '9', '', '春夏装-E', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('e7c6b1ea-645f-406a-a8ac-9706768472cc', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YXL', 'YXL依香丽影', null, '47', '', '依香丽影', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('e98ed7b9-c959-4326-a1a7-0fe7ad6179c0', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'J', '老年处理', null, '153', '', '老年处理', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('e9d62a8b-09bd-435a-b3e2-a9822a2bede0', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'JJL', 'JJL晶晶旗威', null, '99', '', '晶晶旗威', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ea7d64e7-a57a-4df9-924d-0a2d73ff9b08', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BRM', 'BRM芭而慕', null, '292', '', 'BRM芭而慕', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('eb23a73e-cc4d-4caf-83cd-ca74bb226b85', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SSX', 'SSX述色', null, '306', '', 'SSX述色', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ed24f032-166f-4ffb-88d5-a23edcbb23f5', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'AAA', 'AAA处理品', null, '233', '', 'AAA处理品', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ee673e40-ec67-4653-92fc-3fd33c220514', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'LIN', 'LIN李宁', null, '3', '', '李宁-LIN', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('eeec08d1-c9a5-491c-ba1b-01335c7e3b95', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'B', '连衣裙', null, '14', '', '连衣裙-B', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ef5df705-7ce0-4d08-ade0-42d6c9af48a9', '7088d9b9-6692-4fc7-a83c-da580f1407c3', '1002', '个', null, '74', '', null, '2018-06-30 19:28:42', '2018-06-30 19:28:42');
-INSERT INTO `sys_code` VALUES ('f0a9b98f-534f-4edb-9f88-23c60a823406', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BFX', 'BFX柏芙澜', null, '262', '', 'BFX柏芙澜', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f0b27702-4212-430c-ba28-5adda333a86a', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MNX', 'MNX玛尼毛衫', null, '221', '', 'MNX玛尼毛衫', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f1e5ca9a-2970-4849-bbd3-efb766e5a848', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'GLS', '格鲁丝', null, '301', '', 'GLS格鲁丝', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f266600a-7af3-4238-aed1-ccbffd887db3', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MZS', 'MZS曼紫双面呢', null, '77', '', '曼紫双面呢', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f3251ee9-8c9d-4547-ae7c-a7bdc7ca95dd', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'TAS', 'TAS铜氨丝', null, '284', '', 'TAS铜氨丝', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f38bbf12-e3c1-497c-95d9-1c68b3ae3e9c', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'Q', '套装', null, '156', '', '套装', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f3a5b120-3ff6-4679-a159-a2af679a6e24', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'BJN', 'BJN贝婕妮春装', null, '260', '', 'BJN贝婕妮春装', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f44155fb-734c-4e6b-bbe2-fa0a3c3e6e94', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'CCC', 'CCC折扣品', null, '268', '', '折扣品', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f4c60280-5885-48b5-9093-623170a8a2a1', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'SSS', 'SSS莎莎双面尼', null, '249', '', 'SSS莎莎双面尼', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f4d4f3ba-326f-473b-ac5e-c3fad3ac56f4', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'MGG', 'MGG木果果木', null, '274', '', 'MGG木果果木', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f65fd2dd-63c5-4d00-bba7-a1593a4ca40b', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'STX', 'STX诗婷', null, '313', '', 'STX诗婷', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f6d55b1a-10c4-4ee9-a160-ed982411e663', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'CSX', '尘色CSX', null, '127', '', ' 尘色X', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f7b26c3e-4128-40ab-b080-144cfd28b6fb', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'XKB', 'XKB西可可', null, '80', '', '西可可', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('f8ce041e-8da3-4cba-9ca3-762922062a63', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'D', '外套', null, '16', '', '外套-D', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('fbf9703e-23d9-4b3d-b8d1-b747c1d44a89', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'RST', 'RST双面尼三', null, '175', '', 'RST双面尼三', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('fdd9a2c3-5256-4eb7-abc6-d11789517550', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'RLX', 'RLX芮丽', null, '280', '', 'RLX芮丽', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('fe355bd2-9ac5-4127-8b75-7830d30353af', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'YXS', 'YXS伊袖', null, '300', '', 'YXS伊袖', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('fedc9430-77ea-4055-b923-ce90964f09c9', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'E', 'L', null, '36', '', 'L', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ff1f8041-dfb8-43af-8540-76e1de25af53', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'XBX', 'XBX小背心', null, '229', '', 'XBX小背心', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
-INSERT INTO `sys_code` VALUES ('ff899c09-9242-4d0a-aad6-64594079227a', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'LCX', 'LCX莱茨大衣', null, '253', '', 'LCX莱茨大衣', '2018-10-19 13:06:36', '2018-10-19 13:06:36');
+INSERT INTO `sys_code` VALUES ('040b2e01-6d27-4d35-b132-7df089f0feec', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'C', '甲方高管', null, '329', '', null, '2019-03-12 12:39:07', '2019-03-12 12:39:07');
+INSERT INTO `sys_code` VALUES ('08387c77-fca7-4118-bf76-a9d56bc7ce1e', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'B', '窗户洞口', null, '346', '', null, '2019-03-12 17:13:15', '2019-03-12 17:13:15');
+INSERT INTO `sys_code` VALUES ('0b2406d0-76c8-4447-b039-fdb69fa62330', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'D', '其他', null, '334', '', null, '2019-03-12 12:42:02', '2019-03-12 12:42:02');
+INSERT INTO `sys_code` VALUES ('113e2a56-a1d8-4606-a0b0-ec9c6e7543a4', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'D', '注册造价师', null, '338', '', null, '2019-03-12 13:06:09', '2019-03-12 13:06:09');
+INSERT INTO `sys_code` VALUES ('1c607581-4063-4acd-bae3-ce2a02bb0ea8', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'F', '热水器', null, '350', '', null, '2019-03-12 17:13:50', '2019-03-12 17:13:50');
+INSERT INTO `sys_code` VALUES ('25a47ade-8de3-4e62-b2b4-2e780637c985', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'C', '教授级高工', null, '333', '', null, '2019-03-12 12:41:54', '2019-03-12 12:41:54');
+INSERT INTO `sys_code` VALUES ('338ec105-546b-497d-9c73-ae3b79b24756', 'a88fa4d3-3658-4449-8f4a-7f438964d716', 'Export', '导出', null, '355', '', null, '2019-03-28 13:18:40', '2019-03-28 13:18:40');
+INSERT INTO `sys_code` VALUES ('3eb15a2e-04ec-409e-901b-1978de691546', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'E', '其他', null, '339', '', null, '2019-03-12 13:06:18', '2019-03-12 13:06:18');
+INSERT INTO `sys_code` VALUES ('4dff7f15-1eb0-46da-a7a6-619190fbfb67', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'D', 'EPC总项目经理', null, '330', '', null, '2019-03-12 12:39:17', '2019-03-12 12:39:17');
+INSERT INTO `sys_code` VALUES ('4fe963ab-9e8d-44f9-88fc-06210ca9c5d3', '7088d9b9-6692-4fc7-a83c-da580f1407c3', 'E', '水电暖设计', null, '325', '', null, '2019-03-12 12:38:22', '2019-03-12 12:38:22');
+INSERT INTO `sys_code` VALUES ('53c08e73-381f-4c43-bb51-c1a608efc328', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'A', '项目经理', null, '327', '', null, '2019-03-12 12:38:52', '2019-03-12 12:38:52');
+INSERT INTO `sys_code` VALUES ('59852730-5d5e-48bc-8726-f317c26a0636', 'a88fa4d3-3658-4449-8f4a-7f438964d716', 'Authorize', '授权', null, '357', '', null, '2019-04-09 17:42:09', '2019-04-09 17:42:09');
+INSERT INTO `sys_code` VALUES ('64bf0b2f-8856-4fc6-96da-afa78b6eded9', '7088d9b9-6692-4fc7-a83c-da580f1407c3', 'B', '结构设计', null, '322', '', null, '2019-03-12 12:37:29', '2019-03-12 12:37:29');
+INSERT INTO `sys_code` VALUES ('6752569c-7319-4ac1-801d-37b92e8ceed8', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', 'E', '预制装配式结构（混凝土结构）', null, '344', '', null, '2019-03-12 13:07:03', '2019-03-12 13:07:03');
+INSERT INTO `sys_code` VALUES ('75093b9f-c72a-4267-9497-0592aab3b0d6', 'a88fa4d3-3658-4449-8f4a-7f438964d716', 'Delete', '删除', null, '353', '', null, '2019-03-28 13:17:56', '2019-03-28 13:17:56');
+INSERT INTO `sys_code` VALUES ('8486aff0-07c2-4800-9cdc-f72a2f638580', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'D', '配电箱', null, '348', '', null, '2019-03-12 17:13:35', '2019-03-12 17:13:35');
+INSERT INTO `sys_code` VALUES ('9b31c040-23ad-44cb-8ba1-25155e5a041f', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'C', '门洞', null, '347', '', null, '2019-03-12 17:13:23', '2019-03-12 17:13:23');
+INSERT INTO `sys_code` VALUES ('a4032a7c-cf9d-476f-9f10-a8b48ed79a40', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'B', '二级建造师', null, '336', '', null, '2019-03-12 12:42:27', '2019-03-12 12:42:27');
+INSERT INTO `sys_code` VALUES ('a42d0b4f-bec2-4af9-ab46-ff414dbbc118', 'a88fa4d3-3658-4449-8f4a-7f438964d716', 'Update', '修改', null, '352', '', null, '2019-03-28 13:17:49', '2019-03-28 13:17:49');
+INSERT INTO `sys_code` VALUES ('a8a797b9-5bf8-4f9e-b4a4-8705b429612f', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'A', '工程师', null, '331', '', null, '2019-03-12 12:39:30', '2019-03-12 12:39:30');
+INSERT INTO `sys_code` VALUES ('a957471f-2696-4529-af50-06d5d6d2836c', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'A', '厕所马桶', null, '345', '', null, '2019-03-12 17:13:06', '2019-03-12 17:13:06');
+INSERT INTO `sys_code` VALUES ('aacf9b3d-dcc1-4a00-aca2-1dcc5512359e', '7088d9b9-6692-4fc7-a83c-da580f1407c3', 'C', '装修设计', null, '323', '', null, '2019-03-12 12:37:38', '2019-03-12 12:37:38');
+INSERT INTO `sys_code` VALUES ('afdf95b1-bae1-41af-b574-40bf05bace9d', '7088d9b9-6692-4fc7-a83c-da580f1407c3', 'F', '预制构件设计', null, '326', '', null, '2019-03-12 12:38:35', '2019-03-12 12:38:35');
+INSERT INTO `sys_code` VALUES ('ba528619-73cc-4379-94e0-b9e53c89b023', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', 'C', '混凝土结构', null, '342', '', null, '2019-03-12 13:06:45', '2019-03-12 13:06:45');
+INSERT INTO `sys_code` VALUES ('bddf9b84-4033-463a-a0b5-43b6504112e2', 'a88fa4d3-3658-4449-8f4a-7f438964d716', 'Add', '添加', null, '351', '', null, '2019-03-28 13:17:41', '2019-03-28 13:17:41');
+INSERT INTO `sys_code` VALUES ('c330b61e-227e-44f7-af02-15940f9d1280', 'a88fa4d3-3658-4449-8f4a-7f438964d716', 'Import', '导入', null, '356', '', null, '2019-03-28 13:18:50', '2019-03-28 13:18:50');
+INSERT INTO `sys_code` VALUES ('c867b6ca-09f9-4cea-a81c-651580a2b654', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'C', '注册结构工程师', null, '337', '', null, '2019-03-12 12:42:37', '2019-03-12 12:42:37');
+INSERT INTO `sys_code` VALUES ('ca7455e6-a5ac-41b8-b010-279b1bf80b99', 'e86cf108-dc4d-4532-8cce-fdb041363902', 'E', '空调', null, '349', '', null, '2019-03-12 17:13:43', '2019-03-12 17:13:43');
+INSERT INTO `sys_code` VALUES ('cfa86aa8-f296-4813-bc42-b8ec7f6e0776', '48458681-48b0-490a-a840-0ffcbe49f5d4', 'A', '一级建造师', null, '335', '', null, '2019-03-12 12:42:19', '2019-03-12 12:42:19');
+INSERT INTO `sys_code` VALUES ('d67de3b3-975f-432c-a95d-aa0cbea4204f', '7088d9b9-6692-4fc7-a83c-da580f1407c3', 'A', '建筑设计', null, '321', '', null, '2019-03-12 12:37:19', '2019-03-12 12:37:19');
+INSERT INTO `sys_code` VALUES ('db23af8d-357b-4160-9c18-03c628b5ae9a', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', 'B', '钢结构', null, '341', '', null, '2019-03-12 13:06:38', '2019-03-12 13:06:38');
+INSERT INTO `sys_code` VALUES ('e2cafd56-0b0f-4754-b714-93e70c89d422', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', 'D', '预制装配式结构（钢结构）', null, '343', '', null, '2019-03-12 13:06:55', '2019-03-12 13:06:55');
+INSERT INTO `sys_code` VALUES ('e460370f-88fd-4e97-851e-f905f58baaae', '7b664e3e-f58a-4e66-8c0f-be1458541d14', 'B', '高级工程师', null, '328', '', null, '2019-03-12 12:39:00', '2019-03-12 12:39:00');
+INSERT INTO `sys_code` VALUES ('ed1de495-a2b9-4613-8d3b-8ba9fde21770', '8cb134d5-979b-40e2-b453-aeee265f4ab2', 'B', '高级工程师', null, '332', '', null, '2019-03-12 12:41:44', '2019-03-12 12:41:44');
+INSERT INTO `sys_code` VALUES ('f0d04560-1ac7-4661-8bdb-5e4e92fb9168', '7088d9b9-6692-4fc7-a83c-da580f1407c3', 'D', '设备设计', null, '324', '', null, '2019-03-12 12:38:14', '2019-03-12 12:38:14');
+INSERT INTO `sys_code` VALUES ('f61b1937-18fb-43e8-b86e-78547d793d37', 'a88fa4d3-3658-4449-8f4a-7f438964d716', 'Audit', '审核', null, '354', '', null, '2019-03-28 13:18:15', '2019-03-28 13:18:15');
+INSERT INTO `sys_code` VALUES ('fc41508f-3b0f-4d6b-bb09-c89368f0df08', '2e0393f9-e6d6-4c15-98cf-96072f0d3d70', 'A', '木结构', null, '340', '', null, '2019-03-12 13:06:29', '2019-03-12 13:06:29');
 
 -- ----------------------------
 -- Table structure for sys_codetype
@@ -1294,172 +1040,87 @@ CREATE TABLE `sys_codetype` (
   `AddTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   `EditTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
   `SiteGuid` varchar(50) DEFAULT NULL COMMENT '归属公司或站点',
-  PRIMARY KEY (`Guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`Guid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_codetype
 -- ----------------------------
-INSERT INTO `sys_codetype` VALUES ('1942d4fd-3203-42b1-a955-4a84a532b2a2', '8d3158d6-e179-4046-99e9-53eb8c04ddb1', '1', '年份', '19', '2018-07-24 18:54:48', '2018-07-24 18:54:48', null);
-INSERT INTO `sys_codetype` VALUES ('2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '8d3158d6-e179-4046-99e9-53eb8c04ddb1', '1', '批次', '15', '2018-06-18 06:38:03', '2018-06-18 06:38:03', null);
-INSERT INTO `sys_codetype` VALUES ('48458681-48b0-490a-a840-0ffcbe49f5d4', '8d3158d6-e179-4046-99e9-53eb8c04ddb1', '1', '款式', '14', '2018-06-18 06:37:55', '2018-06-18 06:37:55', null);
-INSERT INTO `sys_codetype` VALUES ('7088d9b9-6692-4fc7-a83c-da580f1407c3', '9d7643f0-d739-4342-b2da-45781b62ddd0', '1', '采购商品单位', '18', '2018-06-30 19:28:13', '2018-06-30 19:28:13', null);
-INSERT INTO `sys_codetype` VALUES ('7b664e3e-f58a-4e66-8c0f-be1458541d14', '8d3158d6-e179-4046-99e9-53eb8c04ddb1', '1', '品牌', '5', '2018-06-18 06:21:54', '2018-06-18 06:21:54', null);
-INSERT INTO `sys_codetype` VALUES ('8cb134d5-979b-40e2-b453-aeee265f4ab2', '8d3158d6-e179-4046-99e9-53eb8c04ddb1', '1', '季节', '13', '2018-06-18 06:35:32', '2018-06-18 06:35:32', null);
-INSERT INTO `sys_codetype` VALUES ('8d3158d6-e179-4046-99e9-53eb8c04ddb1', null, '0', '服装SKU', '4', '2018-06-18 06:21:45', '2018-06-18 06:21:46', null);
-INSERT INTO `sys_codetype` VALUES ('9d7643f0-d739-4342-b2da-45781b62ddd0', null, '0', '采购字典', '17', '2018-06-30 19:28:02', '2018-06-30 19:28:02', null);
-INSERT INTO `sys_codetype` VALUES ('e86cf108-dc4d-4532-8cce-fdb041363902', '8d3158d6-e179-4046-99e9-53eb8c04ddb1', '1', '尺码', '16', '2018-06-18 06:38:09', '2018-06-18 06:38:09', null);
+INSERT INTO `sys_codetype` VALUES ('2e0393f9-e6d6-4c15-98cf-96072f0d3d70', '8d3158d6-e179-4046-99e9-53eb8c04ddb1', '1', '项目类型', '15', '2019-03-12 12:36:16', '2019-03-12 12:36:17', null);
+INSERT INTO `sys_codetype` VALUES ('48458681-48b0-490a-a840-0ffcbe49f5d4', '8d3158d6-e179-4046-99e9-53eb8c04ddb1', '1', '资质类型', '14', '2019-03-12 12:35:55', '2019-03-12 12:35:56', null);
+INSERT INTO `sys_codetype` VALUES ('7088d9b9-6692-4fc7-a83c-da580f1407c3', '9d7643f0-d739-4342-b2da-45781b62ddd0', '1', '设计类型', '18', '2019-03-12 12:36:47', '2019-03-12 12:36:47', null);
+INSERT INTO `sys_codetype` VALUES ('7b664e3e-f58a-4e66-8c0f-be1458541d14', '8d3158d6-e179-4046-99e9-53eb8c04ddb1', '1', '个人角色', '5', '2019-03-12 12:34:06', '2019-03-12 12:34:06', null);
+INSERT INTO `sys_codetype` VALUES ('8cb134d5-979b-40e2-b453-aeee265f4ab2', '8d3158d6-e179-4046-99e9-53eb8c04ddb1', '1', '技术职务', '13', '2019-03-12 12:34:29', '2019-03-12 12:34:30', null);
+INSERT INTO `sys_codetype` VALUES ('8d3158d6-e179-4046-99e9-53eb8c04ddb1', null, '0', '项目管理', '4', '2019-03-12 12:33:54', '2019-03-12 12:33:54', null);
+INSERT INTO `sys_codetype` VALUES ('9d7643f0-d739-4342-b2da-45781b62ddd0', null, '0', '设计公司', '17', '2019-03-12 12:36:41', '2019-03-12 12:36:42', null);
+INSERT INTO `sys_codetype` VALUES ('a88fa4d3-3658-4449-8f4a-7f438964d716', 'ef8c0895-2637-4892-84ec-6bfe0766629c', '1', '功能权限', '20', '2019-03-28 13:17:34', '2019-03-28 13:17:34', null);
+INSERT INTO `sys_codetype` VALUES ('e86cf108-dc4d-4532-8cce-fdb041363902', '8d3158d6-e179-4046-99e9-53eb8c04ddb1', '1', '模型分类', '16', '2019-03-12 17:12:28', '2019-03-12 17:12:29', null);
+INSERT INTO `sys_codetype` VALUES ('ef8c0895-2637-4892-84ec-6bfe0766629c', null, '0', '系统权限（千万不要删除）', '19', '2019-03-28 11:18:45', '2019-03-28 11:18:45', null);
 
 -- ----------------------------
 -- Table structure for sys_log
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log`;
 CREATE TABLE `sys_log` (
-  `Guid` varchar(50) NOT NULL COMMENT '唯一标识——Guid',
-  `LoginName` varchar(50) NOT NULL COMMENT '日志操作ID',
-  `DepartName` varchar(50) DEFAULT NULL COMMENT '日志操作人所属部门Guid',
-  `OptionTable` varchar(50) DEFAULT NULL COMMENT '操作表名',
-  `Summary` varchar(255) NOT NULL COMMENT '日志操作内容',
-  `IP` varchar(20) NOT NULL COMMENT '日志操作IP地址',
-  `MacUrl` varchar(50) DEFAULT NULL COMMENT '日志操作Mac地址',
-  `LogType` int(11) NOT NULL DEFAULT '0' COMMENT '日志操作类型',
-  `Urls` varchar(255) NOT NULL COMMENT '日志操作Url',
-  `AddTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '日志添加时间',
-  PRIMARY KEY (`Guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Guid` varchar(100) NOT NULL,
+  `Application` varchar(50) DEFAULT NULL,
+  `Logged` datetime DEFAULT NULL,
+  `Level` varchar(50) DEFAULT NULL,
+  `Message` text,
+  `Logger` varchar(250) DEFAULT NULL,
+  `Callsite` varchar(512) DEFAULT NULL,
+  `Exception` varchar(512) DEFAULT NULL,
+  `IP` varchar(50) DEFAULT NULL,
+  `User` varchar(500) DEFAULT NULL,
+  `UserName` varchar(50) DEFAULT NULL,
+  `Browser` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`Guid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
-INSERT INTO `sys_log` VALUES ('0062dc4b-9d74-486f-abaa-3a329a2e4bed', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-17 13:10:17');
-INSERT INTO `sys_log` VALUES ('02180143-366d-4d40-9eee-5b4c8e6ca1e9', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-15 23:05:24');
-INSERT INTO `sys_log` VALUES ('022949f7-2821-4f25-9e0b-54fc00ed231f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 16:38:02');
-INSERT INTO `sys_log` VALUES ('04924303-3684-4470-9714-e0c213c7dd63', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 23:51:15');
-INSERT INTO `sys_log` VALUES ('0595214c-12f5-488c-9ef6-6bbf9dd182ac', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 15:43:50');
-INSERT INTO `sys_log` VALUES ('089bb90d-3ec3-4431-bd67-3e35d5dfc80e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-27 21:31:44');
-INSERT INTO `sys_log` VALUES ('0a37326b-2c99-4aff-9562-4a8cb8638e2a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 11:44:47');
-INSERT INTO `sys_log` VALUES ('103529fb-e4c6-4776-82cd-5753e0dbcc60', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:30:35');
-INSERT INTO `sys_log` VALUES ('10377b45-c23f-471f-b11b-ffb2b14c5524', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 16:46:19');
-INSERT INTO `sys_log` VALUES ('13903a8a-f86f-4ff4-9cd6-57256f540d22', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-03 10:36:06');
-INSERT INTO `sys_log` VALUES ('1622e52c-aafa-40af-8f09-f7fe1b05aa31', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-09 09:32:48');
-INSERT INTO `sys_log` VALUES ('17c6bf8b-7a1e-43f8-bca3-afc15410de9c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-02 10:41:50');
-INSERT INTO `sys_log` VALUES ('1af85365-f263-487c-9453-ae136213fd43', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:47:04');
-INSERT INTO `sys_log` VALUES ('1c73c7d4-0d36-422d-a1c7-b645cffe55c8', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 16:57:09');
-INSERT INTO `sys_log` VALUES ('1cba4871-625f-40b0-a8db-6fae9865402e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-24 09:14:42');
-INSERT INTO `sys_log` VALUES ('1cc1dd0c-6d10-4655-a1ed-f846ebcf76bc', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-25 14:31:59');
-INSERT INTO `sys_log` VALUES ('1cdce534-50f5-4a84-9477-e29a64fe35e0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 17:56:06');
-INSERT INTO `sys_log` VALUES ('1eb091d7-4c23-485c-80a3-ed28be9d4127', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 16:12:02');
-INSERT INTO `sys_log` VALUES ('1f411ac3-cd27-4ee7-9fb3-ecb53a06258a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-25 10:30:56');
-INSERT INTO `sys_log` VALUES ('1fb9cf2b-e215-41d4-8857-a3c237408e0e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-08 11:19:34');
-INSERT INTO `sys_log` VALUES ('212ffed7-d99c-4c02-823d-5d38f5573fac', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 10:55:47');
-INSERT INTO `sys_log` VALUES ('24245ffd-61eb-4567-90eb-8b572a09766d', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-16 13:33:06');
-INSERT INTO `sys_log` VALUES ('267109cb-6229-4ea3-8d1b-1272dd0ca08e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-06 14:05:56');
-INSERT INTO `sys_log` VALUES ('292de46f-787f-4f7d-ba09-4fdda40abd5a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 14:41:00');
-INSERT INTO `sys_log` VALUES ('2a5022f8-2abf-4260-9c24-61f14f804d80', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-30 14:41:33');
-INSERT INTO `sys_log` VALUES ('2c26d051-b2f0-4f99-98fa-43c23711875e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 09:58:45');
-INSERT INTO `sys_log` VALUES ('2c62098b-123c-4947-aaf0-5b59d7d1c2e0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-15 10:14:13');
-INSERT INTO `sys_log` VALUES ('2ddd0a68-f718-4fdc-bd18-a688d67f281a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 13:40:40');
-INSERT INTO `sys_log` VALUES ('30cecec5-cd22-4668-a647-4228d5cde811', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 12:13:14');
-INSERT INTO `sys_log` VALUES ('30d21205-2f97-4a58-a6cd-894db319f283', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-16 18:28:03');
-INSERT INTO `sys_log` VALUES ('319b812e-5665-4713-935c-efb6a367e6e6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 09:41:24');
-INSERT INTO `sys_log` VALUES ('319c88cd-d0fe-4d03-8e87-73c28618cd4c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 17:57:30');
-INSERT INTO `sys_log` VALUES ('332f6e46-e6b0-4bc1-9fe8-9af898ce6925', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 15:49:20');
-INSERT INTO `sys_log` VALUES ('346c6f4e-a3ed-4890-8aa7-854296542287', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 22:43:15');
-INSERT INTO `sys_log` VALUES ('35e2b377-4592-48f1-aeea-354a6c0f96ff', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:27:26');
-INSERT INTO `sys_log` VALUES ('35e77d18-3769-4ff0-a474-5007e0a6ed40', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-31 16:51:55');
-INSERT INTO `sys_log` VALUES ('3b988aa9-93b8-409a-bb5e-8f3b2e1e5319', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-23 19:02:36');
-INSERT INTO `sys_log` VALUES ('3d3f746b-9aa2-4510-ab10-90b472c37a0d', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 17:52:35');
-INSERT INTO `sys_log` VALUES ('3d9e7a55-8441-436b-bcb8-d5f354b1d216', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 13:24:05');
-INSERT INTO `sys_log` VALUES ('3f800f2f-07c6-421f-954b-af47b6109031', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:26:35');
-INSERT INTO `sys_log` VALUES ('4082b358-0a03-4d78-bfdf-e322201b377c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 14:38:28');
-INSERT INTO `sys_log` VALUES ('432a8477-adb4-4b38-b38d-bda511ec7edd', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-14 16:13:17');
-INSERT INTO `sys_log` VALUES ('456be8f0-f81b-403b-a0b2-3d9398e80dd1', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-06 12:57:02');
-INSERT INTO `sys_log` VALUES ('4aa16f7f-9451-4801-8134-1c5a0a6e97de', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:54:13');
-INSERT INTO `sys_log` VALUES ('4b17250a-4899-45e9-bb50-20ffa9379b52', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 09:32:12');
-INSERT INTO `sys_log` VALUES ('4ef3d66a-c84c-4af4-a15c-4790409c1611', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-08 10:18:14');
-INSERT INTO `sys_log` VALUES ('4ffb6518-4e0c-4c76-b3a6-9d36645da162', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-01 09:42:51');
-INSERT INTO `sys_log` VALUES ('5018ee70-bc17-47b6-93e4-9d84949f7c76', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 14:32:51');
-INSERT INTO `sys_log` VALUES ('50b8e6fa-a375-414a-bf25-6cb12d2e4f97', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-14 11:09:45');
-INSERT INTO `sys_log` VALUES ('52df56c6-8b3b-4c49-850a-34ad90f968f6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:57:47');
-INSERT INTO `sys_log` VALUES ('58ad49f0-2c4a-4d43-9c39-90756bcd9839', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-06 11:48:09');
-INSERT INTO `sys_log` VALUES ('5bc5807c-fcb2-4865-b630-6a3e620943a6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-27 19:31:03');
-INSERT INTO `sys_log` VALUES ('5df86bcf-deb6-4bb3-8527-ac3e49804a44', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 12:01:59');
-INSERT INTO `sys_log` VALUES ('5e1aa40a-aab5-4e70-b050-a6d9e1300db8', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-29 09:40:58');
-INSERT INTO `sys_log` VALUES ('61217f18-c4a0-4117-a800-0a7e02fdca4f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 09:11:51');
-INSERT INTO `sys_log` VALUES ('6bb24f0e-fa5f-4adf-b444-ee3f5c168c20', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-13 22:29:29');
-INSERT INTO `sys_log` VALUES ('6c1efb93-8b8f-41ff-8ebb-fb3410e5772b', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:47:17');
-INSERT INTO `sys_log` VALUES ('6cba5ddd-b1ba-4275-b885-2b4f5d0bb8ab', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 09:40:55');
-INSERT INTO `sys_log` VALUES ('6d75e4f3-110a-422a-8be6-8150e56c604b', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 17:52:47');
-INSERT INTO `sys_log` VALUES ('6e089844-d413-4598-8d72-85951c414431', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-31 15:07:08');
-INSERT INTO `sys_log` VALUES ('702d76cd-856d-4a88-8bf4-3bfda98a9638', 'admins', '商务中心', 'SysAdmin', '登录操作', '127.0.0.1', null, '1', '/fytadmin/login', '2018-12-17 14:15:00');
-INSERT INTO `sys_log` VALUES ('7207bc60-9daf-4eaa-acb8-dccf6795f17f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 14:28:14');
-INSERT INTO `sys_log` VALUES ('7a60db76-3177-4b35-be35-c8c5d636b439', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-02 17:20:03');
-INSERT INTO `sys_log` VALUES ('7b9029e2-6276-4f3e-99c6-350c4cff88ec', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-25 09:29:58');
-INSERT INTO `sys_log` VALUES ('7cea43fc-6fdc-4635-9f15-4522ff964590', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-08 08:57:26');
-INSERT INTO `sys_log` VALUES ('7db1cbe5-621d-410e-8d01-af13b789b5cd', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 09:44:08');
-INSERT INTO `sys_log` VALUES ('812e9d62-c31c-4fba-81ac-09eac3f2f8e3', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-01 11:52:46');
-INSERT INTO `sys_log` VALUES ('8323e852-2a2e-4e01-951c-cb1a8d209d12', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-23 12:44:02');
-INSERT INTO `sys_log` VALUES ('8329dd8b-fda7-4fde-b48b-2479f800871a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-22 15:14:59');
-INSERT INTO `sys_log` VALUES ('84130b71-6c67-4bab-84aa-b27662f20b9c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 09:20:52');
-INSERT INTO `sys_log` VALUES ('87be6724-a85e-4cab-8446-0b066fa27a24', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-08 23:00:00');
-INSERT INTO `sys_log` VALUES ('88c688e2-23e0-4b4d-8217-81f544b4c95b', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-18 15:11:30');
-INSERT INTO `sys_log` VALUES ('8a6cdb09-0324-4d7b-8590-ec537d5476b6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-01 15:42:55');
-INSERT INTO `sys_log` VALUES ('8c178b88-afef-485a-949e-8f97ed2e62ce', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 17:54:40');
-INSERT INTO `sys_log` VALUES ('8c62f2c3-ab60-4be6-8e55-2450a42fb0c2', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 22:05:45');
-INSERT INTO `sys_log` VALUES ('8d41670c-b780-46b9-951c-b474ecc66247', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-08 13:39:11');
-INSERT INTO `sys_log` VALUES ('8e0c6406-89d3-48a2-b599-4716cf76c7e4', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 15:02:08');
-INSERT INTO `sys_log` VALUES ('91a82f96-22dc-401d-a08c-26d481236d7c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 15:35:22');
-INSERT INTO `sys_log` VALUES ('932a7803-bd77-49af-86ab-6af7d304faf9', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-15 17:02:49');
-INSERT INTO `sys_log` VALUES ('940657e6-ecc7-4d75-bc81-ec24e41c8688', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-06 15:06:11');
-INSERT INTO `sys_log` VALUES ('95228b23-ec11-4492-a91d-61af34f8a03f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 15:19:57');
-INSERT INTO `sys_log` VALUES ('95e38528-9091-4b8c-aa48-b2b72fac6f2f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-31 18:02:43');
-INSERT INTO `sys_log` VALUES ('96055b13-8f2c-4da0-9cd7-b0d063076905', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 21:42:38');
-INSERT INTO `sys_log` VALUES ('9642e4b9-3a37-4d05-bc48-b07d23ba4aa5', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 14:43:05');
-INSERT INTO `sys_log` VALUES ('992e0351-ea74-4141-8aab-1eb735c46a05', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-03 12:38:35');
-INSERT INTO `sys_log` VALUES ('9a661bd4-efc5-4929-8d5b-e46fa07b75f0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-08 16:07:12');
-INSERT INTO `sys_log` VALUES ('9d29b8bd-e760-4a9e-a5ad-ca83078afbf5', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 17:58:55');
-INSERT INTO `sys_log` VALUES ('a1fb50d2-df9d-4c31-a050-10e30bd76af4', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 15:05:01');
-INSERT INTO `sys_log` VALUES ('a38f7927-46e4-4e88-8f1c-bf0c347ce5d4', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 15:45:18');
-INSERT INTO `sys_log` VALUES ('a73bca4f-9b83-487a-a4c5-52f615a54294', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-16 22:12:35');
-INSERT INTO `sys_log` VALUES ('aa5ba2bc-a709-4e9b-b44e-69493244a478', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-08 17:07:32');
-INSERT INTO `sys_log` VALUES ('ac2fa8b4-45e8-4f86-86b4-91e08c50c4ce', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-16 19:38:19');
-INSERT INTO `sys_log` VALUES ('af0b3001-eddd-4f0f-a805-9c353d0ab511', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-15 12:14:31');
-INSERT INTO `sys_log` VALUES ('b10db56b-8653-47e8-8378-022dff1e8616', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 14:17:38');
-INSERT INTO `sys_log` VALUES ('b29430e5-c21d-484f-94d1-47c45d11ae22', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 09:35:38');
-INSERT INTO `sys_log` VALUES ('b2a4126f-c1b6-41eb-a7f6-26d91cf0d45b', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-14 23:14:04');
-INSERT INTO `sys_log` VALUES ('b47c7584-a8c5-48f0-869f-0ea8ebf97886', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 16:12:48');
-INSERT INTO `sys_log` VALUES ('b8ef685e-626c-4627-8b8b-3bc1699c33a6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-30 11:41:38');
-INSERT INTO `sys_log` VALUES ('b9aff27c-25ac-4f33-92d7-cab5bd88cbe8', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-01 13:46:58');
-INSERT INTO `sys_log` VALUES ('bb60345e-6651-48ec-8d3a-0a08143c85d4', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-06 10:19:25');
-INSERT INTO `sys_log` VALUES ('be392df2-5417-4685-9890-4ba13fc10ff0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 11:21:17');
-INSERT INTO `sys_log` VALUES ('c0319fd5-0eeb-4013-a9cf-0faa7524e82a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-05 13:32:37');
-INSERT INTO `sys_log` VALUES ('c47ac727-7a65-4b96-85be-7e0cc53e58d9', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-14 08:49:31');
-INSERT INTO `sys_log` VALUES ('c4f0cd31-a084-4136-9083-306fe5db626a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 15:06:30');
-INSERT INTO `sys_log` VALUES ('c76a363c-338c-48ad-98b4-e2498d952932', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 18:00:45');
-INSERT INTO `sys_log` VALUES ('cbe02af8-c1f9-4470-bbd0-173b40865b39', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-28 16:38:24');
-INSERT INTO `sys_log` VALUES ('cc65f1de-7e41-4482-9b49-90a97d0e0a71', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-19 15:57:37');
-INSERT INTO `sys_log` VALUES ('cd8db28a-dacd-4ba2-8465-7c427328b983', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 15:50:50');
-INSERT INTO `sys_log` VALUES ('d4b4239c-c11a-4163-aa89-ab435d55332c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 22:58:27');
-INSERT INTO `sys_log` VALUES ('d5a05413-fa32-4be3-ae22-b716e84019a7', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-30 13:38:52');
-INSERT INTO `sys_log` VALUES ('d5a977f4-74d0-421e-a7e4-d46eb9a21a7b', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-27 10:16:33');
-INSERT INTO `sys_log` VALUES ('db172b4b-f286-4fc3-8b6d-4472c6b70eaa', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-17 13:09:47');
-INSERT INTO `sys_log` VALUES ('dcd8faff-fcc2-4fe2-af78-5e4c0929b167', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 17:54:31');
-INSERT INTO `sys_log` VALUES ('dd5d9783-277d-4a37-9a60-62d35c391194', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-06 16:34:47');
-INSERT INTO `sys_log` VALUES ('dfa81cd4-3c46-4d75-a2c1-0fb47b41dd1f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 14:35:36');
-INSERT INTO `sys_log` VALUES ('e054c80c-3d24-44b9-a55e-9ff526c4d31a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-08 14:39:28');
-INSERT INTO `sys_log` VALUES ('e349e94e-7fcf-4dc7-86d3-2293af5fa64f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 15:05:31');
-INSERT INTO `sys_log` VALUES ('e5af1add-895d-4fe1-8a7c-5b63d3f204a6', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-07 11:56:00');
-INSERT INTO `sys_log` VALUES ('e9032a81-49d9-4b21-9f57-9b7e7cc3423a', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-10-30 15:16:56');
-INSERT INTO `sys_log` VALUES ('e9878e5b-6347-4720-a492-18b479a51c30', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 17:44:25');
-INSERT INTO `sys_log` VALUES ('ebf0d7fb-15f7-442f-a689-92d6a7f17ff5', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-12-18 10:15:14');
-INSERT INTO `sys_log` VALUES ('f0808ca4-d1e0-49ff-8c13-06ff79ec42ad', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-29 15:34:38');
-INSERT INTO `sys_log` VALUES ('f30167a9-df2d-46da-a124-8be32063765e', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-17 16:29:27');
-INSERT INTO `sys_log` VALUES ('f4b18400-1829-4df1-aa04-86e55a513dc0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-23 15:27:07');
-INSERT INTO `sys_log` VALUES ('f72abfcf-5a6f-46ce-8496-d81fa8d7372c', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-03 18:06:27');
-INSERT INTO `sys_log` VALUES ('faf8acfb-54fd-4c61-be40-687025bd29de', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-03-03 15:53:11');
-INSERT INTO `sys_log` VALUES ('fb468990-ac49-4d1d-998f-3dbb9eb7518f', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2019-02-21 22:24:28');
-INSERT INTO `sys_log` VALUES ('fbea55a3-fe5a-4487-8dd0-d569460f861b', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-15 10:13:30');
-INSERT INTO `sys_log` VALUES ('fec1f40d-fa11-4757-81c4-cb51fe4f37a0', 'admins', '商务中心', 'SysAdmin', '登录操作', '::1', null, '1', '/fytadmin/login', '2018-11-14 16:07:17');
+INSERT INTO `sys_log` VALUES ('04098ae5998f415e919f8e60fdd61252', 'FytSoa', '2019-05-04 21:23:35', 'Trace', '\n 方法：Menu：gettree \n 地址：/api/menu/gettree \n 方式：POST \n 参数：{}\n 耗时：2.7561 毫秒', '读取/查询', 'http://localhost/api/menu/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('16783774ee5b42d581a3cdf5dfa29d0c', 'FytSoa', '2019-05-04 21:15:39', 'Trace', '\n 方法：Role：GetPages \n 地址：/api/role/getpages?key= \n 方式：GET \n 参数：{\"parm\":{\"page\":1,\"limit\":15,\"id\":0,\"guid\":null,\"key\":null,\"types\":0,\"audit\":0,\"time\":null,\"orderType\":0,\"field\":null,\"order\":\"desc\",\"where\":null}}\n 耗时：61.0056 毫秒', '读取/查询', 'http://localhost/api/role/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('19e96918202f40518ea7245f35e8f8f1', 'FytSoa', '2019-05-04 21:23:48', 'Trace', '\n 方法：Menu：getpages \n 地址：/api/menu/getpages?page=1&limit=1000&key= \n 方式：GET \n 参数：{\"parm\":{\"page\":1,\"limit\":1000,\"id\":0,\"guid\":null,\"key\":null,\"types\":0,\"audit\":0,\"time\":null,\"orderType\":0,\"field\":null,\"order\":\"desc\",\"where\":null}}\n 耗时：3.4769 毫秒', '读取/查询', 'http://localhost/api/menu/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('1dd7adc2f608492695939617246613aa', 'FytSoa', '2019-05-04 21:25:07', 'Trace', '\n 方法：WxMaterial：server \n 地址：/api/wx/material/server \n 方式：POST \n 参数：{\"gzhid\":2}\n 耗时：1269.8922 毫秒', '同步到微信', 'http://localhost/api/wx/material/server', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('20d8b6cc16a04f1c9d6baac2cdebe0c2', 'FytSoa', '2019-05-04 21:23:08', 'Trace', '\n 方法：code：getpages \n 地址：/api/code/getpages?guid=a88fa4d3-3658-4449-8f4a-7f438964d716 \n 方式：GET \n 参数：{\"request\":{\"guid\":\"a88fa4d3-3658-4449-8f4a-7f438964d716\",\"limit\":10,\"page\":1}}\n 耗时：2.1106 毫秒', '读取/查询', 'http://localhost/api/code/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('271b9ba3bc1f4d8eb7d88d095ad6f5bf', 'FytSoa', '2019-05-04 21:20:00', 'Trace', '\n 方法：WxMaterial：list \n 地址：/api/wx/material/list \n 方式：POST \n 参数：{\"parm\":{\"page\":1,\"limit\":20,\"id\":0,\"guid\":null,\"key\":null,\"types\":0,\"audit\":0,\"time\":null,\"orderType\":0,\"field\":null,\"order\":\"desc\",\"where\":null}}\n 耗时：14.7736 毫秒', '读取/查询', 'http://localhost/api/wx/material/list', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('3642c1f6a15d439daf17ac3e06de968b', 'FytSoa', '2019-05-04 21:23:35', 'Trace', '\n 方法：code：getpages \n 地址：/api/code/getpages?guid=a88fa4d3-3658-4449-8f4a-7f438964d716 \n 方式：GET \n 参数：{\"request\":{\"guid\":\"a88fa4d3-3658-4449-8f4a-7f438964d716\",\"limit\":10,\"page\":1}}\n 耗时：2.1411 毫秒', '读取/查询', 'http://localhost/api/code/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('52e1720b5f5d4c148d99b819de576dfb', 'FytSoa', '2019-05-04 21:23:40', 'Trace', '\n 方法：Menu：gettree \n 地址：/api/menu/gettree \n 方式：POST \n 参数：{}\n 耗时：2.4065 毫秒', '读取/查询', 'http://localhost/api/menu/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('5a14f558cbbe40ffb07daa19010e6f6c', 'FytSoa', '2019-05-04 21:23:48', 'Trace', '\n 方法：Menu：Update \n 地址：/api/menu/edit \n 方式：POST \n 参数：{\"parm\":{\"Guid\":\"57f75c20-a724-459e-a324-7a36be64cdfe\",\"SiteGuid\":null,\"ParentGuid\":\"43aa6f65-8d08-46e6-b231-850f74ccbfd7\",\"ParentName\":\"微信公众号\",\"Name\":\"消息管理\",\"NameCode\":\"Wechat\",\"ParentGuidList\":null,\"Layer\":2,\"Urls\":null,\"Icon\":\"layui-icon-notice\",\"Sort\":108,\"Status\":true,\"BtnFunJson\":null,\"EditTime\":\"0001-01-01T00:00:00\",\"AddTIme\":\"0001-01-01T00:00:00\"},\"cbks\":[]}\n 耗时：29.3069 毫秒', '更新/修改', 'http://localhost/api/menu/edit', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('5c6ab40b34c1430a8a0ce5ae78e194bf', 'FytSoa', '2019-05-04 21:15:38', 'Trace', '\n 方法：Organize：gettree \n 地址：/api/organize/gettree \n 方式：POST \n 参数：{}\n 耗时：1.2576 毫秒', '读取/查询', 'http://localhost/api/organize/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('5d121a723bba4e358e486edc50528156', 'FytSoa', '2019-05-04 21:23:50', 'Trace', '\n 方法：Admin：LogOut \n 地址：/api/admin/logout \n 方式：POST \n 参数：{}\n 耗时：5.9657 毫秒', '退出登录', 'http://localhost/api/admin/logout', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('5f424e222a2f4dfeb096b6399ac444f4', 'FytSoa', '2019-05-04 21:22:55', 'Trace', '\n 方法：code：getpages \n 地址：/api/code/getpages?page=1&limit=10 \n 方式：GET \n 参数：{\"request\":{\"guid\":null,\"limit\":10,\"page\":1}}\n 耗时：126.2702 毫秒', '读取/查询', 'http://localhost/api/code/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('6dc98bf15b9c429086e002e620a74aae', 'FytSoa', '2019-05-04 21:23:16', 'Trace', '\n 方法：code：getpages \n 地址：/api/code/getpages?guid=a88fa4d3-3658-4449-8f4a-7f438964d716 \n 方式：GET \n 参数：{\"request\":{\"guid\":\"a88fa4d3-3658-4449-8f4a-7f438964d716\",\"limit\":10,\"page\":1}}\n 耗时：2.2915 毫秒', '读取/查询', 'http://localhost/api/code/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('6fa0e236f1f143bb825eea2fbc5060aa', 'FytSoa', '2019-05-04 21:23:08', 'Trace', '\n 方法：Menu：gettree \n 地址：/api/menu/gettree \n 方式：POST \n 参数：{}\n 耗时：2.4969 毫秒', '读取/查询', 'http://localhost/api/menu/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('7b08e7c21ba74fb8a2e4a5fcb8e2de3e', 'FytSoa', '2019-05-04 21:22:58', 'Trace', '\n 方法：Role：GetPages \n 地址：/api/role/getpages?key= \n 方式：GET \n 参数：{\"parm\":{\"page\":1,\"limit\":15,\"id\":0,\"guid\":null,\"key\":null,\"types\":0,\"audit\":0,\"time\":null,\"orderType\":0,\"field\":null,\"order\":\"desc\",\"where\":null}}\n 耗时：9.4047 毫秒', '读取/查询', 'http://localhost/api/role/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('841e535876b946dbb0fedbdac4c49274', 'FytSoa', '2019-05-04 21:23:29', 'Trace', '\n 方法：Menu：Update \n 地址：/api/menu/edit \n 方式：POST \n 参数：{\"parm\":{\"Guid\":\"28dd8e15-81ea-4e98-a56e-0719e40e8a9a\",\"SiteGuid\":null,\"ParentGuid\":\"a4b3b26f-076a-4267-b03d-613081b13a12\",\"ParentName\":\"CMS内容管理\",\"Name\":\"功能组件\",\"NameCode\":\"Assembly\",\"ParentGuidList\":null,\"Layer\":2,\"Urls\":null,\"Icon\":\"layui-icon-app\",\"Sort\":99,\"Status\":true,\"BtnFunJson\":null,\"EditTime\":\"0001-01-01T00:00:00\",\"AddTIme\":\"0001-01-01T00:00:00\"},\"cbks\":[]}\n 耗时：30.3244 毫秒', '更新/修改', 'http://localhost/api/menu/edit', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('84cbe3ef5e174e7ab56e3bec33a335e8', 'FytSoa', '2019-05-04 21:23:30', 'Trace', '\n 方法：Menu：getpages \n 地址：/api/menu/getpages?page=1&limit=1000&key= \n 方式：GET \n 参数：{\"parm\":{\"page\":1,\"limit\":1000,\"id\":0,\"guid\":null,\"key\":null,\"types\":0,\"audit\":0,\"time\":null,\"orderType\":0,\"field\":null,\"order\":\"desc\",\"where\":null}}\n 耗时：3.7208 毫秒', '读取/查询', 'http://localhost/api/menu/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('85ca6244100c45d88cc34ef0acac16c6', 'FytSoa', '2019-05-04 21:23:40', 'Trace', '\n 方法：Menu：Update \n 地址：/api/menu/edit \n 方式：POST \n 参数：{\"parm\":{\"Guid\":\"aa66f94f-d74d-4e46-8506-bd1c7b461f98\",\"SiteGuid\":null,\"ParentGuid\":\"43aa6f65-8d08-46e6-b231-850f74ccbfd7\",\"ParentName\":\"微信公众号\",\"Name\":\"基本设置\",\"NameCode\":\"WechatBase\",\"ParentGuidList\":null,\"Layer\":2,\"Urls\":null,\"Icon\":\"layui-icon-set\",\"Sort\":104,\"Status\":true,\"BtnFunJson\":null,\"EditTime\":\"0001-01-01T00:00:00\",\"AddTIme\":\"0001-01-01T00:00:00\"},\"cbks\":[]}\n 耗时：115.9881 毫秒', '更新/修改', 'http://localhost/api/menu/edit', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('86da20e4eddd47a0a62305ebf0b694b1', 'FytSoa', '2019-05-04 21:15:39', 'Trace', '\n 方法：Menu：Update \n 地址：/api/menu/authorizaion \n 方式：POST \n 参数：{\"roid\":\"d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb\"}\n 耗时：32.3218 毫秒', '更改状态', 'http://localhost/api/menu/authorizaion', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('87f144cd034f4d7cab5e6a574346072e', 'FytSoa', '2019-05-04 21:23:42', 'Trace', '\n 方法：Menu：gettree \n 地址：/api/menu/gettree \n 方式：POST \n 参数：{}\n 耗时：3.1309 毫秒', '读取/查询', 'http://localhost/api/menu/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('8f2b75c1018848428e2284eb1cd5c869', 'FytSoa', '2019-05-04 21:23:48', 'Trace', '\n 方法：Menu：gettree \n 地址：/api/menu/gettree \n 方式：POST \n 参数：{}\n 耗时：2.3096 毫秒', '读取/查询', 'http://localhost/api/menu/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('97b783b220e2455c8706c7530a2779c6', 'FytSoa', '2019-05-04 21:23:12', 'Trace', '\n 方法：Menu：Update \n 地址：/api/menu/edit \n 方式：POST \n 参数：{\"parm\":{\"Guid\":\"8b9993da-8cbd-465c-a2c6-a7dab5881500\",\"SiteGuid\":null,\"ParentGuid\":\"a4b3b26f-076a-4267-b03d-613081b13a12\",\"ParentName\":\"CMS内容管理\",\"Name\":\"内容管理\",\"NameCode\":\"CmsContent\",\"ParentGuidList\":null,\"Layer\":2,\"Urls\":null,\"Icon\":\"layui-icon-template-1\",\"Sort\":95,\"Status\":true,\"BtnFunJson\":null,\"EditTime\":\"0001-01-01T00:00:00\",\"AddTIme\":\"0001-01-01T00:00:00\"},\"cbks\":[]}\n 耗时：89.3059 毫秒', '更新/修改', 'http://localhost/api/menu/edit', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('a07f6b09f4ca4c9ea32c9e8f0a317559', 'FytSoa', '2019-05-04 21:22:55', 'Trace', '\n 方法：codetype：gettree \n 地址：/api/codetype/gettree \n 方式：POST \n 参数：{}\n 耗时：11.488 毫秒', '读取/查询', 'http://localhost/api/codetype/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('a9058cbad1a247e4aa195057fa55f913', 'FytSoa', '2019-05-04 21:22:57', 'Trace', '\n 方法：Menu：gettree \n 地址：/api/menu/gettree \n 方式：POST \n 参数：{}\n 耗时：36.8554 毫秒', '读取/查询', 'http://localhost/api/menu/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('b6b1374d865647049140a427c698db3b', 'FytSoa', '2019-05-04 21:23:12', 'Trace', '\n 方法：Menu：getpages \n 地址：/api/menu/getpages?page=1&limit=1000&key= \n 方式：GET \n 参数：{\"parm\":{\"page\":1,\"limit\":1000,\"id\":0,\"guid\":null,\"key\":null,\"types\":0,\"audit\":0,\"time\":null,\"orderType\":0,\"field\":null,\"order\":\"desc\",\"where\":null}}\n 耗时：3.4241 毫秒', '读取/查询', 'http://localhost/api/menu/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('b81678c1eafd4eba854e59478573d7af', 'FytSoa', '2019-05-04 21:23:04', 'Trace', '\n 方法：Menu：getpages \n 地址：/api/menu/getpages?page=1&limit=1000 \n 方式：GET \n 参数：{\"parm\":{\"page\":1,\"limit\":1000,\"id\":0,\"guid\":null,\"key\":null,\"types\":0,\"audit\":0,\"time\":null,\"orderType\":0,\"field\":null,\"order\":\"desc\",\"where\":null}}\n 耗时：4.4913 毫秒', '读取/查询', 'http://localhost/api/menu/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('bbe9f72db95144de9cba13ebd53ee37b', 'FytSoa', '2019-05-04 21:22:58', 'Trace', '\n 方法：Menu：Update \n 地址：/api/menu/authorizaion \n 方式：POST \n 参数：{\"roid\":\"d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb\"}\n 耗时：19.4529 毫秒', '更改状态', 'http://localhost/api/menu/authorizaion', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('bdf0d986d3b34880b6d4f3153b9687fd', 'FytSoa', '2019-05-04 21:25:09', 'Trace', '\n 方法：WxMaterial：list \n 地址：/api/wx/material/list \n 方式：POST \n 参数：{\"parm\":{\"page\":1,\"limit\":20,\"id\":0,\"guid\":null,\"key\":null,\"types\":0,\"audit\":0,\"time\":null,\"orderType\":0,\"field\":null,\"order\":\"desc\",\"where\":null}}\n 耗时：2.189 毫秒', '读取/查询', 'http://localhost/api/wx/material/list', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('bfe8bb3b1b77448dbc36482618e219b3', 'FytSoa', '2019-05-04 21:23:16', 'Trace', '\n 方法：Menu：gettree \n 地址：/api/menu/gettree \n 方式：POST \n 参数：{}\n 耗时：7.1088 毫秒', '读取/查询', 'http://localhost/api/menu/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('c1aa85ae82484321b88170188ee7468e', 'FytSoa', '2019-05-04 21:23:12', 'Trace', '\n 方法：Menu：gettree \n 地址：/api/menu/gettree \n 方式：POST \n 参数：{}\n 耗时：2.4841 毫秒', '读取/查询', 'http://localhost/api/menu/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('c23d89fc1a0c4f0b94074f2a5741bb5f', 'FytSoa', '2019-05-04 21:23:30', 'Trace', '\n 方法：Menu：gettree \n 地址：/api/menu/gettree \n 方式：POST \n 参数：{}\n 耗时：2.3652 毫秒', '读取/查询', 'http://localhost/api/menu/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('c8e8a57e1b97418b941262b19b52a072', 'FytSoa', '2019-05-04 21:15:57', 'Trace', '\n 方法：Organize：GetPages \n 地址：/api/organize/getpages?page=1&limit=15 \n 方式：GET \n 参数：{\"parm\":{\"page\":1,\"limit\":15,\"id\":0,\"guid\":null,\"key\":null,\"types\":0,\"audit\":0,\"time\":null,\"orderType\":0,\"field\":null,\"order\":\"desc\",\"where\":null}}\n 耗时：2.5353 毫秒', '读取/查询', 'http://localhost/api/organize/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('ca2cb50ec0f547ddad919c72a17db204', 'FytSoa', '2019-05-04 21:23:42', 'Trace', '\n 方法：code：getpages \n 地址：/api/code/getpages?guid=a88fa4d3-3658-4449-8f4a-7f438964d716 \n 方式：GET \n 参数：{\"request\":{\"guid\":\"a88fa4d3-3658-4449-8f4a-7f438964d716\",\"limit\":10,\"page\":1}}\n 耗时：2.2092 毫秒', '读取/查询', 'http://localhost/api/code/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('cb087ad5cbc049ed9767ae936092c294', 'FytSoa', '2019-05-04 21:25:04', 'Error', '未知错误', '304', 'http://localhost/themes/img/message.png', '', '::1', 'admins', '', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('d18478b952ac4182a6f90e4c8669cd90', 'FytSoa', '2019-05-04 21:15:57', 'Trace', '\n 方法：Organize：gettree \n 地址：/api/organize/gettree \n 方式：POST \n 参数：{}\n 耗时：0.9884 毫秒', '读取/查询', 'http://localhost/api/organize/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('d49e80bd4fd647f2b20100a2d3781f38', 'FytSoa', '2019-05-04 21:23:04', 'Trace', '\n 方法：Menu：gettree \n 地址：/api/menu/gettree \n 方式：POST \n 参数：{}\n 耗时：3.6823 毫秒', '读取/查询', 'http://localhost/api/menu/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('e03fb3f0ec524b5eb888448df08df352', 'FytSoa', '2019-05-04 21:25:01', 'Trace', '\n 方法：WxMaterial：list \n 地址：/api/wx/material/list \n 方式：POST \n 参数：{\"parm\":{\"page\":1,\"limit\":20,\"id\":0,\"guid\":null,\"key\":null,\"types\":0,\"audit\":0,\"time\":null,\"orderType\":0,\"field\":null,\"order\":\"desc\",\"where\":null}}\n 耗时：9.0848 毫秒', '读取/查询', 'http://localhost/api/wx/material/list', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('ed3b6c50-a70d-4ac3-a63f-e69aa852a605', null, '2019-05-04 21:23:55', 'Info', '登录', '登录', '/fytadmin/login', null, '::1', 'admins', null, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('eee2022c8d5941d9a63628ea818a0202', 'FytSoa', '2019-05-04 21:22:58', 'Trace', '\n 方法：Organize：gettree \n 地址：/api/organize/gettree \n 方式：POST \n 参数：{}\n 耗时：9.4721 毫秒', '读取/查询', 'http://localhost/api/organize/gettree', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('f5ed713c75494d5885634419c9cf9562', 'FytSoa', '2019-05-04 21:22:57', 'Trace', '\n 方法：Menu：getpages \n 地址：/api/menu/getpages?page=1&limit=1000 \n 方式：GET \n 参数：{\"parm\":{\"page\":1,\"limit\":1000,\"id\":0,\"guid\":null,\"key\":null,\"types\":0,\"audit\":0,\"time\":null,\"orderType\":0,\"field\":null,\"order\":\"desc\",\"where\":null}}\n 耗时：19.3095 毫秒', '读取/查询', 'http://localhost/api/menu/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
+INSERT INTO `sys_log` VALUES ('fc011dd6a2094e00871b5d3d1365ffed', 'FytSoa', '2019-05-04 21:23:40', 'Trace', '\n 方法：Menu：getpages \n 地址：/api/menu/getpages?page=1&limit=1000&key= \n 方式：GET \n 参数：{\"parm\":{\"page\":1,\"limit\":1000,\"id\":0,\"guid\":null,\"key\":null,\"types\":0,\"audit\":0,\"time\":null,\"orderType\":0,\"field\":null,\"order\":\"desc\",\"where\":null}}\n 耗时：3.4029 毫秒', '读取/查询', 'http://localhost/api/menu/getpages', '', '::1', '', 'admins', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -1478,53 +1139,48 @@ CREATE TABLE `sys_menu` (
   `Icon` varchar(50) DEFAULT NULL COMMENT '菜单图标Class',
   `Sort` int(11) NOT NULL DEFAULT '0' COMMENT '菜单排序',
   `Status` bit(1) NOT NULL DEFAULT b'1' COMMENT '菜单状态 true=正常 false=不显示',
+  `BtnFunJson` varchar(1000) DEFAULT NULL COMMENT '菜单按钮功能的值，关联Code',
   `EditTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `AddTIme` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
-  PRIMARY KEY (`Guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`Guid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('00aaf062-ee50-4844-9b51-80743a65cd4d', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', 'CMS内容管理', '功能组件', '2040', ',a4b3b26f-076a-4267-b03d-613081b13a12,00aaf062-ee50-4844-9b51-80743a65cd4d,', '2', null, 'layui-icon-component', '62', '', '2018-10-22 23:02:09', '2018-10-22 23:02:09');
-INSERT INTO `sys_menu` VALUES ('0a61ddff-ead5-49c0-8bed-2189872b8646', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', 'CMS内容管理', '栏目管理', '2020', ',a4b3b26f-076a-4267-b03d-613081b13a12,0a61ddff-ead5-49c0-8bed-2189872b8646,', '2', null, 'layui-icon-template', '56', '', '2018-09-29 22:03:38', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('0d65e849-f903-4cf3-b413-9e4e7bbda82e', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', 'CMS内容管理', '内容管理', '2030', ',a4b3b26f-076a-4267-b03d-613081b13a12,0d65e849-f903-4cf3-b413-9e4e7bbda82e,', '2', null, 'layui-icon-survey', '58', '', '2018-09-29 22:03:56', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('1d0bb157-868e-41e6-b048-f2c139111ab3', null, '3d0acfb2-fa3c-4fe6-bd5c-e587c4523978', '消息管理', '文本回复', '3023', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,3d0acfb2-fa3c-4fe6-bd5c-e587c4523978,1d0bb157-868e-41e6-b048-f2c139111ab3,', '3', null, null, '74', '', '2018-09-29 21:58:54', '2018-09-29 21:58:54');
-INSERT INTO `sys_menu` VALUES ('1d58c9b0-22fa-4fe4-aba4-06a4ecd5b0a1', null, 'fe96606e-2b92-4587-8196-e5b4e85ed633', '我的工作台', '数据库文件', '2013', ',a4b3b26f-076a-4267-b03d-613081b13a12,fe96606e-2b92-4587-8196-e5b4e85ed633,1d58c9b0-22fa-4fe4-aba4-06a4ecd5b0a1,', '3', '/fytadmin/cms/datafile/', null, '55', '', '2018-10-30 15:14:27', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('1fc3d8e8-e3f2-49cf-a652-2341082643df', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '用户管理', '1012', ',5ed17c74-0fff-4f88-8581-3b4f26d005a8,1fc3d8e8-e3f2-49cf-a652-2341082643df,', '3', '/fytadmin/sys/admin/', null, '6', '', '2018-09-28 23:26:43', '2018-09-28 23:26:43');
-INSERT INTO `sys_menu` VALUES ('2a3a4afe-2a51-4858-9c85-df26bb7a7611', null, 'f752cbdb-48b9-4958-bd05-0b8c3602e809', '微信公众号', '基本设置', '3010', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,2a3a4afe-2a51-4858-9c85-df26bb7a7611,', '2', null, 'layui-icon-set', '68', '', '2018-09-29 22:05:43', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('35834721-2287-416d-aed2-d0a43277e70e', null, '00aaf062-ee50-4844-9b51-80743a65cd4d', '功能组件', '留言管理', '2043', ',a4b3b26f-076a-4267-b03d-613081b13a12,00aaf062-ee50-4844-9b51-80743a65cd4d,35834721-2287-416d-aed2-d0a43277e70e,', '3', '/fytadmin/cms/message/', null, '65', '', '2018-10-30 15:16:42', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('3d0acfb2-fa3c-4fe6-bd5c-e587c4523978', null, 'f752cbdb-48b9-4958-bd05-0b8c3602e809', '微信公众号', '消息管理', '3020', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,3d0acfb2-fa3c-4fe6-bd5c-e587c4523978,', '2', null, 'layui-icon-speaker', '71', '', '2018-09-29 22:05:53', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('3d4f34cb-b69f-47e1-8abb-2f2b7ae20520', null, '3d0acfb2-fa3c-4fe6-bd5c-e587c4523978', '消息管理', '关注回复', '3021', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,3d0acfb2-fa3c-4fe6-bd5c-e587c4523978,3d4f34cb-b69f-47e1-8abb-2f2b7ae20520,', '3', null, null, '72', '', '2018-09-29 21:58:22', '2018-09-29 21:58:22');
-INSERT INTO `sys_menu` VALUES ('3f8327fd-b8be-44d9-801c-39520e72da87', null, '0a61ddff-ead5-49c0-8bed-2189872b8646', '栏目管理', '栏目列表', '2021', ',a4b3b26f-076a-4267-b03d-613081b13a12,0a61ddff-ead5-49c0-8bed-2189872b8646,3f8327fd-b8be-44d9-801c-39520e72da87,', '3', '/fytadmin/cms/column/', null, '57', '', '2018-10-30 15:14:43', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('404d4b8b-8e3c-42ee-aee5-f29df31308fa', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '菜单管理', '1013', ',5ed17c74-0fff-4f88-8581-3b4f26d005a8,404d4b8b-8e3c-42ee-aee5-f29df31308fa,', '3', '/fytadmin/sys/menu/', null, '7', '', '2018-09-28 23:26:50', '2018-09-28 23:26:50');
-INSERT INTO `sys_menu` VALUES ('4e104381-22f5-4a91-a784-00a7276afa61', null, '00aaf062-ee50-4844-9b51-80743a65cd4d', '功能组件', '文件管理', '2045', ',a4b3b26f-076a-4267-b03d-613081b13a12,00aaf062-ee50-4844-9b51-80743a65cd4d,4e104381-22f5-4a91-a784-00a7276afa61,', '3', '/fytadmin/cms/files/', null, '67', '\0', '2018-11-08 14:28:33', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('51216bb3-d0c7-474a-b565-71cf96db19f4', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '版本更新', '1016', ',5ed17c74-0fff-4f88-8581-3b4f26d005a8,51216bb3-d0c7-474a-b565-71cf96db19f4,', '3', '/fytadmin/app/setting/', null, '10', '', '2018-09-28 23:27:39', '2018-09-28 23:27:39');
-INSERT INTO `sys_menu` VALUES ('51c9c0aa-de65-47d0-87bc-cef0624cb8f9', null, 'fe96606e-2b92-4587-8196-e5b4e85ed633', '我的工作台', '数据库备份', '2012', ',a4b3b26f-076a-4267-b03d-613081b13a12,fe96606e-2b92-4587-8196-e5b4e85ed633,51c9c0aa-de65-47d0-87bc-cef0624cb8f9,', '3', '/fytadmin/cms/database/', null, '54', '', '2018-10-30 15:14:10', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('582721b8-743a-45ce-9497-238982b3be9b', null, '0a61ddff-ead5-49c0-8bed-2189872b8646', '栏目管理', '模板管理', '2022', ',a4b3b26f-076a-4267-b03d-613081b13a12,0a61ddff-ead5-49c0-8bed-2189872b8646,582721b8-743a-45ce-9497-238982b3be9b,', '3', '/fytadmin/cms/template', null, '78', '', '2018-11-05 17:21:49', '2018-11-05 17:21:49');
-INSERT INTO `sys_menu` VALUES ('5ce13ead-971b-4ed4-ad5f-acacccd82381', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '角色管理', '1011', ',5ed17c74-0fff-4f88-8581-3b4f26d005a8,5ce13ead-971b-4ed4-ad5f-acacccd82381,', '3', '/fytadmin/sys/role/', null, '5', '', '2018-09-28 23:26:07', '2018-09-28 23:26:07');
-INSERT INTO `sys_menu` VALUES ('5ed17c74-0fff-4f88-8581-3b4f26d005a8', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', 'CMS内容管理', '系统管理', '1001', ',a4b3b26f-076a-4267-b03d-613081b13a12,5ed17c74-0fff-4f88-8581-3b4f26d005a8,', '2', null, 'layui-icon-set', '2', '', '2018-10-22 23:06:12', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '部门管理', '1010', ',5ed17c74-0fff-4f88-8581-3b4f26d005a8,6d4cfcf7-ff1c-4537-aa3f-75cc9df27583,', '3', '/fytadmin/sys/organize/', null, '4', '', '2018-09-28 23:22:49', '2018-09-28 23:22:49');
-INSERT INTO `sys_menu` VALUES ('787ae7bf-fb35-4ed4-9c6a-15aba81609c3', null, '3d0acfb2-fa3c-4fe6-bd5c-e587c4523978', '消息管理', '语音回复', '3025', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,3d0acfb2-fa3c-4fe6-bd5c-e587c4523978,787ae7bf-fb35-4ed4-9c6a-15aba81609c3,', '3', null, null, '76', '', '2018-09-29 21:59:25', '2018-09-29 21:59:25');
-INSERT INTO `sys_menu` VALUES ('7e2356b0-f77f-41fe-b27b-15665b0ccba0', null, '00aaf062-ee50-4844-9b51-80743a65cd4d', '功能组件', '下载管理', '2044', ',a4b3b26f-076a-4267-b03d-613081b13a12,00aaf062-ee50-4844-9b51-80743a65cd4d,7e2356b0-f77f-41fe-b27b-15665b0ccba0,', '3', '/fytadmin/cms/download/', null, '66', '\0', '2018-11-08 14:28:38', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('8cdf2bc4-b5f8-4d6a-9282-5e5f6042d69f', null, '3d0acfb2-fa3c-4fe6-bd5c-e587c4523978', '消息管理', '默认回复', '3022', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,3d0acfb2-fa3c-4fe6-bd5c-e587c4523978,8cdf2bc4-b5f8-4d6a-9282-5e5f6042d69f,', '3', null, null, '73', '', '2018-09-29 21:58:38', '2018-09-29 21:58:38');
-INSERT INTO `sys_menu` VALUES ('945de8ba-a13d-4ffc-aa62-c072ea2a3b05', null, '0d65e849-f903-4cf3-b413-9e4e7bbda82e', '内容管理', '文章管理', '2031', ',a4b3b26f-076a-4267-b03d-613081b13a12,0d65e849-f903-4cf3-b413-9e4e7bbda82e,945de8ba-a13d-4ffc-aa62-c072ea2a3b05,', '3', '/fytadmin/cms/article/', null, '59', '', '2018-10-30 15:14:56', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('98285095-b35d-458d-9908-355d2e4fddbd', null, '00aaf062-ee50-4844-9b51-80743a65cd4d', '功能组件', '广告管理', '2041', ',a4b3b26f-076a-4267-b03d-613081b13a12,00aaf062-ee50-4844-9b51-80743a65cd4d,98285095-b35d-458d-9908-355d2e4fddbd,', '3', '/fytadmin/cms/adv/', null, '63', '', '2018-10-30 15:16:30', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('99aa1f66-6b0f-4c9d-ab70-22e92f4f6202', null, '0d65e849-f903-4cf3-b413-9e4e7bbda82e', '内容管理', '内容管理', '2034', ',a4b3b26f-076a-4267-b03d-613081b13a12,0d65e849-f903-4cf3-b413-9e4e7bbda82e,99aa1f66-6b0f-4c9d-ab70-22e92f4f6202,', '3', '/fytadmin/cms/content', null, '79', '', '2018-11-06 16:51:19', '2018-11-06 16:51:19');
-INSERT INTO `sys_menu` VALUES ('a05afbda-1234-4ca0-a160-6dd11ea3bf7d', null, '3d0acfb2-fa3c-4fe6-bd5c-e587c4523978', '消息管理', '消息记录', '3026', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,3d0acfb2-fa3c-4fe6-bd5c-e587c4523978,a05afbda-1234-4ca0-a160-6dd11ea3bf7d,', '3', null, null, '77', '', '2018-09-29 21:59:42', '2018-09-29 21:59:42');
-INSERT INTO `sys_menu` VALUES ('a171bbb0-c65c-4e09-82f5-9ed51169b24d', null, '2a3a4afe-2a51-4858-9c85-df26bb7a7611', '基本设置', '公众平台管理', '3011', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,2a3a4afe-2a51-4858-9c85-df26bb7a7611,a171bbb0-c65c-4e09-82f5-9ed51169b24d,', '3', '/fytadmin/wechat/setting', null, '69', '', '2019-02-21 22:31:49', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('a280f6e2-3100-445f-871d-77ea443356a9', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '字段管理', '1015', ',5ed17c74-0fff-4f88-8581-3b4f26d005a8,a280f6e2-3100-445f-871d-77ea443356a9,', '3', '/fytadmin/sys/codes/', null, '9', '', '2018-09-28 23:27:32', '2018-09-28 23:27:32');
-INSERT INTO `sys_menu` VALUES ('a4b3b26f-076a-4267-b03d-613081b13a12', null, null, '根目录', 'CMS内容管理', '0002', ',a4b3b26f-076a-4267-b03d-613081b13a12,', '1', null, 'layui-icon-website', '50', '', '2018-09-29 16:18:57', '2018-09-29 16:18:57');
-INSERT INTO `sys_menu` VALUES ('a82ecfbf-b428-4022-b9a3-81ad277fc05c', null, '00aaf062-ee50-4844-9b51-80743a65cd4d', '功能组件', '投票管理', '2042', ',a4b3b26f-076a-4267-b03d-613081b13a12,00aaf062-ee50-4844-9b51-80743a65cd4d,a82ecfbf-b428-4022-b9a3-81ad277fc05c,', '3', '/fytadmin/cms/vote/', null, '64', '\0', '2018-11-08 14:28:44', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('a90d2eaf-918f-4c43-8ce2-3f4f9b05c74a', null, '0d65e849-f903-4cf3-b413-9e4e7bbda82e', '内容管理', '点击排行', '2033', ',a4b3b26f-076a-4267-b03d-613081b13a12,0d65e849-f903-4cf3-b413-9e4e7bbda82e,a90d2eaf-918f-4c43-8ce2-3f4f9b05c74a,', '3', '/fytadmin/cms/articletop/', null, '61', '', '2018-10-30 15:15:31', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('b354ea64-88b6-4032-a26a-fee198e24d9d', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '系统日志', '1014', ',5ed17c74-0fff-4f88-8581-3b4f26d005a8,b354ea64-88b6-4032-a26a-fee198e24d9d,', '3', '/fytadmin/sys/log/', null, '8', '', '2018-09-28 23:27:06', '2018-09-28 23:27:06');
-INSERT INTO `sys_menu` VALUES ('b8ede145-b5c2-4339-a3cc-f9808aa0c776', null, '3d0acfb2-fa3c-4fe6-bd5c-e587c4523978', '消息管理', '图文回复', '3024', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,3d0acfb2-fa3c-4fe6-bd5c-e587c4523978,b8ede145-b5c2-4339-a3cc-f9808aa0c776,', '3', null, null, '75', '', '2018-09-29 21:59:10', '2018-09-29 21:59:10');
-INSERT INTO `sys_menu` VALUES ('be526a42-9a48-4221-bc9b-3e1d5ddddf2f', null, 'fe96606e-2b92-4587-8196-e5b4e85ed633', '我的工作台', '站点管理', '2011', ',a4b3b26f-076a-4267-b03d-613081b13a12,fe96606e-2b92-4587-8196-e5b4e85ed633,be526a42-9a48-4221-bc9b-3e1d5ddddf2f,', '3', '/fytadmin/cms/site/', null, '53', '', '2018-10-30 15:14:16', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('c1f840e9-e822-4d0f-aca2-28365c52a7c4', null, '0d65e849-f903-4cf3-b413-9e4e7bbda82e', '内容管理', '回收站管理', '2032', ',a4b3b26f-076a-4267-b03d-613081b13a12,0d65e849-f903-4cf3-b413-9e4e7bbda82e,c1f840e9-e822-4d0f-aca2-28365c52a7c4,', '3', '/fytadmin/cms/recycle/', null, '60', '', '2018-10-30 15:15:16', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('d4c25cb6-3804-49e5-b2c3-70d2a68c4af5', null, '2a3a4afe-2a51-4858-9c85-df26bb7a7611', '基本设置', '公众号素材库', '3013', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,2a3a4afe-2a51-4858-9c85-df26bb7a7611,d4c25cb6-3804-49e5-b2c3-70d2a68c4af5,', '3', '/fytadmin/wechat/material', null, '80', '', '2019-02-23 16:12:41', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('dad12bae-d3f3-4c0e-a728-2e6af5f40e66', null, '2a3a4afe-2a51-4858-9c85-df26bb7a7611', '基本设置', '自定义菜单', '3012', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,2a3a4afe-2a51-4858-9c85-df26bb7a7611,dad12bae-d3f3-4c0e-a728-2e6af5f40e66,', '3', '/fytadmin/wechat/menu', null, '70', '', '2019-02-21 22:46:38', '0001-01-01 00:00:00');
-INSERT INTO `sys_menu` VALUES ('f752cbdb-48b9-4958-bd05-0b8c3602e809', null, null, '根目录', '微信公众号', '0003', ',f752cbdb-48b9-4958-bd05-0b8c3602e809,', '1', null, 'layui-icon-login-wechat', '51', '', '2018-09-29 16:19:10', '2018-09-29 16:19:10');
-INSERT INTO `sys_menu` VALUES ('fe96606e-2b92-4587-8196-e5b4e85ed633', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', 'CMS内容管理', '我的工作台', '2010', ',a4b3b26f-076a-4267-b03d-613081b13a12,fe96606e-2b92-4587-8196-e5b4e85ed633,', '2', null, 'layui-icon-website', '52', '', '2018-09-29 21:43:43', '2018-09-29 21:43:43');
+INSERT INTO `sys_menu` VALUES ('11d83c28-0197-4a01-ab0e-148ef3e3d73c', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', '风险预警平台', '我的工作台', 'MeWork', ',a4b3b26f-076a-4267-b03d-613081b13a12,11d83c28-0197-4a01-ab0e-148ef3e3d73c,', '2', null, 'layui-icon-website', '81', '', '[]', '2019-04-21 15:54:31', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('1fc3d8e8-e3f2-49cf-a652-2341082643df', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '用户管理', 'Admin', ',a4b3b26f-076a-4267-b03d-613081b13a12,5ed17c74-0fff-4f88-8581-3b4f26d005a8,1fc3d8e8-e3f2-49cf-a652-2341082643df,', '3', '/fytadmin/sys/admin/', null, '6', '', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"59852730-5d5e-48bc-8726-f317c26a0636\"]', '2019-04-10 09:27:35', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('28dd8e15-81ea-4e98-a56e-0719e40e8a9a', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', 'CMS内容管理', '功能组件', 'Assembly', ',a4b3b26f-076a-4267-b03d-613081b13a12,28dd8e15-81ea-4e98-a56e-0719e40e8a9a,', '2', null, 'layui-icon-app', '99', '', '[]', '2019-05-04 21:23:29', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('3bf0d772-81bc-4537-ad71-a4acffbeb3ad', null, '28dd8e15-81ea-4e98-a56e-0719e40e8a9a', '功能组件', '投票管理', 'Vote', ',a4b3b26f-076a-4267-b03d-613081b13a12,28dd8e15-81ea-4e98-a56e-0719e40e8a9a,3bf0d772-81bc-4537-ad71-a4acffbeb3ad,', '3', '/fytadmin/cms/vote/', null, '102', '', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-21 16:46:23', '2019-04-21 16:46:23');
+INSERT INTO `sys_menu` VALUES ('404d4b8b-8e3c-42ee-aee5-f29df31308fa', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '菜单管理', 'Menu', ',a4b3b26f-076a-4267-b03d-613081b13a12,5ed17c74-0fff-4f88-8581-3b4f26d005a8,404d4b8b-8e3c-42ee-aee5-f29df31308fa,', '3', '/fytadmin/sys/menu/', null, '7', '', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-01 16:51:49', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('43aa6f65-8d08-46e6-b231-850f74ccbfd7', null, null, '根目录', '微信公众号', 'CmsWechat', ',43aa6f65-8d08-46e6-b231-850f74ccbfd7,', '1', null, null, '103', '', '[]', '2019-04-21 16:47:12', '2019-04-21 16:47:12');
+INSERT INTO `sys_menu` VALUES ('4c5b1242-ab39-4192-8a94-bb61af94f605', null, '28dd8e15-81ea-4e98-a56e-0719e40e8a9a', '功能组件', '留言管理', 'Messag', ',a4b3b26f-076a-4267-b03d-613081b13a12,28dd8e15-81ea-4e98-a56e-0719e40e8a9a,4c5b1242-ab39-4192-8a94-bb61af94f605,', '3', '/fytadmin/cms/message/', null, '101', '', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"f61b1937-18fb-43e8-b86e-78547d793d37\"]', '2019-04-21 16:25:44', '2019-04-21 16:25:44');
+INSERT INTO `sys_menu` VALUES ('57f75c20-a724-459e-a324-7a36be64cdfe', null, '43aa6f65-8d08-46e6-b231-850f74ccbfd7', '微信公众号', '消息管理', 'Wechat', ',43aa6f65-8d08-46e6-b231-850f74ccbfd7,57f75c20-a724-459e-a324-7a36be64cdfe,', '2', null, 'layui-icon-notice', '108', '', '[]', '2019-05-04 21:23:48', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('5ce13ead-971b-4ed4-ad5f-acacccd82381', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '角色管理', 'Role', ',a4b3b26f-076a-4267-b03d-613081b13a12,5ed17c74-0fff-4f88-8581-3b4f26d005a8,5ce13ead-971b-4ed4-ad5f-acacccd82381,', '3', '/fytadmin/sys/role/', null, '5', '', '[\"59852730-5d5e-48bc-8726-f317c26a0636\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-10 14:37:49', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('5ed17c74-0fff-4f88-8581-3b4f26d005a8', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', '风险预警平台', '系统管理', 'Sys', ',a4b3b26f-076a-4267-b03d-613081b13a12,5ed17c74-0fff-4f88-8581-3b4f26d005a8,', '2', null, 'layui-icon-set', '2', '', '[]', '2019-03-29 15:43:17', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('69c7ec87-a7fd-4e44-8d80-96988a65f49f', null, '11d83c28-0197-4a01-ab0e-148ef3e3d73c', '我的工作台', '数据库备份', 'DataBase', ',a4b3b26f-076a-4267-b03d-613081b13a12,11d83c28-0197-4a01-ab0e-148ef3e3d73c,69c7ec87-a7fd-4e44-8d80-96988a65f49f,', '3', '/fytadmin/cms/database/', null, '90', '', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '2019-04-21 15:57:02', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '组织机构', 'Department', ',a4b3b26f-076a-4267-b03d-613081b13a12,5ed17c74-0fff-4f88-8581-3b4f26d005a8,6d4cfcf7-ff1c-4537-aa3f-75cc9df27583,', '3', '/fytadmin/sys/organize/', null, '4', '', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-10 13:49:25', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('6d68c215-0f7b-4596-9072-e56fa6e568c9', null, '8b9993da-8cbd-465c-a2c6-a7dab5881500', '内容管理', '文章管理', 'Article', ',a4b3b26f-076a-4267-b03d-613081b13a12,8b9993da-8cbd-465c-a2c6-a7dab5881500,6d68c215-0f7b-4596-9072-e56fa6e568c9,', '3', '/fytadmin/cms/content', null, '96', '', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"f61b1937-18fb-43e8-b86e-78547d793d37\"]', '2019-04-21 16:05:53', '2019-04-21 16:05:53');
+INSERT INTO `sys_menu` VALUES ('8b9993da-8cbd-465c-a2c6-a7dab5881500', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', 'CMS内容管理', '内容管理', 'CmsContent', ',a4b3b26f-076a-4267-b03d-613081b13a12,8b9993da-8cbd-465c-a2c6-a7dab5881500,', '2', null, 'layui-icon-template-1', '95', '', '[]', '2019-05-04 21:23:12', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('924a014a-e23b-469b-af8e-11ea0bff449f', null, '8b9993da-8cbd-465c-a2c6-a7dab5881500', '内容管理', '点击排行', 'ArticleTop', ',a4b3b26f-076a-4267-b03d-613081b13a12,8b9993da-8cbd-465c-a2c6-a7dab5881500,924a014a-e23b-469b-af8e-11ea0bff449f,', '3', '/fytadmin/cms/articletop/', null, '98', '', '[]', '2019-04-21 16:24:20', '2019-04-21 16:24:20');
+INSERT INTO `sys_menu` VALUES ('946bc7c1-6c84-4934-9bda-5f766a61801b', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '权限管理', 'Authorization', ',a4b3b26f-076a-4267-b03d-613081b13a12,5ed17c74-0fff-4f88-8581-3b4f26d005a8,946bc7c1-6c84-4934-9bda-5f766a61801b,', '3', '/fytadmin/sys/authorization', null, '8', '', '[\"59852730-5d5e-48bc-8726-f317c26a0636\"]', '2019-04-10 14:53:19', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('97f0f915-43fc-4d19-9ee2-0d1a5c21877b', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '系统设置', 'SysSetting', ',a4b3b26f-076a-4267-b03d-613081b13a12,5ed17c74-0fff-4f88-8581-3b4f26d005a8,97f0f915-43fc-4d19-9ee2-0d1a5c21877b,', '3', '/fytadmin/sys/syssetting', null, '87', '', '[\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\"]', '2019-04-10 14:53:11', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('a0f954bf-fcb7-4389-94f4-b6e52a3a0e8f', null, '28dd8e15-81ea-4e98-a56e-0719e40e8a9a', '功能组件', '广告管理', 'Adv', ',a4b3b26f-076a-4267-b03d-613081b13a12,28dd8e15-81ea-4e98-a56e-0719e40e8a9a,a0f954bf-fcb7-4389-94f4-b6e52a3a0e8f,', '3', '/fytadmin/cms/adv/', null, '100', '', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-21 16:25:21', '2019-04-21 16:25:21');
+INSERT INTO `sys_menu` VALUES ('a280f6e2-3100-445f-871d-77ea443356a9', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '字典管理', 'Key', ',a4b3b26f-076a-4267-b03d-613081b13a12,5ed17c74-0fff-4f88-8581-3b4f26d005a8,a280f6e2-3100-445f-871d-77ea443356a9,', '3', '/fytadmin/sys/codes/', null, '9', '', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"f61b1937-18fb-43e8-b86e-78547d793d37\"]', '2019-04-10 10:31:03', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('a429f3ac-1ebb-4466-8769-7a6ba9fb075c', null, '57f75c20-a724-459e-a324-7a36be64cdfe', '消息管理', '默认回复', 'DefaultReply', ',43aa6f65-8d08-46e6-b231-850f74ccbfd7,57f75c20-a724-459e-a324-7a36be64cdfe,a429f3ac-1ebb-4466-8769-7a6ba9fb075c,', '3', null, null, '110', '', '[]', '2019-04-21 17:50:09', '2019-04-21 17:50:09');
+INSERT INTO `sys_menu` VALUES ('a4b3b26f-076a-4267-b03d-613081b13a12', null, null, '根目录', 'CMS内容管理', 'Risk', ',a4b3b26f-076a-4267-b03d-613081b13a12,', '1', null, 'layui-icon-website', '50', '', '[]', '2019-04-21 15:53:57', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('aa66f94f-d74d-4e46-8506-bd1c7b461f98', null, '43aa6f65-8d08-46e6-b231-850f74ccbfd7', '微信公众号', '基本设置', 'WechatBase', ',43aa6f65-8d08-46e6-b231-850f74ccbfd7,aa66f94f-d74d-4e46-8506-bd1c7b461f98,', '2', null, 'layui-icon-set', '104', '', '[]', '2019-05-04 21:23:39', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('ac7356cc-4579-4945-bc15-223696c629b2', null, 'c85e3428-4e93-4243-b9eb-352de3310032', '栏目管理', '栏目列表', 'Column', ',a4b3b26f-076a-4267-b03d-613081b13a12,c85e3428-4e93-4243-b9eb-352de3310032,ac7356cc-4579-4945-bc15-223696c629b2,', '3', '/fytadmin/cms/column/', null, '93', '', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-21 16:02:58', '2019-04-21 16:02:58');
+INSERT INTO `sys_menu` VALUES ('b354ea64-88b6-4032-a26a-fee198e24d9d', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '系统管理', '系统日志', 'Log', ',a4b3b26f-076a-4267-b03d-613081b13a12,5ed17c74-0fff-4f88-8581-3b4f26d005a8,b354ea64-88b6-4032-a26a-fee198e24d9d,', '3', '/fytadmin/sys/log/', null, '88', '', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-18 11:25:11', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('b700e1a2-bb9d-4c84-ab85-7e50586616f9', null, '8b9993da-8cbd-465c-a2c6-a7dab5881500', '内容管理', '回收站管理', 'Recycle', ',a4b3b26f-076a-4267-b03d-613081b13a12,8b9993da-8cbd-465c-a2c6-a7dab5881500,b700e1a2-bb9d-4c84-ab85-7e50586616f9,', '3', '/fytadmin/cms/recycle/', null, '97', '', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-21 16:23:47', '2019-04-21 16:23:47');
+INSERT INTO `sys_menu` VALUES ('b81d742a-589b-4168-a678-fbc9a68e3846', null, '57f75c20-a724-459e-a324-7a36be64cdfe', '消息管理', '关注回复', 'AttentionReply', ',43aa6f65-8d08-46e6-b231-850f74ccbfd7,57f75c20-a724-459e-a324-7a36be64cdfe,b81d742a-589b-4168-a678-fbc9a68e3846,', '3', null, null, '109', '', '[]', '2019-04-21 17:49:40', '2019-04-21 17:49:40');
+INSERT INTO `sys_menu` VALUES ('c23bb93b-10e1-4e0a-ae46-8d7e3fb84c85', null, '11d83c28-0197-4a01-ab0e-148ef3e3d73c', '我的工作台', '数据库文件', 'DataBaseFile', ',a4b3b26f-076a-4267-b03d-613081b13a12,11d83c28-0197-4a01-ab0e-148ef3e3d73c,c23bb93b-10e1-4e0a-ae46-8d7e3fb84c85,', '3', '/fytadmin/cms/datafile/', null, '91', '', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-21 15:56:56', '2019-04-21 15:56:56');
+INSERT INTO `sys_menu` VALUES ('c85e3428-4e93-4243-b9eb-352de3310032', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', 'CMS内容管理', '栏目管理', 'CmsColumn', ',a4b3b26f-076a-4267-b03d-613081b13a12,c85e3428-4e93-4243-b9eb-352de3310032,', '2', null, 'layui-icon-template', '92', '', '[]', '2019-04-21 16:03:04', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('de325646-e4d7-4b98-b4dd-a7adddedcd12', null, 'c85e3428-4e93-4243-b9eb-352de3310032', '栏目管理', '模板管理', 'Template', ',a4b3b26f-076a-4267-b03d-613081b13a12,c85e3428-4e93-4243-b9eb-352de3310032,de325646-e4d7-4b98-b4dd-a7adddedcd12,', '3', '/fytadmin/cms/template', null, '94', '', '[\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-21 16:03:35', '2019-04-21 16:03:35');
+INSERT INTO `sys_menu` VALUES ('dec49ec7-75c7-429b-861b-f76a245fad4d', null, '11d83c28-0197-4a01-ab0e-148ef3e3d73c', '我的工作台', '站点管理', 'Site', ',a4b3b26f-076a-4267-b03d-613081b13a12,11d83c28-0197-4a01-ab0e-148ef3e3d73c,dec49ec7-75c7-429b-861b-f76a245fad4d,', '3', '/fytadmin/cms/site/', null, '89', '', '[\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-21 15:56:29', '0001-01-01 00:00:00');
+INSERT INTO `sys_menu` VALUES ('e575a09b-f720-4650-a265-d1577eb48353', null, 'aa66f94f-d74d-4e46-8506-bd1c7b461f98', '基本设置', '公众平台管理', 'WeChatSetting', ',43aa6f65-8d08-46e6-b231-850f74ccbfd7,aa66f94f-d74d-4e46-8506-bd1c7b461f98,e575a09b-f720-4650-a265-d1577eb48353,', '3', '/fytadmin/wechat/setting', null, '105', '', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-21 17:30:04', '2019-04-21 17:30:04');
+INSERT INTO `sys_menu` VALUES ('f4784be1-41b7-4db5-84c9-b471184d5817', null, 'aa66f94f-d74d-4e46-8506-bd1c7b461f98', '基本设置', '公众号素材库', 'WechatMaterial', ',43aa6f65-8d08-46e6-b231-850f74ccbfd7,aa66f94f-d74d-4e46-8506-bd1c7b461f98,f4784be1-41b7-4db5-84c9-b471184d5817,', '3', '/fytadmin/wechat/material', null, '107', '', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-21 17:31:05', '2019-04-21 17:31:05');
+INSERT INTO `sys_menu` VALUES ('fd61fa98-46cd-498a-a363-16aad20c5267', null, 'aa66f94f-d74d-4e46-8506-bd1c7b461f98', '基本设置', '自定义菜单', 'WechatMenu', ',43aa6f65-8d08-46e6-b231-850f74ccbfd7,aa66f94f-d74d-4e46-8506-bd1c7b461f98,fd61fa98-46cd-498a-a363-16aad20c5267,', '3', '/fytadmin/wechat/menu', null, '106', '', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '2019-04-21 17:30:42', '2019-04-21 17:30:42');
 
 -- ----------------------------
 -- Table structure for sys_message
@@ -1547,8 +1203,8 @@ CREATE TABLE `sys_message` (
   `RepId` int(11) NOT NULL DEFAULT '0' COMMENT '回复ID',
   `AddDate` datetime DEFAULT NULL COMMENT '添加时间',
   `RepDate` datetime DEFAULT NULL COMMENT '回复时间',
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`ID`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_message
@@ -1569,18 +1225,16 @@ CREATE TABLE `sys_organize` (
   `Sort` int(11) NOT NULL DEFAULT '1' COMMENT '排序',
   `Status` bit(1) NOT NULL DEFAULT b'1' COMMENT '状态',
   `EditTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`Guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`Guid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_organize
 -- ----------------------------
-INSERT INTO `sys_organize` VALUES ('24febdc4-655f-4492-ac8a-4adab18c22c8', null, '388b72d3-e10a-4183-8ef7-6be44eb99b1a', '融媒体中心', '包头分公司', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,24febdc4-655f-4492-ac8a-4adab18c22c8,', '2', '7', '', '2018-05-16 22:09:35');
-INSERT INTO `sys_organize` VALUES ('388b72d3-e10a-4183-8ef7-6be44eb99b1a', null, '883deb1c-ddd7-484e-92c1-b3ad3b32e655', '包头分公司', '飞易腾集团', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,', '1', '3', '', '2018-05-16 22:06:20');
-INSERT INTO `sys_organize` VALUES ('4b6ab27f-c0fa-483d-9b5a-55891ee8d727', null, '388b72d3-e10a-4183-8ef7-6be44eb99b1a', '事业发展部', '包头分公司', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,4b6ab27f-c0fa-483d-9b5a-55891ee8d727,', '2', '6', '', '2018-05-16 22:09:30');
-INSERT INTO `sys_organize` VALUES ('52523a76-52b3-4c25-a1bd-9123a011f2a8', null, '24febdc4-655f-4492-ac8a-4adab18c22c8', '商务中心', '融媒体中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,388b72d3-e10a-4183-8ef7-6be44eb99b1a,24febdc4-655f-4492-ac8a-4adab18c22c8,52523a76-52b3-4c25-a1bd-9123a011f2a8,', '3', '4', '', '2018-07-20 23:03:59');
-INSERT INTO `sys_organize` VALUES ('5533b6c5-ba2e-4659-be29-c860bb41e04d', null, '883deb1c-ddd7-484e-92c1-b3ad3b32e655', '北京总公司', '飞易腾集团', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,', '1', '2', '', '2018-05-16 22:06:02');
+INSERT INTO `sys_organize` VALUES ('5533b6c5-ba2e-4659-be29-c860bb41e04d', null, '883deb1c-ddd7-484e-92c1-b3ad3b32e655', '北京总公司', 'XX集团', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,', '1', '2', '', '2019-03-28 15:57:44');
+INSERT INTO `sys_organize` VALUES ('7d369418-6984-4565-8b02-a837a25fc771', null, '883deb1c-ddd7-484e-92c1-b3ad3b32e655', '上海分公司', '集团名称', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,7d369418-6984-4565-8b02-a837a25fc771,', '1', '6', '', '2019-04-10 14:35:18');
 INSERT INTO `sys_organize` VALUES ('883deb1c-ddd7-484e-92c1-b3ad3b32e655', null, null, '集团名称', '根目录', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,', '0', '1', '', '2018-11-30 15:05:44');
+INSERT INTO `sys_organize` VALUES ('db16854e-8056-432e-8a15-9bc350ffd4fc', null, '7d369418-6984-4565-8b02-a837a25fc771', '商务部', '上海分公司', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,7d369418-6984-4565-8b02-a837a25fc771,db16854e-8056-432e-8a15-9bc350ffd4fc,', '2', '7', '', '2019-04-10 14:35:26');
 INSERT INTO `sys_organize` VALUES ('dcf99638-5db6-4dd7-a485-31df1160d45a', null, '5533b6c5-ba2e-4659-be29-c860bb41e04d', '互联网中心', '北京总公司', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,dcf99638-5db6-4dd7-a485-31df1160d45a,', '2', '5', '', '2018-05-16 22:09:36');
 
 -- ----------------------------
@@ -1591,143 +1245,67 @@ CREATE TABLE `sys_permissions` (
   `RoleGuid` varchar(50) NOT NULL COMMENT '角色Guid',
   `AdminGuid` varchar(50) DEFAULT NULL COMMENT '管理员ID',
   `MenuGuid` varchar(50) DEFAULT NULL COMMENT '菜单Guid',
-  `BtnFunGuid` varchar(50) DEFAULT NULL,
+  `BtnFunJson` varchar(1000) DEFAULT NULL COMMENT '角色-菜单-权限按钮Json',
   `Types` tinyint(1) NOT NULL DEFAULT '1' COMMENT '授权类型1=角色-菜单 2=用户-角色 3=角色-菜单-按钮功能'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_permissions
 -- ----------------------------
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '6b8d6513-5da7-4f68-a2c4-f0c7cfaf7f61', '3');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', 'c4261103-dfc7-46e5-ab20-4ca5fc7729f6', '3');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '931bd729-f160-4fe3-bb7c-7828a2da047a', '3');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '6b8d6513-5da7-4f68-a2c4-f0c7cfaf7f61', '3');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', 'c4261103-dfc7-46e5-ab20-4ca5fc7729f6', '3');
-INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', null, '1');
-INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', null, '1');
-INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', null, '1');
-INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '6b8d6513-5da7-4f68-a2c4-f0c7cfaf7f61', '3');
-INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', 'c4261103-dfc7-46e5-ab20-4ca5fc7729f6', '3');
-INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', '30d3da88-bb72-4ace-a303-b3aae0ecb732', null, null, '2');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, null, '2');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '30d3da88-bb72-4ace-a303-b3aae0ecb732', null, null, '2');
 INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, null, '2');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', 'b943200f-7c99-44b5-93d9-e4ea2505928a', '3');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', '12cc96cf-7ccf-430b-a54a-e1c6f04690cb', null, null, '2');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'de263753-0706-4985-bf96-317059e483ff', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '1fc3d8e8-e3f2-49cf-a652-2341082643df', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '404d4b8b-8e3c-42ee-aee5-f29df31308fa', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'b354ea64-88b6-4032-a26a-fee198e24d9d', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'a280f6e2-3100-445f-871d-77ea443356a9', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '51216bb3-d0c7-474a-b565-71cf96db19f4', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '40823e8a-bc10-4e38-a45f-a6dd7dd0ef78', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'f9129ddd-3d96-4980-ac48-f6aa9a8b6ba9', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'd46fb5d3-27fc-411f-8bc8-df175cc248e4', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'cc59a616-2ca6-4ca8-9907-80ace8d38b47', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '8f6d2ac6-0c9b-4c9c-a1cd-80ca6365781e', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'd1f782d2-55c3-4ca6-8002-894a1da52515', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'eafbc38f-fccd-4a5a-9df2-44ff41fde6d9', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '5be5bed2-8b11-470f-a233-69a208737f47', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '88989fbb-57e0-4813-a125-f54ca941299c', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '01d476db-17c1-42b9-9725-c995a942006f', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '18e89f9b-dc89-4289-a8fd-ee1330e43f79', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'd9a75927-0700-42b9-9ded-55774ee5c20b', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '9d1dcb18-6db8-4d79-bc7e-f2c830f4262d', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '7bfb29b1-b0af-440f-afe9-82883e2e114e', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'b217116f-27c3-4d1e-9eda-538ca34bee45', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '401273ed-1639-4646-8b2d-8171beba1c60', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '79315453-3610-435e-80ed-abd7d8c4f770', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '86fc504c-3ce8-40ec-804a-c0c8fb6b520f', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '7f0f61dd-ff53-460e-878c-bb3af87740eb', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'db4e4295-fce4-42a6-96f2-387bddcc5449', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'de39aa52-87a6-4539-884d-1ae3a9d6f99c', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '5cbca08b-77a6-4294-aa15-4d82d0baa5f8', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '8360ffe4-b8f4-4697-9930-9fbc058d7f92', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '6dc1436e-6ed9-43be-96c5-2e165d43459b', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'cb7e34dc-54cd-41a1-bbd2-666ab2bdf742', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '155b3ab6-1043-4a78-9b59-bb3d1433a17a', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'cb2e4ab6-48de-4a1b-80e9-f3f77eaf1a6f', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '663d5881-70ec-49a5-ae94-34f53d23608e', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'd651f1e3-653c-4033-9c80-7de6dc9be422', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '6cc8a71a-ef58-48cc-aafb-aafa5a311d7e', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '078cff27-e491-48a0-8f64-8abc06e20bd3', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '3476c160-da68-4bed-9e0b-e38c7af7d099', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '3543facc-f81a-4e66-9f62-1a7ffa7bd8e0', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '5ef5e2eb-5902-446b-82e4-11a6d36140fe', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'e63fd97a-2a8c-40d4-a1e1-6f574c85864c', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'c8728c2f-0637-4b8c-808f-289e31aaf495', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'c26b94c0-cae6-4332-8814-f5c8fbfaa58c', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'f879f695-5d6c-4b62-9bfe-79ba8714079f', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'fe96606e-2b92-4587-8196-e5b4e85ed633', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'be526a42-9a48-4221-bc9b-3e1d5ddddf2f', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '51c9c0aa-de65-47d0-87bc-cef0624cb8f9', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '1d58c9b0-22fa-4fe4-aba4-06a4ecd5b0a1', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '0a61ddff-ead5-49c0-8bed-2189872b8646', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '3f8327fd-b8be-44d9-801c-39520e72da87', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '0d65e849-f903-4cf3-b413-9e4e7bbda82e', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '945de8ba-a13d-4ffc-aa62-c072ea2a3b05', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'c1f840e9-e822-4d0f-aca2-28365c52a7c4', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'a90d2eaf-918f-4c43-8ce2-3f4f9b05c74a', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '00aaf062-ee50-4844-9b51-80743a65cd4d', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '98285095-b35d-458d-9908-355d2e4fddbd', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'a82ecfbf-b428-4022-b9a3-81ad277fc05c', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '35834721-2287-416d-aed2-d0a43277e70e', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '7e2356b0-f77f-41fe-b27b-15665b0ccba0', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '4e104381-22f5-4a91-a784-00a7276afa61', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'f752cbdb-48b9-4958-bd05-0b8c3602e809', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '2a3a4afe-2a51-4858-9c85-df26bb7a7611', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'a171bbb0-c65c-4e09-82f5-9ed51169b24d', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'dad12bae-d3f3-4c0e-a728-2e6af5f40e66', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '3d0acfb2-fa3c-4fe6-bd5c-e587c4523978', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '3d4f34cb-b69f-47e1-8abb-2f2b7ae20520', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '8cdf2bc4-b5f8-4d6a-9282-5e5f6042d69f', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '1d0bb157-868e-41e6-b048-f2c139111ab3', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'b8ede145-b5c2-4339-a3cc-f9808aa0c776', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, '787ae7bf-fb35-4ed4-9c6a-15aba81609c3', null, '1');
-INSERT INTO `sys_permissions` VALUES ('2949c266-575a-4e5d-a663-e39d5f33df7e', null, 'a05afbda-1234-4ca0-a160-6dd11ea3bf7d', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '1fc3d8e8-e3f2-49cf-a652-2341082643df', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '404d4b8b-8e3c-42ee-aee5-f29df31308fa', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'b354ea64-88b6-4032-a26a-fee198e24d9d', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'a280f6e2-3100-445f-871d-77ea443356a9', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '51216bb3-d0c7-474a-b565-71cf96db19f4', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'fe96606e-2b92-4587-8196-e5b4e85ed633', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'be526a42-9a48-4221-bc9b-3e1d5ddddf2f', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '51c9c0aa-de65-47d0-87bc-cef0624cb8f9', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '1d58c9b0-22fa-4fe4-aba4-06a4ecd5b0a1', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '0a61ddff-ead5-49c0-8bed-2189872b8646', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '3f8327fd-b8be-44d9-801c-39520e72da87', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '582721b8-743a-45ce-9497-238982b3be9b', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '0d65e849-f903-4cf3-b413-9e4e7bbda82e', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '945de8ba-a13d-4ffc-aa62-c072ea2a3b05', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'c1f840e9-e822-4d0f-aca2-28365c52a7c4', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'a90d2eaf-918f-4c43-8ce2-3f4f9b05c74a', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '99aa1f66-6b0f-4c9d-ab70-22e92f4f6202', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '00aaf062-ee50-4844-9b51-80743a65cd4d', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '98285095-b35d-458d-9908-355d2e4fddbd', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'a82ecfbf-b428-4022-b9a3-81ad277fc05c', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '35834721-2287-416d-aed2-d0a43277e70e', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '7e2356b0-f77f-41fe-b27b-15665b0ccba0', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '4e104381-22f5-4a91-a784-00a7276afa61', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'f752cbdb-48b9-4958-bd05-0b8c3602e809', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '2a3a4afe-2a51-4858-9c85-df26bb7a7611', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'a171bbb0-c65c-4e09-82f5-9ed51169b24d', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'dad12bae-d3f3-4c0e-a728-2e6af5f40e66', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'd4c25cb6-3804-49e5-b2c3-70d2a68c4af5', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '3d0acfb2-fa3c-4fe6-bd5c-e587c4523978', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '3d4f34cb-b69f-47e1-8abb-2f2b7ae20520', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '8cdf2bc4-b5f8-4d6a-9282-5e5f6042d69f', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '1d0bb157-868e-41e6-b048-f2c139111ab3', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'b8ede145-b5c2-4339-a3cc-f9808aa0c776', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, '787ae7bf-fb35-4ed4-9c6a-15aba81609c3', null, '1');
-INSERT INTO `sys_permissions` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', null, 'a05afbda-1234-4ca0-a160-6dd11ea3bf7d', null, '1');
+INSERT INTO `sys_permissions` VALUES ('4d98e862-af34-4e11-a585-658014333bbc', '30d3da88-bb72-4ace-a303-b3aae0ecb732', null, null, '2');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', '[\"59852730-5d5e-48bc-8726-f317c26a0636\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '1fc3d8e8-e3f2-49cf-a652-2341082643df', '[\"59852730-5d5e-48bc-8726-f317c26a0636\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '404d4b8b-8e3c-42ee-aee5-f29df31308fa', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '946bc7c1-6c84-4934-9bda-5f766a61801b', '[\"59852730-5d5e-48bc-8726-f317c26a0636\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'a280f6e2-3100-445f-871d-77ea443356a9', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"f61b1937-18fb-43e8-b86e-78547d793d37\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', '', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '11d83c28-0197-4a01-ab0e-148ef3e3d73c', '', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '97f0f915-43fc-4d19-9ee2-0d1a5c21877b', '[\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'b354ea64-88b6-4032-a26a-fee198e24d9d', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'dec49ec7-75c7-429b-861b-f76a245fad4d', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '69c7ec87-a7fd-4e44-8d80-96988a65f49f', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'c23bb93b-10e1-4e0a-ae46-8d7e3fb84c85', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'c85e3428-4e93-4243-b9eb-352de3310032', '', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'ac7356cc-4579-4945-bc15-223696c629b2', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'de325646-e4d7-4b98-b4dd-a7adddedcd12', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '8b9993da-8cbd-465c-a2c6-a7dab5881500', '', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '6d68c215-0f7b-4596-9072-e56fa6e568c9', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"f61b1937-18fb-43e8-b86e-78547d793d37\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'b700e1a2-bb9d-4c84-ab85-7e50586616f9', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '924a014a-e23b-469b-af8e-11ea0bff449f', '', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '28dd8e15-81ea-4e98-a56e-0719e40e8a9a', '', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'a0f954bf-fcb7-4389-94f4-b6e52a3a0e8f', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '4c5b1242-ab39-4192-8a94-bb61af94f605', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"f61b1937-18fb-43e8-b86e-78547d793d37\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '3bf0d772-81bc-4537-ad71-a4acffbeb3ad', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '43aa6f65-8d08-46e6-b231-850f74ccbfd7', '', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'aa66f94f-d74d-4e46-8506-bd1c7b461f98', '', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'e575a09b-f720-4650-a265-d1577eb48353', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'fd61fa98-46cd-498a-a363-16aad20c5267', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'f4784be1-41b7-4db5-84c9-b471184d5817', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, '57f75c20-a724-459e-a324-7a36be64cdfe', '', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'b81d742a-589b-4168-a678-fbc9a68e3846', '', '1');
+INSERT INTO `sys_permissions` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', null, 'a429f3ac-1ebb-4466-8769-7a6ba9fb075c', '', '1');
+INSERT INTO `sys_permissions` VALUES ('19deef37-c67b-4314-a21c-a51f66e3b97a', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '', '1');
+INSERT INTO `sys_permissions` VALUES ('19deef37-c67b-4314-a21c-a51f66e3b97a', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('19deef37-c67b-4314-a21c-a51f66e3b97a', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', '[\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('19deef37-c67b-4314-a21c-a51f66e3b97a', null, '1fc3d8e8-e3f2-49cf-a652-2341082643df', '[\"59852730-5d5e-48bc-8726-f317c26a0636\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('19deef37-c67b-4314-a21c-a51f66e3b97a', null, '404d4b8b-8e3c-42ee-aee5-f29df31308fa', '', '1');
+INSERT INTO `sys_permissions` VALUES ('19deef37-c67b-4314-a21c-a51f66e3b97a', null, '946bc7c1-6c84-4934-9bda-5f766a61801b', '[\"59852730-5d5e-48bc-8726-f317c26a0636\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('19deef37-c67b-4314-a21c-a51f66e3b97a', null, 'a280f6e2-3100-445f-871d-77ea443356a9', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('19deef37-c67b-4314-a21c-a51f66e3b97a', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', '', '1');
+INSERT INTO `sys_permissions` VALUES ('19deef37-c67b-4314-a21c-a51f66e3b97a', null, '97f0f915-43fc-4d19-9ee2-0d1a5c21877b', '', '1');
+INSERT INTO `sys_permissions` VALUES ('19deef37-c67b-4314-a21c-a51f66e3b97a', null, 'b354ea64-88b6-4032-a26a-fee198e24d9d', '', '1');
+INSERT INTO `sys_permissions` VALUES ('4d98e862-af34-4e11-a585-658014333bbc', null, '5ed17c74-0fff-4f88-8581-3b4f26d005a8', '', '1');
+INSERT INTO `sys_permissions` VALUES ('4d98e862-af34-4e11-a585-658014333bbc', null, '6d4cfcf7-ff1c-4537-aa3f-75cc9df27583', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('4d98e862-af34-4e11-a585-658014333bbc', null, '5ce13ead-971b-4ed4-ad5f-acacccd82381', '[\"59852730-5d5e-48bc-8726-f317c26a0636\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('4d98e862-af34-4e11-a585-658014333bbc', null, '1fc3d8e8-e3f2-49cf-a652-2341082643df', '[\"59852730-5d5e-48bc-8726-f317c26a0636\",\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('4d98e862-af34-4e11-a585-658014333bbc', null, '404d4b8b-8e3c-42ee-aee5-f29df31308fa', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('4d98e862-af34-4e11-a585-658014333bbc', null, '946bc7c1-6c84-4934-9bda-5f766a61801b', '[\"59852730-5d5e-48bc-8726-f317c26a0636\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('4d98e862-af34-4e11-a585-658014333bbc', null, 'a280f6e2-3100-445f-871d-77ea443356a9', '[\"75093b9f-c72a-4267-9497-0592aab3b0d6\",\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\",\"bddf9b84-4033-463a-a0b5-43b6504112e2\",\"f61b1937-18fb-43e8-b86e-78547d793d37\"]', '1');
+INSERT INTO `sys_permissions` VALUES ('4d98e862-af34-4e11-a585-658014333bbc', null, 'a4b3b26f-076a-4267-b03d-613081b13a12', '', '1');
+INSERT INTO `sys_permissions` VALUES ('4d98e862-af34-4e11-a585-658014333bbc', null, '97f0f915-43fc-4d19-9ee2-0d1a5c21877b', '[\"a42d0b4f-bec2-4af9-ab46-ff414dbbc118\"]', '1');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -1744,14 +1322,15 @@ CREATE TABLE `sys_role` (
   `Summary` varchar(500) DEFAULT NULL COMMENT '部门描述',
   `AddTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
   `EditTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`Guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`Guid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('9bf21fc0-6e39-4e16-a55f-6717977a697a', '52523a76-52b3-4c25-a1bd-9123a011f2a8', '商务中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,52523a76-52b3-4c25-a1bd-9123a011f2a8,', '客服管理员', '1002', '', '只能查看会员相关功能', '2018-05-17 23:37:56', '2018-07-16 11:24:03');
-INSERT INTO `sys_role` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', 'dcf99638-5db6-4dd7-a485-31df1160d45a', '互联网中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,dcf99638-5db6-4dd7-a485-31df1160d45a,', '财务管理员', '1003', '', '只能查看财务相关功能', '2018-05-17 23:39:01', '2018-05-17 23:39:01');
+INSERT INTO `sys_role` VALUES ('19deef37-c67b-4314-a21c-a51f66e3b97a', 'db16854e-8056-432e-8a15-9bc350ffd4fc', '商务部', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,7d369418-6984-4565-8b02-a837a25fc771,db16854e-8056-432e-8a15-9bc350ffd4fc,', '商务部经理', '2001', '', null, '2019-04-10 14:39:14', '2019-04-10 14:39:14');
+INSERT INTO `sys_role` VALUES ('4d98e862-af34-4e11-a585-658014333bbc', 'dcf99638-5db6-4dd7-a485-31df1160d45a', '互联网中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,dcf99638-5db6-4dd7-a485-31df1160d45a,', '项目管理员', '1004', '', '只能查看自己的项目', '2019-03-12 11:26:08', '2019-03-12 11:26:08');
+INSERT INTO `sys_role` VALUES ('d1bbd2f4-ea8f-4c53-9f67-3b6acd9c29fb', 'dcf99638-5db6-4dd7-a485-31df1160d45a', '互联网中心', ',883deb1c-ddd7-484e-92c1-b3ad3b32e655,5533b6c5-ba2e-4659-be29-c860bb41e04d,dcf99638-5db6-4dd7-a485-31df1160d45a,', '超级管理员', '1003', '', '可查看所有功能', '2018-05-17 23:39:01', '2019-03-12 11:25:52');
 
 -- ----------------------------
 -- Table structure for wx_material
@@ -1766,18 +1345,21 @@ CREATE TABLE `wx_material` (
   `Img` varchar(255) DEFAULT NULL COMMENT '图片',
   `Summary` varchar(500) DEFAULT NULL COMMENT '描述',
   `Author` varchar(20) DEFAULT NULL COMMENT '作者',
-  `Link` varchar(255) DEFAULT NULL COMMENT '连接',
+  `Link` varchar(1000) DEFAULT NULL COMMENT '连接',
   `Content` text COMMENT '内容',
   `TestJson` text COMMENT '内容Json',
   `AddDate` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '添加时间',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of wx_material
 -- ----------------------------
-INSERT INTO `wx_material` VALUES ('6', '2', '2', '1', '这里面测试的是连接图文', '/upload/localpc/banner/583bf138e46ad_1024.jpg', 'ddddddddddddddddddddddddd', '', 'sssssssssss', '', '[{\"id\":6,\"wxId\":2,\"type\":2,\"position\":1,\"title\":\"这里面测试的是连接图文\",\"img\":\"/upload/localpc/banner/583bf138e46ad_1024.jpg\",\"summary\":\"ddddddddddddddddddddddddd\",\"author\":\"\",\"link\":\"sssssssssss\",\"content\":\"\",\"testJson\":\"[{\\\"title\\\":\\\"这里面测试的是连接图文\\\",\\\"img\\\":\\\"/upload/localpc/banner/583bf138e46ad_1024.jpg\\\",\\\"author\\\":\\\"\\\",\\\"link\\\":\\\"sssssssssss\\\",\\\"content\\\":\\\"\\\",\\\"summary\\\":\\\"\\\"}]\",\"addDate\":\"2019-03-03T19:31:00\"}]', '2019-03-03 19:43:43');
-INSERT INTO `wx_material` VALUES ('7', '2', '1', '1', '正经的测试标题', 'http://img.feiyit.com/feiyit/website/else/cc.jpg', 'sssdsdsdssddddddddddd', '作者', 'http://www.feiyit.com', '<p>这里面是内容，内容内容</p>\n<p>回车内容</p>', '[{\"id\":7,\"wxId\":2,\"type\":1,\"position\":1,\"title\":\"正经的测试标题\",\"img\":\"http://img.feiyit.com/feiyit/website/else/cc.jpg\",\"summary\":\"sssdsdsdssddddddddddd\",\"author\":\"作者\",\"link\":\"http://www.feiyit.com\",\"content\":\"<p>这里面是内容，内容内容</p>\\n<p>回车内容</p>\",\"testJson\":\"[{\\\"title\\\":\\\"正经的测试标题\\\",\\\"img\\\":\\\"http://img.feiyit.com/feiyit/website/else/cc.jpg\\\",\\\"author\\\":\\\"作者\\\",\\\"link\\\":\\\"http://www.feiyit.com\\\",\\\"content\\\":\\\"<p>这里面是内容，内容内容</p>\\\\n<p>回车内容</p>\\\",\\\"summary\\\":\\\"\\\"}]\",\"addDate\":\"2019-03-03T19:39:15\"}]', '2019-03-03 19:44:13');
+INSERT INTO `wx_material` VALUES ('11', '2', '1', '2', 'A测试上传图文信息', '/upload/localpc/banner/c6.jpg', '', '张三', 'https://mp.weixin.qq.com/s?__biz=MzA4MTE5MjIwMQ==&tempkey=MTAwNl8vZXZSREJrQzczVkkyM0Z6bnNYMGJjeGZBRDB3WG5YX1ViZDhjSEFOM0xYeTJvUUF5RWs4UlNmWGh0aVpBVGtNX3RQWFR5b29Uc2daS1pNdUFsVUEzbnotVnJHbnhNSjhqTERNRk5VN3Q0bGd3UGxldGZUMWtvR2IySTZpNzBEZHpaeVNtakRlZ29FaFZlOW1oR29Pb2NKZGtTRDdoZ0xtczdSdFRnfn4%3D&chksm=07bd384d30cab15b6c53266a664424fc0dad3421194bb27ec53b092e7b6255f07055e7a6ffc7#rd', '<p>A测试上传图文信息A测试上传图文信息A测试上传图文信息</p>\n<p>A测试上传图文信息A测试上传图文信息A测试上传图文信息</p>\n<p>A测试上传图文信息A测试上传图文信息</p>\n<p>A测试上传图文信息A测试上传图文信息A测试上传图文信息</p>', '[{\"title\":\"A测试上传图文信息\",\"img\":\"/upload/localpc/banner/c6.jpg\",\"author\":\"张三\",\"link\":\"https://mp.weixin.qq.com/s?__biz=MzA4MTE5MjIwMQ==&tempkey=MTAwNl8vZXZSREJrQzczVkkyM0Z6bnNYMGJjeGZBRDB3WG5YX1ViZDhjSEFOM0xYeTJvUUF5RWs4UlNmWGh0aVpBVGtNX3RQWFR5b29Uc2daS1pNdUFsVUEzbnotVnJHbnhNSjhqTERNRk5VN3Q0bGd3UGxldGZUMWtvR2IySTZpNzBEZHpaeVNtakRlZ29FaFZlOW1oR29Pb2NKZGtTRDdoZ0xtczdSdFRnfn4%3D&chksm=07bd384d30cab15b6c53266a664424fc0dad3421194bb27ec53b092e7b6255f07055e7a6ffc7#rd\",\"content\":\"<p>A测试上传图文信息A测试上传图文信息A测试上传图文信息</p>\\n<p>A测试上传图文信息A测试上传图文信息A测试上传图文信息</p>\\n<p>A测试上传图文信息A测试上传图文信息</p>\\n<p>A测试上传图文信息A测试上传图文信息A测试上传图文信息</p>\",\"summary\":\"\"}]', '2019-04-29 22:44:53');
+INSERT INTO `wx_material` VALUES ('12', '2', '1', '2', 'B测试测试测试', '/upload/localpc/banner/c6.jpg', '', '李四', '', '<p>B测试测试测试B测试测试测试B测试测试测试</p>\n<p>B测试测试测试B测试测试测试</p>', '[{\"title\":\"B测试测试测试\",\"img\":\"/upload/localpc/banner/c6.jpg\",\"author\":\"李四\",\"link\":\"\",\"content\":\"<p>B测试测试测试B测试测试测试B测试测试测试</p>\\n<p>B测试测试测试B测试测试测试</p>\",\"summary\":\"\"}]', '2019-04-29 22:57:58');
+INSERT INTO `wx_material` VALUES ('13', '2', '1', '2', 'CC测试图文素材', '/upload/localpc/banner/c1.jpg', '', '李四', '', '<p>CC测试图文素材CC测试图文素材</p>\n<p>CC测试图文素材</p>\n<p>CC测试图文素材</p>\n<p>CC测试图文素材</p>\n<p>CC测试图文素材CC测试图文素材CC测试图文素材</p>', '[{\"title\":\"CC测试图文素材\",\"img\":\"/upload/localpc/banner/c1.jpg\",\"author\":\"李四\",\"link\":\"\",\"content\":\"<p>CC测试图文素材CC测试图文素材</p>\\n<p>CC测试图文素材</p>\\n<p>CC测试图文素材</p>\\n<p>CC测试图文素材</p>\\n<p>CC测试图文素材CC测试图文素材CC测试图文素材</p>\",\"summary\":\"\"}]', '2019-04-30 16:44:44');
+INSERT INTO `wx_material` VALUES ('14', '2', '1', '2', 'DDD测试图文信息多条', '/upload/localpc/banner/c6.jpg', '', '张三A', '', '<p>DDD测试图文信息多条</p>\n<p>DDD测试图文信息多条</p>\n<p>DDD测试图文信息多条</p>\n<p>DDD测试图文信息多条DDD测试图文信息多条DDD测试图文信息多条DDD测试图文信息多条</p>', '[{\"title\":\"DDD测试图文信息多条\",\"img\":\"/upload/localpc/banner/c6.jpg\",\"author\":\"张三A\",\"link\":\"\",\"content\":\"<p>DDD测试图文信息多条</p>\\n<p>DDD测试图文信息多条</p>\\n<p>DDD测试图文信息多条</p>\\n<p>DDD测试图文信息多条DDD测试图文信息多条DDD测试图文信息多条DDD测试图文信息多条</p>\",\"summary\":\"\"},{\"title\":\"D2D2D2测试标题\",\"img\":\"/upload/localpc/banner/c1.jpg\",\"author\":\"张三B\",\"link\":\"\",\"content\":\"<p>D2D2D2测试标题</p>\\n<p>D2D2D2测试标题</p>\\n<p>D2D2D2测试标题</p>\\n<p>D2D2D2测试标题D2D2D2测试标题</p>\",\"summary\":\"\"},{\"title\":\"D3D3测试内容\",\"img\":\"/upload/localpc/banner/c4.jpg\",\"author\":\"张三C\",\"link\":\"\",\"content\":\"<p>D3D3测试内容D3D3测试内容D3D3测试内容D3D3测试内容</p>\\n<p>D3D3测试内容D3D3测试内容</p>\\n<p>D3D3测试内容</p>\\n<p>D3D3测试内容</p>\\n<p>D3D3测试内容D3D3测试内容</p>\",\"summary\":\"\"}]', '2019-04-30 16:48:34');
+INSERT INTO `wx_material` VALUES ('17', '2', '1', '2', 'EE标题测试测试', 'http://img.feiyit.com/feiyit/website/service/appdev.png', '', '李四2', '', '<p>EE标题测试测试EE标题测试测试</p>\n<p>EE标题测试测试</p>\n<p>vEE标题测试测试EE标题测试测试</p>\n<p>EE标题测试测试EE标题测试测试EE标题测试测试</p>', '[{\"title\":\"EE标题测试测试\",\"img\":\"http://img.feiyit.com/feiyit/website/service/appdev.png\",\"author\":\"李四2\",\"link\":\"\",\"content\":\"<p>EE标题测试测试EE标题测试测试</p>\\n<p>EE标题测试测试</p>\\n<p>vEE标题测试测试EE标题测试测试</p>\\n<p>EE标题测试测试EE标题测试测试EE标题测试测试</p>\",\"summary\":\"\"}]', '2019-04-30 23:08:37');
 
 -- ----------------------------
 -- Table structure for wx_setting
@@ -1802,4 +1384,4 @@ CREATE TABLE `wx_setting` (
 -- ----------------------------
 -- Records of wx_setting
 -- ----------------------------
-INSERT INTO `wx_setting` VALUES ('2', '测试公众号', 'wx554654654', 'g_sddwsssss', 'wx77922334429502', '9bfed87a0157250c26479a084c207b12', '认证服务号/认证媒体/政府订阅号', null, null, '', '[{\"name\":\"A级菜单\",\"url\":\"http://h5.feiyit.com/\",\"type\":0,\"sub_button\":[]},{\"name\":\"B级菜单\",\"url\":\"http://h5.feiyit.com/\",\"type\":0,\"sub_button\":[]},{\"name\":\"C级菜单\",\"url\":\"\",\"type\":\"0\",\"sub_button\":[{\"name\":\"搜索\",\"type\":0,\"url\":\"http://www.soso.com/\"},{\"name\":\"视频\",\"type\":0,\"url\":\"http://v.qq.com/\"},{\"name\":\"赞一下我们\",\"type\":0,\"url\":\"http://www.feiyit.com/\"}]}]', '2019-03-17 18:45:44');
+INSERT INTO `wx_setting` VALUES ('2', '测试公众号', 'wx554654654', 'g_sddwsssss', 'wx7797e2efb5desd2345', '9bfed87a0157250c264722324234234243207b12', '普通订阅号', null, null, '', '[{\"name\":\"A级菜单\",\"url\":\"http://www.soso.com/\",\"type\":\"0\",\"sub_button\":[{\"name\":\"测试消息\",\"media_id\":\"m1DGaRojSyH7LcnRhgbxvFXJqECZrxBSmGHKAXQHCI8\",\"url\":\"http://www.soso.com/\",\"type\":1,\"media_title\":\"DDD测试图文信息多条\",\"media_url\":\"http://mmbiz.qpic.cn/mmbiz_jpg/SQAGlPhfAE8xaVJb5h568BZzqTVia8OU2j2cvusicRHkmQqgicib9wklgCAD5AXibcBZ2wbDEKjyfW3758VFzSgAEaA/0?wx_fmt=jpeg\"}],\"media_title\":\"DDD测试图文信息多条\",\"media_url\":\"http://mmbiz.qpic.cn/mmbiz_jpg/SQAGlPhfAE8xaVJb5h568BZzqTVia8OU2j2cvusicRHkmQqgicib9wklgCAD5AXibcBZ2wbDEKjyfW3758VFzSgAEaA/0?wx_fmt=jpeg\",\"media_id\":\"OReNiJNayQa_dMOrvllR5bcfcsj4GOeaUcMC1A33hzI\"},{\"name\":\"B级菜单\",\"url\":\"http://h5.feiyit.com/\",\"type\":0,\"sub_button\":[]},{\"name\":\"C级菜单\",\"url\":\"\",\"type\":\"0\",\"sub_button\":[{\"name\":\"搜索\",\"type\":0,\"url\":\"http://www.soso.com/\"},{\"name\":\"视频\",\"type\":0,\"url\":\"http://v.qq.com/\"},{\"name\":\"赞一下我们\",\"type\":0,\"url\":\"http://www.feiyit.com/\"}]}]', '2019-05-04 21:29:16');

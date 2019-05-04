@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FytIms.Service.Extensions;
+using FytSoa.Service.Extensions;
 using FytSoa.Common;
 using FytSoa.Core.Model.Sys;
 using FytSoa.Core.Model.Wx;

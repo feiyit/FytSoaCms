@@ -29,7 +29,7 @@ namespace FytSoa.Api.Controllers.Wx
         /// 修改自定义菜单
         /// </summary>
         /// <returns></returns>
-        [HttpPost("edit")]
+        [HttpPost("edit"), Log("WxMenu：edit", LogType = LogEnum.UPDATE)]
         public async Task<ApiResult<string>> DeleteRole(int id, string menu)
         {
             var model = _settingService.GetModelAsync(m => m.Id == id).Result.data;
@@ -51,7 +51,7 @@ namespace FytSoa.Api.Controllers.Wx
         /// 同步到公众号菜单
         /// </summary>
         /// <returns></returns>
-        [HttpPost("synchro")]
+        [HttpPost("synchro"), Log("WxMenu：synchro", LogType = LogEnum.ASYWX)]
         public async Task<ApiResult<string>> PushMenu(int id)
         {
             //MemoryCacheService.Default.RemoveCache("WinXinAccessToken");
@@ -62,12 +62,18 @@ namespace FytSoa.Api.Controllers.Wx
             var token = WxTools.GetAccess(model.AppId,model.AppSecret);
 
             var dbMenu = JsonConvert.DeserializeObject<List<WxButton>>(model.MenuJson);
+            
             foreach (var item in dbMenu)
             {
                 item.sub_button = item.sub_button.Count > 0 ? item.sub_button : null;
                 if (item.type == "0" && !string.IsNullOrEmpty(item.url))
                 {
                     item.type = "view";
+                }
+                else if (item.type=="1" && !string.IsNullOrEmpty(item.media_id))
+                {
+                    item.type = "media_id";
+                    item.url = null;
                 }
                 else
                 {
@@ -81,6 +87,11 @@ namespace FytSoa.Api.Controllers.Wx
                         if (row.type == "0" && !string.IsNullOrEmpty(row.url))
                         {
                             row.type = "view";
+                        }
+                        else if (row.type == "1" && !string.IsNullOrEmpty(row.media_id))
+                        {
+                            row.type = "media_id";
+                            row.url = null;
                         }
                         else
                         {

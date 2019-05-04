@@ -113,7 +113,7 @@
                             os.error("请选择左侧字典类型~");
                             return;
                         }
-                        os.Open('添加字典值', '/fytadmin/sys/codesvalmodify/?guid=' + guid, '620px', '370px', function () {
+                        os.Open('添加字典值', '/fytadmin/sys/codesvalmodify/?guid=' + guid, '620px', '400px', function () {
                             active.reload();
                         });
                     },
@@ -170,7 +170,7 @@
                 table.on('tool(tool)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'edit') {
-                        os.Open('编辑字典值', '/fytadmin/sys/codesvalmodify/?guid=' + data.guid, '620px', '370px', function () {
+                        os.Open('编辑字典值', '/fytadmin/sys/codesvalmodify/?guid=' + data.guid, '620px', '400px', function () {
                             active.reload();
                         })
                     }

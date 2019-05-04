@@ -99,6 +99,11 @@ namespace FytSoa.Core.Model.Sys
         public bool Status { get; set; }
 
         /// <summary>
+        /// 菜单按钮功能的值，关联Code
+        /// </summary>
+        public string BtnFunJson { get; set; }
+
+        /// <summary>
         /// Desc:修改时间
         /// Default:
         /// Nullable:False
@@ -111,6 +116,7 @@ namespace FytSoa.Core.Model.Sys
         /// Nullable:False
         /// </summary>           
         public DateTime AddTIme { get; set; }
+
 
     }
 }

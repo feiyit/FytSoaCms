@@ -206,9 +206,9 @@
                 os.error('请选择图片分类~');
                 return;
             }
-            $("#cloudup").click();
-            $("#cloudup").off("change");
-            $("#cloudup").change(function () {
+            $("#cloudupfile").click();
+            $("#cloudupfile").off("change");
+            $("#cloudupfile").change(function () {
                 vm.upStatus = 'layui-show';
                 var file = this.files[0];
                 oc.upload(that.firstMenu + "/" + that.menuActive + "/", file);

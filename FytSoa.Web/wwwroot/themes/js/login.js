@@ -18,7 +18,7 @@ layui.use(['element', 'jquery', 'form', 'common'], function () {
         var btns = $(".layui-btn-normal");
         btns.html('<i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>');
         btns.attr('disabled', 'disabled');     
-        $.ajax('/fytadmin/login?handler=login', {
+        $.ajax('/api/admin/login', {
             data: data.field,
             dataType: 'json', //服务器返回json格式数据
             type: 'post', //HTTP请求类型
@@ -41,6 +41,7 @@ layui.use(['element', 'jquery', 'form', 'common'], function () {
                     $(".login-tip").animate({ 'height': '30px' });
                     setTimeout(function () {
                         $(".login-tip").animate({ 'height': 0 });
+                        $(".login-tip span").html('');
                     }, 2500);
                 }
                 btns.attr('disabled', false);
@@ -49,7 +50,7 @@ layui.use(['element', 'jquery', 'form', 'common'], function () {
                 }, 1000);
             },
             error: function (xhr, type, errorThrown) {
-                tool.error('连接异常，请稍后重试！');
+                os.error('连接异常，请稍后重试！');
             }
         });
         return false;

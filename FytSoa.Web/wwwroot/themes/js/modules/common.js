@@ -22,15 +22,19 @@
         },
         ajax: function (url, options, callFun) {
             var httpUrl = "/", token = tool.GetSession('FYTADMIN_ACCESS_TOKEN');
+            var _headers = {};
+            if (token !== null) {
+                _headers = {
+                    'Authorization': 'Bearer ' + token
+                };
+            }
+            //console.log(_headers);
             $.ajax(httpUrl + url, {
                 data: options,
-                async: true,
                 dataType: 'json', //服务器返回json格式数据
                 type: 'post', //HTTP请求类型
                 timeout: 10 * 1000, //超时时间设置为50秒；
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                },
+                headers: _headers,
                 success: function (data) {
                     callFun(data);
                 },
@@ -45,15 +49,18 @@
         },
         get: function (url, options, callFun) {
             var httpUrl = "/", token = tool.GetSession('FYTADMIN_ACCESS_TOKEN');
+            var _headers = {};
+            if (token!==null) {
+                _headers = {
+                    'Authorization': 'Bearer ' + token
+                };
+            }
             $.ajax(httpUrl + url, {
                 data: options,
-                async: true,
                 dataType: 'json', //服务器返回json格式数据
                 type: 'get', //HTTP请求类型
                 timeout: 10 * 1000, //超时时间设置为50秒；
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                },
+                headers: _headers,
                 success: function (data) {
                     callFun(data);
                 },
@@ -72,7 +79,8 @@
                 title: title,
                 shadeClose: false,
                 shade: 0.2,
-                move:false,
+                //move:false,
+                skin: 'layer-cur-open',
                 maxmin: false, //开启最大化最小化按钮
                 area: [width, height],
                 content: url,
@@ -119,6 +127,14 @@
             setTimeout(function () {
                 layer.close(tmls);
             }, 500);
+        },
+        load: function () {
+            $('body').append('<div class="loader-cur-wall"><div class="loader-cur"></div></div>');
+        },
+        loadClose: function () {
+            setTimeout(function () {
+                $('.loader-cur-wall').remove();
+            }, 100);
         },
         getUrlParam: function (name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");

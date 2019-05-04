@@ -1,4 +1,5 @@
-﻿using FytSoa.Extensions;
+﻿using FytSoa.Common;
+using FytSoa.Extensions;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;

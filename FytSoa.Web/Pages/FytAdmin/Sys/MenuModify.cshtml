@@ -31,8 +31,9 @@
     .layui-iconpicker {
         max-width: 100%;
     }
+
 </style>
-<form class="layui-form form-cus" action="">
+<form class="layui-form form-cus" action="" id="app">
     <div class="layui-form-item">
         <label class="layui-form-label">所属父级</label>
         <div class="layui-input-block">
@@ -43,7 +44,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label for="" class="layui-form-label">选择图标</label>
+        <label class="layui-form-label">选择图标</label>
         <div class="layui-input-block">
             <input type="text" id="iconPicker" lay-filter="iconPicker" value="@Model.MenuModel.Icon" class="layui-input">
         </div>
@@ -55,9 +56,9 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">菜单编号</label>
+        <label class="layui-form-label">菜单别名</label>
         <div class="layui-input-block">
-            <input type="text" name="NameCode" value="@Model.MenuModel.NameCode" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入菜单编号" class="layui-input">
+            <input type="text" name="NameCode" value="@Model.MenuModel.NameCode" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="用于权限控制操作" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -67,18 +68,26 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">排序</label>
-        <div class="layui-input-block">
-            <input type="text" name="Sort" value="@Model.MenuModel.Sort" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入排序" class="layui-input">
+        <div class="layui-input-inline">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <input type="text" name="Sort" value="@Model.MenuModel.Sort" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入排序" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-input-inline">
+            <label class="layui-form-label">是否显示</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="Status" lay-skin="switch" lay-text="ON|OFF" value="true" @(Model.MenuModel.Status ? "checked" : "")>
+            </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">是否显示</label>
+        <label class="layui-form-label">权限分配</label>
         <div class="layui-input-block">
-            <input type="checkbox" name="Status" lay-skin="switch" lay-text="ON|OFF" value="true" @(Model.MenuModel.Status ? "checked" : "")>
+            <input type="checkbox" v-for="(it,index) in cbkList" :checked="cbkIsExist(it)?true:false" lay-skin="primary" :name="'cbk['+index+']'" :value="it.guid" :title="it.name" lay-filter="cbk">
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item layui-cur-submit">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
             <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
@@ -91,7 +100,30 @@
 </form>
 <link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
 @section Scripts{
-    <script>
+<script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                cbkList: [],
+                selectCbk:[]
+            },
+            created: function () {
+                let cbkJson = '@Html.Raw(Model.MenuModel.BtnFunJson)';
+                if (cbkJson != '') {
+                    this.selectCbk = JSON.parse(cbkJson);;
+                }
+            },
+            methods: {
+                cbkIsExist: function (m) { //修改，判断值是否在已存在的字符串内
+                    var that = this;
+                    var cbkJson = '@Html.Raw(Model.MenuModel.BtnFunJson)';
+                    if (cbkJson === '') { return false; }
+                    if (cbkJson.indexOf(m.guid) > -1) {
+                        return true;
+                    }
+                }
+            }
+        });
         layui.config({
             base: '/themes/js/modules/'
         }).extend({
@@ -104,10 +136,21 @@
                 search: true,
                 page: false,
                 click: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     $("#Icon").val(data.icon);
                 }
             });
+            var active = {
+                loadBtnCode: function () {
+                    os.get('api/code/getpages', { guid: 'a88fa4d3-3658-4449-8f4a-7f438964d716' }, function (res) {
+                        vm.cbkList = res.data;
+                        vm.$nextTick(function () {
+                            form.render();
+                        });
+                    });
+                }
+            }
+            active.loadBtnCode();
             var index = parent.layer.getFrameIndex(window.name);
             //监听提交
             form.on('submit(submit)', function (data) {
@@ -116,6 +159,8 @@
                 if ($("#Guid").val()) {
                     urls = "api/menu/edit";
                 }
+                data.field.cbks = vm.selectCbk;
+                //os.log(data.field);
                 os.ajax(urls, data.field, function (res) {
                     $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
                     if (res.statusCode === 200) {
@@ -152,8 +197,16 @@
                 $("#ParentName").val(treeNode.name);
                 $(".organize-tree").removeClass('active');
             }
+            form.on('checkbox(cbk)', function (data) {
+                if (data.elem.checked) {
+                    vm.selectCbk.push(data.value);
+                } else {
+                   vm.selectCbk.splice(data.value,1);
+                }
+            });
+
         });
-    </script>
+</script>
 }
 
 

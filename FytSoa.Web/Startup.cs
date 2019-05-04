@@ -64,6 +64,11 @@ namespace FytSoa.Web
             {
                 o.LoginPath = new PathString("/fytadmin/login");
             })
+            //新增一个新的方案
+            .AddCookie(CompanyAuthorizeAttribute.CompanyAuthenticationScheme, o =>
+            {
+                o.LoginPath = new PathString("/company/login");
+            })
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, o =>
             {
                 JwtAuthConfigModel jwtConfig = new JwtAuthConfigModel();
@@ -82,7 +87,7 @@ namespace FytSoa.Web
                     ValidateIssuer = true,
                     ValidateIssuerSigningKey = true,
                     // 是否要求Token的Claims中必须包含 Expires
-                    RequireExpirationTime = true,
+                    RequireExpirationTime = false,
                     // 允许的服务器时间偏移量
                     // ClockSkew = TimeSpan.FromSeconds(300),
                     // 是否验证Token有效期，使用当前时间与Token的Claims中的NotBefore和Expires对比
@@ -117,9 +122,9 @@ namespace FytSoa.Web
             services.AddDistributedRedisCache(options =>
             {
                 //用于连接Redis的配置 
-                options.Configuration = "localhost";// Configuration.GetConnectionString("RedisConnectionString");
+                options.Configuration = Configuration["Cache:Configuration"];
                 //Redis实例名RedisDistributedCache
-                options.InstanceName = "RedisInstance";
+                options.InstanceName = Configuration["Cache:RedisInstance"];
             });
             #endregion 
 
@@ -171,12 +176,24 @@ namespace FytSoa.Web
                     .AllowAnyHeader()
                     .AllowCredentials();
                 });
+
+                c.AddPolicy("Limit", policy =>
+                {
+                    policy
+                    .WithOrigins("localhost:4909")
+                    .WithMethods("get", "post", "put", "delete")
+                    //.WithHeaders("Authorization");
+                    .AllowAnyHeader();
+                });
             });
             #endregion
 
             #region 性能 压缩
             services.AddResponseCompression();
             #endregion
+
+            //NLog 数据库配置
+            //NLog.LogManager.Configuration.FindTargetByName<NLog.Targets.DatabaseTarget>("db").ConnectionString = Configuration.GetConnectionString("LogConnectionString");
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -233,12 +250,13 @@ namespace FytSoa.Web
             app.UseMvc();
         }
 
+      
         /// <summary>  
         /// 自动注册服务——获取程序集中的实现类对应的多个接口
         /// </summary>
         /// <param name="services">服务集合</param>  
         /// <param name="assemblyName">程序集名称</param>
-        public void AddAssembly(IServiceCollection services, string assemblyName)
+        public void AddAssembly(IServiceCollection services,string assemblyName)
         {
             if (!String.IsNullOrEmpty(assemblyName))
             {
@@ -247,14 +265,14 @@ namespace FytSoa.Web
                 foreach (var item in ts.Where(s => !s.IsInterface))
                 {
                     var interfaceType = item.GetInterfaces();
-                    if (interfaceType.Length == 1)
+                    if (interfaceType.Length==1)
                     {
                         services.AddTransient(interfaceType[0], item);
                     }
-                    if (interfaceType.Length > 1)
+                    if (interfaceType.Length>1)
                     {
                         services.AddTransient(interfaceType[1], item);
-                    }
+                    }                    
                 }
             }
         }

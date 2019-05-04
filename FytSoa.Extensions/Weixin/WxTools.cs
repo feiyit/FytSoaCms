@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -26,8 +27,8 @@ namespace FytSoa.Extensions
         public static WxAccessToken GetAccess(string appid, string secret)
         {
             var model = new WxAccessToken();
-            var _cacheAccess=MemoryCacheService.Default.GetCache<WxAccessToken>("WinXinAccessToken");
-            if (_cacheAccess!=null)
+            var _cacheAccess = MemoryCacheService.Default.GetCache<WxAccessToken>("WinXinAccessToken");
+            if (_cacheAccess != null)
             {
                 model = _cacheAccess;
             }
@@ -35,7 +36,7 @@ namespace FytSoa.Extensions
             {
                 var url = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", appid, secret);
                 model = GetResponse<WxAccessToken>(url);
-                MemoryCacheService.Default.SetCache("WinXinAccessToken",model,119);
+                MemoryCacheService.Default.SetCache("WinXinAccessToken", model, 119);
             }
             return model;
         }
@@ -44,17 +45,18 @@ namespace FytSoa.Extensions
         /// 同步到公众号的菜单
         /// </summary>
         /// <returns></returns>
-        public static WxReturnJson PushMenu(string access_token,string body)
+        public static WxReturnJson PushMenu(string access_token, string body)
         {
-            var url = string.Format("https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}",access_token);
-            return PostResponse<WxReturnJson>(url,body);
+            var url = string.Format("https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}", access_token);
+            return PostResponse<WxReturnJson>(url, body);
         }
 
         /// <summary>
         /// 获得素材列表
         /// </summary>
         /// <returns></returns>
-        public static WxMeterArr GetMediaList(string access_token) {
+        public static WxMeterArr GetMediaList(string access_token)
+        {
             var url = string.Format("https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token={0}", access_token);
             return PostResponse<WxMeterArr>(url, "{\"type\":\"news\",\"offset\":0,\"count\":50}");
         }
@@ -89,7 +91,7 @@ namespace FytSoa.Extensions
                     System.IO.StreamReader reader = new System.IO.StreamReader(dataStream);
                     string res = reader.ReadToEnd();
 
-                    return JsonConvert.DeserializeObject<T>(res); ;
+                    return JsonConvert.DeserializeObject<T>(res);
                 }
                 return result;
             }
@@ -144,7 +146,7 @@ namespace FytSoa.Extensions
                 }
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return default(T);
             }
@@ -216,6 +218,110 @@ namespace FytSoa.Extensions
             }
 
         }
+
+
+        /// <summary>
+        /// 服务号：上传多媒体文件
+        /// </summary>
+        /// <param name="accesstoken">调用接口凭据</param>
+        /// <param name="filename">文件路径</param>
+        /// <param name="contenttype">文件Content-Type类型(例如：image/jpeg、audio/mpeg)</param>
+        /// <returns></returns>
+        public static WxMeterUploadRes UploadFile(string uacaccess_tokenrl, string path, string fileExt)
+        {
+            string url = string.Format("https://api.weixin.qq.com/cgi-bin/material/add_material?access_token={0}&type={1}", uacaccess_tokenrl, "image");
+
+            //文件后缀名，使用格式
+            var contenttype = "image/jpeg";
+            switch (fileExt)
+            {
+                case ".png":
+                    contenttype = "image/png";
+                    break;
+            }
+            FileStream fs = null;
+            byte[] bArr = null;
+            //判断是否网络图片
+            if (path.ToLower().StartsWith("http") || path.ToLower().StartsWith("https"))
+            {
+                WebClient mywebclient = new WebClient();
+                bArr = mywebclient.DownloadData(path);
+            }
+            else
+            {
+                fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+                bArr = new byte[fs.Length];
+                fs.Read(bArr, 0, bArr.Length);
+            }
+
+            // 设置参数
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            CookieContainer cookieContainer = new CookieContainer();
+            request.CookieContainer = cookieContainer;
+            request.AllowAutoRedirect = true;
+            request.Method = "POST";
+            string boundary = DateTime.Now.Ticks.ToString("X"); // 随机分隔线
+            request.ContentType = "multipart/form-data;charset=utf-8;boundary=" + boundary;
+            byte[] itemBoundaryBytes = Encoding.UTF8.GetBytes("\r\n--" + boundary + "\r\n");
+            byte[] endBoundaryBytes = Encoding.UTF8.GetBytes("\r\n--" + boundary + "--\r\n");
+
+            int pos = path.LastIndexOf("\\");
+            string fileName = path.Substring(pos + 1);
+
+            //组织表单数据
+            StringBuilder sbHeader = new StringBuilder();
+            sbHeader.Append("--" + boundary + "\r\n");
+            sbHeader.Append("Content-Disposition: form-data; name=\"media\"; filename=\"" + Guid.NewGuid().ToString() + ".jpg\"; filelength=\"" + bArr.Length + "\"");
+            sbHeader.Append("\r\n");
+            sbHeader.Append("Content-Type: " + contenttype);
+            sbHeader.Append("\r\n\r\n");
+
+            //请求头部信息 
+            //StringBuilder sbHeader = new StringBuilder(string.Format("Content-Disposition:form-data;name=\"file\";filename=\"{0}\"\r\nContent-Type:application/octet-stream\r\n\r\n", fileName));
+            byte[] postHeaderBytes = Encoding.UTF8.GetBytes(sbHeader.ToString());
+
+
+            Stream postStream = request.GetRequestStream();
+            postStream.Write(itemBoundaryBytes, 0, itemBoundaryBytes.Length);
+            postStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
+            postStream.Write(bArr, 0, bArr.Length);
+            postStream.Write(endBoundaryBytes, 0, endBoundaryBytes.Length);
+            postStream.Close();
+
+            if (fs!=null)
+            {
+                fs.Close();
+                fs.Dispose();
+            }
+            
+            //发送请求并获取相应回应数据
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            //直到request.GetResponse()程序才开始向目标网页发送Post请求
+            Stream instream = response.GetResponseStream();
+            StreamReader sr = new StreamReader(instream, Encoding.UTF8);
+            //返回结果网页（html）代码
+            string content = sr.ReadToEnd();
+            if (content.Contains("errcode"))
+            {
+                return new WxMeterUploadRes() { code = 500 };
+            }
+            return JsonConvert.DeserializeObject<WxMeterUploadRes>(content);
+        }
+
+        /// <summary>
+        /// 网络图片转换流
+        /// </summary>
+        /// <param name="picUrl">网络图片地址</param>
+        /// <param name="timeOut">Request最大请求时间，如果为-1则无限制</param>
+        /// <returns></returns>
+        public static byte[] GetBytesByImagePath(string picUrl, int timeOut)
+        {
+            byte[] bArr = null;
+            WebClient mywebclient = new WebClient();
+            bArr=mywebclient.DownloadData(picUrl);
+            return bArr;
+        }
+
     }
 
 
@@ -249,6 +355,67 @@ namespace FytSoa.Extensions
         /// </summary>
         public string errmsg { get; set; }
     }
+
+    #region 素材提交到微信平台的模型
+    public class WxMeterArticle
+    {
+        /// <summary>
+        /// 标题
+        /// </summary>
+        public string title { get; set; }
+        /// <summary>
+        /// 图文消息的封面图片素材id（必须是永久mediaID）
+        /// </summary>
+        public string thumb_media_id { get; set; }
+        /// <summary>
+        /// 作者
+        /// </summary>
+        public string author { get; set; }
+        /// <summary>
+        /// 图文消息的摘要，仅有单图文消息才有摘要，多图文此处为空。如果本字段为没有填写，则默认抓取正文前64个字。
+        /// </summary>
+        public string digest { get; set; }
+        /// <summary>
+        /// 是否显示封面，0为false，即不显示，1为true，即显示
+        /// </summary>
+        public int show_cover_pic { get; set; } = 1;
+        /// <summary>
+        /// 图文消息的具体内容，支持HTML标签，必须少于2万字符，小于1M，且此处会去除JS,涉及图片url必须来源 "上传图文消息内的图片获取URL"接口获取。外部图片url将被过滤。
+        /// </summary>
+        public string content { get; set; }
+        /// <summary>
+        /// 图文消息的原文地址，即点击“阅读原文”后的URL
+        /// </summary>
+        public string content_source_url { get; set; }
+        /// <summary>
+        /// Uint32 是否打开评论，0不打开，1打开
+        /// </summary>
+        public int need_open_comment { get; set; } = 1;
+        /// <summary>
+        /// Uint32 是否粉丝才可评论，0所有人可评论，1粉丝才可评论
+        /// </summary>
+        public int only_fans_can_comment { get; set; } = 0;
+    }
+    /// <summary>
+    /// 上传成功后的返回结果
+    /// </summary>
+    public class WxMeterUploadRes
+    {
+        /// <summary>
+        /// 永久素材的id
+        /// </summary>
+        public string media_id { get; set; }
+        /// <summary>
+        /// 素材的地址
+        /// </summary>
+        public string url { get; set; }
+
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public int code { get; set; } = 200;
+    }
+    #endregion
 
     #region 素材模型组
     /// <summary>
@@ -365,7 +532,8 @@ namespace FytSoa.Extensions
     /// <summary>
     /// 微信菜单一级按钮
     /// </summary>
-    public class WxButton {
+    public class WxButton
+    {
 
         /// <summary>
         /// 菜单名称

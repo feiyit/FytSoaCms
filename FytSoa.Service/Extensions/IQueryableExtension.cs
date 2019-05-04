@@ -2,7 +2,7 @@
 using FytSoa.Common;
 using SqlSugar;
 
-namespace FytIms.Service.Extensions
+namespace FytSoa.Service.Extensions
 {
     public static class QueryableExtension
     {

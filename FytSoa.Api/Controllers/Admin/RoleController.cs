@@ -28,7 +28,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpGet("getpages")]
+        [HttpGet("getpages"), Log("Role：GetPages", LogType = LogEnum.RETRIEVE)]
         public async Task<JsonResult> GetPages(PageParm parm)
         {
             var res = await _roleService.GetPagesAsync(parm);
@@ -40,7 +40,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpGet("torolelist")]
+        [HttpGet("torolelist"), Log("Role：torolelist", LogType = LogEnum.RETRIEVE)]
         public async Task<JsonResult> GetToRolePages(string key,string adminGuid)
         {
             var res = await _roleService.GetPagesToRoleAsync(key,adminGuid);
@@ -51,7 +51,7 @@ namespace FytSoa.Api.Controllers
         /// 获得字典栏目Tree列表
         /// </summary>
         /// <returns></returns>
-        [HttpPost("add")]
+        [HttpPost("add"), ApiAuthorize(Modules = "Role", Methods = "Add", LogType = LogEnum.ADD)]
         public async Task<ApiResult<string>> AddRole(SysRole parm)
         {
             return await _roleService.AddAsync(parm);
@@ -61,7 +61,7 @@ namespace FytSoa.Api.Controllers
         /// 删除
         /// </summary>
         /// <returns></returns>
-        [HttpPost("delete")]
+        [HttpPost("delete"), ApiAuthorize(Modules = "Role", Methods = "Delete", LogType = LogEnum.DELETE)]
         public async Task<ApiResult<string>> DeleteRole(string parm)
         {
             return await _roleService.DeleteAsync(parm);
@@ -71,7 +71,7 @@ namespace FytSoa.Api.Controllers
         /// 修改
         /// </summary>
         /// <returns></returns>
-        [HttpPost("edit")]
+        [HttpPost("edit"), ApiAuthorize(Modules = "Role", Methods = "Update", LogType = LogEnum.UPDATE)]
         public async Task<ApiResult<string>> EditRole(SysRole parm)
         {
             return await _roleService.ModifyAsync(parm);

@@ -2,7 +2,7 @@
 using FytSoa.Core.Model.Cms;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FytIms.Service.Extensions;
+using FytSoa.Service.Extensions;
 using FytSoa.Core;
 using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;

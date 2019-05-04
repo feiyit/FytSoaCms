@@ -22,6 +22,7 @@ namespace FytSoa.Extensions
             var claims = new Claim[]
             {
                 new Claim(JwtRegisteredClaimNames.Jti,tokenModel.Uid.ToString()),//用户Id
+                new Claim("UserName", tokenModel.UserName),//用户名
                 new Claim("Role", tokenModel.Role),//身份
                 new Claim("Project", tokenModel.Project),//身份
                 new Claim(JwtRegisteredClaimNames.Iat,dateTime.ToString(),ClaimValueTypes.Integer64)
@@ -55,7 +56,6 @@ namespace FytSoa.Extensions
 
             var jwtHandler = new JwtSecurityTokenHandler();
             var encodedJwt = jwtHandler.WriteToken(jwt);
-
             return encodedJwt;
         }
 
@@ -68,11 +68,14 @@ namespace FytSoa.Extensions
         {
             var jwtHandler = new JwtSecurityTokenHandler();
             JwtSecurityToken jwtToken = jwtHandler.ReadJwtToken(jwtStr);
-            object role = new object(); ;
+            object role = new object();
+            object userName = new object();
             object project = new object();
+            object menu = new object();
             try
             {
                 jwtToken.Payload.TryGetValue("Role", out role);
+                jwtToken.Payload.TryGetValue("UserName", out userName);
                 jwtToken.Payload.TryGetValue("Project", out project);
             }
             catch (Exception e)
@@ -83,6 +86,7 @@ namespace FytSoa.Extensions
             var tm = new TokenModel
             {
                 Uid = jwtToken.Id,
+                UserName=userName.ToString(),
                 Role = role.ToString(),
                 Project = project.ToString()
             };
@@ -98,6 +102,11 @@ namespace FytSoa.Extensions
         /// 用户Id
         /// </summary>
         public string Uid { get; set; }
+
+        /// <summary>
+        /// 用户姓名
+        /// </summary>
+        public string UserName { get; set; }
         /// <summary>
         /// 身份
         /// </summary>

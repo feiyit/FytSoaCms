@@ -58,7 +58,7 @@
             <textarea name="Summary" class="layui-textarea">@Html.Raw(Model.RoleModel.Summary)</textarea>
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item layui-cur-submit">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
             <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
@@ -82,7 +82,7 @@
                 var urls = "api/role/add";
                 if ($("#Guid").val()) {
                     urls = "api/role/edit";
-                }
+                }                
                 os.ajax(urls, data.field, function (res) {
                     $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
                     if (res.statusCode === 200) {

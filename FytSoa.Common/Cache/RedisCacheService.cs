@@ -15,6 +15,14 @@ namespace FytSoa.Common
             _cache = cache;
         }
 
+        public static RedisCacheService Default { get; private set; }
+        static RedisCacheService()
+        {
+            Default = new RedisCacheService(new RedisCache(new RedisCacheOptions() {
+                Configuration=ConfigExtensions.Configuration[KeyHelper.REDISLOCALHOST],
+                InstanceName= ConfigExtensions.Configuration[KeyHelper.REDISSIGNSNAME]
+            }));
+        }
 
         /// <summary>
         /// 是否存在此缓存

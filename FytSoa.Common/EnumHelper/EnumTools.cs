@@ -7,16 +7,70 @@ namespace FytSoa.Common
     public enum LogEnum
     {
         /// <summary>
-        /// 登录日志
+        /// 保存或添加
         /// </summary>
-        [Text("登录日志")]
-        Login = 1,
+        [Text("保存或添加")]
+        ADD = 1,
 
         /// <summary>
-        /// 操作日志
+        /// 更新
         /// </summary>
-        [Text("操作日志")]
-        Operation = 2
+        [Text("更新/修改")]
+        UPDATE = 2,
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        [Text("审核")]
+        AUDIT = 3,
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        [Text("删除")]
+        DELETE = 4,
+
+        /// <summary>
+        /// 读取/查询
+        /// </summary>
+        [Text("读取/查询")]
+        RETRIEVE = 5,
+
+        /// <summary>
+        /// 登录
+        /// </summary>
+        [Text("登录")]
+        LOGIN = 6,
+
+        /// <summary>
+        /// 查看
+        /// </summary>
+        [Text("查看")]
+        LOOK = 7,
+
+        /// <summary>
+        /// 更改状态
+        /// </summary>
+        [Text("更改状态")]
+        STATUS = 8,
+
+        /// <summary>
+        /// 授权
+        /// </summary>
+        [Text("授权")]
+        AUTHORIZE = 9,
+
+        /// <summary>
+        /// 退出登录
+        /// </summary>
+        [Text("退出登录")]
+        LOGOUT = 10,
+
+        /// <summary>
+        /// 同步到微信
+        /// </summary>
+        [Text("同步到微信")]
+        ASYWX = 11
     }
 
     public enum PermissionsEnum

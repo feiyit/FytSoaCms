@@ -150,6 +150,13 @@
             <div class="layui-row">
                 <div class="layui-col-md3" v-for="it in list" v-cloak>
                     <div class="layui-card">
+                        <div class="layui-card-header" style="border-bottom:1px solid #f1f1f1;">
+                            {{it.addDate}}
+                            <div class="card-head-r">
+                                <i v-if="it.position==2" class="layui-icon layui-icon-login-wechat" style="color: #44B549;"></i>
+                                <i v-if="it.position==1" class="layui-icon layui-icon-app"></i>
+                            </div>
+                        </div>
                         <div class="layui-card-body">
                             <a class="cover-dark"><span>预览文章</span></a>
                             <a href="#">
@@ -159,10 +166,9 @@
                             </a>
                         </div>
                         <div class="layui-card-header">
-                            {{it.addDate}}
                             <div class="card-head-r">
                                 <i class="layui-icon layui-icon-delete tips" title="删除" @@click="del(it)"></i>
-                                <i class="layui-icon layui-icon-edit tips" title="修改" @@click="edit(it)"></i>
+                                <i class="layui-icon layui-icon-edit tips" style="margin-left:50px;" title="修改" @@click="edit(it)"></i>
                             </div>
                         </div>
                     </div>
@@ -219,7 +225,7 @@
                         murl = '/fytadmin/wechat/materiallink?wxid=' + m.wxId + '&id=' + m.id;
                         title = '创建图文链接';
                     }
-                    os.Open(title, murl, '1200px', '650px', function () {
+                    os.Open(title, murl, '1200px', '660px', function () {
                         active.Init();
                     });
                 }
@@ -256,7 +262,22 @@
                         });
                     },
                     toolAsynwx: function () {
-                        os.success('同步到微信素材库成功~');
+                        wxid = parseInt($('#WxId').val());
+                        if (wxid === 0) {
+                            os.warning('请选择公众号~');
+                            return;
+                        }
+                        os.load();
+                        os.ajax('api/wx/material/asynwx', { wxid: wxid }, function (res) {
+                            os.loadClose();
+                            if (res.statusCode == 200) {
+                                os.success('同步到微信素材库成功~');
+                                active.Init();
+                            } else {
+                                os.error(res.message);
+                            }
+                        });
+                        
                     },
                     toolSearch: function () {
                         wxm.where.key = $('#key').val();
@@ -323,7 +344,7 @@
                         murl = '/fytadmin/wechat/materiallink?wxid=' + wxid;
                         title = '创建图文链接';
                     }
-                    os.Open(title, murl, '1200px', '650px', function () {
+                    os.Open(title, murl, '1200px', '660px', function () {
                         active.Init();
                     });
                 });

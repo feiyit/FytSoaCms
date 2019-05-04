@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FytIms.Api.Controllers
+namespace FytSoa.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/codetype")]
@@ -27,7 +27,7 @@ namespace FytIms.Api.Controllers
         /// 获得字典栏目Tree列表
         /// </summary>
         /// <returns></returns>
-        [HttpPost("gettree")]
+        [HttpPost("gettree"), Log("codetype：gettree",LogType =LogEnum.RETRIEVE)]
         public List<SysCodeTypeTree> GetListPage()
         {
             return _sysCodeTypeService.GetListTreeAsync().Result.data;
@@ -37,7 +37,7 @@ namespace FytIms.Api.Controllers
         /// 获得字典栏目Tree列表
         /// </summary>
         /// <returns></returns>
-        [HttpPost("add")]
+        [HttpPost("add"), ApiAuthorize(Modules = "Key", Methods = "Add", LogType = LogEnum.ADD)]
         public async Task<ApiResult<string>> AddCodeType(SysCodeType parm)
         {
             return await _sysCodeTypeService.AddAsync(parm);
@@ -47,7 +47,7 @@ namespace FytIms.Api.Controllers
         /// 删除
         /// </summary>
         /// <returns></returns>
-        [HttpPost("delete")]
+        [HttpPost("delete"), ApiAuthorize(Modules = "Key", Methods = "Delete", LogType = LogEnum.DELETE)]
         public async Task<ApiResult<string>> DeleteCode(string guid)
         {
             return await _sysCodeTypeService.DeleteAsync(guid);
@@ -57,7 +57,7 @@ namespace FytIms.Api.Controllers
         /// 删除
         /// </summary>
         /// <returns></returns>
-        [HttpPost("edit")]
+        [HttpPost("edit"), ApiAuthorize(Modules = "Key", Methods = "Update", LogType = LogEnum.UPDATE)]
         public async Task<ApiResult<string>> EditCode(SysCodeType parm)
         {
             return await _sysCodeTypeService.ModifyAsync(parm);

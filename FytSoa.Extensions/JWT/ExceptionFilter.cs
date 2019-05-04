@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FytSoa.Common;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,8 @@ namespace FytSoa.Extensions
                     context.Response.StatusCode = 500;
                     //LogHelper.SetLog(LogLevel.Error, ex);
                 }
+                //记录异常日志
+                Logger.Default.ProcessError(context.Response.StatusCode, ex.Message);
                 await HandleExceptionAsync(context, context.Response.StatusCode, ex.Message);
                 isCatched = true;
             }
@@ -68,6 +71,7 @@ namespace FytSoa.Extensions
                             msg = "未知错误";
                             break;
                     }
+                    Logger.Default.ProcessError(context.Response.StatusCode,msg);
                     await HandleExceptionAsync(context, context.Response.StatusCode, msg);
                 }
             }
@@ -84,21 +88,6 @@ namespace FytSoa.Extensions
             var data = new { statusCode, Success = false, message = msg };
             context.Response.ContentType = "application/json;charset=utf-8";
             await context.Response.WriteAsync(JsonConvert.SerializeObject(data));
-            //var path = context.Request.Path.ToString().ToLower();
-            //if (path.Contains("api"))
-            //{
-            //    var data = new { statusCode, Success = false, message = msg };
-            //    context.Response.ContentType = "application/json;charset=utf-8";
-            //    await context.Response.WriteAsync(JsonConvert.SerializeObject(data));
-            //}
-            //else if (path.Contains("fytadmin") && !path.Contains("login"))
-            //{
-            //    await context.Response.WriteAsync("<script>window.location.href = '/fytadmin/login';</script>");
-            //}
-            //else
-            //{
-            //    //await _next(context);
-            //}
         }
     }
 }

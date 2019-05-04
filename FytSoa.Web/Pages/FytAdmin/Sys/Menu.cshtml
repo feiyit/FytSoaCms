@@ -39,11 +39,11 @@
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'name', title: '菜单名称', sort: true, fixed: 'left' },
-                            { field: 'nameCode', title: '编号' },
-                            { field: 'urls', title: 'Url' },
-                            { field: 'sort', width: 150, title: '排序', sort: true },
-                            { field: 'layer', width: 150, title: '层级' },
+                            { field: 'name', title: '菜单名称', width: 200, fixed: 'left' },
+                            { field: 'nameCode',width:150, title: '模块名' },
+                            { field: 'urls', title: 'Url', width: 200 },
+                            { field: 'sort', width: 100, title: '排序', sort: true },
+                            { field: 'btnFunJson', title: '功能' },
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
@@ -76,7 +76,7 @@
                             });
                     },
                     organizeAdd: function () {
-                        os.Open('添加菜单', '/fytadmin/sys/menumodify', '680px', '500px', function () {
+                        os.Open('添加菜单', '/fytadmin/sys/menumodify', '720px', '520px', function () {
                             active.reload();
                             var tree = $.fn.zTree.getZTreeObj("tree");
                             tree.reAsyncChildNodes(null, "refresh");
@@ -129,7 +129,7 @@
                 table.on('tool(tool)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'edit') {
-                        os.Open('编辑菜单', '/fytadmin/sys/menumodify/?guid=' + data.guid, '680px', '500px', function () {
+                        os.Open('编辑菜单', '/fytadmin/sys/menumodify/?guid=' + data.guid, '720px', '520px', function () {
                             var tree = $.fn.zTree.getZTreeObj("tree");
                             tree.reAsyncChildNodes(null, "refresh");
                             active.reload();
