@@ -1,4 +1,54 @@
- **[Demo演示地址](http://fytsoacms.netcore.club/fytadmin/)**   
+### 特别提示  
+  
+项目依赖  
+```
+本项目运行NetCore SDK版本为2.2+     数据库：Mysql 5.7+    使用SqlSugar  ORM
+```
+  
+## 项目源代码地址
+  **github地址**：[https://github.com/feiyit/FytSoaCms](https://github.com/feiyit/FytSoaCms)  
+**码云地址**：[https://gitee.com/feiyit/FytSoaCm](https://gitee.com/feiyit/FytSoaCms)
+  
+
+#### **简介:**  
+ > - 模块化：全新的架构和模块化的开发机制，便于灵活扩展和二次开发。
+ > - 模型/栏目/分类信息体系：通过栏目和模型绑定，以及不同的模型类型，不同栏目可以实现差异化的功能，轻松实现诸如资讯、下载、讨论和图片等功能。通过分类信息和栏目绑定，可以自动建立索引表，轻松实现复杂的信息检索。
+ > - FytSoaCms是一套基于NetCore+SqlSugar+Layui开发出来的框架，源代码完全开源，并支持前后端分离。
+ > - 支持SQLServer、MySQL、Oracle、PostgreSQL、SQLite等多数据库类型。模块化设计，层次结构清晰。  
+ > - Jwt权限认证，操作权限控制精密细致，对所有管理链接都进行权限验证，可控制到导航菜单、功能按钮。提高开发效率及质量。
+ > - 常用类封装，日志、缓存、验证、字典、文件（本地、七牛云）。等等，目前兼容浏览器（Chrome、Firefox、360浏览器等）
+ > - 适用范围：可以开发OA、ERP、BPM、CRM、WMS、TMS、MIS、BI、电商平台后台、物流管理系统、快递管理系统、教务管理系统等各类管理软件。  
+  
+
+ **[Demo演示地址 http://fytsoacms.netcore.club/fytadmin/](http://fytsoacms.netcore.club/fytadmin/)**  
+  
+  
+ 
+  
+#### **开发者信息:**   
+
+
+1. 系统名称：FytSoaCms  
+1. 作者：飞易腾科技有限公司CTO  平头哥  
+1. QQ群：858895405  
+1. 官网网址：[http://www.feiyit.com/](http://www.feiyit.com/)  
+1. 开源协议：MIT License  
+  
+
+#### **系统技术点:**   
+
+1. 核心框架：NetCore Razor Pages  
+1. ORM：SqlSugar [http://www.codeisbug.com/](http://www.codeisbug.com/)  
+1. 缓存依赖：CSRedis    MemoryCache  
+1. 日志管理：Nlog   登陆日志、操作日志、异常日志
+1. 工具类：Aes加密、Md5加密、RSA加密、Des加密  
+1. 静态分布式：七牛云存储
+1. 其他模块：微信多账号管理、自定义菜单、素材管理、消息管理 
+ 
+  
+=============================================================================  
+
+  
 # 2019-05-04更新  
 1、【新增】增加日志到数据库模块（登录日志、操作日志、异常日志）  
 2、【完成】微信自定义菜单-可选择素材模块  
