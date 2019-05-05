@@ -8,6 +8,7 @@ using FytSoa.Core.Model.Cms;
 using FytSoa.Extensions;
 using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("upload")]
+        [Authorize(Roles = "Admin")]
         public ApiResult<string> LocalUpload(IFormFile file,string path)
         {
             var res = new ApiResult<string>() { statusCode=(int)ApiEnum.Error};

@@ -77,16 +77,17 @@ namespace FytSoa.Api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("authmenu")]        
-        public ApiResult<List<SysMenuDto>> GetAuthMenu()
+        public async Task<ApiResult<List<SysMenuDto>>> GetAuthMenuAsync()
         {
             var res = new ApiResult<List<SysMenuDto>>();
-            //var auth = await HttpContext.AuthenticateAsync();
-            //var menu = auth.Principal.Identities.First(u => u.IsAuthenticated).FindFirst(KeyHelper.ADMINMENU).Value;
+            var auth = await HttpContext.AuthenticateAsync();
+            var userGuid = auth.Principal.Identities.First(u => u.IsAuthenticated).FindFirst(ClaimTypes.Sid).Value;
             //res.data = JsonConvert.DeserializeObject<List<SysMenuDto>>(menu);
             var menuSaveType = ConfigExtensions.Configuration[KeyHelper.LOGINAUTHORIZE];
             if (menuSaveType == "Redis")
             {
-                res.data = RedisCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU);
+                res.data = RedisHelper.Get<List<SysMenuDto>>(KeyHelper.ADMINMENU + "_" +userGuid);
+                //res.data = RedisCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU);
             }
             else
             {

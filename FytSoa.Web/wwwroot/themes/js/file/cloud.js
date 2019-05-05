@@ -241,9 +241,11 @@ layui.config({
             return xhr;
         }
     }
+    console.log(os.getToken());
     upload.render({
         elem: '#localup' //绑定元素
         , multiple: true
+        , headers: os.getToken()
         , size: 0
         , number: 5
         , xhr: xhrOnProgress

@@ -118,6 +118,7 @@ namespace FytSoa.Web
             #endregion
 
             #region 缓存 RedisCache
+            RedisHelper.Initialization(new CSRedis.CSRedisClient(Configuration["Cache:Configuration"]+ ",defaultDatabase=1,poolsize=10"));
             //将Redis分布式缓存服务添加到服务中
             services.AddDistributedRedisCache(options =>
             {

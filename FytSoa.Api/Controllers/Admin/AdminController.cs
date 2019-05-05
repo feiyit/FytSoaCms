@@ -171,7 +171,8 @@ namespace FytSoa.Api.Controllers
                 var menuSaveType = ConfigExtensions.Configuration[KeyHelper.LOGINAUTHORIZE];
                 if (menuSaveType == "Redis")
                 {
-                    RedisCacheService.Default.SetCache(KeyHelper.ADMINMENU, dbres.data.menu, 600);
+                    RedisHelper.Set(KeyHelper.ADMINMENU + "_" +dbres.data.admin.Guid, dbres.data.menu);
+                    //RedisCacheService.Default.SetCache(KeyHelper.ADMINMENU, dbres.data.menu, 600);
                 }
                 else
                 {

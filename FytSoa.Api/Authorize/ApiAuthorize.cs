@@ -63,7 +63,18 @@ namespace FytSoa.Api
             var menuSaveType = ConfigExtensions.Configuration[KeyHelper.LOGINAUTHORIZE];
              if (menuSaveType == "Redis")
             {
-                menu = RedisCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU);
+                var userGuid = "";
+                //检测是否包含'Authorization'请求头，如果不包含则直接放行
+                if (context.HttpContext.Request.Headers.ContainsKey("Authorization"))
+                {
+                    var tokenHeader = context.HttpContext.Request.Headers["Authorization"];
+                    tokenHeader = tokenHeader.ToString().Substring("Bearer ".Length).Trim();
+
+                    TokenModel tm = JwtHelper.SerializeJWT(tokenHeader);
+                    userGuid = tm.Uid;
+                }
+                menu = RedisHelper.Get<List<SysMenuDto>>(KeyHelper.ADMINMENU + "_" + userGuid);
+                //menu = RedisCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU);
             }
             else
             {
