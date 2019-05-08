@@ -1,0 +1,117 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.AdvClassModel
+@{
+    ViewData["Title"] = "广告栏位管理";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<form class="layui-form form-cus" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级</label>
+        <div class="layui-input-block">
+            <select name="ParentGuid">
+                <option value="">一级分类</option>
+                @{
+                    if (Model.List.Any())
+                    {
+                        foreach (var item in Model.List.Where(m => string.IsNullOrEmpty(m.ParentGuid)))
+                        {
+                            if (item.Guid == Model.Class.ParentGuid)
+                            {
+                                <option value="@item.Guid" selected="selected">@item.Title</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Guid">@item.Title</option>
+                            }
+                        }
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">栏位名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="Title" value="@Model.Class.Title" maxlength="40" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">广告类型</label>
+        <div class="layui-input-block">
+            <select name="Flag">
+                <option value="图片列表广告">图片列表广告</option>
+                <option value="友情链接">友情链接</option>
+                <option value="对联广告">对联广告</option>
+                <option value="固定位置">固定位置</option>
+                <option value="矩形横幅">矩形横幅</option>
+                <option value="文字广告">文字广告</option>
+                <option value="HTML代码">HTML代码</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">广告位宽度</label>
+            <div class="layui-input-inline">
+                <input type="number" name="Width" value="@Model.Class.Width" placeholder="请输入数字即可" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">广告位高度</label>
+            <div class="layui-input-inline">
+                <input type="number" name="Height" value="@Model.Class.Height" placeholder="请输入数字即可" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否有效</label>
+        <div class="layui-input-inline">
+            <input type="checkbox" @(Model.Class.Status ? "checked" : "") name="Status" lay-skin="switch" lay-text="ON|OFF">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">广告位说明</label>
+        <div class="layui-input-block">
+            <textarea name="Summary" class="layui-textarea" style="min-height: 60px;" placeholder="简要说明一下，广告的位置，作用等。">@Model.Class.Summary</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="Guid" id="Guid" value="@Model.Class.Guid" />
+</form>
+@section Scripts{
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form'], function () {
+            var form = layui.form, $ = layui.jquery, os = layui.common;
+            var index = parent.layer.getFrameIndex(window.name);
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                var urls = "api/adv/class/add";
+                if ($("#Guid").val()) {
+                    urls = "api/adv/class/edit";
+                }
+                data.field.Status = data.field.Status === 'on' ? true : false;
+                os.ajax(urls, data.field, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode === 200) {
+                        parent.layer.close(index);
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+        });
+    </script>
+}

@@ -1,0 +1,20 @@
+body{overflow: hidden;background:url(../img/login/bg.png) no-repeat center center #fff; height: 100%;}
+.login-wall{width:1200px; margin:200px auto 0 auto;}
+.login-footer{ width: 100%; position: fixed; bottom: 0; text-align: center; height: 40px; line-height: 40px;}
+.login-left{display: block;  float: left; position: relative;}
+.login-left p{margin-top: -10px;color: #808080; font-size: 16px; line-height: 30px;}
+.login-left-bg{background: url(../img/login/login-left-bg.png) left no-repeat; width: 765px;height: 500px; margin-top: 20px;}
+.login-right{float: right;width: 310px;padding: 50px 35px 12px 35px;border-radius: 6px;background-color: rgb(248, 249, 251);box-shadow: 0px 14px 40px 0px rgba(112, 117, 120, 0.26);
+    position: relative;z-index: 1;}
+.login-right h1{text-align: center; margin-bottom: 30px; font-size: 20px;}
+.login-right .cell{border-bottom: 1px solid #ccc; padding:5px 10px; margin-bottom: 20px;}
+.login-right .cell span{display: inline-block; width:40px; height: 40px; vertical-align: middle;}
+.login-right .cell span.icon-user{background: url(../img/login/login02_r_icon02.png) no-repeat;}
+.login-right .cell span.icon-pwd{background: url(../img/login/login02_r_icon03.png) no-repeat;}
+.login-right .cell input{border: 0px; outline: none; margin-left: 15px; background: transparent; position: relative; top: 3px;}
+.login-right .wjpwd{text-align: right;}
+.login-right .wjpwd a{color: #1f7eff; font-size: 12px;}
+.login-btn{text-align: center; margin-top: 30px; margin-bottom: 50px;}
+.login-btn button{ padding: 0 38px; border-radius: 5px;}
+.login-tip{text-align:center; background-color:#FF5722; border-radius:5px; height:0px;}
+.login-tip span{color:#ffffff; display:block;padding:5px 10px; margin-bottom:5px;}

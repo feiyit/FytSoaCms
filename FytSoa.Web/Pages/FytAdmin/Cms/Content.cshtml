@@ -1,0 +1,133 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.ContentModel
+@{
+    ViewData["Title"] = "内容管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <style>
+        .layui-tree-cus>li:first-child>.bold{background: #d9dee4; padding:30px 0 30px 10px; font-weight:bold;margin-bottom:5px;}
+        .layui-tree-cus li{padding:0px;}
+        .layui-tree-cus ul li{padding-left:20px; line-height:30px;}
+    </style>
+    <div class="layui-col-220" data-pjax>
+        <ul id="tree" class="layui-tree-cus">
+            <item class="item"
+                  :model="treeData">
+            </item>
+        </ul>
+    </div>
+    <div class="right-col-body" id="content-body">
+        abc
+    </div>
+    <script type="text/x-template" id="item-template">
+        <li>
+            <div :class="{bold: isFolder}">
+                <span v-if="isFolder && open" @@click="toggle"><i class="layui-icon layui-icon-triangle-d"></i></span>
+                <span v-if="isFolder && !open" @@click="toggle"><i class="layui-icon layui-icon-triangle-r"></i></span>
+                <a cur-pjax :href="model.href" v-if="!isModify(model.href)">{{ model.name }}</a>
+                <a href="javascript:void(0)" @@click="goOpen(model)" v-if="isModify(model.href)">{{ model.name }}</a>
+            </div>
+            <ul v-show="open" v-if="isFolder">
+                <item class="item"
+                      v-for="(model, index) in model.children"
+                      :key="index"
+                      :model="model">
+                </item>
+            </ul>
+        </li>
+    </script>
+    <script>
+        Vue.component('item', {
+            template: '#item-template',
+            props: {
+                model: Object
+            },
+            data: function () {
+                return {
+                    open: true
+                };
+            },
+            computed: {
+                isFolder: function () {
+                    return this.model.children &&
+                        this.model.children.length;
+                }
+            },
+            methods: {
+                toggle: function () {
+                    if (this.isFolder) {
+                        this.open = !this.open;
+                    }
+                },
+                isModify: function (href) {
+                    if (href) {
+                        if (href.indexOf('columnmodify') !== -1) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                goOpen: function (m) {
+                    fun.openModify(m);
+                }
+            }
+        });
+        var active, fun, layuiIndex,vm = new Vue({
+            el: '#tree',
+            data: {
+                treeData: {}
+            }
+        });
+
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'pjax'],
+            function () {
+                var layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common;
+                os.ajax('api/column/tree', { type: 1 }, function (res) {
+                    if (res.statusCode === 200) {
+                        vm.treeData = { 'name': '栏目列表', children: res.data };
+                    } else {
+                        os.error(res.message);
+                    }
+                });   
+                fun = {
+                    openModify: function (m) {
+                        var winH = $(window).height(), winW = $(window).width();
+                        layuiIndex = os.OpenRight('栏目管理', m.href, winW - 220 + 'px', winH - 61 + 'px', null, function () {
+                            active.closeCloumnModify();
+                        });
+                    }
+                };
+                active = {
+                    closeCloumnModify: function () {
+                        var $layero = $('#layui-layer' + layuiIndex);
+                        $layero.animate({
+                            left: $layero.offset().left + $layero.width()
+                        }, 300, function () {
+                            layer.close(layuiIndex);
+                        });
+                        return false;
+                    }
+                };
+                $.pjax({
+                    url: '/fytadmin/cms/article/?column=0',
+                    container: '#content-body',
+                    fragment: '#content-body',
+                    push: false
+                });
+                $(document).pjax('a[cur-pjax]', '#content-body',
+                    {
+                        fragment: "#content-body",
+                        cache: false,
+                        push:false,
+                        show: 'fade'
+                    }
+                );
+            });
+    </script>
+
+</div>

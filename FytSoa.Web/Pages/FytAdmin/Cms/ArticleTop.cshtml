@@ -1,0 +1,97 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.ArticleTopModel
+@{
+    ViewData["Title"] = "文章点击排行";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <div class="list-wall">
+        <div class="layui-form list-search">
+            <div class="layui-inline">
+                <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
+            </div>
+            <div class="layui-inline">
+                <select id="attr" lay-search="">
+                    <option value="">全部</option>
+                    <option value="IsTop">推荐</option>
+                    <option value="IsHot">热点</option>
+                    <option value="IsScroll">滚动</option>
+                    <option value="IsSlide">幻灯</option>
+                    <option value="IsComment">是否评论</option>
+                    <option value="IsWap">发布移动端</option>
+                    <option value="IsLink">转向链接</option>
+                </select>
+            </div>
+            <div class="layui-inline" style="width:100px;">
+                <input type="checkbox" checked="checked" name="close" lay-filter="switch" lay-skin="switch" lay-text="已审核|未审核">
+            </div>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+        </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    <script type="text/html" id="switchTpl">
+        <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="已审核|未审核" lay-filter="statusedit" {{ d.audit==1?'checked':''}}>
+    </script>
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'common', 'form'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common,
+                    form = layui.form;
+                form.render();
+                table.render({
+                    elem: '#tablist',
+                    headers: os.getToken(),
+                    url: '/api/article/getpages',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            {
+                                field: 'title', title: '标题', fixed: 'left'
+                            },
+                            { field: 'hits', width: 100, title: '总点击量' },
+                            { field: 'monthHits', width: 100, title: '月点击量' },
+                            { field: 'weedHits', width: 100, title: '周点击量' },
+                            { field: 'weedHits', width: 100, title: '日点击量' },
+                            { field: 'dayHits', width: 100, title: '点击量' },
+                            { field: 'lastHitDate', width: 200, title: '最后点击时间', sort: true }
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables',
+                    where: {
+                        guid: '1'
+                    }
+                });
+                var type = 0, active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    guid: '1',
+                                    where: $("#attr").val(),
+                                    key: $('#key').val(),
+                                    types: type
+                                },
+                                done: function () {
+                                }
+                            });
+                    },
+                    toolSearch: function () {
+                        active.reload();
+                    }
+                };
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+            });
+    </script>
+</div>

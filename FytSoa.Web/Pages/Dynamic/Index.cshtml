@@ -1,0 +1,55 @@
+﻿@page "{type?}"
+@model FytSoa.Web.Pages.Dynamic.IndexModel
+@{
+    ViewData["Title"] = "高端定制品牌网站_" + Model.Site.SeoTitle;
+    ViewData["Key"] = Model.Site.SeoKey;
+    ViewData["Desc"] = Model.Site.SeoDescribe;
+    ViewData["Nav"] = 3;
+}
+<div class="case-banner">
+    <div style="background: url(/assets/img/case.jpg) no-repeat center top;"></div>
+</div>
+<div class="wrapper casemodel">
+    <div class="category">
+        <a class="@(Model.ActiveColumn.Id==0?"active":"")" href="/dynamic/">全部</a>
+        @{
+            var cclass = Model.Column.Where(m => m.ParentId == 1016).ToList();
+            foreach (var item in cclass)
+            {
+                <a href="/dynamic/@item.EnTitle/" title="@item.Title" class="@(Model.ActiveColumn.Id==item.Id?"active":"")"><span>@item.Title</span></a>
+            }
+        }
+    </div>
+    <ul class="content_list clearfix wow fadeInUp">
+        @{
+            foreach (var item in Model.Case)
+            {
+                <li class="item_block">
+                    <a href="/dynamic/detail/@item.Id/" class="item_box" target="_blank" title="@item.Title">
+                        <div class="item_img">
+                            <img src="@item.ImgUrl" alt="@item.Title">
+                            <div class="item_mask"></div>
+                        </div>
+                        <div class="item_wrapper clearfix">
+                            <p class="date_wrap">
+                                <span class="year">@Convert.ToDateTime(item.EditDate).Year</span>
+                                <span class="md">@Convert.ToDateTime(item.EditDate).Month-@Convert.ToDateTime(item.EditDate).Day</span>
+                            </p>
+                            <div class="item_info clearfix">
+                                <p class="title ellipsis">@item.Title</p>
+                            </div>
+                            <div class="item_des">
+                                <p class="description">@item.Summary</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/dynamic/detail/@item.Id/" class="details" target="_blank" title="@item.Title">详情<i>→</i></a>
+                </li>
+            }
+        }
+
+    </ul>
+    <div class="page">
+        @Html.Raw(PageHelper.Htmls(Convert.ToInt32(Model.Page.CurrentPage), Convert.ToInt32(Model.Page.ItemsPerPage), Convert.ToInt32(Model.Page.TotalPages), "/dynamic/" + Model.ActiveColumn.EnTitle))
+    </div>
+</div>

@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/dist/css/iconfont.css">
+    <link rel="stylesheet" href="/dist/css/bulid.css">
+    <link rel="stylesheet" href="/dist/css/mmenu.css">
+    <link rel="stylesheet" href="/dist/css/animate.min.css">
+    <link rel="stylesheet" href="/dist/css/swiper.min.css">
+    <title>飞易腾科技</title>
+</head>
+
+<body>
+    <div id="page">
+        <!-- #include file="/template/header.html" -->
+        <div class="content">
+            <div class="category-wall">
+                <div class="selected"><span>全部</span><i class="icon iconfont icon-gengduo transform"></i></div>
+                <ul class="transform">
+                    <li :class="where.cid==0?'active':''"><a href="/case-list.shtml">全部</a></li>
+                    <li :class="where.cid==it.id?'active':''" v-cloak v-for="it in list"><a :href="'/case-list.shtml?id='+it.id">{{it.title}}</a></li>
+                </ul>
+            </div>
+            <!-- 案例列表 -->
+            <div class="case">
+                <div class="title">
+                    <h5>产品/案例</h5>
+                    <p>Project/Case</p>
+                </div>
+                <ul class="clearfix">
+                    <li v-cloak v-for="it in nlist">
+                        <a :href="'/case.shtml?id='+it.id" :title="it.title">
+                            <div class="case-img"><img :src="it.imgUrl+'?imageMogr2/thumbnail/260x'" alt=""></div>
+                            <div class="case-info">
+                                <div class="case-title">{{it.title}}</div>
+                                <div class="tag">{{it.tag}}</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <div class="more"><a href="javascript:void(0)" @click="mores()">{{moreTip}}</a></div>
+            </div>
+            <!-- #include file="/template/footer.html" -->
+        </div>
+        <!-- #include file="/template/menu.html" -->
+    </div>
+    <script src="http://cdn.feiyit.com/jquery/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.6.8/vue.min.js"></script>
+    <script src="/dist/js/mmenu.min.js"></script>
+    <script src="/dist/js/common.js"></script>
+    <script type="text/javascript ">
+        var app = new Vue({
+            el: '#page',
+            data: {
+                nlist: [],
+                list: [],
+                where: {
+                    page: 1,
+                    cid: 0,
+                    type: 'case'
+                },
+                total: 1,
+                moreTip: ''
+            },
+            created: function() {
+                let that = this;
+                var parm = os.getUrlParam('id');
+                if (parm != null) {
+                    that.where.cid = parm;
+                }
+                var column = os.GetSession('$fytCaseColumn');
+                if (column == null) {
+                    window.location.href = '/index.shtml';
+                }
+                this.list = column;
+                this.initList();
+            },
+            methods: {
+                initList: function() {
+                    let that = this;
+                    os.loading();
+                    os.ajax('api/h5/list', that.where, function(res) {
+                        setTimeout(() => {
+                            os.loadclose();
+                        }, 500);
+                        if (res.total == 0) return;
+                        if (res.total == 1 || res.total == that.where.page) {
+                            that.moreTip = '没有更多啦~';
+                        } else {
+                            that.moreTip = '点击加载更多~';
+                        }
+                        that.total = res.total;
+                        for (let i = 0; i < res.data.length; i++) {
+                            that.nlist.push(res.data[i]);
+                        }
+                    });
+                },
+                mores: function() {
+                    if (this.total != 1 && this.total > this.where.page) {
+                        this.where.page += 1;
+                        this.initList();
+                    }
+                }
+            }
+        });
+        $(function() {
+            var categoryH = $('.category-wall ul li').length * 40 + 5;
+            $('.selected').on('click', function() {
+                var that = $(this).parent();
+                if (that.hasClass('open')) {
+                    that.removeClass('open');
+                    $('.category-wall ul').css({
+                        'height': 0
+                    });
+                } else {
+                    that.addClass('open');
+                    $('.category-wall ul').css({
+                        'height': categoryH
+                    });
+                }
+            });
+            $('nav#menu').mmenu({
+                extensions: ['effect-slide-menu', 'pageshadow'],
+                searchfield: false,
+                counters: true,
+                navbar: {
+                    title: '飞易腾科技'
+                },
+                navbars: [{
+                    position: 'top',
+                    content: ['searchfield']
+                }, {
+                    position: 'top',
+                    content: [
+                        'prev',
+                        'title',
+                        'close'
+                    ]
+                }, {
+                    position: 'bottom',
+                    content: [
+                        ' WordPress plugin '
+                    ]
+                }]
+            });
+        });
+    </script>
+</body>
+
+</html>

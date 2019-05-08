@@ -1,0 +1,166 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Sys.RoleMenuModel
+@{
+    ViewData["Title"] = "角色分配功能模块";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<style>
+    .layui-table-view{margin-top:0px;}
+    .layui-col-220{width:300px;}
+    .right-col-body{left:300px;}
+    .list-wall{padding-top:0px;}
+    .fyt-center{text-align:center;}
+    #tree{height:550px; overflow:auto;}
+    .layui-layer-loading{box-shadow: 0 0px 0px rgba(0,0,0,.3) !important;}
+    #open-form{display:none;}
+    .layui-form-select dl{max-height:150px;}
+</style>
+<div class="layui-col-220 fyt-wall">
+    <ul id="tree" class="ztree layui-tree-cus"></ul>
+    <div class="fyt-center"><button class="layui-btn" data-type="saveMenu" type="button">保存菜单权限</button></div>
+</div>
+<div class="right-col-body fyt-wall">
+    <div class="list-wall">
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+</div>
+<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
+<script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'ztree', 'common'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    ztree = layui.ztree,
+                    zcheck = layui.zcheck,
+                    os = layui.common,
+                    form = layui.form;
+                table.render({
+                    elem: '#tablist',
+                    headers: os.getToken(),
+                    url: '/api/menu/bycode',
+                    cols: [
+                        [
+                            { field: 'name', title: '菜单名称', sort: true, fixed: 'left' },
+                            { field: 'codeType', title: '功能值' },
+                            { width: 100, title: '操作', templet: '#tool' }
+                        ]
+                    ],
+                    page: false,
+                    id: 'tables'
+                });
+                var setting = {
+                    async: {
+                        enable: true,
+                        headers: os.getToken(),
+                        url: "/api/menu/gettree",
+                        otherParam: {roleGuid:'@Model.roleGuids'}
+                    },
+                    check: {
+                        enable: true,
+                        chkStyle: 'checkbox',
+                        chkboxType:{ "Y": "ps", "N": "ps" }
+                    },
+                    callback: {
+                        onClick: onClick,
+                        onAsyncSuccess: zTreeOnAsyncSuccess
+                    }
+                };
+                $.fn.zTree.init($("#tree"), setting);
+
+                var guid = '', selText = '', layuiIndex='', active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                where: {
+                                    role:'@Model.roleGuids',
+                                    menu: guid
+                                }
+                            });
+                    },    
+                    saveMenu: function () { 
+                        var zTree = $.fn.zTree.getZTreeObj("tree");
+                        var nodes = zTree.getCheckedNodes(true); 
+                        if (nodes.length == 0) {
+                            os.warning('请选择授权的功能模块~');
+                            return;
+                        }
+                        var strMenu = ''; 
+                        //console.log(nodes);
+                        $.each(nodes,function (i, item) {
+                            strMenu += item.guid + ",";
+                        });
+                        //开始提交信息
+                        var index = layer.load(1, {
+                            shade: [0.1, '#fff'] 
+                        });
+                        os.ajax("api/rolemenu/add", { RoleGuid:"@Model.roleGuids", MenuGuid: strMenu,Types:1 }, function (res) { 
+                            layer.close(index);
+                            if (res.statusCode === 200) {
+                                os.success('授权成功~');
+                            } else {
+                                os.error(res.message);
+                            }
+                        });
+                    }
+                };        
+
+                $('.fyt-wall .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+                function onClick(event, treeId, treeNode, clickFlag) {
+                    console.log(treeNode);
+                    guid = treeNode.guid;
+                    active.reload();
+                }
+                //设置授权项被选中状态
+                function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
+                    var treeObj = $.fn.zTree.getZTreeObj("tree");
+                    var nodes = treeObj.transformToArray(treeObj.getNodes());
+                    $.each(nodes, function (i, item) {                        
+                        if (item.isChecked) {
+                            item.checked  = true;
+                            treeObj.updateNode(item, false);
+                        }
+                    });
+                }
+                //监听授权操作
+                form.on('switch(torole)', function (obj) {
+                    var strRole = this.value;
+                    //开始提交信息
+                    var index = layer.load(1, {
+                        shade: [0.1, '#fff']
+                    });
+                    var data = {
+                        role: '@Model.roleGuids',
+                        menu: guid,
+                        btnfun: strRole,
+                        status: obj.elem.checked?1:0
+                    };
+                    os.ajax("api/rolemenu/tubtnfun", data, function (res) {
+                        layer.close(index);
+                        if (res.statusCode === 200) {
+                            if (obj.elem.checked) {
+                                os.success('授权成功~');
+                            }
+                            else {
+                                os.success('取消授权~');
+                            }
+                         } else {
+                            os.error(res.message);
+                            if (obj.elem.checked) {
+                                obj.elem.checked = false;
+                            } else {
+                                obj.elem.checked = true;
+                            }
+                         }
+                    });
+                });
+            });
+</script>
+<script type="text/html" id="tool">
+    <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="取消|授权" lay-filter="torole" {{ d.status ? 'checked' : '' }}>
+</script>

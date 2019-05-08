@@ -1,0 +1,49 @@
+﻿@page "{type?}"
+@model FytSoa.Web.Pages.Cases.IndexModel
+@{
+    ViewData["Title"] = Model.ActiveColumn.Title + "_" + Model.Site.SeoTitle;
+    ViewData["Key"] = Model.Site.SeoKey;
+    ViewData["Desc"] = Model.Site.SeoDescribe;
+    ViewData["Nav"] = 2;
+}
+<div class="case-banner">
+    <div style="background: url(/assets/img/case.jpg) no-repeat center top;"></div>
+</div>
+<div class="casemodel">
+    <div class="wrapper">
+        <div class="category">
+            <a class="@(Model.ActiveColumn.Id==0?"active":"")" href="/cases/">全部</a>
+            @{
+                var cclass = Model.Column.Where(m => m.ParentId == 1015).ToList();
+                foreach (var item in cclass)
+                {
+                    <a href="/cases/@item.EnTitle/" title="@item.Title" class="@(Model.ActiveColumn.Id==item.Id?"active":"")"><span>@item.Title</span></a>
+                }
+            }
+        </div>
+        <div class="case-wall case-content wow fadeInUp">
+            <ul class="clearfix">
+                @{
+                    foreach (var item in Model.Case)
+                    {
+                        <li>
+                            <a href="/cases/detail/@item.Id/" title="" class="item_img">
+                                <img src="@item.ImgUrl" alt="@item.Title" />
+                                <div class="item_mask">
+                                    <div class="item_link_icon"><i class="icon iconfont icon-chaolianjie" aria-hidden="true"></i></div>
+                                </div>
+                                <div class="item-title">
+                                    <p>@item.Title</p>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+            <div class="clear"></div>
+            <div class="page">
+                @Html.Raw(PageHelper.Htmls(Convert.ToInt32(Model.Page.CurrentPage), Convert.ToInt32(Model.Page.ItemsPerPage), Convert.ToInt32(Model.Page.TotalPages), "/cases/" + Model.ActiveColumn.EnTitle))
+            </div>
+        </div>
+    </div>
+</div>

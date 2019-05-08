@@ -1,0 +1,94 @@
+﻿@page "{id?}"
+@model FytSoa.Web.Pages.Cases.DetailModel
+@{
+    ViewData["Title"] = Model.Article.Title;
+    ViewData["Key"] = Model.Article.Tag;
+    ViewData["Desc"] = Model.Article.Summary;
+    ViewData["Nav"] = 2;
+}
+<div class="case-banner">
+    <div style="background: url(/assets/img/case.jpg) no-repeat center top;"></div>
+</div>
+<div class="nlist-wall clearfix">
+    <div id="pageTarget" class="module">
+        <div class="module_container wrapper">
+            <div class="container_target wow fadeInUp">
+                您的位置：
+                <a href="/">首页</a><i class="glyphicon glyphicon-menu-right"></i>
+                <a href="/cases/">案例</a><i class="glyphicon glyphicon-menu-right"></i>
+                <a href="/cases/@Model.ParentColumn.EnTitle/">@Model.ParentColumn.Title</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="wrapper clearfix">
+        <div class="case-left">
+            @Html.Raw(Model.Article.Content)
+        </div><!-- end -->
+        <div class="case-right">
+            <h4>@Model.Article.Title</h4>
+            <ul class="detail-slide" id="detail-slide">
+                <li class="dslide word on">
+                    <h6 class="slide_down">项目介绍</h6>
+                    <div class="scroll detail">
+                        @Html.Raw(Model.Article.Summary)
+                    </div>
+                </li>
+            </ul>
+            <div class="tabs wow slideInUp" data-wow-delay=".0s">
+                @{
+                    var t = Model.Article.Tag;
+                    if (!string.IsNullOrEmpty(t))
+                    {
+                        if (t.IndexOf(",", StringComparison.Ordinal) > -1)
+                        {
+                            var str = t.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var s in str)
+                            {
+                                <a>@s</a>
+                            }
+                        }
+                        else
+                        {
+                            <a>@t</a>
+                        }
+                    }
+                }
+            </div>
+            <div class="clearfix operate wow slideInUp" data-wow-delay=".2s">
+                <a href="http://p.qiao.baidu.com/cps/chatIndex?reqParam=%7B%22from%22%3A0%2C%22sid%22%3A%22-100%22%2C%22tid%22%3A%22-1%22%2C%22ttype%22%3A1%2C%22siteId%22%3A%228169649%22%2C%22userId%22%3A%2218692820%22%7D" target="_blank" title="在线咨询">索要报价</a>
+                <a id="btn_more" href="/cases/">更多相关案例</a>
+            </div>
+            <div class="bdsharebuttonbox bdshare-button-style2-24 wow slideInUp" data-wow-delay=".3s" data-bd-bind="1444914840540">
+                <a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a>
+                <a title="分享到微信" href="#" class="bds_weixin" data-cmd="weixin"></a>
+                <a href="#" class="bds_more" data-cmd="more"></a>
+            </div>
+            <ul class="case-key wow slideInUp" data-wow-delay=".4s">
+                @{
+                    foreach (var item in Model.ArticleList)
+                    {
+                        <li>
+                            <a href="/cases/detail/@item.Id/" title="@item.Title"><img alt="@item.Title" src="@item.ImgUrl" /></a>
+                            <p>@item.Title</p>
+                        </li>
+                    }
+                }
+            </ul>
+
+        </div><!-- end -->
+    </div>
+</div>
+<!-- con end -->
+@section scripts
+    {
+    <script type="text/javascript">
+        $(function () {
+            var winHs = $(window).height();
+            $(".flex-main,.new-lnav").css({ "min-height": winHs + 2 });
+            $(".new-t20").css({ "padding-top": winHs - 230 });
+            $("header").addClass("fyt-flex");
+        });
+        window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "2", "bdSize": "24" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+    </script>
+}

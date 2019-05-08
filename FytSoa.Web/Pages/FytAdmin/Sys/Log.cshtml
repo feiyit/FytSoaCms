@@ -1,0 +1,181 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Sys.LogModel
+@{
+    ViewData["Title"] = "系统日志";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <style>
+        .logtype li a {
+            display: block;
+            padding: 15px 20px;
+        }
+
+        .logtype li.active a {
+            background-color: #f3f7f9;
+            color: #409eff;
+        }
+
+    </style>
+    <div class="layui-col-220">
+        <div class="layui-nav-title">日志类型</div>
+        <ul class="logtype" id="app">
+            <li :class="index==active?'active':''" v-for="(it,index) in types" v-cloak @@click="gotype(index,it)"><a href="javascript:void(0)">{{it.name}}</a></li>
+        </ul>
+    </div>
+    <div class="right-col-body">
+        <div class="list-wall">
+            <div class="layui-form list-search" style="margin-top:10px;">
+                <div class="layui-inline">
+                    <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
+                </div>
+                <div class="layui-inline lay-time-icon">
+                    <input class="layui-input" id="times" autocomplete="off" placeholder="时间区间"><i class="layui-icon layui-icon-date"></i>
+                </div>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+            </div>
+            <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+        </div>
+    </div>
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolDel"><i class="layui-icon"></i> 删除</button>
+        </div>
+    </script>
+    <script>
+        var fun,vm = new Vue({
+            el:'#app',
+            data: {
+                types: [
+                    { name: '所有日志', type: '' },
+                    { name: '登录日志', type: 'Info' },
+                    { name: '操作日志', type: 'Trace' },
+                    { name: '异常日志', type: 'Error' }
+                ],
+                active: 0,
+                model: {}
+            },
+            methods: {
+                gotype: function (index, m) {
+                    this.active = index;
+                    this.model = m;
+                    fun.reload();
+                }
+            }
+        });
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'laydate', 'common'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common,
+                    laydate = layui.laydate;
+                laydate.render({
+                    elem: '#times'
+                    , theme: '#393D49'
+                    , format: 'yyyy/MM/dd'
+                    , range: true
+                });
+                table.render({
+                    toolbar: '#toolbar',
+                    elem: '#tablist',
+                    headers: os.getToken(),
+                    url: '/api/log/getpages',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            { field: 'user', title: '登录账号', width: 120, sort: true, fixed: 'left' },
+                            { field: 'logger', title: '类型', width: 120},
+                            { field: 'callsite', title: '请求地址', minWidth:200 },
+                            { field: 'browser', title: '浏览器信息', minWidth: 140 },
+                            { field: 'ip', title: 'IP', width: 120 },
+                            { field: 'logged', title: '登录时间', width: 160 },
+                            {
+                                field: 'logged', title: '详情', width: 110, templet: function (res) {
+                                    return '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="look"><i class="layui-icon layui-icon-search"></i> 详情</a>';
+                                }
+                            }
+                        ]
+                    ],
+                    page: { limits: [10, 20, 50, 100, 500, 1000, 5000, 10000], groups: 8 },
+                    id: 'tables'
+                });
+
+                fun = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    key: $("#key").val(),
+                                    time: $("#times").val(),
+                                    where:vm.model.type
+                                }
+                            });
+                    },
+                    toolSearch: function () {
+                        fun.reload();
+                    },
+                    toolDel: function () {
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要删除的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            str += item.guid + ",";
+                        });
+                        layer.confirm('确定要执行批量删除吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/log/delete/', { parm: str }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    fun.reload();
+                                    os.success('删除成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+
+                    }
+                };
+                table.on('toolbar(tool)', function (obj) {
+                    fun[obj.event] ? fun[obj.event].call(this) : '';
+                });
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    fun[type] ? fun[type].call(this) : '';
+                });
+                //监听工具条
+                table.on('tool(tool)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'look') {
+                        var errorStr = '';
+                        if (data.level == 'Error') {
+                            if (data.exception) {
+                                errorStr = '<div style="color:#f00;margin-top:15px;"><p>异常信息：</p>' + data.exception + '</div>';
+                            } else {
+                                errorStr = '<div style="color:#f00;margin-top:15px;"><p>异常信息：</p>' + data.message + '</div>';
+                            }
+                        }
+                        layer.open({
+                            title: '日志详情'
+                            , area: ['650px', '460px']
+                            , content: '<div><pre style="height:320px;font: 400 13.3333px Arial;line-height:28px;"><div>浏览器信息：' + data.browser + '</div>' + data.message + errorStr+'</pre></div>'
+                        });   
+                    }
+                    
+                });
+            });
+    </script>
+</div>

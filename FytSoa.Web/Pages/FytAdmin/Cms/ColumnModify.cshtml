@@ -1,0 +1,218 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.ColumnModifyModel
+@{
+    ViewData["Title"] = "栏目管理";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<div id="container">
+    <form class="layui-form form-cus form-back" action="">
+        <div class="panel-body">
+            <div class="panel-addpic">
+                <div class="text">基本属性</div>
+                <div class="form-cur-wall">
+                    <label>父栏目：</label>
+                    <div class="layui-input-block">
+                        <select name="ParentId" lay-verify="required" lay-search="">
+                            <option value="0">父级</option>
+                            @{
+                                if (Model.TempList.Any())
+                                {
+                                    foreach (var item in Model.ColumnList)
+                                    {
+                                        if (item.Id == Model.Column.ParentId)
+                                        {
+                                            <option selected="selected" value="@item.Id">@item.Title</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Title</option>
+                                        }
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>栏目模板：</label>
+                    <div class="layui-input-block">
+                        <select name="TempId" lay-verify="required" lay-search="">
+                            <option value="">--请选择模板--</option>
+                            @{
+                                if (Model.TempList.Any())
+                                {
+                                    foreach (var item in Model.TempList)
+                                    {
+                                        if (item.Id == Model.Column.TempId)
+                                        {
+                                            <option selected="selected" value="@item.Id">@item.Title</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Title</option>
+                                        }
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>英文名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="EnTitle" value="@Model.Column.EnTitle" maxlength="100" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <ul class="addpic-list clearfix">
+                    <li>
+                        <div class="add-photo default">
+                            <input class="imgv" id="ImgUrl" name="ImgUrl" type="hidden" value="@Model.Column.ImgUrl">
+                            <div class="select-newimg fyt-cloud @(!string.IsNullOrEmpty(Model.Column.ImgUrl)?"layui-hide":"")" data-text="ImgUrl" data-img="imgShow" data-type="form">
+                                <i class="icon-addphote"></i>
+                                <span>选择图片</span>
+                            </div>
+                            <div class="add-photo-wall @(!string.IsNullOrEmpty(Model.Column.ImgUrl)?"":"layui-hide")">
+                                <img id="imgShow" src="@Model.Column.ImgUrl">
+                                <div class="phote-edit">
+                                    <a class="photo-tool fyt-cloud" data-text="ImgUrl" data-img="imgShow" data-type="form" href="javascript:void(0)"><i class="layui-icon layui-icon-edit"></i>更换</a>
+                                    <a class="photo-tool last" href="javascript:void(0)" onclick="oc.deleteFile()"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                                </div>
+                                <div class="cover">封面</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="form-cur-wall layui-clear">
+                    <label style="line-height:inherit;">栏目属性：</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="IsTopShow" @(Model.Column.IsTopShow ? "checked=''" : "") lay-skin="primary" title="是否顶部显示">
+                        <input type="checkbox" name="IsWapShow" @(Model.Column.IsWapShow ? "checked=''" : "") lay-skin="primary" title="是否移动端显示">
+                    </div>
+                </div>
+                <div class="text else">扩展属性</div>
+                <div class="form-cur-wall">
+                    <label>副标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="SubTitle" value="@Model.Column.SubTitle" maxlength="50" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>转向连接</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="LinkUrl" value="@Model.Column.LinkUrl" placeholder="以http开头" maxlength="100" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">栏目名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Title" value="@Model.Column.Title" maxlength="50" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-col-md6 layui-col-xs12">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">SEO关键词</label>
+                        <div class="layui-input-block">
+                            <textarea name="KeyWord" class="layui-textarea" style="min-height: 60px;" placeholder="SEO关键字，填写利于抓取，英文逗号分隔">@Model.Column.KeyWord</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6 layui-col-xs12">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">SEO描述</label>
+                        <div class="layui-input-block">
+                            <textarea name="Summary" class="layui-textarea" style="min-height: 60px;" placeholder="SEO描述，填写利于抓取，最多200个字">@Model.Column.Summary</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">文本域</label>
+                    <div class="layui-input-block">
+                        <textarea id="Content" name="Content" placeholder="请输入内容" class="layui-textarea">@Html.Raw(Model.Column.Content)</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                    <button type="button" class="layui-btn layui-btn-primary btn-open-close">返回上页</button>
+                </div>
+            </div>
+        </div>
+
+        
+        <input type="hidden" name="Id" id="Id" value="@Model.Column.Id" />
+        <input type="hidden" name="SiteGuid" value="0" />
+    </form>
+    <script>
+        var oc;
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form', 'layedit'], function () {
+            var form = layui.form, $ = layui.jquery, os = layui.common;
+            var layedit = layui.layedit;
+            var index = layedit.build('Content', { height:400 }); 
+            form.render();
+            $('.panel-addpic').css({'min-height':$(window).height()-95});
+            $("#btn-text").click(function () {
+                layedit.setTexts(index, "你好");
+            });
+            os.cloudFile();
+            oc = {
+                setContent(v) {
+                    var imgIndex = v.lastIndexOf('/');
+                    var str = v.substring(imgIndex + 1, v.length);
+                    if (os.isExtImage(v)) {
+                        layedit.setCursorText(index, '<img src="' + v + '" alt="' + str+'"/>');
+                    } else {
+                        layedit.setCursorText(index, '<p style="padding:12px 20px;background-color: #edf3f5;"><a href="' + v + '" target="_blank" title="' + str + '">' + str +'</a></p>');
+                    }
+                },
+                fileSave(v) {
+                    $(".select-newimg").addClass('layui-hide');
+                    $(".add-photo-wall").removeClass('layui-hide');
+                    $('#ImgUrl').val(v);
+                    $('#imgShow').attr('src',v);
+                },
+                deleteFile(){
+                    $(".select-newimg").removeClass('layui-hide');
+                    $(".add-photo-wall").addClass('layui-hide');
+                    $('#ImgUrl').val('');
+                    $('#imgShow').attr('src', v);
+                }
+            };
+            
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                data.field.Content = layedit.getContent(index);
+                var urls = "api/column/add";
+                if ($("#Id").val()!=='0') {
+                    urls = "api/column/edit";
+                }
+                data.field.IsTopShow = data.field.IsTopShow === 'on' ? true : false;
+                data.field.IsWapShow = data.field.IsWapShow === 'on' ? true : false;
+                os.ajax(urls, data.field, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode === 200) {
+                        var $$ = parent.layui.jquery;
+                        $$("#isSave").val('1');
+                        parent.active.closeCloumnModify();
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.active.closeCloumnModify();
+            });
+        });
+    </script>
+</div>

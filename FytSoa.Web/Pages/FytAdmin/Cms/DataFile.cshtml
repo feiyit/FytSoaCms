@@ -1,0 +1,107 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.DataFileModel
+@{
+    ViewData["Title"] = "数据库备份文件";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <div class="list-wall">
+        <div class="layui-form list-search" style="margin-top:10px;">
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolRefresh"><i class="layui-icon layui-icon-refresh"></i> 刷新</button>
+        </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    <script type="text/html" id="switchTpl">
+        <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="开|关" lay-filter="statusedit" {{ d.iosAudit==1?'checked':''}}>
+    </script>
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'common'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    os = layui.common; 
+                table.render({
+                    elem: '#tablist',
+                    headers: os.getToken(),
+                    url: '/api/cmssite/backups/files',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            { field: 'name', title: '文件名称', fixed: 'left' },
+                            { field: 'fileExt', width: 150, title: '扩展名' },
+                            { field: 'fileSize', width: 150, title: '文件大小'},
+                            { field: 'createDate', width: 280, title: '更新时间', sort: true },
+                            {
+                                width: 150, title: '操作', templet: function (res) { 
+                                    return '<a href="/fytadmin/cms/datafile?handler=down&fileName=' + res.name+'" class="layui-btn layui-btn-primary layui-btn-xs" lay-event="download"><i class="layui-icon layui-icon-download-circle"></i> 下载</a>'
+                            } }
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables'
+                });
+
+                var guid = '', active = {
+                    reload: function () {
+                        os.tableLoading();
+                        table.reload('tables', {
+                            done: function (res, curr, count) {
+                                os.tableLoadingClose();
+                            }
+                        });
+                    },
+                    toolRefresh: function () {
+                        active.reload();
+                    },
+                    toolDel: function () {
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要删除的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            str += item.name + ",";
+                        });
+                        layer.confirm('确定要执行批量删除吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            }); 
+                            os.ajax('api/cmssite/delete/files/', { filename: str }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    active.reload();
+                                    os.success('删除成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+
+                    }
+                };
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+                //监听工具条
+                table.on('tool(tool)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'download') {
+                        os.ajax('api/cmssite/download/files/', { fileName: data.name }, function (res) {
+                            os.success('下载成功！');
+                        });
+                    }
+                });
+            });
+    </script>
+    <script type="text/html" id="tool">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="download"><i class="layui-icon layui-icon-download-circle"></i> 下载</a>
+    </script>
+</div>

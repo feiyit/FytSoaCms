@@ -1,0 +1,60 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.TemplateModifyModel
+@{
+    ViewData["Title"] = "模板管理";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<form class="layui-form form-cus" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">模型名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="Title" value="@Model.Template.Title" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">模型名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="Url" value="@Model.Template.Url" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="Id" id="Id" value="@Model.Template.Id" />
+</form>
+<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
+@section Scripts{
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form'], function () {
+            var form = layui.form, $ = layui.jquery, os = layui.common;
+            var index = parent.layer.getFrameIndex(window.name);
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                var urls = "api/column/template/add";
+                if ($("#Id").val()!=='0') {
+                    urls = "api/column/template/edit";
+                }
+                data.field.IosAudit = data.field.IosAudit === 'on' ? 1 : 0;
+                os.ajax(urls, data.field, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode == 200) {
+                        parent.layer.close(index);
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+        });
+    </script>
+}

@@ -1,0 +1,38 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Sys.SysSettingModel
+@{
+    ViewData["Title"] = "系统设置";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <div style="padding:15px;">
+        <form class="layui-form form-cus" action="">
+            <div class="layui-tab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">安全设置</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">禁止IP区间</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="Name" value="" placeholder="可以输入禁用IP段" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">禁止IP</label>
+                            <div class="layui-input-block">
+                                <textarea name="Summary" class="layui-textarea" placeholder="一行条记录"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-cur-submit">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

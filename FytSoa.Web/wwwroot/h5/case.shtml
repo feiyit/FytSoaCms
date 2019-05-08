@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/dist/css/iconfont.css">
+    <link rel="stylesheet" href="/dist/css/bulid.css">
+    <link rel="stylesheet" href="/dist/css/mmenu.css">
+    <link rel="stylesheet" href="/dist/css/animate.min.css">
+    <link rel="stylesheet" href="/dist/css/swiper.min.css">
+    <title>飞易腾科技</title>
+</head>
+
+<body>
+    <div id="page">
+        <!-- #include file="/template/header.html" -->
+        <div class="content">
+            <div class="category-wall">
+                <div class="selected"><span>全部</span><i class="icon iconfont icon-gengduo transform"></i></div>
+                <ul class="transform">
+                    <li class="active"><a href="/case-list.shtml">全部</a></li>
+                    <li v-cloak v-for="it in list"><a :href="'/case-list.shtml?id='+it.id">{{it.title}}</a></li>
+                </ul>
+            </div>
+            <!-- 新闻 -->
+            <div class="news">
+                <div class="fyt-title clearfix"><span><i class="icon iconfont icon-jituanxiangmu"></i>{{model.title}}</span></div>
+                <div class="fyt-card">{{model.summary}}</div>
+                <div class="news-text" v-html="model.content"></div>
+            </div>
+            <!-- #include file="/template/footer.html" -->
+        </div>
+        <!-- #include file="/template/menu.html" -->
+    </div>
+    <script src="http://cdn.feiyit.com/jquery/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.6.8/vue.min.js"></script>
+    <script src="/dist/js/mmenu.min.js"></script>
+    <script src="/dist/js/common.js"></script>
+    <script type="text/javascript ">
+        var app = new Vue({
+            el: '#page',
+            data: {
+                model: {},
+                list: []
+            },
+            created: function() {
+                let that = this;
+                var column = os.GetSession('$fytCaseColumn');
+                if (column == null) {
+                    window.location.href = '/index.shtml';
+                }
+                this.list = column;
+                os.loading();
+                os.ajax('api/h5/detail', {
+                    id: os.getUrlParam('id')
+                }, function(res) {
+                    setTimeout(() => {
+                        os.loadclose();
+                    }, 500);
+                    that.model = res;
+                });
+            }
+        });
+        $(function() {
+            var categoryH = $('.category-wall ul li').length * 40 + 5;
+            $('.selected').on('click', function() {
+                var that = $(this).parent();
+                if (that.hasClass('open')) {
+                    that.removeClass('open');
+                    $('.category-wall ul').css({
+                        'height': 0
+                    });
+                } else {
+                    that.addClass('open');
+                    $('.category-wall ul').css({
+                        'height': categoryH
+                    });
+                }
+            });
+            $('nav#menu').mmenu({
+                extensions: ['effect-slide-menu', 'pageshadow'],
+                searchfield: false,
+                counters: true,
+                navbar: {
+                    title: '飞易腾科技'
+                },
+                navbars: [{
+                    position: 'top',
+                    content: ['searchfield']
+                }, {
+                    position: 'top',
+                    content: [
+                        'prev',
+                        'title',
+                        'close'
+                    ]
+                }, {
+                    position: 'bottom',
+                    content: [
+                        ' WordPress plugin '
+                    ]
+                }]
+            });
+        });
+    </script>
+</body>
+
+</html>

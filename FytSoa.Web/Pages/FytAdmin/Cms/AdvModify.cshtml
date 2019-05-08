@@ -1,0 +1,175 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.AdvModifyModel
+@{
+    ViewData["Title"] = "广告位管理";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<form class="layui-form form-cus" action="" lay-filter="adv">
+    <style>
+        .layui-form-item .layui-input-inline {
+            width: 315px;
+        }
+    </style>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">广告位名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Title" value="@Model.Adv.Title" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">所属版位</label>
+            <div class="layui-input-inline">
+                <input type="text" disabled="disabled" value="@Model.Class.Title+[@Model.Class.Flag]" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">广告类型</label>
+            <div class="layui-input-inline">
+                <select name="Types">
+                    <option value="0">图片</option>
+                    <option value="1">文字</option>
+                    <option value="2">动画</option>
+                    <option value="3">视频</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">链接方式</label>
+            <div class="layui-input-inline">
+                <select name="Target">
+                    <option value="_blank">新窗口</option>
+                    <option value="_self">原窗口</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">权重</label>
+            <div class="layui-input-inline">
+                <div id="slideSort" style="top:17px;"></div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">点击量</label>
+            <div class="layui-input-inline">
+                <input type="number" name="Hits" value="@Model.Adv.Hits" lay-verify="required" lay-verType="tips" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选项</label>
+        <div class="layui-input-block">
+            <input type="checkbox" @(Model.Adv.Status ? "checked" : "") name="Status" lay-skin="switch" lay-text="ON|OFF"><span class="switch-tip">是否有效</span>
+            <input type="checkbox" @(Model.Adv.IsTimeLimit ? "checked" : "") name="IsTimeLimit" lay-skin="switch" lay-filter="switchOpen" lay-text="ON|OFF"><span class="switch-tip">是否启用时间限制</span>
+        </div>
+    </div>
+    <div class="layui-form-item isTime @(Model.Adv.IsTimeLimit?"":"layui-hide")">
+        <div class="layui-inline">
+            <label class="layui-form-label">上线日期</label>
+            <div class="layui-input-inline">
+                <input type="text" id="BeginTime" name="BeginTime" value="@Model.Adv.BeginTime" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">下线日期</label>
+            <div class="layui-input-inline">
+                <input type="text" id="EndTime" name="EndTime" value="@Model.Adv.EndTime" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">广告图片</label>
+        <div class="layui-input-block fyt-upfile">
+            <input type="text" id="ImgUrl" name="ImgUrl" value="@Model.Adv.ImgUrl" autocomplete="off" placeholder="请选择文件" class="layui-input">
+            <button type="button" class="layui-btn fyt-cloud" data-text="ImgUrl" data-type="iframe">选择文件</button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">链接地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="LinkUrl" value="@Model.Adv.LinkUrl" placeholder="以http://或https://开头" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">文字描述</label>
+        <div class="layui-input-block">
+            <textarea name="LinkSummary" class="layui-textarea" style="min-height: 60px;" placeholder="简要说明一下，广告的位置，作用等。">@Model.Adv.LinkSummary</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="Guid" id="Guid" value="@Model.Adv.Guid" />
+    <input type="hidden" name="ClassGuid" value="@Model.Class.Guid" />
+</form>
+@section Scripts{
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form', 'slider', 'laydate'], function () {
+            var form = layui.form, $ = layui.jquery, os = layui.common, slider = layui.slider, laydate = layui.laydate,sort=@Model.Adv.Sort;
+            os.cloudFile();
+            var index = parent.layer.getFrameIndex(window.name);
+            var sliderIndex=slider.render({
+                elem: '#slideSort'
+                , input: true 
+                , change: function (value) {
+                    sort = value; 
+                }
+                , theme:'#409eff'
+            });
+            //赋值
+            sliderIndex.setValue(@Model.Adv.Sort);
+            form.val('adv', {
+                "Types": "@Model.Adv.Types" 
+                , "Target": "@Model.Adv.Target"
+            })
+            laydate.render({
+                elem: '#BeginTime'
+                , type: 'datetime'
+            });
+            laydate.render({
+                elem: '#EndTime'
+                , type: 'datetime'
+            });
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                var urls = "api/adv/list/add";
+                if ($("#Guid").val()) {
+                    urls = "api/adv/list/edit";
+                }
+                data.field.Status = data.field.Status === 'on' ? true : false;
+                data.field.IsTimeLimit = data.field.IsTimeLimit === 'on' ? true : false;
+                data.field.Sort = sort;
+                os.ajax(urls, data.field, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode === 200) {
+                        parent.layer.close(index);
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+            form.on('switch(switchOpen)', function (data) {
+                if (this.checked) {
+                    $('.isTime').removeClass('layui-hide');
+                } else {
+                    $('.isTime').addClass('layui-hide');
+                }
+            });
+        });
+    </script>
+}
