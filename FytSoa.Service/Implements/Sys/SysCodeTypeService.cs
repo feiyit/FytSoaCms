@@ -44,7 +44,7 @@ namespace FytSoa.Service.Implements
         /// <returns></returns>
         public async Task<ApiResult<SysCodeTypeDto>> GetByGuidAsync(string parm)
         {
-            var model =await Db.Queryable<SysCode>().SingleAsync(m => m.Guid == parm);
+            var model =await Db.Queryable<SysCodeType>().SingleAsync(m => m.Guid == parm);
             var res = new ApiResult<SysCodeTypeDto>
             {
                 statusCode = 200,

@@ -51,7 +51,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), ApiAuthorize(Modules = "Department", Methods = "Add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> AddOrganize(SysOrganize parm)
+        public async Task<ApiResult<string>> AddOrganize([FromBody]SysOrganize parm)
         {
             return await _sysOrganizeService.AddAsync(parm);
         }
@@ -61,9 +61,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete"), ApiAuthorize(Modules = "Department", Methods = "Delete", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> DeleteOrganize(string parm)
+        public async Task<ApiResult<string>> DeleteOrganize([FromBody]ParmString parm)
         {
-            return await _sysOrganizeService.DeleteAsync(parm);
+            return await _sysOrganizeService.DeleteAsync(parm.parm);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"),ApiAuthorize(Modules = "Department", Methods = "Update", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> EditOrganize(SysOrganize parm)
+        public async Task<ApiResult<string>> EditOrganize([FromBody]SysOrganize parm)
         {
             return await _sysOrganizeService.ModifyAsync(parm);
         }

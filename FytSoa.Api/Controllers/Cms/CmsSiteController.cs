@@ -7,6 +7,7 @@ using FytSoa.Common;
 using FytSoa.Core;
 using FytSoa.Core.Model.Cms;
 using FytSoa.Extensions;
+using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -31,7 +32,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost("savesite")]
-        public async Task<ApiResult<string>> SaveSite(CmsSite parm)
+        public async Task<ApiResult<string>> SaveSite([FromBody]CmsSite parm)
         {
             return await _siteService.UpdateAsync(parm);
         }
@@ -45,7 +46,7 @@ namespace FytSoa.Api.Controllers.Cms
         public async Task<ApiResult<string>> DbBackups()
         {
             var path = FileHelperCore.MapPath("/wwwroot/db_back/") + DateTime.Now.ToString("yyyyMMddHHmmss") + ".sql";
-            var res = new ApiResult<string>() { statusCode=(int)ApiEnum.Error};
+            var res = new ApiResult<string>() { };
             var thread =new System.Threading.Thread(
                                 new System.Threading.ParameterizedThreadStart(DbBackup.BackupDb))
                             {
@@ -84,12 +85,12 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost("delete/files")]
-        public ApiResult<string> DeleteDbBackupsFile(string filename)
+        public ApiResult<string> DeleteDbBackupsFile([FromBody]ParmString obj)
         {
             var res = new ApiResult<string>() { statusCode = (int)ApiEnum.Error };
             try
             {
-                var str = Utils.StrToListString(filename);
+                var str = Utils.StrToListString(obj.parm);
                 foreach (var item in str)
                 {
                     FileHelperCore.DeleteFiles("/wwwroot/db_back/"+item);

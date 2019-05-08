@@ -194,7 +194,7 @@
                 active = {
                     Init: function () {
                         os.load();
-                        os.ajax('api/wx/material/server', { gzhid: parseInt(wxid) }, function (res) {
+                        os.ajax('api/wx/material/server', { id: parseInt(wxid) }, function (res) {
                             if (res.total_count !== 0) {                                
                                 //console.log(wxm.list);
                                 $.each(res.item, function (i, item) {

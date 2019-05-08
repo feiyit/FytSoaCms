@@ -73,7 +73,7 @@
                             var loadindex = layer.load(1, {
                                 shade: [0.1, '#000']
                             }); 
-                            os.ajax('api/cmssite/delete/files/', { filename: str }, function (res) {
+                            os.ajax('api/cmssite/delete/files/', { parm: str }, function (res) {
                                 layer.close(loadindex);
                                 if (res.statusCode === 200) {
                                     active.reload();

@@ -24,7 +24,7 @@
             this.isDown = this.isDown ? false : true;
         },
         logout: function () {
-            layer.load(1);
+            os.load();
             os.ajax('api/admin/logout', null, function (res) {
                 if (res.statusCode === 200) {
                     window.location.href = res.data;
@@ -48,7 +48,7 @@ layui.config({
 }).use(['element', 'layer', 'jquery', 'common', 'pjax'], function () {
     var element = layui.element, $ = layui.jquery;
     os = layui.common;
-    os.get('api/menu/authmenu', null, function (res) {
+    os.ajax('api/menu/authmenu', null, function (res) {
         if (res.statusCode === 200) {
             $.each(res.data, function (index, item) {
                 if (item.layer === 1) {
@@ -80,7 +80,7 @@ layui.config({
             $(".load8").fadeOut(200);
             os.error(res.message);
         }
-    });
+    },'get');
     $('.layui-layout-admin').pjax('a[data-pjax]', '#main-container',
         {
             fragment: "#container",

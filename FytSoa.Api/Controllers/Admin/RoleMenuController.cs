@@ -41,7 +41,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), ApiAuthorize(Modules = "Role", Methods = "Authorize", LogType = LogEnum.AUTHORIZE)]
-        public async Task<ApiResult<string>> SaveRoleMenu(SysPermissions parm)
+        public async Task<ApiResult<string>> SaveRoleMenu([FromBody]SysPermissions parm)
         {
             return await _roleMenu.SaveAsync(parm);
         }
@@ -51,9 +51,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add/authorization"), ApiAuthorize(Modules = "Role", Methods = "Authorize", LogType = LogEnum.AUTHORIZE)]
-        public ApiResult<string> SaveAuthorization(List<SysMenuDto> list,string roleGuid)
+        public ApiResult<string> SaveAuthorization([FromBody]SysMenuAuthorization parm)
         {
-            return _roleMenu.SaveAuthorization(list,roleGuid);
+            return _roleMenu.SaveAuthorization(parm.list,parm.roleGuid);
         }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("torole"), ApiAuthorize(Modules = "Admin", Methods = "Authorize", LogType = LogEnum.AUTHORIZE)]
-        public async Task<ApiResult<string>> AdminToRole(SysPermissions parm,bool status)
+        public async Task<ApiResult<string>> AdminToRole([FromBody]SysPermissions parm)
         {
-            return await _roleMenu.ToRoleAsync(parm,status);
+            return await _roleMenu.ToRoleAsync(parm, parm.status);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("tubtnfun"), ApiAuthorize(Modules = "Role", Methods = "Authorize", LogType = LogEnum.AUTHORIZE)]
-        public ApiResult<string> RoleMenuToFun(SysPermissionsParm parm)
+        public ApiResult<string> RoleMenuToFun([FromBody]SysPermissionsParm parm)
         {
             return _roleMenu.RoleMenuToFunAsync(parm);
         }

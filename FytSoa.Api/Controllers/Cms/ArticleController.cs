@@ -42,9 +42,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("recycle")]
-        public Task<ApiResult<string>> GoRecycle(string parm,int type)
+        public Task<ApiResult<string>> GoRecycle([FromBody]ArticleOptionParm obj)
         {
-            return _articleService.GoRecycle(parm,type);
+            return _articleService.GoRecycle(obj.parm,obj.type);
         }
 
         /// <summary>
@@ -53,9 +53,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("copyortransfer")]
-        public Task<ApiResult<string>> GoCopyOrTransfer(string parm, int type,int column)
+        public Task<ApiResult<string>> GoCopyOrTransfer([FromBody]ArticleOptionParm obj)
         {
-            return _articleService.GoCopyOrTransfer(parm, type, column);
+            return _articleService.GoCopyOrTransfer(obj.parm, obj.type, obj.column);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("add")]
-        public async Task<ApiResult<string>> Add(CmsArticle parm)
+        public async Task<ApiResult<string>> Add([FromBody]CmsArticle parm)
         {
             return await _articleService.AddAsync(parm);
         }
@@ -73,9 +73,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<ApiResult<string>> Delete(string parm)
+        public async Task<ApiResult<string>> Delete([FromBody]ParmString obj)
         {
-            return await _articleService.DeleteAsync(parm);
+            return await _articleService.DeleteAsync(obj.parm);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit")]
-        public async Task<ApiResult<string>> Edit(CmsArticle parm)
+        public async Task<ApiResult<string>> Edit([FromBody]CmsArticle parm)
         {
             return await _articleService.UpdateAsync(parm);
         }

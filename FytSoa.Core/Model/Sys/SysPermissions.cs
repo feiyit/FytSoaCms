@@ -46,5 +46,12 @@ namespace FytSoa.Core.Model.Sys
         /// </summary>
         public int Types { get; set; } = 1;
 
+        /// <summary>
+        /// 用户授权角色 状态  和数据库字段没关系
+        /// 默认=1
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public bool status { get; set; } = false;
+
     }
 }

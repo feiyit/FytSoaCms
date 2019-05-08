@@ -142,12 +142,12 @@
             });
             var active = {
                 loadBtnCode: function () {
-                    os.get('api/code/getpages', { guid: 'a88fa4d3-3658-4449-8f4a-7f438964d716' }, function (res) {
+                    os.ajax('api/code/getpages', { guid: 'a88fa4d3-3658-4449-8f4a-7f438964d716' }, function (res) {
                         vm.cbkList = res.data;
                         vm.$nextTick(function () {
                             form.render();
                         });
-                    });
+                    },'get');
                 }
             }
             active.loadBtnCode();

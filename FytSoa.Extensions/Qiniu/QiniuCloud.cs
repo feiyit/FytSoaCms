@@ -14,11 +14,11 @@ namespace FytSoa.Extensions
 {
     public class QiniuCloud
     {
-        private static string Ak = "STmyIs-6NX9jOFN6uTO8R6rkZhNtA7HPs7C_7ZZe";
-        private static string Sk = "avPiQPtIzxT0zD8yXE2GP49aiAkA_W1C_VCgdCfj";
-        private static string Bucket = "feiyitbh6l6ynwess";  //空间名
+        private static string Ak = "";
+        private static string Sk = "";
+        private static string Bucket = "";  //空间名
         private static readonly string BasePath = "feiyit/";
-        private static string domain = "http://img.feiyit.com/";
+        private static string domain = "http://feiyit.com/";
 
         /// <summary>
         /// 根据前缀获得文件列表

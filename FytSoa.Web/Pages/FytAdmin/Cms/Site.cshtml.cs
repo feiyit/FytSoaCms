@@ -22,7 +22,7 @@ namespace FytSoa.Web.Pages.FytAdmin.Cms
         public CmsSite Site { get; set; }
         public void OnGet()
         {
-            Site = _siteService.GetModelAsync("78756a6c-50c8-47a5-b898-5d6d24a20327").Result.data;
+            Site = _siteService.GetModelAsync(m=>m.Guid== "78756a6c-50c8-47a5-b898-5d6d24a20327").Result.data;
         }
     }
 }

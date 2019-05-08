@@ -261,7 +261,7 @@ namespace FytSoa.Service.Implements
                     Email=parm.Email,
                     Status=parm.Status
                 }).Where(m=>m.Guid==parm.Guid).ExecuteCommandAsync();
-                if (dbres>1)
+                if (dbres>0)
                 {
                     res.statusCode = (int)ApiEnum.Status;
                     res.message = "更新成功！";

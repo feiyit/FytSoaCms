@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FytSoa.Common;
 using FytSoa.Core.Model.Wx;
 using FytSoa.Extensions;
+using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -30,10 +31,10 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"), Log("WxMenu：edit", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> DeleteRole(int id, string menu)
+        public async Task<ApiResult<string>> DeleteRole([FromBody]MenuEditDto parm)
         {
-            var model = _settingService.GetModelAsync(m => m.Id == id).Result.data;
-            model.MenuJson = menu;
+            var model = _settingService.GetModelAsync(m => m.Id == parm.id).Result.data;
+            model.MenuJson = parm.menu;
             return await _settingService.UpdateAsync(model);
         }
 
@@ -42,9 +43,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("model")]
-        public async Task<ApiResult<WxSetting>> GetModel(int id)
+        public async Task<ApiResult<WxSetting>> GetModel([FromBody]ParmInt obj)
         {
-            return await _settingService.GetModelAsync(m=>m.Id==id);
+            return await _settingService.GetModelAsync(m=>m.Id== obj.id);
         }
 
         /// <summary>
@@ -52,12 +53,12 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("synchro"), Log("WxMenu：synchro", LogType = LogEnum.ASYWX)]
-        public async Task<ApiResult<string>> PushMenu(int id)
+        public async Task<ApiResult<string>> PushMenu([FromBody]ParmInt obj)
         {
             //MemoryCacheService.Default.RemoveCache("WinXinAccessToken");
             var res = new ApiResult<string>();
             //获得公众号配置
-            var model = _settingService.GetModelAsync(m => m.Id == id).Result.data;
+            var model = _settingService.GetModelAsync(m => m.Id == obj.id).Result.data;
             //获得access_taken
             var token = WxTools.GetAccess(model.AppId,model.AppSecret);
 

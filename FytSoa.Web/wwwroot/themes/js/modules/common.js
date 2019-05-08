@@ -20,7 +20,7 @@
         success: function (msg) {
             toastr.success(msg);
         },
-        ajax: function (url, options, callFun) {
+        ajax: function (url, options, callFun,method='post') {
             var httpUrl = "/", token = tool.GetSession('FYTADMIN_ACCESS_TOKEN');
             var _headers = {};
             if (token !== null) {
@@ -28,37 +28,14 @@
                     'Authorization': 'Bearer ' + token
                 };
             }
+            options = method === 'get' ? options : JSON.stringify(options);
             //console.log(_headers);
+            //console.log(options);
             $.ajax(httpUrl + url, {
                 data: options,
+                contentType: 'application/json',
                 dataType: 'json', //服务器返回json格式数据
-                type: 'post', //HTTP请求类型
-                timeout: 10 * 1000, //超时时间设置为50秒；
-                headers: _headers,
-                success: function (data) {
-                    callFun(data);
-                },
-                error: function (xhr, type, errorThrown) {
-                    if (type === 'timeout') {
-                        tool.error('连接超时，请稍后重试！');
-                    } else if (type === 'error') {
-                        tool.error('连接异常，请稍后重试！');
-                    }
-                }
-            });
-        },
-        get: function (url, options, callFun) {
-            var httpUrl = "/", token = tool.GetSession('FYTADMIN_ACCESS_TOKEN');
-            var _headers = {};
-            if (token!==null) {
-                _headers = {
-                    'Authorization': 'Bearer ' + token
-                };
-            }
-            $.ajax(httpUrl + url, {
-                data: options,
-                dataType: 'json', //服务器返回json格式数据
-                type: 'get', //HTTP请求类型
+                type: method, //HTTP请求类型
                 timeout: 10 * 1000, //超时时间设置为50秒；
                 headers: _headers,
                 success: function (data) {

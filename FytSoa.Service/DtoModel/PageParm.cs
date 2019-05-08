@@ -5,6 +5,32 @@ using System.Text;
 namespace FytSoa.Service.DtoModel
 {
     /// <summary>
+    /// 自定义排序
+    /// </summary>
+    public class ParmSort
+    {
+        public int p { get; set; }
+        public int i { get; set; }
+        public int o { get; set; }
+    }
+
+    /// <summary>
+    /// 提供字符串FromBody的解析
+    /// </summary>
+    public class ParmString
+    {
+        public string parm { get; set; }
+    }
+
+    /// <summary>
+    /// 提供字符串FromBody的解析
+    /// </summary>
+    public class ParmInt
+    {
+        public int id { get; set; }
+    }
+
+    /// <summary>
     /// 分页参数
     /// </summary>
     public class PageParm

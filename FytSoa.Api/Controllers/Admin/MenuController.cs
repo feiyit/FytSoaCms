@@ -107,9 +107,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), ApiAuthorize(Modules = "Menu", Methods = "Add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> AddMenu(SysMenu parm,List<string> cbks)
+        public async Task<ApiResult<string>> AddMenu([FromBody]SysMenu model)
         {
-            return await _sysMenuService.AddAsync(parm,cbks);
+            return await _sysMenuService.AddAsync(model, model.cbks);
         }
 
         /// <summary>
@@ -117,9 +117,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete"), ApiAuthorize(Modules = "Menu", Methods = "Delete", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> DeleteMenu(string parm)
+        public async Task<ApiResult<string>> DeleteMenu([FromBody]ParmString obj)
         {
-            var list = Utils.StrToListString(parm);
+            var list = Utils.StrToListString(obj.parm);
             return await _sysMenuService.DeleteAsync(m => list.Contains(m.Guid));
         }
 
@@ -128,9 +128,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"), ApiAuthorize(Modules = "Menu", Methods = "Update", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> EditMenu(SysMenu parm, List<string> cbks)
+        public async Task<ApiResult<string>> EditMenu([FromBody]SysMenu model)
         {
-            return await _sysMenuService.ModifyAsync(parm,cbks);
+            return await _sysMenuService.ModifyAsync(model, model.cbks);
         }
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace FytSoa.Api.Controllers
         /// <returns></returns>
         [HttpPost("authorizaion")]
         [ApiAuthorize(Modules = "Menu", Methods = "Update", LogType = LogEnum.STATUS)]
-        public async Task<ApiResult<List<SysMenuDto>>> GetAuthorizaionMenu(string roid)
+        public async Task<ApiResult<List<SysMenuDto>>> GetAuthorizaionMenu([FromBody]ParmString obj)
         {
-            return await _sysMenuService.GetMenuByRole(roid);
+            return await _sysMenuService.GetMenuByRole(obj.parm);
         }
     }
 }

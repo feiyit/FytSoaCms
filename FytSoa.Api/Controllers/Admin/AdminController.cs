@@ -46,7 +46,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), ApiAuthorize(Modules = "Admin", Methods = "Add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> AddAdmin(SysAdmin parm)
+        public async Task<ApiResult<string>> AddAdmin([FromBody]SysAdmin parm)
         {
             return await _adminService.AddAsync(parm);
         }
@@ -56,9 +56,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete"), ApiAuthorize(Modules = "Admin", Methods = "Delete", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> DeleteAdmin(string parm)
+        public async Task<ApiResult<string>> DeleteAdmin([FromBody]ParmString obj)
         {
-            return await _adminService.DeleteAsync(parm);
+            return await _adminService.DeleteAsync(obj.parm);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"), ApiAuthorize(Modules = "Admin", Methods = "Update", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> EditAdmin(SysAdmin parm)
+        public async Task<ApiResult<string>> EditAdmin([FromBody]SysAdmin parm)
         {
             return await _adminService.ModifyAsync(parm);
         }
@@ -77,7 +77,7 @@ namespace FytSoa.Api.Controllers
         /// <returns></returns>
         [HttpPost("login")]
         [AllowAnonymous]
-        public ApiResult<string> Login(SysAdminLogin parm)
+        public ApiResult<string> Login([FromBody]SysAdminLogin parm)
         {
             var apiRes = new ApiResult<string>() { statusCode = (int)ApiEnum.HttpRequestError };
             var token = "";

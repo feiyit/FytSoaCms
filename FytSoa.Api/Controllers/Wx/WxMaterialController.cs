@@ -42,7 +42,7 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), Log("WxMaterial：add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> Add(WxMaterial model)
+        public async Task<ApiResult<string>> Add([FromBody]WxMaterial model)
         {
             return await _meterialService.Add(model,null);
         }
@@ -52,9 +52,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("del"), Log("WxMaterial：del", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> Delete(int parm)
+        public async Task<ApiResult<string>> Delete([FromBody]ParmInt obj)
         {
-            return await _meterialService.DeleteAsync(m=>m.Id== parm);
+            return await _meterialService.DeleteAsync(m=>m.Id== obj.id);
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("get"), Log("WxMaterial：get", LogType = LogEnum.RETRIEVE)]
-        public async Task<ApiResult<WxMaterial>> GetModel(int id)
+        public async Task<ApiResult<WxMaterial>> GetModel([FromBody]ParmInt obj)
         {
-            return await _meterialService.GetModelAsync(m => m.Id == id);
+            return await _meterialService.GetModelAsync(m => m.Id == obj.id);
         }
 
         /// <summary>
@@ -72,9 +72,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("server"), Log("WxMaterial：server", LogType = LogEnum.ASYWX)]
-        public JsonResult GetServerMaterial(int gzhid)
+        public JsonResult GetServerMaterial([FromBody]ParmInt obj)
         {
-            var gzhModel = _settingService.GetModelAsync(m=>m.Id==gzhid).Result.data;
+            var gzhModel = _settingService.GetModelAsync(m=>m.Id== obj.id).Result.data;
             var token = WxTools.GetAccess(gzhModel.AppId, gzhModel.AppSecret);
             var list = WxTools.GetMediaList(token.access_token);
             return Json(list);
@@ -85,11 +85,11 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("asynwx"), Log("WxMaterial：asynwx", LogType = LogEnum.ASYWX)]
-        public async Task<ApiResult<string>> PushMaterial(int wxid=0)
+        public async Task<ApiResult<string>> PushMaterial([FromBody]ParmInt obj)
         {
             var res = new ApiResult<string>();
             //根据公众号查询配置
-            var gzhModel = _settingService.GetModelAsync(m => m.Id == wxid).Result.data;
+            var gzhModel = _settingService.GetModelAsync(m => m.Id == obj.id).Result.data;
             var token = WxTools.GetAccess(gzhModel.AppId, gzhModel.AppSecret);
 
             //提交素材的Url
@@ -99,7 +99,7 @@ namespace FytSoa.Api.Controllers.Wx
             //定义标识，是否有素材没有上传成功
             bool isUploadOk = true,asynOk=true;
             //根据公众号查询所有
-            var list = _meterialService.GetListAsync(m => m.WxId == wxid && m.Position == 1, m => m.AddDate, DbOrderEnum.Desc).Result.data;
+            var list = _meterialService.GetListAsync(m => m.WxId == obj.id && m.Position == 1, m => m.AddDate, DbOrderEnum.Desc).Result.data;
             if (list.Count > 0)
             {
                 //到微信服务端获得thumb_media_id
@@ -170,7 +170,7 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("synchro"), Log("WxMaterial：synchro", LogType = LogEnum.ASYWX)]
-        public async Task<ApiResult<string>> PushMaterial(WxMaterial model) {
+        public async Task<ApiResult<string>> PushMaterial([FromBody]WxMaterial model) {
             var res = new ApiResult<string>();
 
             var gzhModel = _settingService.GetModelAsync(m => m.Id == model.WxId).Result.data;

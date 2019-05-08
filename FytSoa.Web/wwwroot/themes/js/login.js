@@ -9,6 +9,8 @@ layui.use(['element', 'jquery', 'form', 'common'], function () {
     $(".layui-btn-danger").click(function () {
         document.getElementById("forms").reset();
     });
+    //清空token
+    os.SessionRemove('FYTADMIN_ACCESS_TOKEN');
     form.on('submit(loginsub)', function (data) {
         var crypt = new JSEncrypt();
         crypt.setPrivateKey(data.field.privateKey);
@@ -17,41 +19,32 @@ layui.use(['element', 'jquery', 'form', 'common'], function () {
         data.field.password = enc;
         var btns = $(".layui-btn-normal");
         btns.html('<i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>');
-        btns.attr('disabled', 'disabled');     
-        $.ajax('/api/admin/login', {
-            data: data.field,
-            dataType: 'json', //服务器返回json格式数据
-            type: 'post', //HTTP请求类型
-            timeout: 10 * 1000, //超时时间设置为50秒；
-            success: function (res) {
-                if (res.statusCode === 200) {
-                    os.SetSession('FYTADMIN_ACCESS_TOKEN', res.data);
-                    setTimeout(function () {
-                        var rurl = os.getUrlParam('ReturnUrl');
-                        if (!rurl) {
-                            window.location.href = '/fytadmin/index';
-                        }
-                        else {
-                            window.location.href = rurl;
-                        }
-                    }, 1000);
-                } else {
-                    $(".login-tip span").html(res.message);
-                    $("#password").val('');
-                    $(".login-tip").animate({ 'height': '30px' });
-                    setTimeout(function () {
-                        $(".login-tip").animate({ 'height': 0 });
-                        $(".login-tip span").html('');
-                    }, 2500);
-                }
-                btns.attr('disabled', false);
+        btns.attr('disabled', 'disabled');  
+        os.ajax('api/admin/login', data.field, function (res) {
+            if (res.statusCode === 200) {
+                os.SetSession('FYTADMIN_ACCESS_TOKEN', res.data);
                 setTimeout(function () {
-                    btns.html('登录');
+                    var rurl = os.getUrlParam('ReturnUrl');
+                    if (!rurl) {
+                        window.location.href = '/fytadmin/index';
+                    }
+                    else {
+                        window.location.href = rurl;
+                    }
                 }, 1000);
-            },
-            error: function (xhr, type, errorThrown) {
-                os.error('连接异常，请稍后重试！');
+            } else {
+                $(".login-tip span").html(res.message);
+                $("#password").val('');
+                $(".login-tip").animate({ 'height': '30px' });
+                setTimeout(function () {
+                    $(".login-tip").animate({ 'height': 0 });
+                    $(".login-tip span").html('');
+                }, 2500);
             }
+            btns.attr('disabled', false);
+            setTimeout(function () {
+                btns.html('登录');
+            }, 1000);
         });
         return false;
     });

@@ -239,7 +239,7 @@
                     $ = layui.jquery;
                     os = layui.common;
                 //查询公众号列表
-                os.get('api/wx/setting/getpages', null, function (res) {
+                os.ajax('api/wx/setting/getpages', null, function (res) {
                     if (res.data.length > 0) {
                         wxm.dropList = res.data;
                         wxm.$nextTick(function () {
@@ -248,7 +248,7 @@
                     } else {
                         os.error('公众号数据返回为空~');
                     }
-                });
+                },'get');
                 active = {
                     Init: function () {
                         os.ajax('api/wx/material/list', wxm.where, function (res) {
@@ -305,7 +305,7 @@
                             var loadindex = layer.load(1, {
                                 shade: [0.1, '#000']
                             });
-                            os.ajax('api/wx/material/del', { parm: m.id }, function (res) {
+                            os.ajax('api/wx/material/del', { id: m.id }, function (res) {
                                 layer.close(loadindex);
                                 if (res.statusCode === 200) {
                                     active.Init();

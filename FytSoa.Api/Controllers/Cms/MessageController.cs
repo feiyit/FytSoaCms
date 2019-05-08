@@ -35,11 +35,11 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<ApiResult<string>> Delete(string parm,int type=0)
+        public async Task<ApiResult<string>> Delete([FromBody]MessageDeleteDto obj)
         {
-            if (type == 0)
+            if (obj.type == 0)
             {
-                return await _messageService.DeleteAsync(parm);
+                return await _messageService.DeleteAsync(obj.parm);
             }
             else
             {
@@ -52,11 +52,11 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("read")]
-        public async Task<ApiResult<string>> Read(int parm,int type=0)
+        public async Task<ApiResult<string>> Read([FromBody]MessageReadDto obj)
         {
-            if (type == 0)
+            if (obj.type == 0)
             {
-                return await _messageService.UpdateAsync(m => new CmsMessage() { Status = true }, m => m.Id == parm);
+                return await _messageService.UpdateAsync(m => new CmsMessage() { Status = true }, m => m.Id == obj.parm);
             }
             else
             {

@@ -58,7 +58,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("add")]
-        public async Task<ApiResult<string>> Add(CmsColumn parm)
+        public async Task<ApiResult<string>> Add([FromBody]CmsColumn parm)
         {
             return await _columnService.AddAsync(parm);
         }
@@ -68,9 +68,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<ApiResult<string>> Delete(string parm)
+        public async Task<ApiResult<string>> Delete([FromBody]ParmString obj)
         {
-            return await _columnService.DeleteAsync(parm);
+            return await _columnService.DeleteAsync(obj.parm);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit")]
-        public async Task<ApiResult<string>> Edit(CmsColumn parm)
+        public async Task<ApiResult<string>> Edit([FromBody]CmsColumn parm)
         {
             return await _columnService.UpdateAsync(parm);
         }
@@ -88,9 +88,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("sort")]
-        public async Task<ApiResult<string>> ColStor(int p,int i,int o)
+        public async Task<ApiResult<string>> ColStor([FromBody]ParmSort obj)
         {
-            return await _columnService.ColSort(p,i,o);
+            return await _columnService.ColSort(obj.p,obj.i,obj.o);
         }
         #endregion
 
@@ -113,7 +113,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("template/add")]
-        public async Task<ApiResult<string>> AddTemplate(CmsTemplate parm)
+        public async Task<ApiResult<string>> AddTemplate([FromBody]CmsTemplate parm)
         {
             return await _tempService.AddAsync(parm);
         }
@@ -123,9 +123,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("template/delete")]
-        public async Task<ApiResult<string>> DeleteTemplate(string parm)
+        public async Task<ApiResult<string>> DeleteTemplate([FromBody]ParmString obj)
         {
-            return await _tempService.DeleteAsync(parm);
+            return await _tempService.DeleteAsync(obj.parm);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("template/edit")]
-        public async Task<ApiResult<string>> EditTemplate(CmsTemplate parm)
+        public async Task<ApiResult<string>> EditTemplate([FromBody]CmsTemplate parm)
         {
             return await _tempService.UpdateAsync(parm);
         }

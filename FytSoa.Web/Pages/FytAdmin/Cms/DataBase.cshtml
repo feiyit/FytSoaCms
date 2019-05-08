@@ -35,7 +35,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="submit">备份SQL格式数据库</button>
+                <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>备份SQL格式数据库</button>
             </div>
         </div>
     </form>
@@ -47,8 +47,10 @@
             var form = layui.form, $ = layui.$, os = layui.common;
             //监听提交
             form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
                 os.ajax('api/cmssite/backups', null, function (res) { 
-                    if (res.success) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode===200) {
                         os.success(res.message);
                     }
                     else {

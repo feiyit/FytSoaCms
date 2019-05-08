@@ -53,7 +53,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), ApiAuthorize(Modules = "Role", Methods = "Add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> AddRole(SysRole parm)
+        public async Task<ApiResult<string>> AddRole([FromBody]SysRole parm)
         {
             return await _roleService.AddAsync(parm);
         }
@@ -63,9 +63,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete"), ApiAuthorize(Modules = "Role", Methods = "Delete", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> DeleteRole(string parm)
+        public async Task<ApiResult<string>> DeleteRole([FromBody]ParmString obj)
         {
-            return await _roleService.DeleteAsync(parm);
+            return await _roleService.DeleteAsync(obj.parm);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"), ApiAuthorize(Modules = "Role", Methods = "Update", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> EditRole(SysRole parm)
+        public async Task<ApiResult<string>> EditRole([FromBody]SysRole parm)
         {
             return await _roleService.ModifyAsync(parm);
         }

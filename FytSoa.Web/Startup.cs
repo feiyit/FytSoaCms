@@ -106,7 +106,7 @@ namespace FytSoa.Web
             #region ª∫¥Ê≈‰÷√
             services.AddMemoryCache();
             services.AddSingleton<ICacheService, MemoryCacheService>();
-            RedisHelper.Initialization(new CSRedis.CSRedisClient(Configuration["Cache:Configuration"] + ",defaultDatabase=1,poolsize=10"));
+            RedisHelper.Initialization(new CSRedis.CSRedisClient(Configuration["Cache:Configuration"]));
             #endregion
 
             services.AddMvc().AddRazorPagesOptions(options =>

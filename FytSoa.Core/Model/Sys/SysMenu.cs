@@ -1,5 +1,6 @@
 ﻿using SqlSugar;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -116,6 +117,13 @@ namespace FytSoa.Core.Model.Sys
         /// Nullable:False
         /// </summary>           
         public DateTime AddTIme { get; set; }
+
+
+        /// <summary>
+        /// 授权功能  和数据库没关系
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public List<string> cbks { get; set; }
 
 
     }

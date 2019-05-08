@@ -444,7 +444,7 @@
         }).use(['layer', 'jquery', 'common', 'form'], function () {
             var form = layui.form, $ = layui.jquery, os = layui.common;
             //查询公众号列表
-            os.get('api/wx/setting/getpages', null, function (res) {
+            os.ajax('api/wx/setting/getpages', null, function (res) {
                 if (res.data.length > 0) {
                     wx.wxbaseList = res.data;
                     wx.$nextTick(function () {
@@ -453,7 +453,7 @@
                 } else {
                     os.error('公众号数据返回为空~');
                 }
-            });
+            },'get');
             //菜单类型
             form.on('radio(menutype)', function (data) {
                 wx.menutype = data.value;

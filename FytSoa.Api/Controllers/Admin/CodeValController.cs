@@ -41,7 +41,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), ApiAuthorize(Modules = "Key", Methods = "Add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> AddCodeType(SysCode parm)
+        public async Task<ApiResult<string>> AddCodeType([FromBody]SysCode parm)
         {
             return await _sysCodeService.AddAsync(parm);
         }
@@ -51,9 +51,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete"), ApiAuthorize(Modules = "Key", Methods = "Delete", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> DeleteCode(string parm)
+        public async Task<ApiResult<string>> DeleteCode([FromBody]ParmString obj)
         {
-            return await _sysCodeService.DeleteAsync(parm);
+            return await _sysCodeService.DeleteAsync(obj.parm);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"), ApiAuthorize(Modules = "Key", Methods = "Update", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> EditCode(SysCode parm)
+        public async Task<ApiResult<string>> EditCode([FromBody]SysCode parm)
         {
             return await _sysCodeService.ModifyAsync(parm);
         }
@@ -71,7 +71,7 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("editstatus"), ApiAuthorize(Modules = "Key", Methods = "Audit", LogType = LogEnum.AUDIT)]
-        public async Task<ApiResult<string>> EditStatusCode(SysCode parm)
+        public async Task<ApiResult<string>> EditStatusCode([FromBody]SysCode parm)
         {
             return await _sysCodeService.ModifyStatusAsync(parm);
         }

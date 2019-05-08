@@ -41,7 +41,7 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), Log("WxSetting：add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> AddSetting(WxSetting parm)
+        public async Task<ApiResult<string>> AddSetting([FromBody]WxSetting parm)
         {
             return await _settingService.AddAsync(parm);
         }
@@ -51,7 +51,7 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"), Log("WxSetting：edit", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> EditSetting(WxSetting parm)
+        public async Task<ApiResult<string>> EditSetting([FromBody]WxSetting parm)
         {
             return await _settingService.UpdateAsync(parm);
         }
@@ -62,9 +62,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete"), Log("WxSetting：delete", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> DeleteRole(string parm)
+        public async Task<ApiResult<string>> DeleteRole([FromBody]ParmString obj)
         {
-            return await _settingService.DeleteAsync(parm);
+            return await _settingService.DeleteAsync(obj.parm);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("class/add")]
-        public async Task<ApiResult<string>> AddClass(CmsAdvClass parm)
+        public async Task<ApiResult<string>> AddClass([FromBody]CmsAdvClass parm)
         {
             parm.Guid = Guid.NewGuid().ToString();
             return await _classService.AddAsync(parm);
@@ -55,9 +55,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("class/delete")]
-        public async Task<ApiResult<string>> DeleteClass(string parm)
+        public async Task<ApiResult<string>> DeleteClass([FromBody]ParmString obj)
         {
-            return await _classService.DeleteAsync(parm);
+            return await _classService.DeleteAsync(obj.parm);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("class/edit")]
-        public async Task<ApiResult<string>> EditClass(CmsAdvClass parm)
+        public async Task<ApiResult<string>> EditClass([FromBody]CmsAdvClass parm)
         {
             return await _classService.UpdateAsync(parm);
         }
@@ -90,7 +90,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("list/add")]
-        public async Task<ApiResult<string>> AddAdvList(CmsAdvList parm)
+        public async Task<ApiResult<string>> AddAdvList([FromBody]CmsAdvList parm)
         {
             parm.Guid = Guid.NewGuid().ToString();
             return await _listService.AddAsync(parm);
@@ -101,9 +101,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("list/delete")]
-        public async Task<ApiResult<string>> DeleteAdvList(string parm)
+        public async Task<ApiResult<string>> DeleteAdvList([FromBody]ParmString obj)
         {
-            return await _listService.DeleteAsync(parm);
+            return await _listService.DeleteAsync(obj.parm);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("list/edit")]
-        public async Task<ApiResult<string>> EditAdvList(CmsAdvList parm)
+        public async Task<ApiResult<string>> EditAdvList([FromBody]CmsAdvList parm)
         {
             return await _listService.UpdateAsync(parm);
         }

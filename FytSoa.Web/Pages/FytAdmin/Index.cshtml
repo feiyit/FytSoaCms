@@ -7,7 +7,7 @@
 }
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header" id="mainapp">
-        <div class="layui-logo">装配式建筑风险预警平台</div>
+        <div class="layui-logo">FytSoa内容管理平台</div>
         <ul class="layui-nav layui-layout-left layui-first-nav" lay-filter="topmenu">
             <li class="layui-nav-item layui-this" v-for="(it,index) in menulist" v-cloak v-if="it.layer===1 && index===0"><a href="javascript:void(0)" :data-index="index"><i :class="'layui-icon '+it.icon"></i>{{it.name}}</a></li>
             <li class="layui-nav-item" v-for="(it,index) in menulist" v-cloak v-if="it.layer===1 && index!=0"><a href="javascript:void(0)" :data-index="index"><i :class="'layui-icon '+it.icon"></i>{{it.name}}</a></li>

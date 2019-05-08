@@ -242,7 +242,7 @@
                 fun = {
                     //根据部门查询角色
                     initRole: function (guid) {
-                        os.get('api/role/getpages', { key: guid }, function (res) {
+                        os.ajax('api/role/getpages', { key: guid }, function (res) {
                             if (res.count != 0) {
                                 vm.roleList = res.data;
                                 //默认第一条选中
@@ -250,11 +250,11 @@
                                 vm.roleActive = 0;
                                 fun.menuList(vm.roleGuid);
                             }
-                        });
+                        },'get');
                     },
                     //根据角色查询菜单和权限
                     menuList: function (roleguid) {
-                        os.ajax('api/menu/authorizaion', { roid: roleguid }, function (res) {
+                        os.ajax('api/menu/authorizaion', { parm: roleguid }, function (res) {
                             //os.log(res);                            
                             if (res.statusCode === 200) {
                                 vm.menuList = res.data;
