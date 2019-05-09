@@ -172,11 +172,10 @@ namespace FytSoa.Api.Controllers
                 if (menuSaveType == "Redis")
                 {
                     RedisHelper.Set(KeyHelper.ADMINMENU + "_" +dbres.data.admin.Guid, dbres.data.menu);
-                    //RedisCacheService.Default.SetCache(KeyHelper.ADMINMENU, dbres.data.menu, 600);
                 }
                 else
                 {
-                    MemoryCacheService.Default.SetCache(KeyHelper.ADMINMENU, dbres.data.menu, 600);
+                    MemoryCacheService.Default.SetCache(KeyHelper.ADMINMENU + "_" + dbres.data.admin.Guid, dbres.data.menu, 600);
                 }
                 token = JwtHelper.IssueJWT(new TokenModel()
                 {

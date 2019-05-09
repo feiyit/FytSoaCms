@@ -88,11 +88,10 @@ namespace FytSoa.Api.Controllers
             if (menuSaveType == "Redis")
             {
                 res.data = RedisHelper.Get<List<SysMenuDto>>(KeyHelper.ADMINMENU + "_" +userGuid);
-                //res.data = RedisCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU);
             }
             else
             {
-                res.data = MemoryCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU);
+                res.data = MemoryCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU + "_" + userGuid);
             }
             if (res.data==null)
             {

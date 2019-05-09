@@ -57,28 +57,26 @@ namespace FytSoa.Api
                 Stopwatch = new Stopwatch();
                 Stopwatch.Start();
             }
-            
+            var userGuid = "";
+            //检测是否包含'Authorization'请求头，如果不包含则直接放行
+            if (context.HttpContext.Request.Headers.ContainsKey("Authorization"))
+            {
+                var tokenHeader = context.HttpContext.Request.Headers["Authorization"];
+                tokenHeader = tokenHeader.ToString().Substring("Bearer ".Length).Trim();
+
+                TokenModel tm = JwtHelper.SerializeJWT(tokenHeader);
+                userGuid = tm.Uid;
+            }
             //获得权限
             var menu = new List<SysMenuDto>();
             var menuSaveType = ConfigExtensions.Configuration[KeyHelper.LOGINAUTHORIZE];
              if (menuSaveType == "Redis")
-            {
-                var userGuid = "";
-                //检测是否包含'Authorization'请求头，如果不包含则直接放行
-                if (context.HttpContext.Request.Headers.ContainsKey("Authorization"))
-                {
-                    var tokenHeader = context.HttpContext.Request.Headers["Authorization"];
-                    tokenHeader = tokenHeader.ToString().Substring("Bearer ".Length).Trim();
-
-                    TokenModel tm = JwtHelper.SerializeJWT(tokenHeader);
-                    userGuid = tm.Uid;
-                }
+            {                
                 menu = RedisHelper.Get<List<SysMenuDto>>(KeyHelper.ADMINMENU + "_" + userGuid);
-                //menu = RedisCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU);
             }
             else
             {
-                menu = MemoryCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU);
+                menu = MemoryCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU + "_"+ userGuid);
             }
             if (menu==null)
             {
