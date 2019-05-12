@@ -76,7 +76,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="parm">分页参数</param>
         /// <returns></returns>
         [HttpPost("list")]
-        public CloudFile LocalList(PageParm parm) {
+        public CloudFile LocalList([FromBody]PageParm parm) {
             return _imageService.GetList(parm);
         }
 
@@ -86,9 +86,14 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="filename">文件名称</param>
         /// <returns></returns>
         [HttpPost("delete")]
-        public Task<ApiResult<string>> DeleteList(string filename)
+        public Task<ApiResult<string>> DeleteList([FromBody]ParmFileName obj)
         {
-            return _imageService.DeleteAsync(m => m.ImgBig == filename);
+            return _imageService.DeleteAsync(m => m.ImgBig == obj.filename);
+        }
+
+        public class ParmFileName
+        {
+            public string filename { get; set; }
         }
     }
 }

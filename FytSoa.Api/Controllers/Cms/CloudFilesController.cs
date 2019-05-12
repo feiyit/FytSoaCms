@@ -40,9 +40,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost("list")]
-        public CloudFile FileList(string prefix,string marker)
+        public CloudFile FileList([FromBody]QiniuListParmDto obj)
         {
-            return QiniuCloud.List(prefix,marker);
+            return QiniuCloud.List(obj.prefix, obj.marker);
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="filename">文件名称</param>
         /// <returns></returns>
         [HttpPost("delete")]
-        public CloudFile DeleteList(string filename)
+        public CloudFile DeleteList([FromBody]QiniuDelParmDto obj)
         {
-            return QiniuCloud.Delete(filename);
+            return QiniuCloud.Delete(obj.filename);
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="filename">文件名称</param>
         /// <returns></returns>
         [HttpPost("upload")]
-        public CloudFile UpLoadFile(string prefix, string filepath)
+        public CloudFile UpLoadFile([FromBody]QiniuDelByPathParmDto obj)
         {
-            return QiniuCloud.UploadFile(prefix, filepath);
+            return QiniuCloud.UploadFile(obj.prefix, obj.filepath);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="model">CmsImgType</param>
         /// <returns></returns>
         [HttpPost("type/add")]
-        public async Task<ApiResult<string>> AddImageType(CmsImgType model)
+        public async Task<ApiResult<string>> AddImageType([FromBody]CmsImgType model)
         {
             if (string.IsNullOrEmpty(model.Guid))
             {
@@ -90,9 +90,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="parm">string parm</param>
         /// <returns></returns>
         [HttpPost("type/del")]
-        public async Task<ApiResult<string>> DelImageType(string parm)
+        public async Task<ApiResult<string>> DelImageType([FromBody]ParmString obj)
         {
-            return await _imgTypeService.DeleteAsync(parm);
+            return await _imgTypeService.DeleteAsync(obj.parm);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="model">CmsImgType</param>
         /// <returns></returns>
         [HttpPost("type/modify")]
-        public async Task<ApiResult<string>> EditImageType(CmsImgType model)
+        public async Task<ApiResult<string>> EditImageType([FromBody]CmsImgType model)
         {
             return await _imgTypeService.UpdateAsync(model);
         }
@@ -112,7 +112,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="parm">PageParm parm</param>
         /// <returns></returns>
         [HttpPost("type/list")]
-        public async Task<ApiResult<List<CmsImgType>>> ListImageType(PageParm parm)
+        public async Task<ApiResult<List<CmsImgType>>> ListImageType([FromBody]PageParm parm)
         {
             return await _imgTypeService.GetListAsync(m=>m.Type==parm.types,m=>m.AddDate,DbOrderEnum.Asc);
         }
