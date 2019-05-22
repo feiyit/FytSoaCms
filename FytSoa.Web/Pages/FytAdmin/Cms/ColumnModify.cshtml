@@ -128,7 +128,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>          
             <div class="layui-row">
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">文本域</label>
@@ -145,54 +145,59 @@
             </div>
         </div>
 
-        
+
         <input type="hidden" name="Id" id="Id" value="@Model.Column.Id" />
         <input type="hidden" name="SiteGuid" value="0" />
     </form>
+    <script src="/themes/tinymce/tinymce.min.js"></script>
+    <script src="/themes/tinymce/langs/zh_CN.js"></script>
     <script>
-        var oc;
+        var oc, os;
+        tinymce.init({
+            selector: '#Content',
+            height: 400,
+            plugins: 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help filemanager',
+            toolbar: 'formatselect styleselect | bold italic forecolor backcolor | link filemanager | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat'
+        });
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['layer', 'jquery', 'common', 'form', 'layedit'], function () {
-            var form = layui.form, $ = layui.jquery, os = layui.common;
-            var layedit = layui.layedit;
-            var index = layedit.build('Content', { height:400 }); 
+        }).use(['layer', 'jquery', 'common', 'form'], function () {
+            var form = layui.form, $ = layui.jquery;
+            os = layui.common;
             form.render();
-            $('.panel-addpic').css({'min-height':$(window).height()-95});
-            $("#btn-text").click(function () {
-                layedit.setTexts(index, "你好");
-            });
+            $('.panel-addpic').css({ 'min-height': $(window).height() - 95 });
+            
             os.cloudFile();
             oc = {
                 setContent(v) {
                     var imgIndex = v.lastIndexOf('/');
                     var str = v.substring(imgIndex + 1, v.length);
                     if (os.isExtImage(v)) {
-                        layedit.setCursorText(index, '<img src="' + v + '" alt="' + str+'"/>');
+                        tinyMCE.editors[0].setContent('<img src="' + v + '" alt="' + str + '"/>')
                     } else {
-                        layedit.setCursorText(index, '<p style="padding:12px 20px;background-color: #edf3f5;"><a href="' + v + '" target="_blank" title="' + str + '">' + str +'</a></p>');
+                        tinyMCE.editors[0].setContent('<p style="padding:12px 20px;background-color: #edf3f5;"><a href="' + v + '" target="_blank" title="' + str + '">' + str + '</a></p>')
                     }
                 },
                 fileSave(v) {
                     $(".select-newimg").addClass('layui-hide');
                     $(".add-photo-wall").removeClass('layui-hide');
                     $('#ImgUrl').val(v);
-                    $('#imgShow').attr('src',v);
+                    $('#imgShow').attr('src', v);
                 },
-                deleteFile(){
+                deleteFile() {
                     $(".select-newimg").removeClass('layui-hide');
                     $(".add-photo-wall").addClass('layui-hide');
                     $('#ImgUrl').val('');
                     $('#imgShow').attr('src', v);
                 }
             };
-            
+
             //监听提交
             form.on('submit(submit)', function (data) {
                 $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
-                data.field.Content = layedit.getContent(index);
+                data.field.Content = tinyMCE.editors[0].getContent();
                 var urls = "api/column/add";
-                if ($("#Id").val()!=='0') {
+                if ($("#Id").val() !== '0') {
                     urls = "api/column/edit";
                 }
                 data.field.IsTopShow = data.field.IsTopShow === 'on' ? true : false;

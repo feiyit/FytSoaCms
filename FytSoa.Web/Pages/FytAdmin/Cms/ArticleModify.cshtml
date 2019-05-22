@@ -173,7 +173,7 @@
                         <textarea id="Content" name="Content" placeholder="请输入内容" class="layui-textarea">@Html.Raw(Model.Article.Content)</textarea>
                     </div>
                 </div>
-            </div>           
+            </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
@@ -183,14 +183,22 @@
         </div>
         <input type="hidden" name="Id" id="Id" value="@Model.Article.Id" />
     </form>
+    <script src="/themes/tinymce/tinymce.min.js"></script>
+    <script src="/themes/tinymce/langs/zh_CN.js"></script>
     <script>
-        var oc;
+        var oc, os;
+        tinymce.init({
+            selector: '#Content',
+            height: 400,
+            plugins: 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help filemanager',
+            toolbar: 'formatselect styleselect | bold italic forecolor backcolor | link filemanager | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat'
+        });
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['layer', 'jquery', 'common', 'form', 'layedit', 'laydate', 'slider'], function () {
-            var form = layui.form, $ = layui.jquery, os = layui.common, laydate = layui.laydate, slider = layui.slider,sort=@Model.Article.Sort;
-            var layedit = layui.layedit;
-            var index = layedit.build('Content', { height:500});
+        }).use(['layer', 'jquery', 'common', 'form', 'laydate', 'slider'], function () {
+            var form = layui.form, $ = layui.jquery, laydate = layui.laydate, slider = layui.slider, sort =@Model.Article.Sort;
+            os = layui.common;
+           
             form.render();
             laydate.render({
                 elem: '#EditDate'
@@ -200,24 +208,24 @@
             $('.panel-addpic').css({ 'min-height': $(window).height() - 95 });
             var sliderIndex=slider.render({
                 elem: '#slideSort'
-                , input: true 
+                , input: true
                 , change: function (value) {
-                    sort = value; 
+                    sort = value;
                 }
                 , theme:'#409eff'
             });
             //赋值
             sliderIndex.setValue(@Model.Article.Sort);
-           
+
             os.cloudFile();
             oc = {
                 setContent(v) {
                     var imgIndex = v.lastIndexOf('/');
                     var str = v.substring(imgIndex + 1, v.length);
                     if (os.isExtImage(v)) {
-                        layedit.setCursorText(index, '<img src="' + v + '" alt="' + str+'"/>');
+                        tinyMCE.editors[0].setContent('<img src="' + v + '" alt="' + str + '"/>')
                     } else {
-                        layedit.setCursorText(index, '<p style="padding:12px 20px;background-color: #edf3f5;"><a href="' + v + '" target="_blank" title="' + str + '">' + str +'</a></p>');
+                        tinyMCE.editors[0].setContent('<p style="padding:12px 20px;background-color: #edf3f5;"><a href="' + v + '" target="_blank" title="' + str + '">' + str + '</a></p>')
                     }
                 },
                 fileSave(v) {
@@ -237,7 +245,7 @@
             //监听提交
             form.on('submit(submit)', function (data) {
                 $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
-                data.field.Content = layedit.getContent(index);
+                data.field.Content = tinyMCE.editors[0].getContent();
                 var urls = "api/article/add";
                 if ($("#Id").val()!=='0') {
                     urls = "api/article/edit";

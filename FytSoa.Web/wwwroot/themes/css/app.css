@@ -689,7 +689,7 @@ i.file-preview.file-type-mp4, i.file-preview.file-type-swf, i.file-preview.file-
     .loader-cur:after {
         animation: after 2s infinite;
     }
-
+.mce-flow-layout-item.mce-last{display:none;}
 @keyframes before {
     0% {
         width: 0.5em;
