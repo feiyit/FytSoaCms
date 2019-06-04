@@ -1,4 +1,6 @@
 ﻿@using System.Security.Claims;
+@using FytSoa.Core.Model.Cms;
+@using FytSoa.Common;
 <!DOCTYPE html>
 
 <html>
@@ -7,7 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="referrer" content="no-referrer" />
-    <link rel="stylesheet" href="~/build/admin/css/site.min.css">
+    <link rel="stylesheet" href="~/themes/layui/css/layui.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/build/admin/css/site.min.css" asp-append-version="true">
     <script type="text/javascript" src="~/themes/js/modules/vue.js"></script>
     <script src="~/themes/layui/layui.js"></script>
     <title>@Html.Raw(ViewBag.Title)</title>
@@ -37,6 +40,14 @@
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:void(0)" @@click="clearCache"><i class="layui-icon layui-icon-fonts-clear"></i>清除缓存</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:void(0)"><i class="layui-icon layui-icon-website"></i>@(FytSoa.Api.SiteTool.CurrentSite?.SiteName) <i class="layui-icon layui-icon-triangle-d"></i></a>
+                    <dl class="layui-nav-child">
+                        <dd><a><i class="layui-icon layui-icon-fonts-code"></i>站点切换</a></dd>
+                        <hr />
+                        <dd v-for="(it,index) in siteList" @@click="qhSite(it)"><a href="javascript:void(0)">{{it.siteName}}</a></dd>
+                    </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">

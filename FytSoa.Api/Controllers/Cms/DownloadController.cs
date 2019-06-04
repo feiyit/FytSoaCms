@@ -33,6 +33,7 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpGet("getpages")]
         public JsonResult GetPages(PageParm parm)
         {
+            parm.site = SiteTool.CurrentSite?.Guid;
             var res = _downloadService.GetList(parm);
             return Json(new { code = 0, msg = "success", count = res.TotalItems, data = res.Items });
         }
@@ -45,6 +46,7 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("add")]
         public async Task<ApiResult<string>> Add(CmsDownload parm)
         {
+            parm.SiteGuid = SiteTool.CurrentSite?.Guid;
             //处理文件类型
             parm.FileType= FileHelper.GetFileExt(parm.FileUrl);
             return await _downloadService.AddAsync(parm);
@@ -67,6 +69,7 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("edit")]
         public async Task<ApiResult<string>> Edit(CmsDownload parm)
         {
+            parm.SiteGuid = SiteTool.CurrentSite?.Guid;
             //处理文件类型
             parm.FileType = FileHelper.GetFileExt(parm.FileUrl);
             return await _downloadService.UpdateAsync(parm);

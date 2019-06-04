@@ -255,7 +255,7 @@ layui.config({
                 vm.upStatus = 'layui-hide';
             }
         }
-        , exts: 'jpg|png|gif|bmp|jpeg|zip|rar|7z|doc|docx|ppt|pptx|xls|xlsx|txt'
+        , exts: 'jpg|png|gif|bmp|jpeg|zip|rar|7z|doc|docx|ppt|pptx|xls|xlsx|txt|mp3|mp4|flv'
         , url: '/api/localfiles/upload' //上传接口
         , data: {
             path: function () { return $('#localpath').val() }

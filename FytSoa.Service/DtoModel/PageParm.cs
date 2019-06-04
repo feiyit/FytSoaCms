@@ -94,6 +94,11 @@ namespace FytSoa.Service.DtoModel
         /// 动态条件
         /// </summary>
         public string where { get; set; }
+
+        /// <summary>
+        /// 站点
+        /// </summary>
+        public string site { get; set; }
     }
 
     public class AppSearchParm

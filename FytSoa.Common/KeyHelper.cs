@@ -10,6 +10,11 @@ namespace FytSoa.Common
     public class KeyHelper
     {
         /// <summary>
+        /// 站点编号
+        /// </summary>
+        public static string NOWSITE = "NOWSITE";
+
+        /// <summary>
         /// 管理菜单
         /// </summary>
         public static string ADMINMENU = "ADMINMENU";

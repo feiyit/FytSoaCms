@@ -48,6 +48,6 @@ namespace FytSoa.Service.Interfaces
         /// </summary>
         /// <param name="parm">T</param>
         /// <returns></returns>
-        Task<ApiResult<List<ColumnTree>>> TreeAsync(int type);
+        Task<ApiResult<List<ColumnTree>>> TreeAsync(int type,string site);
     }
 }

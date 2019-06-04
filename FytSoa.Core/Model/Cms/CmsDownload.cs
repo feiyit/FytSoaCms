@@ -182,5 +182,12 @@ namespace FytSoa.Core.Model.Cms
         /// </summary>           
         public DateTime AddDate { get; set; } = DateTime.Now;
 
+        /// <summary>
+        /// Desc:站点ID
+        /// Default:0
+        /// Nullable:False
+        /// </summary>
+        public string SiteGuid { get; set; }
+
     }
 }

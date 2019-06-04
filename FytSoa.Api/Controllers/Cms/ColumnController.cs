@@ -32,9 +32,10 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public async Task<JsonResult> GetPages(PageParm parm)
+        public JsonResult GetPages(PageParm parm)
         {
-            var list = _columnService.RecursiveModule(_columnService.GetListAsync().Result.data);
+            parm.site = SiteTool.CurrentSite?.Guid;
+            var list = _columnService.RecursiveModule(_columnService.GetListAsync(m => m.SiteGuid == parm.site, m => m.Sort, DbOrderEnum.Asc).Result.data);
             foreach (var item in list)
             {
                 item.Title = Utils.LevelName(item.Title, item.ClassLayer);
@@ -50,7 +51,7 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("tree")]
         public async Task<ApiResult<List<ColumnTree>>> GetTree(int type=1)
         {
-            return await _columnService.TreeAsync(type);
+            return await _columnService.TreeAsync(type, SiteTool.CurrentSite?.Guid);
         }
 
         /// <summary>
@@ -60,6 +61,7 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("add")]
         public async Task<ApiResult<string>> Add([FromBody]CmsColumn parm)
         {
+            parm.SiteGuid = SiteTool.CurrentSite?.Guid;
             return await _columnService.AddAsync(parm);
         }
 
@@ -80,6 +82,7 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("edit")]
         public async Task<ApiResult<string>> Edit([FromBody]CmsColumn parm)
         {
+            parm.SiteGuid = SiteTool.CurrentSite?.Guid;
             return await _columnService.UpdateAsync(parm);
         }
 

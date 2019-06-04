@@ -298,13 +298,13 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public async Task<ApiResult<List<ColumnTree>>> TreeAsync(int type = 1)
+        public async Task<ApiResult<List<ColumnTree>>> TreeAsync(int type = 1, string site="")
         {
             var res = new ApiResult<List<ColumnTree>>() { statusCode = (int)ApiEnum.Error };
             try
             {
                 var list =await Db.Queryable<CmsColumn>()
-                    .Where(m => m.TypeID == type)
+                    .Where(m => m.TypeID == type && m.SiteGuid==site)
                     .Select(m => new ColumnTree()
                     {
                         Id = m.Id,

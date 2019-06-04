@@ -25,6 +25,7 @@ namespace FytSoa.Service.Implements
         public Page<CmsArticle> GetList(PageParm parm)
         {
             return Db.Queryable<CmsArticle>()
+                .WhereIF(!string.IsNullOrEmpty(parm.site),m=>m.SiteGuid==parm.site)
                 .WhereIF(parm.id!=0,m=>m.ColumnId==parm.id)
                 .WhereIF(!string.IsNullOrEmpty(parm.key),m=>m.Title.Contains(parm.key) || m.Tag.Contains(parm.key) || m.Summary.Contains(parm.key))
                 .WhereIF(parm.audit == 0,m=>m.Audit)
@@ -32,8 +33,9 @@ namespace FytSoa.Service.Implements
                 .WhereIF(parm.types == 1, m => !m.IsRecyc)
                 .WhereIF(parm.types == 0, m => m.IsRecyc)
                 .WhereIF(!string.IsNullOrEmpty(parm.where),parm.where)
-                .OrderBy(m=>m.Sort,SqlSugar.OrderByType.Desc)
-                .OrderBy(m=>m.EditDate,SqlSugar.OrderByType.Desc)
+                .OrderByIF(string.IsNullOrEmpty(parm.guid),m => m.Sort, OrderByType.Desc)
+                .OrderByIF(string.IsNullOrEmpty(parm.guid),m =>m.EditDate,OrderByType.Desc)
+                .OrderByIF(!string.IsNullOrEmpty(parm.guid) && parm.guid=="1",m => m.Hits, OrderByType.Desc)
                 .ToPage(parm.page, parm.limit);
         }
 

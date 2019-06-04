@@ -27,7 +27,8 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("page")]
         public async Task<ApiResult<Page<CmsMessage>>> GetPages(PageParm parm)
         {
-            return await _messageService.GetPagesAsync(parm);
+            parm.site = parm.site = SiteTool.CurrentSite?.Guid; ;
+            return await _messageService.GetPagesAsync(parm,m=>m.SiteGuid==parm.site,m=>m.AddDate,DbOrderEnum.Desc);
         }
 
         /// <summary>

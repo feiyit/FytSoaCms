@@ -1,5 +1,7 @@
 ﻿@page
 @using System.Security.Claims;
+@using FytSoa.Core.Model.Cms;
+@using FytSoa.Common;
 @model FytSoa.Web.Pages.FytAdmin.IndexModel
 @{
     ViewData["Title"] = "管理平台";
@@ -29,6 +31,14 @@
             </li>
             <li class="layui-nav-item">
                 <a href="javascript:void(0)" @@click="clearCache"><i class="layui-icon"></i>清除缓存</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:void(0)"><i class="layui-icon layui-icon-website"></i>@(FytSoa.Api.SiteTool.CurrentSite?.SiteName) <i class="layui-icon layui-icon-triangle-d"></i></a>
+                <dl class="layui-nav-child">
+                    <dd><a><i class="layui-icon layui-icon-fonts-code"></i>站点切换</a></dd>
+                    <hr />
+                    <dd v-for="(it,index) in siteList" @@click="qhSite(it)"><a href="javascript:void(0)">{{it.siteName}}</a></dd>
+                </dl>
             </li>
             <li class="layui-nav-item">
                 <a href="javascript:;">

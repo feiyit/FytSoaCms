@@ -27,6 +27,16 @@ namespace FytSoa.Api.Controllers.Cms
         }
 
         /// <summary>
+        /// 获得站点列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("list")]
+        public async Task<IActionResult> SaveList()
+        {
+            return Ok(await _siteService.GetListAsync(m => true, m => m.AddTime, DbOrderEnum.Asc));
+        }
+
+        /// <summary>
         /// 保存站点信息
         /// </summary>
         /// <param name="parm"></param>
@@ -34,7 +44,26 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("savesite")]
         public async Task<ApiResult<string>> SaveSite([FromBody]CmsSite parm)
         {
-            return await _siteService.UpdateAsync(parm);
+            if (!string.IsNullOrEmpty(parm.Guid))
+            {
+                return await _siteService.UpdateAsync(parm);
+            }
+            else
+            {
+                parm.Guid = Guid.NewGuid().ToString();
+                return await _siteService.AddAsync(parm);
+            }
+        }
+
+        /// <summary>
+        /// 删除站点
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        [HttpPost("del")]
+        public async Task<IActionResult> DelSite([FromBody]ParmString parm)
+        {
+            return Ok(await _siteService.DeleteAsync(m => m.Guid == parm.parm));
         }
 
         /// <summary>
@@ -43,15 +72,15 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost("backups")]
-        public async Task<ApiResult<string>> DbBackups()
+        public ApiResult<string> DbBackups()
         {
             var path = FileHelperCore.MapPath("/wwwroot/db_back/") + DateTime.Now.ToString("yyyyMMddHHmmss") + ".sql";
             var res = new ApiResult<string>() { };
-            var thread =new System.Threading.Thread(
+            var thread = new System.Threading.Thread(
                                 new System.Threading.ParameterizedThreadStart(DbBackup.BackupDb))
-                            {
-                                Priority = System.Threading.ThreadPriority.Highest
-                            };
+            {
+                Priority = System.Threading.ThreadPriority.Highest
+            };
             thread.Start(path);
 
             if (thread.ThreadState != System.Threading.ThreadState.Running)
