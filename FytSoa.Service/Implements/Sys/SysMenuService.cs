@@ -308,5 +308,110 @@ namespace FytSoa.Service.Implements
             }
             return res;
         }
+
+        /// <summary>
+        /// 排序
+        /// </summary>
+        /// <param name="p">父级</param>
+        /// <param name="i">当前id</param>
+        /// <param name="o">排序方式</param>
+        /// <returns></returns>
+        public async Task<ApiResult<string>> ColSort(string p, string i, int o)
+        {
+            var res = new ApiResult<string>() { statusCode = (int)ApiEnum.Error };
+            try
+            {
+                int a = 0, b = 0, c = 0;
+                var list = Db.Queryable<SysMenu>().Where(m => m.ParentGuid == p).OrderBy(m => m.Sort).ToList();
+                if (list.Count > 0)
+                {
+                    var index = 0;
+                    foreach (var item in list)
+                    {
+                        index++;
+                        if (index == 1)
+                        {
+                            if (item.Guid == i) //判断是否是头如果上升则不做处理
+                            {
+                                if (o == 1) //下降一位
+                                {
+                                    a = Convert.ToInt32(item.Sort);
+                                    b = Convert.ToInt32(list[index].Sort);
+                                    c = a;
+                                    a = b;
+                                    b = c;
+                                    item.Sort = a;
+                                    await Db.Updateable(item).ExecuteCommandAsync();
+                                    var nitem = list[index];
+                                    nitem.Sort = b;
+                                    await Db.Updateable(nitem).ExecuteCommandAsync();
+                                    break;
+                                }
+                            }
+                        }
+                        else if (index == list.Count)
+                        {
+                            if (item.Guid == i) //最后一条如果下降则不做处理
+                            {
+                                if (o == 0) //上升一位
+                                {
+                                    a = Convert.ToInt32(item.Sort);
+                                    b = Convert.ToInt32(list[index - 2].Sort);
+                                    c = a;
+                                    a = b;
+                                    b = c;
+                                    item.Sort = a;
+                                    await Db.Updateable(item).ExecuteCommandAsync();
+                                    var nitem = list[index - 2];
+                                    nitem.Sort = b;
+                                    await Db.Updateable(nitem).ExecuteCommandAsync();
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (item.Guid == i) //判断是否是头如果上升则不做处理
+                            {
+                                if (o == 1) //下降一位
+                                {
+                                    a = Convert.ToInt32(item.Sort);
+                                    b = Convert.ToInt32(list[index].Sort);
+                                    c = a;
+                                    a = b;
+                                    b = c;
+                                    item.Sort = a;
+                                    await Db.Updateable(item).ExecuteCommandAsync();
+                                    var nitem = list[index];
+                                    nitem.Sort = b;
+                                    await Db.Updateable(nitem).ExecuteCommandAsync();
+                                    break;
+                                }
+                                else
+                                {
+                                    a = Convert.ToInt32(item.Sort);
+                                    b = Convert.ToInt32(list[index - 2].Sort);
+                                    c = a;
+                                    a = b;
+                                    b = c;
+                                    item.Sort = a;
+                                    await Db.Updateable(item).ExecuteCommandAsync();
+                                    var nitem = list[index - 2];
+                                    nitem.Sort = b;
+                                    await Db.Updateable(nitem).ExecuteCommandAsync();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                res.statusCode = (int)ApiEnum.Status;
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+            }
+            return res;
+        }
     }
 }

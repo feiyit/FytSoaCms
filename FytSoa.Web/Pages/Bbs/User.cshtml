@@ -1,0 +1,275 @@
+﻿@page "{id?}"
+@using FytSoa.Common
+@model FytSoa.Web.Pages.Bbs.UserModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = Model.User.NickName;
+}
+<div class="col-md-8 main-content">
+    <div class="row select-category">
+        <div class="col-md-6 col-xs-6 current-category">
+            <span>
+                @Model.User.NickName
+            </span>
+        </div>
+
+        <div class="col-md-6 col-xs-6 user-controls">
+            <ul>
+                <li>
+                    <a href="#" class="inbox" id="inbox">
+                        联系
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- END SELECT-CATEGORY -->
+    <div class="row user-statistic highlight">
+        <div class="col-md-5 col-xs-12 user-info">
+            <span class="avatar-80">
+                <img src="@Model.User.HeadPic" class="avatar" alt="">
+            </span>
+            <ul>
+                <li itemprop="name" class="name">
+                    @Model.User.NickName
+                </li>
+                <li class="location">
+                    <i class="fa fa-calendar"></i>
+                    <span>
+                        @Model.User.LoginTime
+                    </span>
+                </li>
+                <li itemprop="email" class="email">
+                    <i class="fa fa-envelope"></i>
+                    @Model.User.Email
+                </li>
+            </ul>
+            <div itemprop="description" class="col-md-12 description">
+                @Model.User.Autograph
+            </div>
+        </div>
+        <div class="col-md-7 col-xs-12 user-post-count">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6 statistics">
+                    <div class="pull-top question-cat">
+                        <span title="46" class="user-badge" style="background-color:#@(Utils.GetAskGroupColor(Model.GroupName));">@Model.GroupName</span> <br>
+                        <span class="points-count">
+                            @Model.User.Point
+                        </span>
+                        <span class="star">
+                            <i class="fa fa-star"></i><br>点
+                        </span>
+                    </div>
+                    <div class="pull-bottom">
+                        <div class="col-md-6 col-sm-6 col-xs-6 num-question">
+                            <p class="questions-count">
+                                问题<br>
+                                <span>@Model.QuestionCount</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 num-answer">
+                            <p class="answers-count">
+                                答案<br>
+                                <span>@Model.AnswerCount</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END USER-STATISTIC -->
+
+    <div class="row question-filter">
+        <div class="col-md-12 sort-questions">
+            <ul>
+                <li>
+                    <a class="@(Model.Types==""?"active":"")" href="/bbs/user/@Model.User.Guid">
+                        问题
+                    </a>
+                </li>
+                <li>
+                    <a class="@(Model.Types!=""?"active":"")" href="/bbs/user/@Model.User.Guid?type=answer">
+                        答案
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- END QUESTIONS-FILTER -->
+
+    <div class="main-questions-list">
+        <ul id="main_questions_list">
+            @{
+                if (Model.Types == "")
+                {
+                    if (Model.QuestionList != null)
+                    {
+                        foreach (var item in Model.QuestionList.Items)
+                        {
+                            <li class="question-item">
+                                <div class="col-md-8 col-xs-8 q-left-content">
+                                    <div class="q-ltop-content">
+                                        <h2>
+                                            <a href="/bbs/question/@item.EnTitle" class="question-title">
+                                                @item.Title
+                                            </a>
+                                        </h2>
+                                    </div>
+                                    <div class="q-lbtm-content">
+                                        <div itemprop="text" class="question-excerpt">
+                                            @item.Summary
+                                        </div>
+                                        <div class="question-cat">
+                                            <ul class="question-tags">
+                                                @{
+                                                    var tags = Utils.StrToListString(item.Tags);
+                                                    foreach (var tag in tags)
+                                                    {
+                                                        <li>
+                                                            <a class="q-tag" href="/bbs/?key=@tag">
+                                                                @tag
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                            <span class="question-time">
+                                                发表于：@Utils.DateDiff(item.AddTime, DateTime.Now)
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end left content -->
+                                <div class="col-md-4 col-xs-4 q-right-content">
+                                    <ul class="question-statistic">
+                                        <li>
+                                            <span class="question-views">
+                                                @item.LookSum
+                                            </span>
+                                            次浏览
+                                        </li>
+                                        <li class="active">
+                                            <span itemprop="answerCount" class="question-answers">
+                                                @item.AnswerSum 个
+                                            </span>
+                                            答案
+                                        </li>
+                                        <li>
+                                            <span itemprop="upvoteCount" class="question-votes">
+                                                @item.Support
+                                            </span>
+                                            赞
+                                        </li>
+                                    </ul>
+                                    <div class="pumping">
+                                    </div>
+                                </div>
+                                <!-- end right content -->
+                                <div class="clearfix"></div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <div style="text-align: center; font-size: 15px; margin-top: 50px;">
+                            <img src="/dist_bbs/images/nodata.png" style="margin-bottom: 20px; width: 80px;" />
+                            <p>无内容</p>
+                        </div>
+                    }
+                }
+                else
+                {
+                    if (Model.AnswerList != null)
+                    {
+                        foreach (var item in Model.AnswerList.Items)
+                        {
+                        <li class="answer-item question-item post-137 answer type-answer status-publish hentry" data-id="137">
+                            <div class="col-md-8 q-left-content">
+                                <div class="q-ltop-content title-answer-style">
+                                    <a href="/bbs/question/@item.EnTitle" class="question-title">
+                                        @item.Title
+                                    </a>
+                                </div>
+                                <div class="q-lbtm-content">
+                                    <div class="question-cat">
+                                        <span class="author-avatar">
+                                            <img itemprop="image" src="@item.NickName" class="avatar" alt="">
+                                        </span>
+                                        <span title="46" class="user-badge" style="background-color:#@(Utils.GetAskGroupColor(item.GroupName));">@item.GroupName</span>
+                                        <span class="question-time">
+                                            @Utils.DateDiff(item.AddTime, DateTime.Now)
+                                        </span>
+                                        <ul class="question-tags">
+                                            @{
+                                                var tags = Utils.StrToListString(item.Tags);
+                                                foreach (var tag in tags)
+                                                {
+                                                    <li>
+                                                        <a class="q-tag" href="/bbs/?key=@tag">
+                                                            @tag
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="quote-answer-style">
+                                    <div>
+                                        <span class="icon-quote"></span>
+                                        @Html.Raw(item.Answer)
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end left content -->
+                            <div class="col-md-4 q-right-content">
+                                <ul class="question-statistic">
+                                    <li>
+                                        <span class="question-views">
+                                            @item.LookSum
+                                        </span>
+                                        次浏览
+                                    </li>
+                                    <li class="">
+                                        <span class="question-answers">
+                                            @item.AnswerSum 个
+                                        </span>
+                                        答案
+                                    </li>
+                                    <li>
+                                        <span class="question-votes">
+                                            @item.Support
+                                        </span>
+                                        赞
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end right content -->
+                            <div class="clearfix"></div>
+                        </li>
+                        }
+                    }
+                    else
+                    {
+                        <div style="text-align: center; font-size: 15px; margin-top: 50px;">
+                            <img src="/dist_bbs/images/nodata.png" style="margin-bottom: 20px; width: 80px;" />
+                            <p>无内容</p>
+                        </div>
+                    }
+                }
+            }
+        </ul>
+    </div>
+    <!-- END MAIN-QUESTIONS-LIST -->
+    <div class="row paginations home">
+        <div class="col-md-12">
+            <ul class="page-numbers">
+                @Html.Raw(PageHelper.HtmlsBBs(Model.pageIndex, 5, Model.QuestionList?.TotalPages ?? 0, "/bbs/"))
+            </ul>
+        </div>
+    </div>
+    <!-- END MAIN-PAGINATIONS -->
+</div>

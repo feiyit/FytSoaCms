@@ -25,7 +25,6 @@ namespace FytSoa.Service.Implements
         public Page<CmsArticle> GetList(PageParm parm)
         {
             return Db.Queryable<CmsArticle>()
-                .WhereIF(!string.IsNullOrEmpty(parm.site),m=>m.SiteGuid==parm.site)
                 .WhereIF(parm.id!=0,m=>m.ColumnId==parm.id)
                 .WhereIF(!string.IsNullOrEmpty(parm.key),m=>m.Title.Contains(parm.key) || m.Tag.Contains(parm.key) || m.Summary.Contains(parm.key))
                 .WhereIF(parm.audit == 0,m=>m.Audit)
@@ -33,9 +32,9 @@ namespace FytSoa.Service.Implements
                 .WhereIF(parm.types == 1, m => !m.IsRecyc)
                 .WhereIF(parm.types == 0, m => m.IsRecyc)
                 .WhereIF(!string.IsNullOrEmpty(parm.where),parm.where)
-                .OrderByIF(string.IsNullOrEmpty(parm.guid),m => m.Sort, OrderByType.Desc)
-                .OrderByIF(string.IsNullOrEmpty(parm.guid),m =>m.EditDate,OrderByType.Desc)
-                .OrderByIF(!string.IsNullOrEmpty(parm.guid) && parm.guid=="1",m => m.Hits, OrderByType.Desc)
+                .WhereIF(!string.IsNullOrEmpty(parm.site), m=>m.SiteGuid==parm.site)
+                .OrderBy(m=>m.Sort,SqlSugar.OrderByType.Desc)
+                .OrderBy(m=>m.EditDate,SqlSugar.OrderByType.Desc)
                 .ToPage(parm.page, parm.limit);
         }
 
@@ -53,11 +52,11 @@ namespace FytSoa.Service.Implements
                 var dbres = 0;
                 if (type == 0)
                 {
-                    dbres=await Db.Updateable<CmsArticle>().UpdateColumns(m => m.IsRecyc == true).Where(m => list.Contains(m.Id)).ExecuteCommandAsync();
+                    dbres=await Db.Updateable<CmsArticle>().SetColumns(m => m.IsRecyc == true).Where(m => list.Contains(m.Id)).ExecuteCommandAsync();
                 }
                 else
                 {
-                    dbres =await Db.Updateable<CmsArticle>().UpdateColumns(m => m.IsRecyc == false).Where(m => list.Contains(m.Id)).ExecuteCommandAsync();
+                    dbres =await Db.Updateable<CmsArticle>().SetColumns(m => m.IsRecyc == false).Where(m => list.Contains(m.Id)).ExecuteCommandAsync();
                 }
                 if (dbres==0)
                 {
@@ -122,7 +121,7 @@ namespace FytSoa.Service.Implements
                 else
                 {
                     //转移
-                   await Db.Updateable<CmsArticle>().UpdateColumns(m=>m.ColumnId==columnid).Where(m=>list.Contains(m.Id)).ExecuteCommandAsync();
+                   await Db.Updateable<CmsArticle>().SetColumns(m=>m.ColumnId==columnid).Where(m=>list.Contains(m.Id)).ExecuteCommandAsync();
                 }
                 res.statusCode = (int)ApiEnum.Status;
             }

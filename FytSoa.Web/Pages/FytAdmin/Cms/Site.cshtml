@@ -84,7 +84,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">站点Logo</label>
                                 <div class="layui-input-block fyt-upfile">
-                                    <input type="text" id="SiteLogo" name="SiteLogo" v-model="m.siteLogo" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入站点域名" class="layui-input">
+                                    <input type="text" id="SiteLogo" name="SiteLogo" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入站点域名" class="layui-input">
                                     <button type="button" class="layui-btn fyt-cloud" data-text="SiteLogo" data-type="sign">选择文件</button>
                                 </div>
                             </div>
@@ -173,14 +173,14 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">微信二维码</label>
                                 <div class="layui-input-block fyt-upfile">
-                                    <input type="text" id="WeiXin" name="WeiXin" v-model="m.weiXin" autocomplete="off" placeholder="（选填）微信二维码" class="layui-input">
+                                    <input type="text" id="WeiXin" name="WeiXin" autocomplete="off" placeholder="（选填）微信二维码" class="layui-input">
                                     <button type="button" class="layui-btn fyt-cloud" data-text="WeiXin" data-type="sign">选择文件</button>
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">微博二维码</label>
                                 <div class="layui-input-block fyt-upfile">
-                                    <input type="text" id="WeiBo" name="WeiBo" v-model="m.weiBo" autocomplete="off" placeholder="（选填）微博二维码/连接" class="layui-input">
+                                    <input type="text" id="WeiBo" name="WeiBo" autocomplete="off" placeholder="（选填）微博二维码/连接" class="layui-input">
                                     <button type="button" class="layui-btn fyt-cloud" data-text="WeiBo" data-type="sign">选择文件</button>
                                 </div>
                             </div>
@@ -206,6 +206,9 @@
             methods: {
                 selSite: function (m) {
                     this.m = m;
+                    $('#SiteLogo').val(m.siteLogo);
+                    $('#WeiBo').val(m.weiBo);
+                    $('#WeiXin').val(m.weiXin);
                     if (m.status) {
                         $('input:checkbox').prop("checked",true);
                     }
@@ -220,11 +223,11 @@
                         os.warning('站点必须保留一个！~');
                         return;
                     }
-                    layer.confirm('确定要删除改站点吗？', function (index) {
+                    layer.confirm('确定要删除该站点吗？', function (index) {
                         layer.close(index);
                         os.ajax('api/cmssite/del/', { parm: m.guid }, function (res) {
                             if (res.statusCode === 200) {
-                                that.m = {};
+                                that.clearSite();
                                 fun.init();
                                 os.success('删除成功！');
                             } else {
@@ -234,7 +237,13 @@
                     });
                 },
                 addSite: function () {
+                    this.clearSite();
+                },
+                clearSite: function () {
                     this.m = {};
+                    $('#SiteLogo').val('');
+                    $('#WeiBo').val('');
+                    $('#WeiXin').val('');
                 }
             }
         });
@@ -259,9 +268,13 @@
             fun.init();
             //监听提交
             form.on('submit(submit)', function (data) {
-                var urls = "api/cmssite/savesite";
-                data.field.Status = data.field.Status === 'on' ? true : false;
-                os.ajax(urls, data.field, function (res) {
+                var urls = "api/cmssite/savesite";                
+                
+                vm.m.status = data.field.Status === 'on' ? true : false;
+                vm.m.siteLogo = $('#SiteLogo').val();
+                vm.m.weiBo = $('#WeiBo').val();
+                vm.m.weiXin = $('#WeiXin').val();
+                os.ajax(urls, vm.m, function (res) {
                     if (res.statusCode == 200) {
                         fun.init();
                         os.success('保存成功~');

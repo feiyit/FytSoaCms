@@ -1,0 +1,85 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!-- MODAL LOGIN / REGISTER -->
+<div class="modal fade modal-submit-questions" id="login_register" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                <h4 class="modal-title modal-title-sign-in" id="myModalLabel">登录（Sign In）</h4>
+            </div>
+            <div class="modal-body">
+                <form id="signin_form" class="form_modal_style">
+                    <label for="username">手机号码/账号/邮箱（Username or Email）</label>
+                    <input type="text" class="email_user" name="username" id="username" />
+                    <label for="password">密码（Password）</label>
+                    <input type="password" class="password_user" id="password" name="password">
+                    <div class="clearfix"></div>
+                    <input type="submit" value="登录" class="btn-submit">
+                    <a href="javascript:void(0)" class="link_forgot_pass">忘记密码？</a>
+                    <div class="submit-block">
+                        <a href="javascript:void(0)" class="link_sign_up">注册</a><span>如果没有账号，请点击注册</span>
+                    </div>
+                </form>
+                <form id="signup_form" class="form_modal_style">
+                    <label for="username">用户名（Username）</label>
+                    <input type="text" class="name_user" name="username" />
+
+                    <label for="email">手机号码（Phone）</label>
+                    <input type="number" class="email_user" name="phone" maxlength="11" />
+
+                    <label for="email">邮箱（Email）</label>
+                    <input type="text" class="phone" name="email" />
+
+                    <label for="password1">密码（Password）</label>
+                    <input type="password" class="password_user_signup" id="password1" name="password" />
+
+                    <label for="re_password">确定密码（Retype Password）</label>
+                    <input type="password" class="repeat_password_user_signup" id="re_password" name="re_password" />
+                    <div class="clearfix"></div>
+                    <div class="gg-captcha"></div>
+                    <input type="submit" value="注册" class="btn-submit">
+                    <a href="javascript:void(0)" class="link_sign_in">登录</a>
+                    <div class="clearfix"></div>
+                    <p class="policy-sign-up">
+                        单击“注册”表示您已阅读并同意<a target="_blank" href="">隐私政策</a> 和 <a target="_blank" href="">服务条款.</a>
+                    </p>
+                </form>
+                <form id="forgotpass_form" class="form_modal_style collapse">
+                    <label>请输入您的邮箱（Enter your email here）</label>
+                    <input type="text" class="name_user" name="email" id="email" />
+                    <input type="submit" value="发送" class="btn-submit">
+                    <a href="javascript:void(0)" class="return_link_sign_in">登录</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL LOGIN / REGISTER -->
+<!-- MODAL RESET PASSWORD -->
+<div class="modal fade modal-submit-questions" id="reset_password" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                <h4 class="modal-title modal-title-sign-in" id="myModalLabel">Reset Password</h4>
+            </div>
+            <div class="modal-body">
+
+                <form id="resetpass_form" class="form_modal_style">
+                    <input type="hidden" id="user_login" name="user_login" value="" />
+                    <input type="hidden" id="user_key" name="user_key" value="">
+                    <label>Enter your new password here</label>
+                    <input type="password" class="name_user" name="new_password" id="new_password" />
+                    <input type="password" class="name_user" name="re_new_password" id="re_new_password" />
+                    <input type="submit" name="submit" value="Reset" class="btn-submit">
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL RESET PASSWORD -->

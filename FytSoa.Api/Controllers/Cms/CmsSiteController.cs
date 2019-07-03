@@ -44,7 +44,7 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("savesite")]
         public async Task<ApiResult<string>> SaveSite([FromBody]CmsSite parm)
         {
-            if (!string.IsNullOrEmpty(parm.Guid))
+            if (!string.IsNullOrEmpty(parm?.Guid))
             {
                 return await _siteService.UpdateAsync(parm);
             }

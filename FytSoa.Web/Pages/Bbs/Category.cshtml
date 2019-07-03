@@ -1,0 +1,60 @@
+﻿@page
+@model FytSoa.Web.Pages.Bbs.CategoryModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "分类";
+}
+<div class="col-md-8 main-content">
+    <div class="row select-category">
+        <div class="col-md-6 col-xs-6 current-category">
+            <span>分类</span>
+        </div>
+        <div class="col-md-6 col-xs-6 select-categories input-find-tags">
+            <form class="form-input-search" autocomplete="off" method="GET" action="/bbs/">
+                <input autocomplete="off" type="text" name="key" value="" class="search-users" placeholder="Find Categories" />
+                <i class="fa fa-chevron-circle-right"></i>
+            </form>
+        </div>
+    </div>
+    <!-- END SELECT-CATEGORY -->
+    <div class="row question-filter">
+        <div class="col-md-6 col-xs-6 sort-questions">
+            <ul>
+                <li>
+                    <a class="active" href="/bbs/category/">分类</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- END QUESTIONS-FILTER -->
+    <div class="main-tag-list">
+        <div class="tags-list row ">
+            @{
+                if (Model.CategoryList != null)
+                {
+                    var zmList = Model.CategoryList.GroupBy(m => m.FirstLetter).OrderBy(m => m.Key).Select(m => m.Key).ToList();
+                    foreach (var item in zmList)
+                    {
+                        <div class="col-md-12">
+                            <span class="character">@item</span>
+                        </div>
+                        <div class="clearfix"></div>
+                        var list = Model.CategoryList.Where(m => m.FirstLetter == item).ToList();
+                        foreach (var row in list)
+                        {
+                            <div class="tag-item cat-item col-md-2 col-xs-2">
+                                <a href="/bbs/?category=@row.EnClassName" class="q-tag">@row.ClassName</a>
+                            </div>
+                        }
+                        <div class="col-md-12">
+                            <div class="clearfix"></div>
+                            <div class="grey-line"></div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- END MAIN-TAGS-LIST -->
+</div>

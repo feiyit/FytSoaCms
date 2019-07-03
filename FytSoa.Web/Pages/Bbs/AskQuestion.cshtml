@@ -1,0 +1,60 @@
+﻿@page
+@model FytSoa.Web.Pages.Bbs.AskQuestionModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "发表问题";
+}
+<div class="col-md-8 main-content">
+    <div class="row select-category">
+        <div class="col-md-6 col-xs-6 current-category"><span itemprop="name">发表问题</span></div>
+    </div>
+    <form id="submit_poll" class="form_submit_poll modal-submit-questions" style="padding: 20px;">
+        <div class="input-poll-title">
+            <input type="text" class="submit-input" id="question_title" name="title" maxlength="150" autocomplete="off" placeholder="请输入标题（Your Question）" />
+            <span id="charNumPoll">150</span>
+        </div>
+        <div class="select-categories">
+            <select name="category" class="categories-select chosen-select">
+                <option value="">请选择分类（Select a Category）</option>
+                @{
+                    if (Model.classifyList.Any())
+                    {
+                        foreach (var item in Model.classifyList)
+                        {
+                            <option value='@item.Guid'>@item.ClassName</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+        <div class="wp-editor-container">
+            <textarea name="contents" id="insert_poll"></textarea>
+        </div>
+        <div id="question-tags-container">
+            <input data-provide="typeahead" type="text" class="submit-input tags-input" id="question_tags" name="" autocomplete="off" placeholder="标签，最多5个（Tag (max 5 tags)）" />
+            <span class="tip-add-tag">添加</span>
+            <ul class="typeahead dropdown-menu"></ul>
+            <ul class="tags-list" id="poll_tag_list"></ul>
+        </div>
+        <button id="btn_submit_poll" class="btn-submit-question">
+            提交问题
+        </button>
+        <p class="term-texts">
+            发表问题表示您已阅读并同意<a target="_blank" href="">隐私政策</a> 和 <a target="_blank" href="">服务条款.</a>
+        </p>
+    </form>
+</div>
+<script src="/themes/tinymce/tinymce.min.js"></script>
+<script src="/themes/tinymce/langs/zh_CN.js"></script>
+<script>
+    tinymce.init({
+        selector: '#insert_poll',
+        height: 300,
+        plugins: 'link lists image code table colorpicker textcolor wordcount contextmenu codesample ',
+        toolbar:
+            'bold italic underline codesample  | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | undo redo | link unlink image code | removeformat',
+        branding: false,
+        menubar: false
+    });
+    var asktags=@Html.Raw(Model.TagStr);
+</script>

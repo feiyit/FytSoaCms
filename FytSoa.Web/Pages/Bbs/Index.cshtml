@@ -1,0 +1,204 @@
+﻿@page
+@using FytSoa.Common
+@model FytSoa.Web.Pages.Bbs.IndexModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "社区";
+}
+<div class="col-md-8 main-content">
+    <div class="row select-category">
+        <div itemprop="mainEntityOfPage" class="col-md-6 col-xs-6 current-category">
+            <span itemprop="name">所有话题</span>
+        </div>
+        <div class="col-md-6 col-xs-6">
+            <div class="select-categories-wrapper">
+                <div class="outer-filter-wrapper">
+                    <div class="select-categories-filter">
+                        <span class="label-filter">排序</span>
+                        <div class="select-categories">
+                            <select name="cat" id="move_to_category" class="select-grey-bg chosen-select">
+                                <option value="">选择分类</option>
+                                @{
+                                    if (Model.classifyList.Any())
+                                    {
+                                        foreach (var item in Model.classifyList)
+                                        {
+                                            if (Model.Classify == item.EnClassName)
+                                            {
+                                                <option value='@item.EnClassName' selected="selected">@item.ClassName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value='@item.EnClassName'>@item.ClassName</option>
+                                            }
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-by-select">
+                        <select class="filter-select-type chosen-select" name="" id="" style="display: none;">
+                            <option value="/?qtype=all">All</option>
+                            <option value="/?qtype=poll">Poll</option>
+                            <option value="/?qtype=normal">Normal</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row question-filter" id="question_filter">
+        <div class="col-md-6 col-xs-12 sort-questions">
+            <ul>
+                <li>
+                    <a class="@(string.IsNullOrEmpty(Model.Types)?"active":"")" href="/bbs/">最新</a>
+                </li>
+                <li>
+                    <a class="@(Model.Types=="red"?"active":"")" href="/bbs/?where=red">热门</a>
+                </li>
+                <li>
+                    <a class="@(Model.Types=="wjj"?"active":"")" href="/bbs/?where=wjj">未解决</a>
+                </li>
+                <li>
+                    <a class="@(Model.Types=="whd"?"active":"")" href="/bbs/?where=whd">未回答</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6 col-xs-6 question_total_page">
+            <div class="number-of-questions-wrapper">
+                <span class="number-of-questions-text">问题总页数: </span>
+                <div class="number-of-questions">
+                    <select id="filter-numbers" class="select-grey-bg chosen-select" style="display: none;">
+                        @{
+                            foreach (var item in Model.HtmlLimit)
+                            {
+                                if (item == Model.Limit)
+                                {
+                                    <option value="@item" selected="selected">@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-questions-list">
+        <ul id="main_questions_list">
+            @{
+                if (Model.Ask != null)
+                {
+                    foreach (var item in Model.Ask.Items)
+                    {
+                        <li class="question-item">
+                            <div class="col-md-8 col-xs-8 q-left-content">
+                                <div class="q-ltop-content">
+                                    <h2>
+                                        <span class="mask-poll @(!item.IsRed?"hidden":"")">热门</span>
+                                        <a href="/bbs/question/@item.EnTitle" class="question-title">@item.Title</a>
+                                    </h2>
+                                </div>
+                                <div class="q-lbtm-content">
+                                    <div class="question-excerpt">
+                                        @item.Summary
+                                    </div>
+                                    <div class="question-cat">
+                                        <ul class="question-tags">
+                                            @{
+                                                var tags = Utils.StrToListString(item.Tags);
+                                                foreach (var tag in tags)
+                                                {
+                                                    <li>
+                                                        <a class="q-tag" href="/bbs/?key=@tag">
+                                                            @tag
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                        <a href="/bbs/user/@item.UserGuid">
+                                            <span class="author-avatar">
+                                                <img src="@item.HeadPic" class="avatar" alt="">
+                                            </span>
+                                            <span class="author-name">@item.NickName</span>
+                                        </a>
+                                        <span class="user-badge" style="background-color: #@(Utils.GetAskGroupColor(item.GroupName));">@item.GroupName</span>
+                                        <span class="question-time">
+                                            @Utils.DateDiff(item.AddTime, DateTime.Now)
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end left content -->
+                            <div class="col-md-4 col-xs-4 q-right-content">
+                                <ul class="question-statistic">
+                                    <li>
+                                        <span class="question-views">
+                                            @item.LookSum
+                                        </span> 查看
+                                    </li>
+                                    <li class="active">
+                                        <span itemprop="answerCount" class="question-answers">
+                                            @item.AnswerSum
+                                        </span> 答案
+                                    </li>
+                                    <li>
+                                        <span itemprop="upvoteCount" class="question-votes">
+                                            @item.Support
+                                        </span> 支持
+                                    </li>
+                                </ul>
+                                <div class="pumping">
+                                </div>
+                            </div>
+                            <!-- end right content -->
+                            <div class="clearfix"></div>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <div style="text-align: center; font-size: 15px; margin-top: 50px;">
+                        <img src="/dist_bbs/images/nodata.png" style="margin-bottom: 20px; width: 80px;" />
+                        <p>无内容</p>
+                    </div>
+                }
+            }
+        </ul>
+    </div>
+    <div class="row paginations home">
+        <div class="col-md-12">
+            <ul class="page-numbers">
+                @Html.Raw(PageHelper.HtmlsBBs(Model.pageIndex, 5, Model.Ask?.TotalPages ?? 0, "/bbs/"))
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- main end -->
+@section Scripts{
+    <script>
+        $(function () {
+            $("#move_to_category").chosen().change(function () {
+                if ($("#move_to_category").val()) {
+                    window.location.href = "/bbs/?category=" + $("#move_to_category").val();
+                } else {
+                    window.location.href = "/bbs/";
+                }
+            });
+            $("#filter-numbers").chosen().change(function () {
+                if ($("#filter-numbers").val()) {
+                    window.location.href = "/bbs/?limit=" + $("#filter-numbers").val();
+                } else {
+                    window.location.href = "/bbs/";
+                }
+            });
+            
+        })
+    </script>
+}

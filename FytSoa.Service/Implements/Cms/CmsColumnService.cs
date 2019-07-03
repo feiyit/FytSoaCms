@@ -175,7 +175,7 @@ namespace FytSoa.Service.Implements
                                     a = b;
                                     b = c;
                                     item.Sort = a;
-                                    CmsColumnDb.Update(item);
+                                    //CmsColumnDb.Update(item);
                                     await Db.Updateable(item).ExecuteCommandAsync();
                                     var nitem = list[index];
                                     nitem.Sort = b;
@@ -277,6 +277,7 @@ namespace FytSoa.Service.Implements
             }
             return result;
         }
+
         /// <summary>
         /// 递归模块列表
         /// </summary>
@@ -364,7 +365,6 @@ namespace FytSoa.Service.Implements
             }
             return nodeList;
         }
-
 
         /// <summary>
         /// 模型去重，非常重要

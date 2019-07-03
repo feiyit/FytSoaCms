@@ -133,6 +133,16 @@ namespace FytSoa.Api.Controllers
         }
 
         /// <summary>
+        /// 排序
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("sort")]
+        public async Task<ApiResult<string>> ColStor([FromBody]ParmStringSort obj)
+        {
+            return await _sysMenuService.ColSort(obj.p, obj.i, obj.o);
+        }
+
+        /// <summary>
         /// 修改
         /// </summary>
         /// <returns></returns>

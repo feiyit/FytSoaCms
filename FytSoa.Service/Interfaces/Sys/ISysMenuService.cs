@@ -48,5 +48,14 @@ namespace FytSoa.Service.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<ApiResult<string>> ModifyAsync(SysMenu parm, List<string> btnfun);
+
+        /// <summary>
+        /// 排序
+        /// </summary>
+        /// <param name="p">父级</param>
+        /// <param name="i">当前id</param>
+        /// <param name="o">排序方式</param>
+        /// <returns></returns>
+        Task<ApiResult<string>> ColSort(string p, string i, int o);
     }
 }

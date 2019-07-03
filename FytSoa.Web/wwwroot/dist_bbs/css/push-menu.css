@@ -1,0 +1,239 @@
+/* ---------------------------------------- */
+
+
+/* P U S H   M E N U    S T Y L E       	*/
+
+
+/* ---------------------------------------- */
+
+
+/*custom */
+
+.menu-res {
+    background: #19202e;
+    padding: 10px;
+}
+
+.menu-res li {
+    line-height: 35px;
+    text-align: left;
+}
+
+.menu-res li i {
+    float: right;
+    position: relative;
+    top: 10px;
+    font-size: 15px;
+}
+
+.menu-res li i.rotate {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+}
+
+.menu-res li>.sub-menu {
+    display: none;
+    padding-left: 20px;
+}
+
+.menu-res li a {
+    color: #78829d;
+    font-size: 14px;
+}
+
+.menu-res li a:hover {
+    color: #fff;
+}
+
+.buttonset #showTop {
+    display: none;
+}
+
+
+/* General styles for all menus */
+
+.cbp-spmenu {
+    position: fixed;
+}
+
+.buttonset {
+    display: none;
+}
+
+.buttonset #showLeftPush,
+.buttonset #showRightPush,
+.buttonset #showTop {
+    width: 35px;
+    height: 35px;
+    background: #3498db;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    text-align: center;
+    display: inline-block;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    margin: 0 5px;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+}
+
+.buttonset #showLeftPush i,
+.buttonset #showRightPush i,
+.buttonset #showTop i {
+    color: #fff;
+    font-size: 16px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.buttonset #showRightPush {
+    background: #19bb9b;
+}
+
+
+/* Orientation-dependent styles for the content of the menu */
+
+.cbp-spmenu-vertical {
+    width: 240px;
+    height: 100%;
+    top: 0;
+    z-index: 1100;
+}
+
+body.admin-bar .cbp-spmenu-vertical {
+    top: 34px;
+}
+
+.cbp-spmenu-horizontal {
+    width: 100%;
+    left: 0;
+    z-index: 1100;
+    overflow: hidden;
+}
+
+
+/* Vertical menu that slides from the left or right */
+
+.cbp-spmenu-left {
+    left: -240px;
+}
+
+.cbp-spmenu-right {
+    right: -240px;
+    background: #eef1f7 !important;
+}
+
+.cbp-spmenu-left.cbp-spmenu-open {
+    left: 0px;
+}
+
+.cbp-spmenu-right.cbp-spmenu-open {
+    right: 0px;
+}
+
+
+/* Horizontal menu that slides from the top or bottom */
+
+.cbp-spmenu-top {
+    top: -400px;
+}
+
+.cbp-spmenu-bottom {
+    bottom: -150px;
+}
+
+.cbp-spmenu-top.cbp-spmenu-open {
+    top: 130px;
+}
+
+.cbp-spmenu-bottom.cbp-spmenu-open {
+    bottom: 0px;
+}
+
+
+/* Push classes applied to the body */
+
+.cbp-spmenu-push {
+    overflow-x: hidden;
+    position: relative;
+    left: 0;
+}
+
+.cbp-spmenu-push-toright {
+    left: 240px;
+}
+
+.cbp-spmenu-push-toleft {
+    left: -240px;
+}
+
+
+/* Transitions */
+
+.cbp-spmenu,
+.cbp-spmenu-push {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+section.buttonset button.disabled {
+    background: #aaa !important;
+    pointer-events: none;
+}
+
+
+/* Example media queries */
+
+@media screen and (max-width: 980px) {
+    .admin-bar .cbp-spmenu-top.cbp-spmenu-open {
+        top: 112px;
+    }
+    .cbp-spmenu-top.cbp-spmenu-open {
+        top: 80px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .admin-bar .cbp-spmenu-top.cbp-spmenu-open {
+        top: 126px;
+    }
+    .cbp-spmenu-top.cbp-spmenu-open {
+        top: 80px;
+    }
+}
+
+@media screen and (max-width: 55.1875em) {
+    .cbp-spmenu-horizontal {
+        font-size: 75%;
+    }
+    .cbp-spmenu-top {
+        /*top: -110px;*/
+    }
+    .cbp-spmenu-bottom {
+        bottom: -110px;
+    }
+}
+
+@media screen and (max-height: 26.375em) {
+    .cbp-spmenu-vertical {
+        font-size: 90%;
+        width: 190px;
+    }
+    .cbp-spmenu-left,
+    .cbp-spmenu-push-toleft {
+        left: -190px;
+    }
+    .cbp-spmenu-right {
+        right: -190px;
+    }
+    .cbp-spmenu-push-toright {
+        left: 190px;
+    }
+}

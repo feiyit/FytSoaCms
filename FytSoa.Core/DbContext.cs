@@ -58,6 +58,7 @@ namespace FytSoa.Core
         public SimpleClient<SysPermissions> SysPermissionsDb => new SimpleClient<SysPermissions>(Db);
         public SimpleClient<SysRole> SysRoleDb => new SimpleClient<SysRole>(Db);
         public SimpleClient<SysAdmin> SysAdminDb => new SimpleClient<SysAdmin>(Db);
+        public SimpleClient<SysBtnFun> SysBtnFunDb => new SimpleClient<SysBtnFun>(Db);
         public SimpleClient<SysAppSetting> SysAppSettingDb => new SimpleClient<SysAppSetting>(Db);
 
     }

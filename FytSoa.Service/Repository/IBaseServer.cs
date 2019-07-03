@@ -120,6 +120,13 @@ namespace FytSoa.Service.Interfaces
         Task<ApiResult<string>> DeleteAsync(Expression<Func<T, bool>> where, bool Async = true);
 
         #endregion
-  
+
+        #region 查询Count
+        Task<ApiResult<ResultCount>> CountAsync(Expression<Func<T, bool>> where, bool Async = true);
+        #endregion
+
+        #region 是否存在
+        Task<ApiResult<ResultAny>> IsExistAsync(Expression<Func<T, bool>> where, bool Async = true);
+        #endregion
     }
 }

@@ -1,0 +1,224 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Member.MemberModifyModel
+@{
+    ViewData["Title"] = "添加/修改用户";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<style>
+    .help-block {
+        color: #999;
+        font-size: 12px;
+        display: block;
+        padding: 5px 0;
+    }
+
+    .form-cus {
+        width: 70%;
+        float:right;
+    }
+
+    .layui-form-item .layui-input-inline {
+        width: 235px;
+    }
+
+    .cur-image {
+        width: 24%;
+        position: absolute;
+        left: 25px;
+        top: 0px;
+        margin-bottom:0px;
+    }
+    
+
+        .cur-image .add-photo.default {
+            height: 170px;
+        }
+
+        .cur-image .select-newimg {
+            padding-top: 55px;
+        }
+
+        .cur-image .add-photo img {
+            height: 170px;
+        }
+    .form-cus .layui-form-item.cell{display:table;}
+    .form-cus .layui-form-item.cell .layui-inline{display:table-cell;}
+    .widget-footer {
+        border: 1px solid #f6f9fd !important;
+        background-color: #f6f9fd;
+        text-align: center;
+        color: rgb(163, 175, 183);
+    }
+    .widget-footer span{display:block; line-height:25px; color:#333;}
+</style>
+<div id="app">
+    <form class="layui-form form-cus" action="" v-if="m">
+        <div class="layui-form-item">
+            <label class="layui-form-label">会员组</label>
+            <div class="layui-input-block">
+                <select name="grade" id="grade">
+                    <option v-for="it in group" :value="it.guid">{{it.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item cell">
+            <div class="layui-inline">
+                <label class="layui-form-label">登录账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" v-model="m.loginName" name="loginName" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">登录密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" v-model="m.loginPwd" name="loginPwd" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">昵称</label>
+            <div class="layui-input-block">
+                <input type="text" v-model="m.nickName" name="nickName" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">手机号码</label>
+                <div class="layui-input-inline">
+                    <input type="text" v-model="m.mobile" name="mobile" maxlength="20" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" v-model="m.email" name="email" maxlength="50" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="status" id="status" lay-skin="switch" checked="checked" lay-text="启用|禁用">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">签名</label>
+            <div class="layui-input-block">
+                <textarea name="autograph" v-model="m.autograph" class="layui-textarea" style="min-height:50px;"></textarea>
+            </div>
+        </div>
+        <ul class="addpic-list cur-image clearfix">
+            <li>
+                <div class="add-photo default">
+                    <input class="imgv" v-model="m.headPic" name="headPic" id="headPic" type="hidden">
+                    <div class="select-newimg fyt-cloud " :class="m.headPic?'layui-hide':''" data-text="headPic" data-img="imgShow" data-type="form">
+                        <i class="icon-addphote"></i>
+                        <span>选择组图片</span>
+                    </div>
+                    <div class="add-photo-wall" :class="!m.headPic?'layui-hide':''">
+                        <img id="imgShow" :src="m.headPic">
+                        <div class="phote-edit">
+                            <a class="photo-tool fyt-cloud" data-text="headPic" data-img="imgShow" data-type="form" href="javascript:void(0)"><i class="layui-icon layui-icon-edit"></i>更换</a>
+                            <a class="photo-tool last" href="javascript:void(0)" onclick="oc.deleteFile()"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                        </div>
+                        <div class="cover">组图片</div>
+                    </div>
+                </div>
+            </li>
+            <li class="widget-footer layui-clear">上次登录：{{m.loginTime}}</li>
+            <li class="widget-footer layui-clear">
+                <div class="layui-col-xs4"><span>￥{{m.money}}</span>金额</div>
+                <div class="layui-col-xs4"><span>{{m.point}}</span>积分</div>
+                <div class="layui-col-xs4"><span>{{m.loginSum}}次</span>登陆</div>
+            </li>
+        </ul>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+        var oc,vm = new Vue({
+            el: '#app',
+            data: {
+                m: {},
+                group: []
+            },
+            created: function () {
+               
+            },
+            methods: {
+
+            }
+        });
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form'], function () {
+            var form = layui.form, $ = layui.jquery, os = layui.common;
+            os.cloudFile();
+            var index = parent.layer.getFrameIndex(window.name);
+            oc = {
+                init: function () {
+                    os.ajax('api/member/model', { parm: os.getUrlParam('guid') }, function (res) {
+                        console.log(res);
+                        if (res.statusCode === 200) {
+                            vm.m = res.data.member;
+                            vm.group = res.data.group;
+                            vm.$nextTick(function () {
+                                if (vm.m.guid) {
+                                    $('#grade').val(vm.m.grade);
+                                    $("#status").prop("checked", vm.m.status)
+                                }
+                                form.render();
+                            });
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
+                },
+                fileSave(v) {
+                    $(".select-newimg").addClass('layui-hide');
+                    $(".add-photo-wall").removeClass('layui-hide');
+                    $('#headPic').val(v);
+                    $('#imgShow').attr('src', v);
+                },
+                deleteFile() {
+                    $(".select-newimg").removeClass('layui-hide');
+                    $(".add-photo-wall").addClass('layui-hide');
+                    $('#headPic').val('');
+                    $('#imgShow').attr('src', v);
+                }
+
+            };
+            oc.init();
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                var urls = "api/member/add";
+                if (vm.m.guid) {
+                    urls = "api/member/edit";
+                }
+                vm.m.grade = data.field.grade;
+                vm.m.headPic = data.field.headPic;
+                vm.m.status = data.field.status === 'on' ? true : false;
+                os.ajax(urls, vm.m, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode == 200) {
+                        parent.layer.close(index);
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+        });
+    </script>
+}

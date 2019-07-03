@@ -1,0 +1,237 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.BBS.QuestionsModel
+@{
+    ViewData["Title"] = "社区-问答管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <style>
+        .layui-badge {
+            border-radius: 15px;
+            padding: 0px 15px;
+            height: 22px;
+            line-height: 22px;
+        }
+    </style>
+    <div class="list-wall">
+        <div class="layui-form list-search" style="margin-top: 10px;">
+            <div class="layui-inline">
+                <input class="layui-input" id="key" autocomplete="off" placeholder="请输入关键字查询">
+            </div>
+            <div class="layui-inline lay-time-icon">
+
+            </div>
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolSearch"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+        </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolAdd"><i class="layui-icon"></i> 新增</button>
+            <button type="button" class="layui-btn layui-btn-sm" lay-event="toolDel"><i class="layui-icon"></i> 删除</button>
+        </div>
+    </script>
+    <script type="text/html" id="switchTpl">
+        <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="是|否" lay-filter="isRed" {{ d.isRed==1?'checked':''}}>
+    </script>
+    <script type="text/html" id="auditTpl">
+        <input type="checkbox" name="audit" value="{{d.guid}}" lay-skin="switch" lay-text="通过|未通过" lay-filter="audit" {{ d.audit==1?'checked':''}}>
+    </script>
+    <script>
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'common','form'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    form = layui.form,
+                    os = layui.common;
+
+                table.render({
+                    elem: '#tablist',
+                    headers: os.getToken(),
+                    toolbar: '#toolbar',
+                    url: '/api/question/list',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            { field: 'title', title: '问题标题', fixed: 'left' },
+                            {
+                                field: 'nickName',
+                                title: '发布者',
+                                width: 150,
+                                templet: function (data) {
+                                    return data.nickName;
+                                }
+                            },
+                            {
+                                field: 'types',
+                                title: '分类',
+                                width: 150,
+                                templet: function (data) {
+                                    return data.types;
+                                }
+                            },
+                            { field: 'tags', width: 150, title: '标签' },
+                            { field: 'lookSum', title: '查看次数', width: 100 },
+                            { field: 'answerSum', width: 100, title: '回答总数' },
+                            { field: 'support', width: 100, title: '支持总数' },
+                            {
+                                field: 'status',
+                                width: 120,
+                                title: '状态',
+                                templet: function (data) {
+                                    let s = '';
+                                    switch (data.status) {
+                                        case 1:
+                                            s = '<span class="layui-badge layui-bg-orange">未解决</span>';
+                                            break;
+                                        case 2:
+                                            s = '<span class="layui-badge layui-bg-blue">已回答</span>';
+                                            break;
+                                        case 3:
+                                            s = '<span class="layui-badge layui-bg-green">已解决</span>';
+                                            break;
+                                        default:
+                                    }
+                                    return s;
+                                }
+                            },
+                            { field: 'isRed', width: 100, title: '是否热门', templet: '#switchTpl' },
+                            { field: 'audit', width: 100, title: '审核状态', templet: '#auditTpl' },
+                            { field: 'addTime', width: 200, title: '发布时间' },
+                            { width: 100, title: '操作', templet: '#tool' }
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables',
+                    response: {
+                        statusCode: 200
+                    },
+                    parseData: function (res) {
+                        return {
+                            "code": res.statusCode,
+                            "msg": res.message,
+                            "count": res.totalPages,
+                            "data": res.data.items
+                        };
+                    }
+                });
+
+                var active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                }
+                            });
+                    },
+                    toolAdd: function () {
+                        os.Open('添加会员',
+                            '/fytadmin/member/membermodify',
+                            '1000px',
+                            '500px',
+                            function () {
+                                active.reload();
+                            });
+                    },
+                    Audit: function(d) {
+                        os.load();
+                        os.ajax('api/question/audit', d, function (res) {
+                            os.loadClose();
+                            if (res.statusCode === 200) {
+                                os.success('状态更改成功~');
+                                active.reload();
+                            } else {
+                                os.error(res.message);
+                            }
+                        });
+                    },
+                    toolDel: function () {
+                        var checkStatus = table.checkStatus('tables'), data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要删除的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data,
+                            function (i, item) {
+                                str += item.guid + ",";
+                            });
+                        layer.confirm('确定要执行批量删除吗？',
+                            function (index) {
+                                layer.close(index);
+                                var loadindex = layer.load(1,
+                                    {
+                                        shade: [0.1, '#000']
+                                    });
+                                os.ajax('api/question/delete/',
+                                    { parm: str },
+                                    function (res) {
+                                        layer.close(loadindex);
+                                        if (res.statusCode === 200) {
+                                            active.reload();
+                                            os.success('删除成功！');
+                                        } else {
+                                            os.error(res.message);
+                                        }
+                                    });
+                            });
+
+                    }
+                };
+                table.on('toolbar(tool)',
+                    function (obj) {
+                        active[obj.event] ? active[obj.event].call(this) : '';
+                    });
+                $('.list-search .layui-btn').on('click',
+                    function () {
+                        var type = $(this).data('type');
+                        active[type] ? active[type].call(this) : '';
+                    });
+                form.on('switch(isRed)', function (data) {
+                    os.load();
+                    os.ajax('api/question/status', { types: data.elem.checked ? 1 : 0, guid: data.value }, function (res) {
+                        os.loadClose();
+                        if (res.statusCode === 200) {
+                            os.success('状态更改成功~');
+                            active.reload();
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
+                });
+                form.on('switch(audit)', function (data) {
+                    var d = { Guid: data.value, Status: data.elem.checked,Text:''};
+                    if (!data.elem.checked) {
+                        layer.prompt({ title: '请输入审核失败原因', formType: 2, maxlength: 200 }, function (text, index) {
+                            d.Text = text;
+                            active.Audit(d);
+                            layer.close(index);
+                        });
+                    } else {
+                        active.Audit(d);
+                    }
+                });
+                //监听工具条
+                table.on('tool(tool)',
+                    function (obj) {
+                        var data = obj.data;
+                        if (obj.event === 'edit') {
+                            os.Open('修改会员',
+                                '/fytadmin/member/membermodify/?guid=' + data.guid,
+                                '1000px',
+                                '500px',
+                                function () {
+                                    active.reload();
+                                })
+                        }
+                    });
+            });
+    </script>
+    <script type="text/html" id="tool">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
+    </script>
+</div>

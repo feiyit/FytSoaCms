@@ -8,7 +8,8 @@
         toastr = layui.toastr,
         pjax = layui.pjax;
     toastr.options = {
-        "positionClass": "toast-top-center"
+        "positionClass": "toast-top-right",
+        "timeOut": "1500"
     };
     var tmls,tool = {
         error: function (msg) {

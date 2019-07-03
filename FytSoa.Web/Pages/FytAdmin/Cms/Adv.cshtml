@@ -46,12 +46,12 @@
             },
             methods: {
                 classAdd: function () {
-                    os.Open('添加广告栏位', '/fytadmin/cms/advclass', '750px', '550px', function () {
+                    os.Open('添加广告栏位', '/fytadmin/cms/advclass', '800px', '550px', function () {
                         fun.init();
                     });
                 },
                 classEdit: function (m) {
-                    os.Open('添加广告栏位', '/fytadmin/cms/advclass?guid=' + m.guid, '750px', '550px', function () {
+                    os.Open('添加广告栏位', '/fytadmin/cms/advclass?guid=' + m.guid, '800px', '550px', function () {
                         fun.init();
                     });
                 },
@@ -170,7 +170,7 @@
                             os.error('请选择左侧栏位~');
                             return;
                         }
-                        os.Open('添加广告位信息', '/fytadmin/cms/advmodify?column=' + vm.menuActive.guid, '900px', '600px', function () {
+                        os.Open('添加广告位信息', '/fytadmin/cms/advmodify?column=' + vm.menuActive.guid, '1000px', '650px', function () {
                             active.reload();
                         }); 
                     },
@@ -211,7 +211,7 @@
                 table.on('tool(tool)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'edit') {
-                        os.Open('修改广告位信息', '/fytadmin/cms/advmodify/?column='+data.classGuid+'&guid=' + data.guid, '900px', '600px', function () {
+                        os.Open('修改广告位信息', '/fytadmin/cms/advmodify/?column='+data.classGuid+'&guid=' + data.guid, '1000px', '650px', function () {
                             active.reload();
                         });
                     }

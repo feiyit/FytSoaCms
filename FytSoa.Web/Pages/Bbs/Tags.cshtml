@@ -1,0 +1,65 @@
+﻿@page
+@model FytSoa.Web.Pages.Bbs.TagsModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "标签";
+}
+<div class="col-md-8 main-content">
+    <div class="row select-category">
+        <div class="col-md-6 col-xs-6 current-category">
+            <span>标签</span>
+        </div>
+        <div class="col-md-6 col-xs-6 select-categories input-find-tags">
+            <form class="form-input-search" autocomplete="off" method="GET" action="/bbs/">
+                <input autocomplete="off" type="text" name="tkey" id="tkey" value="" class="search-users" placeholder="Find Tags">
+                <i class="fa fa-chevron-circle-right"></i>
+            </form>
+        </div>
+    </div>
+    <!-- END SELECT-CATEGORY -->
+    <div class="row question-filter">
+        <div class="col-md-6 col-xs-6 sort-questions">
+            <!-- order by -->
+            <ul>
+                <li>
+                    <a class="active" href="/bbs/tags/">
+                        名称
+                    </a>
+                </li>
+            </ul>
+            <!--// order by -->
+        </div>
+    </div>
+    <!-- END QUESTIONS-FILTER -->
+
+    <div class="main-tag-list">
+        <div class="tags-list ">
+            @{
+                if (Model.TagList!=null)
+                {
+                    var zmList = Model.TagList.GroupBy(m => m.FirstLetter).OrderBy(m=>m.Key).Select(m => m.Key).ToList();
+                    foreach (var item in zmList)
+                    {
+                        <div class="wrap-tag-list">
+                            <span class="character">@item</span>
+                            <div class="clearfix"></div>
+                            @{
+                                var list = Model.TagList.Where(m => m.FirstLetter == item).ToList();
+                                foreach (var row in list)
+                                {
+                                    <div class="tag-item">
+                                        <a href="/bbs/?key=@row.EnTagName" class="q-tag">
+                                            @row.Name
+                                        </a> x @row.TagCount
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- END MAIN-TAGS-LIST -->
+</div>
