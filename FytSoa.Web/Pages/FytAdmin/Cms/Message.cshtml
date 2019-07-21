@@ -138,6 +138,9 @@
                             if (res.data.totalPages === 1 || vm.parm.page === res.data.totalPages) {
                                 vm.moreTip = '';
                             }
+                            if (res.data.totalPages === 0) {
+                                vm.moreTip = '没有留言信息';
+                            }
                             if (res.statusCode === 200) {
                                 if (vm.parm.page === 1) {
                                     vm.list = res.data.items;

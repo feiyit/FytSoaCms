@@ -1,0 +1,86 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.BBS.FilterKeyModel
+@{
+    ViewData["Title"] = "社区-过滤关键字";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <style>
+        .layui-bgs {
+            padding: 15px;
+            margin: 13px;
+            color: #eb6709;
+            background-color: rgba(255,225,196,.5);
+            border-color: rgba(255,225,196,.3);
+        }
+    </style>
+    <div style="padding:15px;" id="app">
+        <form class="layui-form form-cus" action="">
+            <div class="layui-tab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">关键字过滤</li>
+                </ul>
+                <div class="layui-bgs">禁词、多条请以#隔开、注意#为英文半角符号、请认真填写</div>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">禁词</label>
+                            <div class="layui-input-block">
+                                <textarea name="key" v-model="m.key" class="layui-textarea" style="height:300px;" placeholder="必须以英文逗号分隔"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-cur-submit">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        var fun, os, vm = new Vue({
+            el: '#app',
+            data: {
+                m: { key: '我操#操你妹#你妹的' }
+            }
+        });
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form'],
+            function () {
+                var layer = layui.layer,
+                    form = layui.form,
+                    $ = layui.jquery;
+                os = layui.common;
+                fun = {
+                    init: function () {
+                        os.ajax('api/bbs/tags/get/key', null, function (res) {
+                            if (res.statusCode === 200) {
+                                vm.m = res.data;
+                            } else {
+                                os.error(res.message);
+                            }
+                        });
+                    }
+                };
+                fun.init();
+                //监听提交
+                form.on('submit(submit)', function (data) {
+                    $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                    var urls = "api/bbs/tags/save/key";
+                    os.ajax(urls, vm.m, function (res) {
+                        $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                        if (res.statusCode == 200) {
+                            os.success('保存成功~');
+                        }
+                        else {
+                            os.error(res.message);
+                        }
+                    });
+                    return false;
+                });
+            });
+    </script>
+</div>

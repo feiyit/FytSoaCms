@@ -42,7 +42,11 @@
                             { field: 'name', title: '菜单名称', width: 200, fixed: 'left' },
                             { field: 'nameCode',width:150, title: '模块名' },
                             { field: 'urls', title: 'Url', width: 200 },
-                            { field: 'sort', width: 100, title: '排序', sort: true },
+                            {
+                                field: 'sort', width: 120, title: '排序', templet: function (res) {
+                                    return '<a href="javascript:void(0)" class="table-sort text-color" lay-event="sortup" title="向上"><i class="layui-icon layui-icon-return"></i></a><a href="javascript:void(0)"  lay-event="sortdown" class="table-sort text-color" title="向下"><i class="layui-icon layui-icon-return"></i></a>';
+                                }
+                            },
                             { field: 'btnFunJson', title: '功能' },
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
@@ -134,6 +138,27 @@
                             tree.reAsyncChildNodes(null, "refresh");
                             active.reload();
                         })
+                    }
+                    if (obj.event === 'sortdown') {
+                        os.ajax('api/menu/sort', { p: data.parentGuid, i: data.guid, o: 1 }, function (res) {
+                            if (res.statusCode === 200) {
+                                active.reload();
+                            }
+                            else {
+                                os.error(res.message);
+                            }
+                        });
+                    }
+                    if (obj.event === 'sortup') {
+                        os.log(data);
+                        os.ajax('api/menu/sort', { p: data.parentGuid, i: data.guid, o: 0 }, function (res) {
+                            if (res.statusCode === 200) {
+                                active.reload();
+                            }
+                            else {
+                                os.error(res.message);
+                            }
+                        });
                     }
                 });
             });

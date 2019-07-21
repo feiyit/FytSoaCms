@@ -1,0 +1,114 @@
+﻿@using FytSoa.Common
+@using FytSoa.Core.Model.Cms
+@using FytSoa.Service.Interfaces
+@inject IBbs_QuestionsService _questionService
+@{
+    var m = _questionService.GetRgithData().Result.data;
+}
+<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 left-sidebar">
+                <div class="widget widget-btn">
+                    <button type="button" data-toggle="modal" class="action ask-question"><i class="fa fa-plus"></i> 我要提问</button>
+                </div>
+                <!-- END BUTTON MODAL QUESTION -->
+                <div class="widget widget-menus">
+                    <div class="menu-left-menu-container">
+                        <ul id="menu-left-menu" class="menu">
+                            <li><a href="/bbs/"><i class="fa fa-question-circle"></i>问题</a></li>
+                            <li><a href="/bbs/tags/"><i class="fa fa-tags"></i>标签</a></li>
+                            <li class="hidden"><a href="javascript:void(0)"><i class="fa fa-trophy"></i>微章</a></li>
+                            <li><a href="/bbs/category/"><i class="fa fa-th-list"></i>分类</a></li>
+                            <li><a href="/bbs/expert/"><i class="fa fa-users"></i>专家</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- END LEFT MENU -->
+                <div class="clearfix"></div>
+                <div class="copyright">
+                    &copy;2019 <br>
+                               <a href="/bbs">FytSoaCms & BBS</a>
+                </div>
+            </div>
+            <!-- END LEFT-SIDEBAR -->
+        </div>
+    </div>
+</nav>
+<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 right-sidebar">
+                <ul>
+                    <li class="widget widget-statistic">
+                        <ul>
+                            <li class="questions-count">
+                                <p>话题总数</p>
+                                <span> @m.QuestionCount</span>
+                            </li>
+                            <li class="members-count">
+                                <p>会员</p>
+                                <span> @m.UserCount</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END widget-statistic -->
+                    <li class="widget widget-related-tags">
+                        <h3>最常用标签</h3>
+                        <ul>
+                            @{
+                                if (m.TagList!=null)
+                                {
+                                    foreach (var item in m.TagList)
+                                    {
+                                        <li>
+                                            <a class="q-tag" href="/bbs/?key=@item.EnTagName">@item.TagName</a> x @item.TagCount
+                                        </li>
+                                    }
+                                }
+                            }
+                        </ul>
+                        <a href="/bbs/tags">更多标签</a>
+                    </li>
+                    <li class="widget widget-hot-questions">
+                        <h3>热门话题</h3>
+                        <ul>
+                            @{
+                                if (m.RedQuestionList!=null)
+                                {
+                                    foreach (var item in m.RedQuestionList)
+                                    {
+                                        <li>
+                                            <a href="/bbs/question/@item.EnTitle" title="@item.Title">
+                                                <span class="topic-avatar">
+                                                    <img itemprop="image" src="@item.HeadPic" class="avatar" alt="">
+                                                </span>
+                                                <span class="topic-title">@item.Title</span>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top" id="cbp-spmenu-s3">
+    <ul class="menu-res">
+        <li><a href="">首页</a></li>
+        <li class="menu-item-has-children">
+            <i class="fa fa-chevron-circle-down"></i>
+            <a href="">关于我们</a>
+            <ul class="sub-menu">
+                <li><a href="">我们</a></li>
+                <li><a href="">话题</a></li>
+            </ul>
+        </li>
+        <li><a href="">社区</a></li>
+        <li><a href="">话题</a></li>
+        <li><a href="">联系</a></li>
+    </ul>
+</nav>

@@ -5,7 +5,6 @@
     "outputFileName": "wwwroot/build/admin/css/site.min.css",
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
-      "wwwroot/themes/layui/css/layui.css",
       "wwwroot/themes/css/toastr.css",
       "wwwroot/themes/css/nprogress.css",
       "wwwroot/themes/css/app.css"
@@ -15,7 +14,6 @@
     "outputFileName": "wwwroot/build/admin/css/login.min.css",
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
-      "wwwroot/themes/layui/css/layui.css",
       "wwwroot/themes/css/toastr.css",
       "wwwroot/themes/css/login.css"
     ]

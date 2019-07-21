@@ -64,20 +64,12 @@ namespace FytSoa.Api
                 var tokenHeader = context.HttpContext.Request.Headers["Authorization"];
                 tokenHeader = tokenHeader.ToString().Substring("Bearer ".Length).Trim();
 
-                TokenModel tm = JwtHelper.SerializeJWT(tokenHeader);
+                var tm = JwtHelper.SerializeJWT(tokenHeader);
                 userGuid = tm.Uid;
             }
             //获得权限
-            var menu = new List<SysMenuDto>();
             var menuSaveType = ConfigExtensions.Configuration[KeyHelper.LOGINAUTHORIZE];
-             if (menuSaveType == "Redis")
-            {                
-                menu = RedisHelper.Get<List<SysMenuDto>>(KeyHelper.ADMINMENU + "_" + userGuid);
-            }
-            else
-            {
-                menu = MemoryCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU + "_"+ userGuid);
-            }
+             var menu = menuSaveType == "Redis" ? RedisHelper.Get<List<SysMenuDto>>(KeyHelper.ADMINMENU + "_" + userGuid) : MemoryCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU + "_"+ userGuid);
             if (menu==null)
             {
                 ContextReturn(context, "登录已过期，请退出重新登录！");
@@ -97,24 +89,26 @@ namespace FytSoa.Api
             
             //判断是否包含权限模块
             var menuModel = menu.Find(m => m.nameCode == Modules);
-            if (!menu.Any(m => m.nameCode == Modules) || menuModel.btnFun == null)
+            if (menu.All(m => m.nameCode != Modules) || menuModel.btnFun == null)
             {
                 ContextReturn(context, "您没有操作权限，请联系系统管理员！");
                 return;
             }
             //判断模块下面的权限是否包含功能
-            if (!menuModel.btnFun.Any(m => m.codeType == Methods))
+            if (menuModel.btnFun.All(m => m.codeType != Methods))
             {
                 ContextReturn(context, "您没有操作权限，请联系系统管理员！");
                 return;
             }
             base.OnActionExecuting(context);
         }
+
         /// <summary>
         /// 返回API的信息
         /// </summary>
         /// <param name="context"></param>
-        private void ContextReturn(ActionExecutingContext context,string mes) {
+        /// <param name="mes"></param>
+        private static void ContextReturn(ActionExecutingContext context,string mes) {
             var res = new ApiResult<string>() { statusCode = (int)ApiEnum.Unauthorized, message = "您没有操作权限，请联系系统管理员！" };
             context.HttpContext.Response.ContentType = "application/json;charset=utf-8";
             context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(res));
@@ -125,35 +119,33 @@ namespace FytSoa.Api
         public override void OnActionExecuted(ActionExecutedContext context)
         {
             base.OnActionExecuted(context);
-            if (IsLog)
+            if (!IsLog) return;
+            Stopwatch.Stop();
+
+            var url = context.HttpContext.Request.Path + context.HttpContext.Request.QueryString;
+            var method = context.HttpContext.Request.Method;
+
+            var qs = ActionArguments;
+
+            var user = "";
+            //检测是否包含'Authorization'请求头，如果不包含则直接放行
+            if (context.HttpContext.Request.Headers.ContainsKey("Authorization"))
             {
-                Stopwatch.Stop();
+                var tokenHeader = context.HttpContext.Request.Headers["Authorization"];
+                tokenHeader = tokenHeader.ToString().Substring("Bearer ".Length).Trim();
 
-                string url = context.HttpContext.Request.Path + context.HttpContext.Request.QueryString;
-                string method = context.HttpContext.Request.Method;
-
-                string qs = ActionArguments;
-
-                var user = "";
-                //检测是否包含'Authorization'请求头，如果不包含则直接放行
-                if (context.HttpContext.Request.Headers.ContainsKey("Authorization"))
-                {
-                    var tokenHeader = context.HttpContext.Request.Headers["Authorization"];
-                    tokenHeader = tokenHeader.ToString().Substring("Bearer ".Length).Trim();
-
-                    TokenModel tm = JwtHelper.SerializeJWT(tokenHeader);
-                    user = tm.UserName;
-                }
-
-                var str = $"\n 方法：{Modules}：{Methods} \n " +
-                    $"地址：{url} \n " +
-                    $"方式：{method} \n " +
-                    $"参数：{qs}\n " +
-                    //$"结果：{res}\n " +
-                    $"耗时：{Stopwatch.Elapsed.TotalMilliseconds} 毫秒";
-                Logger.Default.Process(user, LogType.GetEnumText(), str);
+                var tm = JwtHelper.SerializeJWT(tokenHeader);
+                user = tm.UserName;
             }
-            
+
+            var str = $"\n 方法：{Modules}：{Methods} \n " +
+                      $"地址：{url} \n " +
+                      $"方式：{method} \n " +
+                      $"参数：{qs}\n " +
+                      //$"结果：{res}\n " +
+                      $"耗时：{Stopwatch.Elapsed.TotalMilliseconds} 毫秒";
+            Logger.Default.Process(user, LogType.GetEnumText(), str);
+
         }
 
     }

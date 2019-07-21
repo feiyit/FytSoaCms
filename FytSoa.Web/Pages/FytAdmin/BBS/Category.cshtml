@@ -1,0 +1,214 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.BBS.CategoryModel
+@{
+    ViewData["Title"] = "社区-分类管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <style>
+        .layui-col-220 {
+            width: 30%;
+        }
+
+        .right-col-body {
+            left: 30%;
+        }
+
+        .form-row {
+            padding: 10px 25px;
+        }
+
+            .form-row .layui-form-label {
+                float: none;
+                width: 95%;
+                text-align: left;
+                color: #76838f;
+                padding-left: 0px;
+            }
+
+            .form-row .layui-input-block {
+                margin-left: 0px;
+            }
+    </style>
+    <div class="layui-col-220" id="app">
+        <div class="layui-nav-title"><span>分类管理</span></div>
+        <form class="layui-form form-cus form-row" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="Name" v-model="m.className" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入分类名称" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类英文标识</label>
+                <div class="layui-input-block">
+                    <input type="text" name="Codes" v-model="m.enClassName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="必须为英文，首字母建议大写" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类状态</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="status" id="status" lay-skin="switch" checked="checked" lay-text="启用|禁用">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-block">
+                    <textarea name="summary" v-model="m.summary" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="right-col-body" id="content-body">
+        <div class="list-wall" style="padding-top:0px;">
+            <div class="layui-form list-search" style="margin-top:10px;">
+                <button type="button" class="layui-btn layui-btn-sm" data-type="toolDel"><i class="layui-icon"></i> 删除</button>
+            </div>
+            <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+        </div>
+    </div>
+    <script>
+        var active, os, vm = new Vue({
+            el: '#app',
+            data: {
+                m: {guid:''}
+            }
+        });
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'table','form'],
+            function () {
+                var layer = layui.layer,
+                    table = layui.table,
+                    form=layui.form,
+                    $ = layui.jquery;
+                os = layui.common;
+                table.render({
+                    elem: '#tablist',
+                    headers: os.getToken(),
+                    url: '/api/bbs/category/list',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            { field: 'className', width: 150, title: '名称', fixed: 'left'},
+                            { field: 'enClassName', width: 200, title: '英文名称', fixed: 'left' },
+                            { field: 'firstLetter', width: 120, title: '首字母', fixed: 'left' },
+                            { field: 'status', width: 150, title: '状态', templet: '#switchTpl' },
+                            { field: 'summary', title: '描述' },
+                            { width: 100, title: '操作', templet: '#tool' }
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables'
+                    , response: {
+                        statusCode: 200
+                    }
+                    , parseData: function (res) {
+                        return {
+                            "code": res.statusCode,
+                            "msg": res.message,
+                            "count": res.data.totalItems,
+                            "data": res.data.items
+                        };
+                    }
+                });
+
+                active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+
+                                }
+                            });
+                    },
+                    toolDel: function () {
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要删除的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            str += item.guid + ",";
+                        });
+                        layer.confirm('确定要执行批量删除吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/bbs/category/delete/', { parm: str }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    active.reload();
+                                    os.success('删除成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+
+                    }
+                };
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+                //监听工具条
+                table.on('tool(tool)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'edit') {
+                        vm.m = data;
+                    }
+                });
+                form.on('switch(status)', function (data) {
+                    os.load();
+                    os.ajax('api/bbs/category/status', { types: data.elem.checked ? 1 : 0, guid: data.value }, function (res) {
+                        os.loadClose();
+                        if (res.statusCode === 200) {
+                            os.success('状态更改成功~');
+                            active.reload();
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
+                });
+                //监听提交
+                form.on('submit(submit)', function (data) {
+                    $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                    var urls = "api/bbs/category/add";
+                    if (vm.m.guid) {
+                        urls = "api/bbs/category/edit";
+                    }
+                    vm.m.status = data.field.status === 'on' ? true : false; console.log(vm.m);
+                    os.ajax(urls, vm.m, function (res) {
+                        $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                        if (res.statusCode == 200) {
+                            active.reload();
+                            vm.m = {};
+                            os.success('保存成功~');
+                        }
+                        else {
+                            os.error(res.message);
+                        }
+                    });
+                    return false;
+                });
+            });
+    </script>
+    <script type="text/html" id="tool">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
+    </script>
+    <script type="text/html" id="switchTpl">
+        <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-filter="status" lay-text="ON|OFF" {{ d.status==1?'checked':''}}>
+    </script>
+</div>

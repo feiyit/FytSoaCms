@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FytSoa.Common;
+using FytSoa.Core.Model.Cms;
 using FytSoa.Core.Model.Sys;
 using FytSoa.Extensions;
 using FytSoa.Service.DtoModel;
@@ -23,10 +24,15 @@ namespace FytSoa.Api.Controllers
     {
         private readonly ISysAdminService _adminService;
         private readonly ISysLogService _logService;
-        public AdminController(ISysAdminService adminService, ISysLogService logService)
+        private readonly ICacheService _cacheService;
+        private readonly ICmsSiteService _siteService;
+        public AdminController(ISysAdminService adminService, ISysLogService logService, ICacheService cacheService,
+            ICmsSiteService siteService)
         {
             _adminService = adminService;
             _logService = logService;
+            _cacheService = cacheService;
+            _siteService = siteService;
         }
 
         /// <summary>
@@ -131,7 +137,7 @@ namespace FytSoa.Api.Controllers
                     //记录登录次数，保存到session
                     MemoryCacheService.Default.SetCache(KeyHelper.LOGINCOUNT, loginConfig);
                     //提示用户错误和登录次数信息
-                    apiRes.message = dbres.message+"　　您还剩余" + (configLoginCount - loginConfig.Count) + "登录次数";
+                    apiRes.message = dbres.message + "　　您还剩余" + (configLoginCount - loginConfig.Count) + "登录次数";
                     return apiRes;
                 }
 
@@ -166,21 +172,24 @@ namespace FytSoa.Api.Controllers
                         AllowRefresh = false
                     });
                 }
-
+                //获得第一条站点，并保存到session中
+                var site = _siteService.GetListAsync(m => !m.IsDel, m => m.AddTime, DbOrderEnum.Asc).Result.data.FirstOrDefault();
                 //把权限存到缓存里
                 var menuSaveType = ConfigExtensions.Configuration[KeyHelper.LOGINAUTHORIZE];
                 if (menuSaveType == "Redis")
                 {
-                    RedisHelper.Set(KeyHelper.ADMINMENU + "_" +dbres.data.admin.Guid, dbres.data.menu);
+                    RedisHelper.Set(KeyHelper.ADMINMENU + "_" + dbres.data.admin.Guid, dbres.data.menu);
+                    RedisHelper.Set(KeyHelper.NOWSITE, site);
                 }
                 else
                 {
+                    MemoryCacheService.Default.SetCache(KeyHelper.NOWSITE, site);
                     MemoryCacheService.Default.SetCache(KeyHelper.ADMINMENU + "_" + dbres.data.admin.Guid, dbres.data.menu, 600);
                 }
                 token = JwtHelper.IssueJWT(new TokenModel()
                 {
                     Uid = user.Guid,
-                    UserName=user.LoginName,
+                    UserName = user.LoginName,
                     Role = "Admin",
                     TokenType = "Web"
                 });
@@ -215,10 +224,10 @@ namespace FytSoa.Api.Controllers
                 {
                     Guid = Guid.NewGuid().ToString(),
                     Logged = DateTime.Now,
-                    Logger=LogEnum.LOGIN.GetEnumText(),
+                    Logger = LogEnum.LOGIN.GetEnumText(),
                     Level = "Error",
                     Message = "登录失败！" + ex.Message,
-                    Exception=ex.Message,
+                    Exception = ex.Message,
                     Callsite = "/fytadmin/login",
                     IP = Utils.GetIp(),
                     User = parm.loginname,
@@ -233,15 +242,34 @@ namespace FytSoa.Api.Controllers
         }
 
         /// <summary>
+        /// 切换站点
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("rep/site")]
+        public IActionResult UpdateNowSite([FromBody]CmsSite parm)
+        {
+            var menuSaveType = ConfigExtensions.Configuration[KeyHelper.LOGINAUTHORIZE];
+            if (menuSaveType == "Redis")
+            {
+                RedisHelper.Set(KeyHelper.NOWSITE, parm);
+            }
+            else
+            {
+                MemoryCacheService.Default.SetCache(KeyHelper.NOWSITE, parm);
+            }
+            return Ok(new ApiResult<string>());
+        }
+
+        /// <summary>
         /// 管理员退出
         /// </summary>
         /// <returns></returns>
-        [HttpPost("logout"),Log("Admin：LogOut",LogType =LogEnum.LOGOUT)]
+        [HttpPost("logout"), Log("Admin：LogOut", LogType = LogEnum.LOGOUT)]
         [AllowAnonymous]
         public ApiResult<string> LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return new ApiResult<string>() { data="/fytadmin/login/"};
+            return new ApiResult<string>() { data = "/fytadmin/login/" };
         }
     }
 }

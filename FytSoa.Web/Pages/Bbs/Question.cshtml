@@ -1,0 +1,256 @@
+﻿@page "{number?}"
+@using FytSoa.Common
+@model FytSoa.Web.Pages.Bbs.QuestionModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "社区";
+}
+<div class="col-md-8 main-content single-content">
+    <div class="row select-category single-head">
+        <div class="col-md-2 col-xs-4">
+            <span class="back">
+                <i class="fa fa-angle-double-left"></i> <a href="/bbs">首页</a>
+            </span>
+        </div>
+        <div class="col-md-8 col-xs-8">
+            <h1>
+                <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">@Model.Ask.Title</font>
+                </font>
+            </h1>
+        </div>
+    </div>
+    <!-- END SELECT-CATEGORY -->
+    <div id="question_content" class="row question-main-content question-item" data-id="78">
+        <!-- Vote section -->
+        <div class="col-md-2 col-xs-2 vote-block">
+            <!-- vote group -->
+            <ul>
+                <!-- vote up -->
+                <li title="" data-original-title="This is useful.">
+                    <a href="javascript:void(0)" class="action vote vote-up img-circle">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </li>
+                <!--// vote up -->
+                <!--vote point -->
+                <li data-original-title="" title="">
+                    <span class="vote-count">@Model.Ask.Support</span>
+                </li>
+                <!--// vote point -->
+                <!-- vote down -->
+                <li title="" data-original-title="This is not useful">
+                    <a href="javascript:void(0)" class="action vote vote-down img-circle">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                </li>
+                <!--// vote down -->
+            </ul>
+            <!--// vote group -->
+        </div>
+        <!--// Vote section -->
+        <div class="col-md-9 col-xs-9 q-right-content">
+
+            <!-- admin control -->
+            <ul class="post-controls">
+                <!-- Follow Action -->
+                <li>
+                    <a href="javascript:void(0)" class="action follow">
+                        <i class="fa fa-plus-square"></i>
+                    </a>
+                </li>
+                <!-- // Follow Action -->
+                <!-- report Action -->
+                <li>
+                    <a href="javascript:void(0)" class="action report">
+                        <i class="fa fa-exclamation-triangle"></i>
+                    </a>
+                </li>
+                <!--// Report Action -->
+            </ul>
+            <!--// admin control -->
+            <!-- question tag -->
+            <div class="top-content">
+                <span class="answered"><i class="fa fa-check"></i> 回答</span>
+                <ul class="question-tags">
+                    @{
+                        var tags = Utils.StrToListString(Model.Ask.Tags);
+                        foreach (var tag in tags)
+                        {
+                            <li>
+                                <a class="q-tag" href="/bbs/?key=@tag">
+                                    @tag
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+
+            </div>
+            <!--// question tag -->
+            <div class="clearfix"></div>
+
+            <div class="question-content">
+                @Html.Raw(Model.Ask.Contents)
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 col-xs-8 question-cat">
+                    <a href="/bbs/user/@Model.Ask.UserGuid">
+                        <span>
+                            <span class="author-avatar">
+                                <img src="@Model.Ask.HeadPic" class="avatar" alt="">
+                            </span>
+                            <span class="author-name">@Model.Ask.NickName</span>
+                        </span>
+                    </a>
+                    <span class="user-badge" style="background-color:#@(Utils.GetAskGroupColor(Model.Ask.GroupName));">@Model.Ask.GroupName</span>
+                    <span class="question-time">
+                        @Utils.DateDiff(Model.Ask.AddTime, DateTime.Now)
+                    </span>
+                </div>
+                <div class="col-md-4 col-xs-4 question-control">
+                    <ul>
+                        <li>
+                            <a class="share-social" href="javascript:void(0)">
+                                分享<i class="fa fa-share"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#container_78" class="show-comments active">
+                                评论（0）<i class="fa fa-comment"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- END QUESTION-MAIN-CONTENT -->
+
+
+    <div class="sticky-wrapper" style="">
+        <div class="row answers-filter" id="answers_filter">
+            <div class="max-col-md-8">
+                <div class="col-md-6 col-xs-6">
+                    <span class="answers-count">
+                        <span itemprop="answerCount" class="number">
+                            @Model.Ask.AnswerSum 答案
+                        </span>
+                    </span>
+                </div>
+                <div class="col-md-6 col-xs-6 sort-questions">
+                    <ul>
+                        <li><a class="@(Model.Order==0?"active":"")" href="/bbs/question/@Model.Ask.EnTitle">默认</a></li>
+                        <li><a class="@(Model.Order==1?"active":"")" href="/bbs/question/@Model.Ask.EnTitle?order=1">回答时间</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ANSWERS LOOP -->
+    @{
+        if (Model.Answer.Items.Any())
+        {
+            foreach (var item in Model.Answer.Items)
+            {
+                <div id="answers_main_list">
+                    <div class="row question-main-content question-item answer-item">
+                        <div class="col-md-12 col-xs-12 q-right-content">
+                            @{
+                                if (item.IsAdopt)
+                                {
+                                    <div class="top-content" style="margin-bottom: 20px;">
+                                        <span class="answered best-answer">
+                                            <i class="fa fa-check"></i> 最佳答案
+                                        </span>
+                                    </div>
+                                }
+                            }
+                            <div class="clearfix"></div>
+                            <div itemprop="text" class="question-content" style="margin-top: 0px;">
+                                @Html.Raw(item.Content)
+                            </div>
+                            <div class="row cat-infomation">
+                                <!-- Answer owner infomation -->
+                                <div class="col-md-8 col-xs-8 question-cat">
+                                    <a href="/bbs/user/@item.UserGuid">
+                                        <span class="author-avatar">
+                                            <img itemprop="image" src="@item.HeadPic" class="avatar" alt="">
+                                        </span>
+                                        <span class="author-name">@item.NickName</span>
+                                    </a>
+                                    <span class="user-badge" style="background-color: #@(Utils.GetAskGroupColor(item.GroupName));">@item.GroupName</span>
+                                    <span class="question-time">
+                                        @Utils.DateDiff(item.AddTime, DateTime.Now)
+                                    </span>
+                                </div>
+                                <!--// Answer owner infomation -->
+
+                                <div class="col-md-4 col-xs-4 question-control">
+                                    <!-- share comment , report -->
+                                    <ul>
+                                        <li>
+                                            <a class="share-social" href="javascript:void(0);">
+                                                分享 <i class="fa fa-share"></i>
+                                            </a>
+                                        </li>
+                                        <!-- comment count -->
+                                        <li>
+                                            <a href="#container_82" class="show-comments ">
+                                                评论（0） <i class="fa fa-comment"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--// share comment , report -->
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!-- END REPLY-ITEM -->
+                </div>
+                                    }
+                                }
+        else
+        {
+            <div style="text-align: center; font-size: 15px; margin-top: 50px;">
+                <img src="/dist_bbs/images/nodata.png" style="margin-bottom: 20px; width: 80px;"/>
+                <p>暂无答案，快来添加答案吧</p>
+            </div>
+        }
+    }
+    <!-- ANSWERS LOOP -->
+
+    <div class="row form-reply" style="padding-bottom: 50px;">
+        <div class="col-md-12">
+            <h3>你的答案</h3>
+            <div class="alert alert-warning">
+                <i class="fa fa-info-circle"></i> 请登录后再发布答案，<a href="javascript:void(0)" class="login-url" style="line-height: inherit;display:inline-block">点击登录</a>
+            </div>
+            <form id="form_reply" method="POST">
+                <input type="hidden" id="Ask" value="@Model.Ask.Guid">
+                <textarea name="contents" id="insert_poll"></textarea>
+                <div class="row submit-wrapper">
+                    <div class="col-md-2">
+                        <button id="submit_reply" class="btn-submit" type="button">
+                            发表回答
+                        </button>
+                    </div>
+                    <div class="col-md-10 term-texts">
+                        布您的回答即表示您已阅读并同意<a target="_blank" href="">隐私政策</a> 和 <a target="_blank" href="">服务条款.</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- main end -->
+<script src="/themes/tinymce/tinymce.min.js"></script>
+<script src="/themes/tinymce/langs/zh_CN.js"></script>
+@section Scripts{ 
+    <script src="/dist_bbs/js/answer.js"></script>
+}

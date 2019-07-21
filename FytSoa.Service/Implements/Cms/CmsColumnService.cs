@@ -175,7 +175,7 @@ namespace FytSoa.Service.Implements
                                     a = b;
                                     b = c;
                                     item.Sort = a;
-                                    CmsColumnDb.Update(item);
+                                    //CmsColumnDb.Update(item);
                                     await Db.Updateable(item).ExecuteCommandAsync();
                                     var nitem = list[index];
                                     nitem.Sort = b;
@@ -277,6 +277,7 @@ namespace FytSoa.Service.Implements
             }
             return result;
         }
+
         /// <summary>
         /// 递归模块列表
         /// </summary>
@@ -298,13 +299,13 @@ namespace FytSoa.Service.Implements
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public async Task<ApiResult<List<ColumnTree>>> TreeAsync(int type = 1)
+        public async Task<ApiResult<List<ColumnTree>>> TreeAsync(int type = 1, string site="")
         {
             var res = new ApiResult<List<ColumnTree>>() { statusCode = (int)ApiEnum.Error };
             try
             {
                 var list =await Db.Queryable<CmsColumn>()
-                    .Where(m => m.TypeID == type)
+                    .Where(m => m.TypeID == type && m.SiteGuid==site)
                     .Select(m => new ColumnTree()
                     {
                         Id = m.Id,
@@ -364,7 +365,6 @@ namespace FytSoa.Service.Implements
             }
             return nodeList;
         }
-
 
         /// <summary>
         /// 模型去重，非常重要

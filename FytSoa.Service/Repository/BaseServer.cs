@@ -247,8 +247,8 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<string>() { statusCode = (int)ApiEnum.Error };
             try
             {
-                var dbres = Async ? await Db.Updateable<T>().UpdateColumns(columns).Where(where).ExecuteCommandAsync() 
-                    : Db.Updateable<T>().UpdateColumns(columns).Where(where).ExecuteCommand();
+                var dbres = Async ? await Db.Updateable<T>().SetColumns(columns).Where(where).ExecuteCommandAsync() 
+                    : Db.Updateable<T>().SetColumns(columns).Where(where).ExecuteCommand();
                 res.data = dbres.ToString();
                 res.statusCode = (int)ApiEnum.Status;
             }
@@ -297,6 +297,48 @@ namespace FytSoa.Service.Implements
             {
                 var dbres = Async? await Db.Deleteable<T>().Where(where).ExecuteCommandAsync() : Db.Deleteable<T>().Where(where).ExecuteCommand();
                 res.data = dbres.ToString();
+                res.statusCode = (int)ApiEnum.Status;
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                Logger.Default.ProcessError((int)ApiEnum.Error, ex.Message);
+            }
+            return res;
+        }
+        #endregion
+
+        #region 查询Count
+        public async Task<ApiResult<ResultCount>> CountAsync(Expression<Func<T, bool>> where, bool Async = true)
+        {
+            var res = new ApiResult<ResultCount>() { statusCode = (int)ApiEnum.Error };
+            try
+            {
+                res.data = new ResultCount
+                {
+                    Count = Async ? await Db.Queryable<T>().CountAsync(where) : Db.Queryable<T>().Count(where)
+                };
+                res.statusCode = (int)ApiEnum.Status;
+            }
+            catch (Exception ex)
+            {
+                res.message = ApiEnum.Error.GetEnumText() + ex.Message;
+                Logger.Default.ProcessError((int)ApiEnum.Error, ex.Message);
+            }
+            return res;
+        }
+        #endregion
+
+        #region 是否存在
+        public async Task<ApiResult<ResultAny>> IsExistAsync(Expression<Func<T, bool>> where, bool Async = true)
+        {
+            var res = new ApiResult<ResultAny>() { statusCode = (int)ApiEnum.Error };
+            try
+            {
+                res.data = new ResultAny
+                {
+                    Any = Async ? await Db.Queryable<T>().AnyAsync(where) : Db.Queryable<T>().Any(where)
+                };
                 res.statusCode = (int)ApiEnum.Status;
             }
             catch (Exception ex)

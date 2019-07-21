@@ -1,9 +1,8 @@
 ﻿layui.config({
     base: '/themes/js/modules/'
 });
-layui.use(['element', 'jquery', 'form', 'common'], function () {
+layui.use(['jquery', 'form', 'common'], function () {
     var form = layui.form,
-        layer = layui.layer,
         $ = layui.jquery,
         os = layui.common;
     $(".layui-btn-danger").click(function () {

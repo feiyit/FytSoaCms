@@ -476,6 +476,29 @@ namespace FytSoa.Common
 
         #endregion
 
+        #region Base64位加密解密
+        /// <summary>
+        /// 将字符串转换成base64格式,使用UTF8字符集
+        /// </summary>
+        /// <param name="content">加密内容</param>
+        /// <returns></returns>
+        public static string Base64Encode(string content)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(content);
+            return Convert.ToBase64String(bytes);
+        }
+        /// <summary>
+        /// 将base64格式，转换utf8
+        /// </summary>
+        /// <param name="content">解密内容</param>
+        /// <returns></returns>
+        public static string Base64Decode(string content)
+        {
+            byte[] bytes = Convert.FromBase64String(content);
+            return Encoding.UTF8.GetString(bytes);
+        }
+        #endregion
+
         #region 条形码解析
         /// <summary>
         /// 分解条形码，并返回数组
@@ -734,5 +757,88 @@ namespace FytSoa.Common
             DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return (long)(time.AddHours(-8) - Jan1st1970).TotalMilliseconds;
         }
+
+        /// <summary>
+        /// 生成唯一数
+        /// </summary>
+        public class UniqueData
+        {
+            private static object obj = new object();
+            private static int _sn = 0;
+            public static string Gener()
+            {
+                lock (obj)
+                {
+                    if (_sn == int.MaxValue)
+                    {
+                        _sn = 0;
+                    }
+                    else
+                    {
+                        _sn++;
+                    }
+                    //Thread.Sleep(100);
+                    return DateTime.Now.ToString("yyyyMMdd") + _sn.ToString().PadLeft(5, '0');
+                }
+            }
+        }
+
+        #region 返回时间差
+        public static string DateDiff(DateTime DateTime1, DateTime DateTime2)
+        {
+            string dateDiff = null;
+            try
+            {
+                //TimeSpan ts1 = new TimeSpan(DateTime1.Ticks);
+                //TimeSpan ts2 = new TimeSpan(DateTime2.Ticks);
+                //TimeSpan ts = ts1.Subtract(ts2).Duration();
+                TimeSpan ts = DateTime2 - DateTime1;
+                if (ts.Days >= 1)
+                {
+                    dateDiff = DateTime1.Month.ToString() + "月" + DateTime1.Day.ToString() + "日";
+                }
+                else
+                {
+                    if (ts.Hours > 1)
+                    {
+                        dateDiff = ts.Hours.ToString() + "小时前";
+                    }
+                    else
+                    {
+                        dateDiff = ts.Minutes.ToString() + "分钟前";
+                    }
+                }
+            }
+            catch
+            { }
+            return dateDiff;
+        }
+        #endregion
+
+        #region 社区返回用户等级颜色标识
+        /// <summary>
+        /// 社区返回用户等级颜色标识
+        /// </summary>
+        /// <param name="groupName"></param>
+        /// <returns></returns>
+        public static string GetAskGroupColor(string groupName)
+        {
+            var str = "";
+            switch (groupName)
+            {
+                case "普通用户":
+                    str = "04aad4"; break;
+                case "专家":
+                    str = "ffbf00"; break;
+                case "社区管理员":
+                    str = "a35429"; break;
+                case "创始人":
+                    str = "780978"; break;
+                default:
+                    str = "04aad4"; break;
+            }
+            return str;
+        }
+        #endregion
     }
 }

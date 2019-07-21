@@ -5,12 +5,38 @@ using System.Text;
 namespace FytSoa.Service.DtoModel
 {
     /// <summary>
+    /// 查询count
+    /// </summary>
+    public class ResultCount
+    {
+        public int Count { get; set; } = 0;
+    }
+
+    /// <summary>
+    /// 是否存在
+    /// </summary>
+    public class ResultAny
+    {
+        public bool Any { get; set; } = false;
+    }
+
+    /// <summary>
     /// 自定义排序
     /// </summary>
     public class ParmSort
     {
         public int p { get; set; }
         public int i { get; set; }
+        public int o { get; set; }
+    }
+
+    /// <summary>
+    /// 自定义排序
+    /// </summary>
+    public class ParmStringSort
+    {
+        public string p { get; set; }
+        public string i { get; set; }
         public int o { get; set; }
     }
 
@@ -68,7 +94,17 @@ namespace FytSoa.Service.DtoModel
         /// <summary>
         /// 审核状态
         /// </summary>
-        public int audit { get; set; } = 0;
+        public int audit { get; set; } = -1;
+
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public int status { get; set; } = -1;
+
+        /// <summary>
+        /// 属性
+        /// </summary>
+        public int attr { get; set; } = 0;
 
         /// <summary>
         /// 搜索日期，可能是2个日期，通过-分隔
@@ -94,6 +130,16 @@ namespace FytSoa.Service.DtoModel
         /// 动态条件
         /// </summary>
         public string where { get; set; }
+
+        /// <summary>
+        /// 站点
+        /// </summary>
+        public string site { get; set; }
+
+        /// <summary>
+        /// 英文名称
+        /// </summary>
+        public string number { get; set; }
     }
 
     public class AppSearchParm

@@ -142,5 +142,12 @@ namespace FytSoa.Core.Model.Cms
         /// </summary>           
         public DateTime? RepDate { get; set; }
 
+        /// <summary>
+        /// Desc:站点ID
+        /// Default:0
+        /// Nullable:False
+        /// </summary>
+        public string SiteGuid { get; set; }
+
     }
 }

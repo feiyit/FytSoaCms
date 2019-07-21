@@ -71,7 +71,7 @@ namespace FytSoa.Core.Model.Cms
         /// Default:0
         /// Nullable:False
         /// </summary>
-        public int SiteID { get; set; } = 1;
+        public string SiteGuid { get; set; }
 
         /// <summary>
         /// 更新时间

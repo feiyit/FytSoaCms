@@ -36,7 +36,8 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("class/page")]
         public async Task<ApiResult<List<CmsAdvClass>>> GetClassPages()
         {
-            return await _classService.GetListAsync();
+            var siteGuid = SiteTool.CurrentSite?.Guid; ;
+            return await _classService.GetListAsync(m=>m.SiteGuid== siteGuid, m=>m.Guid,DbOrderEnum.Asc);
         }
 
         /// <summary>
@@ -46,6 +47,7 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("class/add")]
         public async Task<ApiResult<string>> AddClass([FromBody]CmsAdvClass parm)
         {
+            parm.SiteGuid = SiteTool.CurrentSite?.Guid;
             parm.Guid = Guid.NewGuid().ToString();
             return await _classService.AddAsync(parm);
         }
@@ -67,6 +69,7 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("class/edit")]
         public async Task<ApiResult<string>> EditClass([FromBody]CmsAdvClass parm)
         {
+            parm.SiteGuid = SiteTool.CurrentSite?.Guid;
             return await _classService.UpdateAsync(parm);
         }
         #endregion
@@ -80,7 +83,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// <returns></returns>
         [HttpGet("list/page")]
         public async Task<JsonResult> GetAdvListPages(PageParm parm)
-        {
+        {            
             var res = await _listService.GetListAsync(m=>m.ClassGuid==parm.key,m=>m.Sort,DbOrderEnum.Desc);
             return Json(new { code = 0, msg = "success", count = 1, res.data });
         }

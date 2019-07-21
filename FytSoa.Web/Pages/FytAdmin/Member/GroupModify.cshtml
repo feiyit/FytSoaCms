@@ -1,0 +1,169 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Member.GroupModifyModel
+@{
+    ViewData["Title"] = "添加/修改用户组";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+ <style>
+     .help-block{color: #999; font-size:12px; display:block; padding:5px 0;}
+     .form-cus{width:75%;}
+     .layui-form-item .layui-input-inline{width:225px;}
+     .cur-image{width:20%; position:absolute;right:25px; top:0px;}
+     .cur-image .add-photo.default{height:130px;}
+     .cur-image .select-newimg{padding-top:35px;}
+     .cur-image .add-photo img{height:130px;}
+    </style>
+<div id="app">   
+    <form class="layui-form form-cus" action="" v-if="m">
+        <div class="layui-form-item">
+            <label class="layui-form-label">组等级</label>
+            <div class="layui-input-block">
+                <select name="level" id="level">
+                    <option v-for="it in sellevel" :value="it.v">{{it.v}}</option>
+                </select>
+                <span class="help-block">数字越大等级越高</span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">组名称</label>
+            <div class="layui-input-block">
+                <input type="text" v-model="m.name" name="name" autocomplete="off" class="layui-input" lay-verify="required" lay-verType="tips">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">积分升级条件</label>
+                <div class="layui-input-inline">
+                    <input type="number" v-model="m.upPoint" name="upPoint" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">金额升级条件</label>
+                <div class="layui-input-inline">
+                    <input type="number" v-model="m.upMoney" name="upMoney" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">折扣</label>
+            <div class="layui-input-block">
+                <input type="number" v-model="m.disCount" name="disCount" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                <span class="help-block">请输入0~100之间的数字,值为0代表不设置折扣</span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="status" id="status" lay-skin="switch" checked="checked" lay-text="启用|禁用">
+            </div>
+        </div>
+        <ul class="addpic-list cur-image clearfix">
+            <li>
+                <div class="add-photo default">
+                    <input class="imgv" v-model="m.images" name="images" id="images" type="hidden">
+                    <div class="select-newimg fyt-cloud " :class="m.images?'layui-hide':''" data-text="images" data-img="imgShow" data-type="form">
+                        <i class="icon-addphote"></i>
+                        <span>选择组图片</span>
+                    </div>
+                    <div class="add-photo-wall" :class="!m.images?'layui-hide':''">
+                        <img id="imgShow" :src="m.images">
+                        <div class="phote-edit">
+                            <a class="photo-tool fyt-cloud" data-text="images" data-img="imgShow" data-type="form" href="javascript:void(0)"><i class="layui-icon layui-icon-edit"></i>更换</a>
+                            <a class="photo-tool last" href="javascript:void(0)" onclick="oc.deleteFile()"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                        </div>
+                        <div class="cover">组图片</div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+        var oc,vm = new Vue({
+            el: '#app',
+            data: {
+                m: {},
+                sellevel: []
+            },
+            created: function () {
+                var that = this;
+                for (let i = 0; i < 101; i++) {
+                    that.sellevel.push({'v':i});
+                }
+            },
+            methods: {
+
+            }
+        });
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form'], function () {
+            var form = layui.form, $ = layui.jquery, os = layui.common;
+            os.cloudFile();
+            var index = parent.layer.getFrameIndex(window.name);
+            oc = {
+                init: function () {
+                    os.ajax('api/membergroup/model', { parm: os.getUrlParam('guid') }, function (res) {
+                        console.log(res);
+                        if (res.statusCode === 200) {
+                            vm.m = res.data;
+                            if (vm.m.guid) {
+                                $('#level').val(vm.m.level);
+                                $("#status").prop("checked", vm.m.status)
+                                vm.$nextTick(function () {
+                                    form.render();
+                                });
+                            }
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
+                },
+                fileSave(v) {
+                    $(".select-newimg").addClass('layui-hide');
+                    $(".add-photo-wall").removeClass('layui-hide');
+                    $('#images').val(v);
+                    $('#imgShow').attr('src', v);
+                },
+                deleteFile() {
+                    $(".select-newimg").removeClass('layui-hide');
+                    $(".add-photo-wall").addClass('layui-hide');
+                    $('#images').val('');
+                    $('#imgShow').attr('src', v);
+                }
+            };
+            oc.init();
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                var urls = "api/membergroup/add";
+                if (vm.m.guid) {
+                    urls = "api/membergroup/edit";
+                }
+                vm.m.level = data.field.level;
+                vm.m.images = data.field.images;
+                vm.m.status = data.field.status === 'on' ? true : false;
+                os.ajax(urls, vm.m, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode == 200) {
+                        parent.layer.close(index);
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.layer.close(index);
+            });
+        });
+    </script>
+}

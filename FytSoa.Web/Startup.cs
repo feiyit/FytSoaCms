@@ -60,9 +60,9 @@ namespace FytSoa.Web
                 o.LoginPath = new PathString("/fytadmin/login");
             })
             //新增一个新的方案
-            .AddCookie(CompanyAuthorizeAttribute.CompanyAuthenticationScheme, o =>
+            .AddCookie(BbsUserAuthorizeAttribute.BbsUserAuthenticationScheme, o =>
             {
-                o.LoginPath = new PathString("/company/login");
+                o.LoginPath = new PathString("/bbs/nologin");
             })
             .AddJwtBearer(JwtAuthorizeAttribute.JwtAuthenticationScheme, o =>
             {
@@ -111,7 +111,7 @@ namespace FytSoa.Web
 
             services.AddMvc().AddRazorPagesOptions(options =>
             {
-                options.Conventions.AddPageRoute("/web/index", "/");
+                //options.Conventions.AddPageRoute("/web/index", "/");
             });
 
             #region Swagger UI

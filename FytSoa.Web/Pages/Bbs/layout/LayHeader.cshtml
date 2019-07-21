@@ -1,0 +1,76 @@
+﻿@using FytSoa.Common
+@using FytSoa.Core.Model.Cms
+@using FytSoa.Service.Interfaces
+@inject ICmsAdvListService _advService
+@inject ICacheService _cacheService
+<header id="header">
+    <div class="col-md-2 col-xs-2" id="logo">
+        <a href="/bbs" style="font-size:20px;">
+            FytSoaCms & BBS
+        </a>
+    </div>
+    <!-- logo -->
+    <div id="menu_qa" class="col-md-8 col-xs-8">
+        <div class="header-menu">
+            <ul>
+                <li><a href="/">首页</a></li>
+                <li class="menu-item-has-children">
+                    <i class="fa fa-chevron-circle-down"></i><a href="/">开源地址</a>
+                    <ul class="sub-menu">
+                        <li><a href="https://github.com/feiyit/SoaProJect" target="_blank">GitHub</a></li>
+                        <li><a href="https://gitee.com/feiyit/FytSoaCms" target="_blank">码云</a></li>
+                    </ul>
+                </li>
+                <li><a href="/bbs">社区</a></li>
+                <li><a href="/web">网站</a></li>
+                <li><a href="javascript:alert('加群：858895405')">联系</a></li>
+            </ul>
+        </div>
+        <!-- menu -->
+        <div class="header-search-wrapper">
+            <section class="buttonset">
+                <button id="showLeftPush"><i class="fa fa-question"></i></button>
+                <button id="showRightPush"><i class="fa fa-bar-chart-o"></i></button>
+                <button id="showTop"><i class="fa fa-list"></i></button>
+            </section>
+            <form id="header_search" method="GET" action="/bbs/" class="disable-mobile-search">
+                <input type="text" name="key" required="" value="" placeholder="请输入关键字（Enter Keywords）" autocomplete="off" style="width: 350px;">
+                <i class="fa fa-search"></i>
+                <div id="search_preview" class="search-preview empty"></div>
+            </form>
+        </div>
+        <!-- search -->
+    </div>
+    <div id="login_qa" class="col-md-2 col-xs-2 btn-group header-avatar">
+        <a class="login-url" id="rlogin" href="javascript:void(0)" data-toggle="modal">登录 or 注册</a>
+        <div class="login-success">
+            <span class="expand dropdown-toggle" type="span" data-toggle="dropdown" aria-expanded="false" style="margin-top: 25px;">
+                <a href="javascript:void(0)" class="dropdown-account">
+                    <span class="avatar"><img itemprop="image" id="uheadpic" src="" class="avatar" alt=""></span>
+                    <span class="display_name" id="login_name">feiyit</span>
+                    <span class="icon-down"><i class="fa fa-chevron-circle-down"></i></span>
+                </a>
+            </span>
+            <ul class="dropdown-menu dropdown-profile">
+                <li>
+                    <a href="/">
+                        <i class="fa fa-user"></i> 个人信息
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="open-edit-profile edit_profile">
+                        <i class="fa fa-cog"></i> 设置
+                    </a>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0)" id="logout">
+                        <i class="fa fa-power-off"></i> 退出
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- avatar -->
+</header>
+<div class="col-md-12 col-xs-12" id="header_sidebar"></div>

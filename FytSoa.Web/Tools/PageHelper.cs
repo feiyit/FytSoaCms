@@ -8,6 +8,67 @@ namespace FytSoa.Web
 {
     public class PageHelper
     {
+        public static string HtmlsBBs(int page, int pagesize, long total, string url)
+        {
+            var str = "";
+            if (total<2)
+            {
+                return str;
+            }
+            if (page!=1)
+            {
+                str += "<li><a class=\"prev page-numbers\" href=\""+url+"\">&lt;</a></li>";
+            }
+            
+            int maxi = Convert.ToInt32(total);
+            if (maxi < 10)
+            {
+                for (int i = 1; i < maxi + 1; i++)
+                {
+                    if (i == page)
+                    {
+                        str += "<li><span class=\"page-numbers current\">" + i + "</span></li>";
+                    }
+                    else
+                    {
+                        str += "<li><a class=\"page-numbers\" href=\"" + url + "?page=" + i + "\">" + i + "</a></li>";
+                    }
+                }
+            }
+            else
+            {
+                int maxfeye = page + 5;
+                int minfeye = page - 4;
+                if (page < 6)
+                {
+                    minfeye = 1;
+                    maxfeye = 11;
+                }
+                if (maxfeye > maxi)
+                {
+                    maxfeye = maxi;
+                }
+                for (int f = minfeye; f < maxfeye + 1; f++)//每页显示9个分页数字
+                {
+                    if (f == page)
+                    {
+                        str += "<li><span class=\"page-numbers current\">" + f + "</span></li>";
+                    }
+                    else
+                    {
+                        str += "<li><a class=\"page-numbers\" href=\"" + url + "?page=" + f + "\">" + f + "</a></li>";
+
+                    }
+                }
+            }
+
+            if (page!=total)
+            {
+                str += "<li><a class=\"next page-numbers\" href=\""+url+"+?page="+(page+1) +"\">&gt;</a></li>";
+            }
+            return str;
+        }
+
         public static string Htmls(int page, int pagesize, int total, string url)
         {
             var str = "";

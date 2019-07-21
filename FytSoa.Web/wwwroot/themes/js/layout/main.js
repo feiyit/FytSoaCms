@@ -4,7 +4,8 @@
         menulist: [],
         messList: [],
         messCount: 0,
-        isDown: false
+        isDown: false,
+        siteList:[]
     },
     created: function () {
         var that = this;
@@ -32,6 +33,16 @@
                     os.error(res.message);
                 }
             });
+        },
+        qhSite: function (m) {
+            os.load();
+            os.ajax('api/admin/rep/site', m, function (res) {
+                if (res.statusCode === 200) {
+                    window.location.reload();
+                } else {
+                    os.error(res.message);
+                }
+            });
         }
     }
 });
@@ -48,6 +59,14 @@ layui.config({
 }).use(['element', 'layer', 'jquery', 'common', 'pjax'], function () {
     var element = layui.element, $ = layui.jquery;
     os = layui.common;
+    //加载站点列表
+    os.ajax('api/cmssite/list', {}, function (res) {
+        if (res.statusCode === 200) {
+            main_vm.siteList = res.data;
+        } else {
+            os.error(res.message);
+        }
+    });
     os.ajax('api/menu/authmenu', null, function (res) {
         if (res.statusCode === 200) {
             $.each(res.data, function (index, item) {

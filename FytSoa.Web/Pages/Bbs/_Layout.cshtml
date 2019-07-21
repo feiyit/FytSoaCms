@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="/dist_bbs/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/dist_bbs/css/chosen.css">
+    <link rel="stylesheet" href="/dist_bbs/css/custom.css">
+    <link rel="stylesheet" href="/dist_bbs/css/main.css">
+    <link rel="stylesheet" href="/dist_bbs/css/push-menu.css">
+    <title>@Html.Raw(ViewData["Title"])</title>
+    <meta name="keywords" content="@Html.Raw(ViewData["Key"])" />
+    <meta name="description" content="@Html.Raw(ViewData["Desc"])" />
+</head>
+<body class="cbp-spmenu cbp-spmenu-push">
+    @Html.Partial("layout/Header")
+    <div class="container-fluid">
+        <div class="row">
+            @Html.Partial("layout/LayHeader")
+            @Html.Partial("layout/LayLeft")
+            <!-- left end -->
+            @RenderBody()
+            @Html.Partial("layout/LayRight")
+            <!-- right end -->
+        </div>
+    </div>
+    @Html.Partial("layout/Modal")
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="/dist_bbs/js/bootstrap.min.js"></script>
+    <script src="/dist_bbs/js/chosen.jquery.min.js"></script>
+    <script src="/dist_bbs/js/chosen.proto.min.js"></script>
+    <script src="/dist_bbs/js/utils.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

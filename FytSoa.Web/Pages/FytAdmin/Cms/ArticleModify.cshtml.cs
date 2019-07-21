@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FytSoa.Api;
 using FytSoa.Common;
 using FytSoa.Core.Model.Cms;
 using FytSoa.Service.Interfaces;
@@ -34,7 +35,8 @@ namespace FytSoa.Web.Pages.FytAdmin.Cms
             {
                 Article.ColumnId = column;
             }
-            var list = _columnService.RecursiveModule(_columnService.GetListAsync().Result.data);
+            var siteGuid = SiteTool.CurrentSite?.Guid;
+            var list = _columnService.RecursiveModule(_columnService.GetListAsync(m => m.SiteGuid == siteGuid, m => m.Sort, DbOrderEnum.Asc).Result.data);
             foreach (var item in list)
             {
                 item.Title = Utils.LevelName(item.Title, item.ClassLayer);

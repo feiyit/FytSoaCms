@@ -10,6 +10,11 @@ namespace FytSoa.Common
     public class KeyHelper
     {
         /// <summary>
+        /// 站点编号
+        /// </summary>
+        public static string NOWSITE = "NOWSITE";
+
+        /// <summary>
         /// 管理菜单
         /// </summary>
         public static string ADMINMENU = "ADMINMENU";
@@ -55,5 +60,19 @@ namespace FytSoa.Common
         /// </summary>
         public static string LOGINDELAYMINUTE = "Login:DelayMinute";
         #endregion
+
+        #region 社区配置
+        /// <summary>
+        /// 过滤关键字
+        /// </summary>
+        public static string FilterKey = "Cache:FilterKey";
+
+        /// <summary>
+        /// 登录认证保存Key
+        /// </summary>
+        public static string BbsUserKey = "BBSUSERKEY";
+        #endregion
+
+
     }
 }

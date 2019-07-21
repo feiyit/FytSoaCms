@@ -32,6 +32,7 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpGet("getpages")]
         public JsonResult GetPages(PageParm parm)
         {
+            parm.site = SiteTool.CurrentSite?.Guid;
             var res = _articleService.GetList(parm);
             return Json(new { code = 0, msg = "success", count = res.TotalItems, data = res.Items });
         }
@@ -65,6 +66,7 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("add")]
         public async Task<ApiResult<string>> Add([FromBody]CmsArticle parm)
         {
+            parm.SiteGuid = SiteTool.CurrentSite?.Guid;
             return await _articleService.AddAsync(parm);
         }
 
@@ -85,6 +87,7 @@ namespace FytSoa.Api.Controllers.Cms
         [HttpPost("edit")]
         public async Task<ApiResult<string>> Edit([FromBody]CmsArticle parm)
         {
+            parm.SiteGuid = SiteTool.CurrentSite?.Guid;
             return await _articleService.UpdateAsync(parm);
         }
         #endregion

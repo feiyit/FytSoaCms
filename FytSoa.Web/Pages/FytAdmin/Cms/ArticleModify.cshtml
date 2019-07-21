@@ -223,9 +223,9 @@
                     var imgIndex = v.lastIndexOf('/');
                     var str = v.substring(imgIndex + 1, v.length);
                     if (os.isExtImage(v)) {
-                        tinyMCE.editors[0].setContent('<img src="' + v + '" alt="' + str + '"/>')
+                        tinyMCE.editors[0].execCommand('mceInsertContent',false,'<img src="' + v + '" alt="' + str + '"/>')
                     } else {
-                        tinyMCE.editors[0].setContent('<p style="padding:12px 20px;background-color: #edf3f5;"><a href="' + v + '" target="_blank" title="' + str + '">' + str + '</a></p>')
+                        tinyMCE.editors[0].execCommand('mceInsertContent',false,'<p style="padding:12px 20px;background-color: #edf3f5;"><a href="' + v + '" target="_blank" title="' + str + '">' + str + '</a></p>')
                     }
                 },
                 fileSave(v) {
@@ -265,7 +265,10 @@
                     if (res.statusCode === 200) {
                         var $$ = parent.layui.jquery;
                         $$("#isSave").val('1');
-                        parent.active.closeCloumnModify();
+                        os.success('保存成功~');
+                        setTimeout(function () {
+                            parent.active.closeCloumnModify();
+                        }, 500);
                     }
                     else {
                         os.error(res.message);

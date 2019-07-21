@@ -41,10 +41,10 @@ namespace FytSoa.Api
             base.OnActionExecuted(context);
             Stopwatch.Stop();
 
-            string url = context.HttpContext.Request.Path + context.HttpContext.Request.QueryString;
-            string method = context.HttpContext.Request.Method;
+            var url = context.HttpContext.Request.Path + context.HttpContext.Request.QueryString;
+            var method = context.HttpContext.Request.Method;
 
-            string qs = ActionArguments;
+            var qs = ActionArguments;
 
             var user = "";
             //检测是否包含'Authorization'请求头，如果不包含则直接放行
@@ -53,7 +53,7 @@ namespace FytSoa.Api
                 var tokenHeader = context.HttpContext.Request.Headers["Authorization"];
                 tokenHeader = tokenHeader.ToString().Substring("Bearer ".Length).Trim();
 
-                TokenModel tm = JwtHelper.SerializeJWT(tokenHeader);
+                var tm = JwtHelper.SerializeJWT(tokenHeader);
                 user = tm.UserName;
             }
 

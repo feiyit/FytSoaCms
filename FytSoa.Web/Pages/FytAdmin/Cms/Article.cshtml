@@ -94,16 +94,16 @@
                                     return '<a href="javascript:void(0)" lay-event="edit" class="text-color">' + res.title + '</a>';
                                 }
                             },
-                            { field: 'tag', width: 200, title: '标签' },
-                            { field: 'sort', width: 100, title: '权重', sort: true },
+                            { field: 'tag', width: 100, title: '标签' },
+                            { field: 'sort', width: 80, title: '权重', sort: true },
                             {
-                                field: 'iosVersion', width: 200, title: '属性', templet: function (res) {
+                                field: 'iosVersion', width: 140, title: '属性', templet: function (res) {
                                     return attrHtml(res);
                                 }
                             },
                             { field: 'audit', width: 120, title: '审核状态', templet: '#switchTpl' },
-                            { field: 'hits', width: 100, title: '点击量' },
-                            { field: 'editDate', width: 200, title: '更新时间', sort: true }
+                            { field: 'hits', width: 80, title: '点击量' },
+                            { field: 'editDate', width: 160, title: '更新时间', sort: true }
                         ]
                     ],
                     page: true,

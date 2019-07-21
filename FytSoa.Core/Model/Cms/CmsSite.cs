@@ -155,5 +155,10 @@ namespace FytSoa.Core.Model.Cms
         /// </summary>
         public bool IsDel { get; set; } = false;
 
+        /// <summary>
+        /// 创建站点时间
+        /// </summary>
+        public DateTime AddTime { get; set; } = DateTime.Now;
+
     }
 }
