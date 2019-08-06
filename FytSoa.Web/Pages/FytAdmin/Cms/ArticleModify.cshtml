@@ -188,6 +188,7 @@
     <script>
         var oc, os;
         tinymce.init({
+            convert_urls: false,
             selector: '#Content',
             height: 400,
             plugins: 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help filemanager',
@@ -220,12 +221,15 @@
             os.cloudFile();
             oc = {
                 setContent(v) {
-                    var imgIndex = v.lastIndexOf('/');
-                    var str = v.substring(imgIndex + 1, v.length);
-                    if (os.isExtImage(v)) {
-                        tinyMCE.editors[0].execCommand('mceInsertContent',false,'<img src="' + v + '" alt="' + str + '"/>')
-                    } else {
-                        tinyMCE.editors[0].execCommand('mceInsertContent',false,'<p style="padding:12px 20px;background-color: #edf3f5;"><a href="' + v + '" target="_blank" title="' + str + '">' + str + '</a></p>')
+                    for (var i = 0; i < v.length; i++) {
+                        var item = v[i];
+                        var imgIndex = v.lastIndexOf('/');
+                        var str = item.name.substring(imgIndex + 1, item.name.length);
+                        if (os.isExtImage(item.name)) {
+                            tinyMCE.editors[0].execCommand('mceInsertContent', false, '<p><img src="' + item.name + '" alt="' + str + '"/></p>')
+                        } else {
+                            tinyMCE.editors[0].execCommand('mceInsertContent', false, '<p style="padding:12px 20px;background-color: #edf3f5;"><a href="' + item.name + '" target="_blank" title="' + str + '">' + str + '</a></p>')
+                        }
                     }
                 },
                 fileSave(v) {

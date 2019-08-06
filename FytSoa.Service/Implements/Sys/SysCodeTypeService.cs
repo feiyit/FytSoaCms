@@ -105,7 +105,7 @@ namespace FytSoa.Service.Implements
         public async Task<ApiResult<string>> ModifyAsync(SysCodeType parm)
         {
             var dbres =await Db.Updateable<SysCodeType>()
-                .UpdateColumns(m => new SysCodeType() { Name = parm.Name, EditTime = DateTime.Now })
+                .SetColumns(m => new SysCodeType() { Name = parm.Name, EditTime = DateTime.Now })
                 .Where(m => m.Guid == parm.Guid)
                 .ExecuteCommandAsync();
             var res = new ApiResult<string>

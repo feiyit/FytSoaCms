@@ -54,6 +54,8 @@
     <None Include="wwwroot\themes\layui\lay\modules\tree.js" />
     <None Include="wwwroot\themes\layui\lay\modules\upload.js" />
     <None Include="wwwroot\themes\layui\lay\modules\util.js" />
+    <None Include="wwwroot\themes\tinymce\plugins\filemanager\plugin.js" />
+    <None Include="wwwroot\themes\tinymce\plugins\filemanager\plugin.min.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.9.406" />

@@ -23,7 +23,7 @@
         list: [],
         noShow: 'layui-hide',
         more: 'layui-hide',
-        active: '',
+        active: [],
         menuActive: '',
         firstMenu: '',
         tagName: '全部分类',
@@ -40,6 +40,7 @@
     methods: {
         //切换类型
         savetype: function (t) {
+            this.active = [];
             this.tabActive = t;
             this.typeModel.Type = t;
             this.list = [];
@@ -80,7 +81,7 @@
         },
         //点击确定，返回给父窗体的值
         saveSelect: function () {
-            if (this.active === '') {
+            if (this.active.length==0) {
                 os.error('请选择图片~'); return;
             }
             var imgControl = os.getUrlParam('img');
@@ -90,30 +91,65 @@
             var frameid = os.getUrlParam('frameid');
             //非iframe 文本框选择文件
             if (type === 'sign') {
-                $$('#' + control).val(this.active);
+                $$('#' + control).val(this.active[0].name);
             }
             //弹出表单选择文件
             if (type === 'form') {
                 var formframes = $$("#" + frameid)[0].contentWindow;
-                formframes.oc.fileSave(this.active);
+                formframes.oc.fileSave(this.active[0].name);
             }
             //编辑器选择文件
             if (type === 'edit') {
-                window.parent.oc.setContent(this.active);
+                //window.parent.oc.setContent(this.active);
+                var formframes = $$("#" + frameid)[0].contentWindow;
+                formframes.oc.setContent(this.active);
+            }
+            //多选文件
+            if (type === 'many') {
+                var formframes = $$("#" + frameid)[0].contentWindow;
+                formframes.oc.setMany(this.active);
             }
             //iframe  选择图片
             if (type === 'iframe') {
                 var frames = $$("#" + frameid)[0].contentWindow;
-                frames.document.getElementById(control).value = this.active;
+                frames.document.getElementById(control).value = this.active[0].name;
             }
             parent.layer.close(index);
         },
         //选择图片操作
         selectImg: function (m) {
-            this.active = m.name;
+            var that = this;
+            //最多只能选择6张图片，并判断是否存在，如果存在，则删除
+            var iscz = false;
+            for (var i = 0; i < that.active.length; i++) {
+                if (that.active[i] == m) {
+                    iscz = true;
+                    var sy = that.active.indexOf(m);
+                    that.active.splice(sy, 1);
+                }
+            }
+            if (!iscz) {
+                if (that.active.length === 6) {
+                    os.error('最多只能选择6张图片~');
+                    return;
+                }
+                this.active.push(m);
+            }
+        },
+        //判断图片是否在选择的里面
+        isSelect: function (m) {
+            var that = this;
+            var cz = false;
+            for (var i = 0; i < that.active.length; i++) {
+                if (that.active[i].name == m) {
+                    cz = true;
+                }
+            }
+            return cz;
         },
         //点击左侧分类，显示图片列表
         goTypeList: function (parentM, thisM) {
+            this.active = [];
             this.tagName = parentM.name + ' / ' + thisM.name;
             this.menuActive = thisM.enName;
             this.firstMenu = parentM.enName;
@@ -241,7 +277,7 @@ layui.config({
             return xhr;
         }
     }
-    console.log(os.getToken());
+    
     upload.render({
         elem: '#localup' //绑定元素
         , multiple: true
@@ -272,7 +308,7 @@ layui.config({
                 vm.upStatus = 'layui-hide';
                 os.error(res.message);
             }
-            console.log(res);
+            
         }
         , error: function () {
             vm.upStatus = 'layui-hide';
@@ -312,7 +348,7 @@ layui.config({
         initLocal: function () {
             os.tableLoading(); os.log(vm.localParm);
             os.ajax('api/localfiles/list', vm.localParm, function (res) {
-                console.log(res);
+                
                 if (res.code === 200) {
                     //总页数
                     vm.localParm.total = parseInt(res.page);
@@ -437,7 +473,7 @@ layui.config({
             var key = file.name;
             os.ajax('api/cloudfiles/token', null, function (res) {
                 if (res.code === 200) {
-                    key = res.page + prefix + key; console.log(key);
+                    key = res.page + prefix + key; 
                     var observable = qiniu.upload(file, key, res.token, putExtra, config);
                     var subscription = observable.subscribe(observer) // 上传开始
                 }

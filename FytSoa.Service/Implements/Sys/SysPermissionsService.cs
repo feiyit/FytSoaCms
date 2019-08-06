@@ -204,7 +204,7 @@ namespace FytSoa.Service.Implements
                     model.BtnFunJson = JsonConvert.SerializeObject(new List<string>() { parm.btnfun });
                 }
                 Db.Updateable<SysPermissions>()
-                    .UpdateColumns(m=>new SysPermissions() { BtnFunJson=model.BtnFunJson })
+                    .SetColumns(m=>new SysPermissions() { BtnFunJson=model.BtnFunJson })
                     .Where(m => m.RoleGuid == parm.role
                 && m.MenuGuid == parm.menu && m.Types == 1).ExecuteCommand();
                 res.statusCode = (int)ApiEnum.Status;

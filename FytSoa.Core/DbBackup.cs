@@ -85,8 +85,8 @@ namespace FytSoa.Core
                         {
                             cmmd.Connection = myconn;
                             cmmd.CommandTimeout = 3600;
-                            backCmd.ImportInfo.TargetDatabase = dbName;//前提条件 当前 myconn 中的用户有建库等系列权限
-                            backCmd.ImportInfo.DatabaseDefaultCharSet = "utf8";
+                            //backCmd.ImportInfo.TargetDatabase = dbName;//前提条件 当前 myconn 中的用户有建库等系列权限
+                            //backCmd.ImportInfo.DatabaseDefaultCharSet = "utf8";
                             backCmd.ImportFromFile(path);
                             isSuccess = true;
                         }

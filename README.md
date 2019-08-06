@@ -1,4 +1,4 @@
-### 特别提示  
+### 特别提示 :heart:   
   
 项目依赖  
 ```
@@ -7,7 +7,8 @@
   
 ## 项目源代码地址
   **github地址**：[https://github.com/feiyit/FytSoaCms](https://github.com/feiyit/FytSoaCms)  
-**码云地址**：[https://gitee.com/feiyit/FytSoaCm](https://gitee.com/feiyit/FytSoaCms)
+**码云地址**：[https://gitee.com/feiyit/FytSoaCms](https://gitee.com/feiyit/FytSoaCms)  
+
   
 
 #### **简介:**  
@@ -21,8 +22,7 @@
   
 
  **Demo演示地址[ http://fytsoacms.netcore.club/fytadmin/](http://fytsoacms.netcore.club/fytadmin/)**  
-  账号：demo888    密码：demo   
-  
+  账号：demo888    密码：demo  
   
  
   
@@ -47,8 +47,9 @@
 1. 其他模块：微信多账号管理、自定义菜单、素材管理、消息管理 
  
   
-=============================================================================  
-
+===================================================================================================  
+  
+  
   
 #### **下一步工作计划**   
 
@@ -76,6 +77,11 @@
 9、【升级】Layui升级到5.X  
 10、【升级】ORM升级到5.X  
 
+
+   
+  
+  
+  
   
 # 2019-05-04更新  
 1、【新增】增加日志到数据库模块（登录日志、操作日志、异常日志）  
@@ -97,6 +103,9 @@
 
 ### 下一步计划，要增加功能模块，投票，然后在做一个社区，欢迎大家一起参与，QQ群：858895405  
 ** 
+  
+ 
+  
 
 
 

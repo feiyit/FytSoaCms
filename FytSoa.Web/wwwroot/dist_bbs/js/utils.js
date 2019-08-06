@@ -146,7 +146,7 @@ var user = {
             function (res) {
                 if (res.statusCode === 200) {
                     window.location.reload();
-                    os.SetSession("BBSLOGINSUCCESS","1");
+                    //os.SetSession("BBSLOGINSUCCESS","1");
                 } else {
                     toastr.error(res.message);
                 }
@@ -200,34 +200,34 @@ var user = {
     },
     //is login
     init: function() {
-        const logins = os.GetSession("BBSLOGINSUCCESS");
-        if (logins!==null) {
-            os.ajax("api/bbs/user/getuser",
+        //const logins = os.GetSession("BBSLOGINSUCCESS");
+        //if (logins!==null) {
+            
+        //}
+        os.ajax("api/bbs/user/getuser",
+            {},
+            function (res) {
+                if (res.statusCode === 200) {
+                    $("#rlogin").hide();
+                    $(".login-success").show();
+                    $("#login_name").html(res.data.loginName);
+                    $("#uheadpic").attr('src', res.data.headPic);
+                    $('.base-href').attr('href','/bbs/user/'+res.data.guid);
+                }
+            });
+        $("#logout").click(function () {
+            os.ajax("api/bbs/user/logout",
                 {},
                 function (res) {
                     if (res.statusCode === 200) {
-                        $("#rlogin").hide();
-                        $(".login-success").show();
-                        $("#login_name").html(res.data.loginName);
-                        $("#uheadpic").attr('src', res.data.headPic);
+                        os.SessionRemove("BBSLOGINSUCCESS");
+                        $("#rlogin").show();
+                        $(".login-success").hide();
                     } else {
                         toastr.error(res.message);
                     }
                 });
-            $("#logout").click(function () {
-                os.ajax("api/bbs/user/logout",
-                    {},
-                    function (res) {
-                        if (res.statusCode === 200) {
-                            os.SessionRemove("BBSLOGINSUCCESS");
-                            $("#rlogin").show();
-                            $(".login-success").hide();
-                        } else {
-                            toastr.error(res.message);
-                        }
-                    });
-            });
-        }
+        });
         if ($("#question_title").length > 0) {
             $("#question_title").keyup(function () {
                 var el = $(this);
@@ -280,6 +280,9 @@ var user = {
                 }
             });
             $(".tip-add-tag").click(function () {
+                if (!$("#question_tags").val()) {
+                    toastr.error('请输入标签关键字'); return;
+                }
                 $(".typeahead").hide();
                 $("#poll_tag_list").append('<li class="tag-item"><input type="hidden" name="stag" value="' + $("#question_tags").val() + '">' + $("#question_tags").val() + ' <a href="javascript:void(0)" class="delete"><i class="fa fa-times"></i></a></li>');
                 $("#question_tags").val('');
@@ -289,12 +292,16 @@ var user = {
             });
         }
         
-        $(".ask-question").click(function() {
-            if (logins !== null) {
-                window.location.href = '/bbs/askquestion';
-            } else {
-                $('#login_register').modal('toggle');
-            }
+        $(".ask-question").click(function () {
+            os.ajax("api/bbs/user/getuser",
+                {},
+                function (res) {
+                    if (res.statusCode === 200) {
+                        window.location.href = '/bbs/askquestion';
+                    } else {
+                        $('#login_register').modal('toggle');
+                    }
+                });
         });
     }
 };

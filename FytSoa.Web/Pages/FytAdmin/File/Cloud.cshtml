@@ -15,7 +15,7 @@
                 <strong>图片分类</strong><a class="layui-btn pic-btn pic-right" href="javascript:void(0)" @@click="addType()">+新增</a>
             </div>
             <div class="fyt-bran-top fyt-tree">
-                <div class="layui-collapse" lay-accordion="">
+                <div class="layui-collapse" lay-accordion="" style="height:390px; overflow:auto;">
                     <div class="layui-colla-item" v-for="(it,index) in typeMenu" v-if="it.level==0">
                         <h2 class="layui-colla-title">{{it.name}}</h2>
                         <div class="layui-colla-content layui-show">
@@ -52,7 +52,7 @@
                     <i class="layui-icon layui-icon-face-smile-fine"></i><span>没有内容...</span>
                 </p>
                 <ul>
-                    <li v-for="(it,index) in list" @@click="selectImg(it)" :class="{'active': active == it.name}">
+                    <li v-for="(it,index) in list" @@click="selectImg(it)" :class="{'active': isSelect(it.name)}">
                         <i class="sels"></i>
                         <div class="file-wrapper">
                             <img v-if="isImage(it.name)" :src="it.name+'?imageView2/1/w/350/h/350/q/75|imageslim'">

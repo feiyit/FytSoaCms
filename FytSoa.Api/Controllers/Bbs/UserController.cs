@@ -84,7 +84,7 @@ namespace FytSoa.Api.Controllers.Bbs
                 Email = param[2].value,
                 LoginPwd = param[3].value,
                 Autograph = "这家伙很懒，什么也没留下",
-                HeadPic = "/dist_bbs/images/head/"+Utils.Number(2) + ".jpg"
+                HeadPic = "/dist_bbs/images/head/"+Utils.Number(1) + ".jpg"
             };
             return Ok(await _memberService.Add(model));
         }
@@ -114,9 +114,16 @@ namespace FytSoa.Api.Controllers.Bbs
         public async Task<IActionResult> IsLogin()
         {
             var auth = await HttpContext.AuthenticateAsync(BbsUserAuthorizeAttribute.BbsUserAuthenticationScheme);
-            var str = auth.Principal.Identities.First(u => u.IsAuthenticated).FindFirst(KeyHelper.BbsUserKey).Value;
-            var model=JsonConvert.DeserializeObject<Core.Model.Member.Member>(DES3Encrypt.DecryptString(str));
-            return Ok(new ApiResult<Core.Model.Member.Member>() { data = model});
+            if (auth.Succeeded)
+            {
+                var str = auth.Principal.Identities.First(u => u.IsAuthenticated).FindFirst(KeyHelper.BbsUserKey).Value;
+                var model = JsonConvert.DeserializeObject<Core.Model.Member.Member>(DES3Encrypt.DecryptString(str));
+                return Ok(new ApiResult<Core.Model.Member.Member>() { data = model });
+            }
+            else
+            {
+                return Ok(new ApiResult<string>() { statusCode=400 });
+            }
         }
 
         /// <summary>
@@ -161,6 +168,7 @@ namespace FytSoa.Api.Controllers.Bbs
         /// 返回登录人的信息
         /// </summary>
         /// <returns></returns>
+        [NonAction]
         public async Task<Core.Model.Member.Member> GetLoginUser()
         {
             var auth = await HttpContext.AuthenticateAsync(BbsUserAuthorizeAttribute.BbsUserAuthenticationScheme);
