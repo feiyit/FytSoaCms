@@ -247,7 +247,7 @@ namespace FytSoa.Service.Implements
                     var model = SysOrganizeDb.GetById(parm.DepartmentGuid);
                     parm.DepartmentGuidList = model.ParentGuidList;
                 }
-                var dbres =await Db.Updateable<SysAdmin>().UpdateColumns(m => new SysAdmin()
+                var dbres =await Db.Updateable<SysAdmin>().SetColumns(m => new SysAdmin()
                 {
                     LoginName = parm.LoginName,
                     LoginPwd = parm.LoginPwd,

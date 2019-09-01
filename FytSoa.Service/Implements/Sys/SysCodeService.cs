@@ -103,7 +103,7 @@ namespace FytSoa.Service.Implements
         /// <returns></returns>
         public async Task<ApiResult<string>> ModifyAsync(SysCode parm)
         {
-            var isok =await Db.Updateable<SysCode>().UpdateColumns(
+            var isok =await Db.Updateable<SysCode>().SetColumns(
                 m => new SysCode()
                 {
                     Name = parm.Name,
@@ -128,7 +128,7 @@ namespace FytSoa.Service.Implements
         /// <returns></returns>
         public async Task<ApiResult<string>> ModifyStatusAsync(SysCode parm)
         {
-            var isok = await Db.Updateable<SysCode>().UpdateColumns(
+            var isok = await Db.Updateable<SysCode>().SetColumns(
                 m => new SysCode()
                 {
                     Status = parm.Status,
