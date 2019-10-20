@@ -14,11 +14,30 @@ namespace FytSoa.Extensions
 {
     public class QiniuCloud
     {
+        public static readonly QiniuCloud QnColud;
+
+        static QiniuCloud()
+        {
+            QnColud = new QiniuCloud();
+        }
+
         private static string Ak = "";
         private static string Sk = "";
         private static string Bucket = "";  //空间名
-        private static readonly string BasePath = "feiyit/";
+        private static string BasePath = "";
         private static string domain = "";
+
+        /// <summary>
+        /// 配置七牛云信息 仅初始化时生效
+        /// </summary>
+        public void Setting(QiniuConfig config)
+        {
+            Ak = config.AK;
+            Sk = config.SK;
+            Bucket = config.Bucket;
+            BasePath = config.BasePath;
+            domain = config.domain;
+        }
 
         /// <summary>
         /// 根据前缀获得文件列表

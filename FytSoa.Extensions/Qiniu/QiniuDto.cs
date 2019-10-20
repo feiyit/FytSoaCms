@@ -22,4 +22,35 @@ namespace FytSoa.Extensions
 
         public string filepath { get; set; }
     }
+
+    /// <summary>
+    /// 七牛云基本配置
+    /// </summary>
+    public class QiniuConfig
+    {
+        /// <summary>
+        ///  Access Key 
+        /// </summary>
+        public string AK { get; set; }
+
+        /// <summary>
+        /// Secret Key
+        /// </summary>
+        public string SK { get; set; }
+
+        /// <summary>
+        /// 空间名称
+        /// </summary>
+        public string Bucket { get; set; }
+
+        /// <summary>
+        /// 基本目录
+        /// </summary>
+        public string BasePath { get; set; }
+
+        /// <summary>
+        /// 域名
+        /// </summary>
+        public string domain { get; set; }
+    }
 }

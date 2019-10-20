@@ -23,7 +23,7 @@ namespace FytSoa.Web.Pages.Bbs
 
         public void OnGet()
         {
-            TagList = _tagService.GetListTagCounts().Result.data;
+            TagList = _tagService.GetListTagCounts(100).Result.data;
         }
     }
 }

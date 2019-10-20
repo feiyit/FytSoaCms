@@ -16,7 +16,7 @@ namespace FytSoa.Api.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [JwtAuthorize(Roles = "Admin")]
-    public class RoleMenuController : Controller
+    public class RoleMenuController : ControllerBase
     {
         private readonly ISysPermissionsService _roleMenu;
         public RoleMenuController(ISysPermissionsService roleMenu)
@@ -27,13 +27,13 @@ namespace FytSoa.Api.Controllers
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="param"></param>
         /// <returns></returns>
         [HttpGet("list")]
-        public async Task<JsonResult> GetPages(string key)
+        public async Task<IActionResult> GetPages([FromQuery]PageParm param)
         {
-            var res = await _roleMenu.GetListAsync(key);
-            return Json(new { code = 0, msg = "success", count = 100, res.data });
+            var res = await _roleMenu.GetListAsync(param.key);
+            return Ok(new { code = 0, msg = "success", count = 100, res.data });
         }
 
         /// <summary>
@@ -41,9 +41,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), ApiAuthorize(Modules = "Role", Methods = "Authorize", LogType = LogEnum.AUTHORIZE)]
-        public async Task<ApiResult<string>> SaveRoleMenu([FromBody]SysPermissions parm)
+        public async Task<IActionResult> SaveRoleMenu([FromBody]SysPermissions parm)
         {
-            return await _roleMenu.SaveAsync(parm);
+            return Ok(await _roleMenu.SaveAsync(parm));
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add/authorization"), ApiAuthorize(Modules = "Role", Methods = "Authorize", LogType = LogEnum.AUTHORIZE)]
-        public ApiResult<string> SaveAuthorization([FromBody]SysMenuAuthorization parm)
+        public IActionResult SaveAuthorization([FromBody]SysMenuAuthorization parm)
         {
-            return _roleMenu.SaveAuthorization(parm.list,parm.roleGuid);
+            return Ok(_roleMenu.SaveAuthorization(parm.list, parm.roleGuid));
         }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("torole"), ApiAuthorize(Modules = "Admin", Methods = "Authorize", LogType = LogEnum.AUTHORIZE)]
-        public async Task<ApiResult<string>> AdminToRole([FromBody]SysPermissions parm)
+        public async Task<IActionResult> AdminToRole([FromBody]SysPermissions parm)
         {
-            return await _roleMenu.ToRoleAsync(parm, parm.status);
+            return Ok(await _roleMenu.ToRoleAsync(parm, parm.status));
         }
 
         /// <summary>
@@ -71,9 +71,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("tubtnfun"), ApiAuthorize(Modules = "Role", Methods = "Authorize", LogType = LogEnum.AUTHORIZE)]
-        public ApiResult<string> RoleMenuToFun([FromBody]SysPermissionsParm parm)
+        public IActionResult RoleMenuToFun([FromBody]SysPermissionsParm parm)
         {
-            return _roleMenu.RoleMenuToFunAsync(parm);
+            return Ok(_roleMenu.RoleMenuToFunAsync(parm));
         }
     }
 }

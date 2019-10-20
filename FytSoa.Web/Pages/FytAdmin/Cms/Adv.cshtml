@@ -101,7 +101,7 @@
                 });
                 fun = {
                     init: function () {
-                        os.ajax('api/adv/class/page', null, function (res) {
+                        os.ajax('api/adv/class/page', {}, function (res) {
                             if (res.statusCode === 200) {
                                 vm.menu = res.data;
                                 vm.$nextTick(function () {

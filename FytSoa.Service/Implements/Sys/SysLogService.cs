@@ -15,7 +15,7 @@ namespace FytSoa.Service.Implements
     /// <summary>
     /// 系统日志接口实现
     /// </summary>
-    public class SysLogService : BaseServer<SysLog>, ISysLogService
+    public class SysLogService : BaseService<SysLog>, ISysLogService
     {
         /// <summary>
         /// 获得列表

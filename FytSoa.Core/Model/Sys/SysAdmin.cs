@@ -97,5 +97,10 @@ namespace FytSoa.Core.Model.Sys
         /// 上次登录时间
         /// </summary>
         public DateTime? UpLoginDate { get; set; }
+
+        /// <summary>
+        /// 登录次数
+        /// </summary>
+        public int LoginSum { get; set; } = 1;
     }
 }

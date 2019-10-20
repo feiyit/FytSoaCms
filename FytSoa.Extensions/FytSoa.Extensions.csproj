@@ -12,4 +12,15 @@
     <ProjectReference Include="..\FytSoa.Common\FytSoa.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="FytSoa.Tasks\obj\FytSoa.Tasks.csproj.nuget.dgspec.json" />
+    <None Remove="FytSoa.Tasks\obj\FytSoa.Tasks.csproj.nuget.g.targets" />
+    <None Remove="FytSoa.Tasks\obj\FytSoa.Tasks.csproj.nuget.g.props" />
+    <None Remove="FytSoa.Tasks\obj\project.assets.json" />
+    <None Remove="FytSoa.Tasks\obj\FytSoa.Tasks.csproj.nuget.cache" />
+    <None Remove="FytSoa.Tasks\obj\Debug\netcoreapp2.2\FytSoa.Tasks.assets.cache" />
+    <None Remove="FytSoa.Tasks\obj\Debug\netcoreapp2.2\FytSoa.Tasks.csprojAssemblyReference.cache" />
+    <None Remove="FytSoa.Tasks\obj\Debug\netcoreapp2.2\FytSoa.Tasks.AssemblyInfoInputs.cache" />
+    <None Remove="FytSoa.Tasks\obj\Debug\netcoreapp2.2\FytSoa.Tasks.csproj.FileListAbsolute.txt" />
+  </ItemGroup>
 </Project>

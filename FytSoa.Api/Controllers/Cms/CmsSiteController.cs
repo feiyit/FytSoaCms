@@ -18,7 +18,7 @@ namespace FytSoa.Api.Controllers.Cms
     [Route("api/[controller]")]
     [Produces("application/json")]
     [JwtAuthorize(Roles = "Admin")]
-    public class CmsSiteController : Controller
+    public class CmsSiteController : ControllerBase
     {
         private readonly ICmsSiteService _siteService;
         public CmsSiteController(ICmsSiteService siteService)
@@ -42,16 +42,16 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost("savesite")]
-        public async Task<ApiResult<string>> SaveSite([FromBody]CmsSite parm)
+        public async Task<IActionResult> SaveSite([FromBody]CmsSite parm)
         {
             if (!string.IsNullOrEmpty(parm?.Guid))
             {
-                return await _siteService.UpdateAsync(parm);
+                return Ok(await _siteService.UpdateAsync(parm));
             }
             else
             {
                 parm.Guid = Guid.NewGuid().ToString();
-                return await _siteService.AddAsync(parm);
+                return Ok(await _siteService.AddAsync(parm));
             }
         }
 
@@ -69,10 +69,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// <summary>
         /// 备份数据库
         /// </summary>
-        /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost("backups")]
-        public ApiResult<string> DbBackups()
+        public IActionResult DbBackups()
         {
             var path = FileHelperCore.MapPath("/wwwroot/db_back/") + DateTime.Now.ToString("yyyyMMddHHmmss") + ".sql";
             var res = new ApiResult<string>() { };
@@ -93,19 +92,18 @@ namespace FytSoa.Api.Controllers.Cms
                 res.message = "备份任务正在后台处理，请稍后到数据库恢复菜单中查看";
                 System.Threading.Thread.Sleep(1000);
             }
-            return res;
+            return Ok(res);
         }
 
         /// <summary>
         /// 获得数据库备份文件
         /// </summary>
-        /// <param name="parm"></param>
         /// <returns></returns>
         [HttpGet("backups/files")]
-        public JsonResult GetDbBackupsFile()
+        public IActionResult GetDbBackupsFile()
         {
             var list = FileHelperCore.ResolveFileInfo("/wwwroot/db_back/").OrderByDescending(m=>m.CreateDate).ToList();
-            return Json(new { code = 0, msg = "success", count = list.Count, data = list });
+            return Ok(new { code = 0, msg = "success", count = list.Count, data = list });
         }
 
         /// <summary>
@@ -114,7 +112,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost("delete/files")]
-        public ApiResult<string> DeleteDbBackupsFile([FromBody]ParmString obj)
+        public IActionResult DeleteDbBackupsFile([FromBody]ParmString obj)
         {
             var res = new ApiResult<string>() { statusCode = (int)ApiEnum.Error };
             try
@@ -130,7 +128,7 @@ namespace FytSoa.Api.Controllers.Cms
             {
                 res.message = ex.Message;
             }
-            return res;
+            return Ok(res);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace FytSoa.Service.Implements
     /// <summary>
     /// 角色关联菜单的实现
     /// </summary>
-    public class SysPermissionsService : DbContext, ISysPermissionsService
+    public class SysPermissionsService : BaseService<SysPermissions>, ISysPermissionsService
     {
         /// <summary>
         /// 用户授权角色

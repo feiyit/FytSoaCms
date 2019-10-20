@@ -52,16 +52,22 @@
         <div class="col-md-6 col-xs-12 sort-questions">
             <ul>
                 <li>
-                    <a class="@(string.IsNullOrEmpty(Model.Types)?"active":"")" href="/bbs/">最新</a>
+                    <a class="@(string.IsNullOrEmpty(Model.Types)?"active":"")" href="/">最新</a>
                 </li>
                 <li>
-                    <a class="@(Model.Types=="red"?"active":"")" href="/bbs/?where=red">热门</a>
+                    <a class="@(Model.Types=="red"?"active":"")" href="/?where=red">热门</a>
+                </li>
+                @*<li>
+            <a class="@(Model.Types=="wjj"?"active":"")" href="/?where=wjj">未解决</a>
+        </li>
+        <li>
+            <a class="@(Model.Types=="whd"?"active":"")" href="/?where=whd">未回答</a>
+        </li>*@
+                <li>
+                    <a class="@(Model.Types=="share"?"active":"")" href="/?where=share&category=share">分享</a>
                 </li>
                 <li>
-                    <a class="@(Model.Types=="wjj"?"active":"")" href="/bbs/?where=wjj">未解决</a>
-                </li>
-                <li>
-                    <a class="@(Model.Types=="whd"?"active":"")" href="/bbs/?where=whd">未回答</a>
+                    <a class="@(Model.Types=="update"?"active":"")" href="/?where=update&category=update" style="color:#ff4f4f">更新公告</a>
                 </li>
             </ul>
         </div>

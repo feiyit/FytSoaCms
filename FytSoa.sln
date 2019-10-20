@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FytSoa.Api", "FytSoa.Api\Fy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FytSoa.Web", "FytSoa.Web\FytSoa.Web.csproj", "{325FD02E-815E-4A79-98EB-0CB84B11A404}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FytSoa.Tasks", "FytSoa.Tasks\FytSoa.Tasks.csproj", "{2E2D8A50-5B64-42D5-8C44-E9DCA2A1D769}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{325FD02E-815E-4A79-98EB-0CB84B11A404}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{325FD02E-815E-4A79-98EB-0CB84B11A404}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{325FD02E-815E-4A79-98EB-0CB84B11A404}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E2D8A50-5B64-42D5-8C44-E9DCA2A1D769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E2D8A50-5B64-42D5-8C44-E9DCA2A1D769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E2D8A50-5B64-42D5-8C44-E9DCA2A1D769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E2D8A50-5B64-42D5-8C44-E9DCA2A1D769}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{6EE69736-8F13-4BE9-B720-FEE7C2CB9C5C} = {7A756B8B-A108-4490-8B1B-82F15B1C8F86}
 		{2A0A9AB5-0871-4FD1-97FD-F67F5C1874FE} = {D1BE54DE-6E0C-4BA6-87F4-7F70FF2368E7}
 		{325FD02E-815E-4A79-98EB-0CB84B11A404} = {D1BE54DE-6E0C-4BA6-87F4-7F70FF2368E7}
+		{2E2D8A50-5B64-42D5-8C44-E9DCA2A1D769} = {6D124F81-9E90-46E0-B172-62DFEED53AA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {080FB29A-96A2-45F7-9076-3390E4B8FA98}

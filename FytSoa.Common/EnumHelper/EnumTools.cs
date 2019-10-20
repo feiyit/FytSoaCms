@@ -70,7 +70,13 @@ namespace FytSoa.Common
         /// 同步到微信
         /// </summary>
         [Text("同步到微信")]
-        ASYWX = 11
+        ASYWX = 11,
+
+        /// <summary>
+        /// 任务
+        /// </summary>
+        [Text("自动任务")]
+        TASK = 12
     }
 
     public enum PermissionsEnum

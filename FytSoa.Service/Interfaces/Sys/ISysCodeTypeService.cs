@@ -11,7 +11,7 @@ namespace FytSoa.Service.Interfaces
     /// <summary>
     /// 字典分类接口
     /// </summary>
-    public interface ISysCodeTypeService : IBaseServer<SysCodeType>
+    public interface ISysCodeTypeService : IBaseService<SysCodeType>
     {
 
         /// <summary>

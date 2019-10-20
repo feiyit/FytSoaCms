@@ -16,7 +16,7 @@ namespace FytSoa.Api.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [JwtAuthorize(Roles = "Admin")]
-    public class SettingController : Controller
+    public class SettingController : ControllerBase
     {
         private readonly ISysAppSettingService _settingService;
         public SettingController(ISysAppSettingService settingService)
@@ -27,13 +27,13 @@ namespace FytSoa.Api.Controllers
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="parm"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public async Task<JsonResult> GetPages(PageParm parm)
+        public async Task<IActionResult> GetPages([FromQuery]PageParm parm)
         {
             var res = await _settingService.GetPagesAsync(parm,m=>!m.IsDel,m=>m.UpdateDate,DbOrderEnum.Desc);
-            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+            return Ok(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
         /// <summary>
@@ -41,10 +41,10 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add")]
-        public async Task<ApiResult<string>> AddRole(SysAppSetting parm)
+        public async Task<IActionResult> AddRole([FromBody]SysAppSetting parm)
         {
             parm.Guid= Guid.NewGuid().ToString();
-            return await _settingService.AddAsync(parm);
+            return Ok(await _settingService.AddAsync(parm));
         }
 
         /// <summary>
@@ -52,10 +52,10 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<ApiResult<string>> DeleteRole(string parm)
+        public async Task<IActionResult> DeleteRole([FromBody]ParmString obj)
         {
-            var list = Utils.StrToListString(parm);
-            return await _settingService.UpdateAsync(m => new SysAppSetting() { IsDel = true }, m => list.Contains(m.Guid));
+            var list = Utils.StrToListString(obj.parm);
+            return Ok(await _settingService.UpdateAsync(m => new SysAppSetting() { IsDel = true }, m => list.Contains(m.Guid)));
         }
 
         /// <summary>
@@ -63,9 +63,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit")]
-        public async Task<ApiResult<string>> EditRole(SysAppSetting parm)
+        public async Task<IActionResult> EditRole([FromBody]SysAppSetting parm)
         {
-            return await _settingService.UpdateAsync(parm);
+            return Ok(await _settingService.UpdateAsync(parm));
         }
     }
 }

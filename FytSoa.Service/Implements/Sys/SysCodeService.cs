@@ -13,7 +13,7 @@ namespace FytSoa.Service.Implements
     /// <summary>
     /// 字典值实现
     /// </summary>
-    public class SysCodeService :  BaseServer<SysCode>, ISysCodeService
+    public class SysCodeService : BaseService<SysCode>, ISysCodeService
     {
         /// <summary>
         /// 获得一条数据

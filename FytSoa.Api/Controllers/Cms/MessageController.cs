@@ -16,7 +16,7 @@ namespace FytSoa.Api.Controllers.Cms
     [Route("api/[controller]")]
     [Produces("application/json")]
     [JwtAuthorize(Roles = "Admin")]
-    public class MessageController : Controller
+    public class MessageController : ControllerBase
     {
         private readonly ICmsMessageService _messageService;
         public MessageController(ICmsMessageService messageService)
@@ -25,10 +25,10 @@ namespace FytSoa.Api.Controllers.Cms
         }
 
         [HttpPost("page")]
-        public async Task<ApiResult<Page<CmsMessage>>> GetPages(PageParm parm)
+        public async Task<IActionResult> GetPages([FromBody]PageParm parm)
         {
             parm.site = parm.site = SiteTool.CurrentSite?.Guid; ;
-            return await _messageService.GetPagesAsync(parm,m=>m.SiteGuid==parm.site,m=>m.AddDate,DbOrderEnum.Desc);
+            return Ok(await _messageService.GetPagesAsync(parm, m => m.SiteGuid == parm.site, m => m.AddDate, DbOrderEnum.Desc));
         }
 
         /// <summary>
@@ -36,15 +36,15 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<ApiResult<string>> Delete([FromBody]MessageDeleteDto obj)
+        public async Task<IActionResult> Delete([FromBody]MessageDeleteDto obj)
         {
             if (obj.type == 0)
             {
-                return await _messageService.DeleteAsync(obj.parm);
+                return Ok(await _messageService.DeleteAsync(obj.parm));
             }
             else
             {
-                return await _messageService.DeleteAsync(m=>true);
+                return Ok(await _messageService.DeleteAsync(m => true));
             }
         }
 
@@ -53,15 +53,15 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("read")]
-        public async Task<ApiResult<string>> Read([FromBody]MessageReadDto obj)
+        public async Task<IActionResult> Read([FromBody]MessageReadDto obj)
         {
             if (obj.type == 0)
             {
-                return await _messageService.UpdateAsync(m => new CmsMessage() { Status = true }, m => m.Id == obj.parm);
+                return Ok(await _messageService.UpdateAsync(m => new CmsMessage() { Status = true }, m => m.Id == obj.parm));
             }
             else
             {
-                return await _messageService.UpdateAsync(m => new CmsMessage() { Status = true }, m => true);
+                return Ok(await _messageService.UpdateAsync(m => new CmsMessage() { Status = true }, m => true));
             }
         }
     }

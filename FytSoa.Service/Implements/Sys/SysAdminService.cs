@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace FytSoa.Service.Implements
 {
-    public class SysAdminService : BaseServer<SysAdmin>, ISysAdminService
+    public class SysAdminService : BaseService<SysAdmin>, ISysAdminService
     {
         #region  用户登录和授权菜单查询
         /// <summary>
@@ -54,6 +54,7 @@ namespace FytSoa.Service.Implements
                 //修改登录时间
                 model.LoginDate = DateTime.Now;
                 model.UpLoginDate = model.LoginDate;
+                model.LoginSum = model.LoginSum + 1;
                 SysAdminDb.Update(model);
 
                 
@@ -205,8 +206,17 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<SysAdmin>>();
             try
             {
+                var adminGuidList = new List<string>();
+                //判断是否根据角色查询用户信息
+                if (!string.IsNullOrEmpty(parm.guid))
+                {
+                    adminGuidList = await Db.Queryable<SysPermissions>()
+                        .Where(m => m.RoleGuid == parm.guid && m.Types == 2)
+                        .Select(m => m.AdminGuid).ToListAsync();
+                }
                 res.data =await Db.Queryable<SysAdmin>()
                         .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.DepartmentGuidList.Contains(parm.key))
+                        .WhereIF(!string.IsNullOrEmpty(parm.guid), m => adminGuidList.Contains(m.Guid))
                         .OrderBy(m => m.AddDate).ToPageAsync(parm.page, parm.limit);
             }
             catch (Exception ex)

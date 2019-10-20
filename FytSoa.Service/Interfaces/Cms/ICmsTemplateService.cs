@@ -6,7 +6,7 @@ namespace FytSoa.Service.Interfaces
     * 版权所有：北京飞易腾科技有限公司
     * 企业官网：http://www.feiyit.com
     */
-	public interface ICmsTemplateService: IBaseServer<CmsTemplate>
+	public interface ICmsTemplateService: IBaseService<CmsTemplate>
 	{
 	}
 }

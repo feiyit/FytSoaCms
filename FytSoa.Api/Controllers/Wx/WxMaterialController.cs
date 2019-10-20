@@ -17,7 +17,7 @@ namespace FytSoa.Api.Controllers.Wx
     [Produces("application/json")]
     [Route("api/wx/material")]
     [JwtAuthorize(Roles = "Admin")]
-    public class WxMaterialController : Controller
+    public class WxMaterialController : ControllerBase
     {
         private readonly IWxMaterialService _meterialService;
         private readonly IWxSettingService _settingService;
@@ -32,9 +32,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("list"), Log("WxMaterial：list", LogType = LogEnum.RETRIEVE)]
-        public async Task<ApiResult<Page<WxMaterial>>> GetList(PageParm parm)
+        public async Task<IActionResult> GetList(PageParm parm)
         {
-            return await _meterialService.GetPageList(parm);
+            return Ok(await _meterialService.GetPageList(parm));
         }
 
         /// <summary>
@@ -42,9 +42,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), Log("WxMaterial：add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> Add([FromBody]WxMaterial model)
+        public async Task<IActionResult> Add([FromBody]WxMaterial model)
         {
-            return await _meterialService.Add(model,null);
+            return Ok(await _meterialService.Add(model, null));
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("del"), Log("WxMaterial：del", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> Delete([FromBody]ParmInt obj)
+        public async Task<IActionResult> Delete([FromBody]ParmInt obj)
         {
-            return await _meterialService.DeleteAsync(m=>m.Id== obj.id);
+            return Ok(await _meterialService.DeleteAsync(m => m.Id == obj.id));
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("get"), Log("WxMaterial：get", LogType = LogEnum.RETRIEVE)]
-        public async Task<ApiResult<WxMaterial>> GetModel([FromBody]ParmInt obj)
+        public async Task<IActionResult> GetModel([FromBody]ParmInt obj)
         {
-            return await _meterialService.GetModelAsync(m => m.Id == obj.id);
+            return Ok(await _meterialService.GetModelAsync(m => m.Id == obj.id));
         }
 
         /// <summary>
@@ -72,12 +72,12 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("server"), Log("WxMaterial：server", LogType = LogEnum.ASYWX)]
-        public JsonResult GetServerMaterial([FromBody]ParmInt obj)
+        public async Task<IActionResult> GetServerMaterial([FromBody]ParmInt obj)
         {
-            var gzhModel = _settingService.GetModelAsync(m=>m.Id== obj.id).Result.data;
-            var token = WxTools.GetAccess(gzhModel.AppId, gzhModel.AppSecret);
+            var gzhModel =await _settingService.GetModelAsync(m=>m.Id== obj.id);
+            var token = WxTools.GetAccess(gzhModel.data.AppId, gzhModel.data.AppSecret);
             var list = WxTools.GetMediaList(token.access_token);
-            return Json(list);
+            return Ok(list);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("asynwx"), Log("WxMaterial：asynwx", LogType = LogEnum.ASYWX)]
-        public async Task<ApiResult<string>> PushMaterial([FromBody]ParmInt obj)
+        public async Task<IActionResult> PushMaterial([FromBody]ParmInt obj)
         {
             var res = new ApiResult<string>();
             //根据公众号查询配置
@@ -148,13 +148,13 @@ namespace FytSoa.Api.Controllers.Wx
             {
                 res.statusCode = 500;
                 res.message = "上传素材失败~";
-                return res;
+                return Ok(res);
             }
             if (!asynOk)
             {
                 res.statusCode = 500;
                 res.message = "同步素材失败~";
-                return res;
+                return Ok(res);
             }
             //只修改同步成功的素材
             if (asynOkList.Count>0)
@@ -162,7 +162,7 @@ namespace FytSoa.Api.Controllers.Wx
                 await _meterialService.UpdateAsync(list);
             }
 
-            return res;
+            return Ok(res);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("synchro"), Log("WxMaterial：synchro", LogType = LogEnum.ASYWX)]
-        public async Task<ApiResult<string>> PushMaterial([FromBody]WxMaterial model) {
+        public async Task<IActionResult> PushMaterial([FromBody]WxMaterial model) {
             var res = new ApiResult<string>();
 
             var gzhModel = _settingService.GetModelAsync(m => m.Id == model.WxId).Result.data;
@@ -195,7 +195,7 @@ namespace FytSoa.Api.Controllers.Wx
                         {
                             var fileExt = FileHelperCore.GetFileExtension(row.Img);
                             var path = row.Img;
-                            if (!path.ToLower().StartsWith("http") && !path.ToLower().StartsWith("https"))
+                            if (!path.ToLower().StartsWith("http", StringComparison.Ordinal) && !path.ToLower().StartsWith("https", StringComparison.Ordinal))
                             {
                                 path = FileHelperCore.MapPath("/wwwroot" + row.Img);
                             }
@@ -224,7 +224,7 @@ namespace FytSoa.Api.Controllers.Wx
             {
                 res.statusCode = 500;
                 res.message = "同步素材失败~";
-                return res;
+                return Ok(res);
             }
 
             var postStr = JsonConvert.SerializeObject(new { articles = articleList });
@@ -234,11 +234,11 @@ namespace FytSoa.Api.Controllers.Wx
             {
                 res.statusCode = 500;
                 res.message = "上传图文失败~";
-                return res;
+                return Ok(res);
             }
             //修改状态
             await _meterialService.UpdateAsync(list);
-            return res;
+            return Ok(res);
         }
     }
 }

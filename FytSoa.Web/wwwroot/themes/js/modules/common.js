@@ -1,10 +1,8 @@
-﻿layui.define(['layer', 'toastr', 'ztree', 'ztreecheck', 'pjax'], function (exports) {
+﻿layui.define(['layer', 'toastr', 'pjax'], function (exports) {
     "use strict";
 
     var $ = layui.jquery,
         layer = layui.layer,
-        ztree = layui.ztree,
-        zcheck = layui.ztreecheck,
         toastr = layui.toastr,
         pjax = layui.pjax;
     toastr.options = {
@@ -40,7 +38,11 @@
                 timeout: 10 * 1000, //超时时间设置为50秒；
                 headers: _headers,
                 success: function (data) {
-                    callFun(data);
+                    if (data.statusCode == 408 || data.statusCode == 407) {
+                        window.location.href = '/fytadmin/login?ReturnUrl='+window.location.href;
+                    } else {
+                        callFun(data);
+                    }
                 },
                 error: function (xhr, type, errorThrown) {
                     if (type === 'timeout') {

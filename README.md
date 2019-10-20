@@ -9,6 +9,15 @@
   **github地址**：[https://github.com/feiyit/FytSoaCms](https://github.com/feiyit/FytSoaCms)  
 **码云地址**：[https://gitee.com/feiyit/FytSoaCms](https://gitee.com/feiyit/FytSoaCms)  
 
+ :tw-1f1eb:  :tw-1f1fe:  :tw-1f1f9:  :tw-1f1e8:  :tw-1f1f2:  :tw-1f1f8: 
+  
+#### **Demo演示地址:**  [http://fytsoa.feiyit.com/](http://fytsoa.feiyit.com/)  
+账号：demo888    密码：demo888  
+```
+注：下载的代码包括数据，里面的账号是admins   123456  
+```
+  
+  
   
 
 #### **简介:**  
@@ -21,16 +30,13 @@
  > - 适用范围：可以开发OA、ERP、BPM、CRM、WMS、TMS、MIS、BI、电商平台后台、物流管理系统、快递管理系统、教务管理系统等各类管理软件。  
   
 
- **Demo演示地址[ http://fytsoacms.netcore.club/fytadmin/](http://fytsoacms.netcore.club/fytadmin/)**  
-  账号：demo888    密码：demo  
-  
  
   
 #### **开发者信息:**   
 
 
 1. 系统名称：FytSoaCms  
-1. 作者：飞易腾科技有限公司CTO  平头哥  
+1. 作者：飞易腾科技有限公司   CTO  平头哥  
 1. QQ群：858895405  
 1. 官网网址：[http://www.feiyit.com/](http://www.feiyit.com/)  
 1. 开源协议：MIT License  
@@ -58,6 +64,21 @@
 - 前端小程序-app使用uni-app  
 - 后台前端框架迁移到vue+element  
  
+
+# 2019-09-12更新 
+
+
+
+1、【升级】Layui到最新版本2.5.5  
+2、【优化】替换ztree组件，使用layui的tree    
+3、【优化】首页默认为社区模板，去掉网站模板     
+4、【优化】系统管理员模块+CMS模块的API优化   
+5、【优化】权限模块优化，包括修改、新增菜单功能点优化    
+ 
+    
+===================================================================================================  
+  
+  
   
   
   

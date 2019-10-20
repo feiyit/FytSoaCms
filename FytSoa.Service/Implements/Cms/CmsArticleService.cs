@@ -15,7 +15,7 @@ namespace FytSoa.Service.Implements
     * 版权所有：北京飞易腾科技有限公司
     * 企业官网：http://www.feiyit.com
     */
-    public class CmsArticleService : BaseServer<CmsArticle>, ICmsArticleService
+    public class CmsArticleService : BaseService<CmsArticle>, ICmsArticleService
     {
         /// <summary>
         /// 获得列表

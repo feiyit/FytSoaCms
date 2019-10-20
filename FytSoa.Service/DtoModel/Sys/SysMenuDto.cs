@@ -1,4 +1,5 @@
 ﻿using FytSoa.Core.Model.Sys;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -119,13 +120,44 @@ namespace FytSoa.Service.DtoModel
     /// </summary>
     public class SysMenuTree
     {
-        public string guid { get; set; }
-        public string name { get; set; }
-        public bool isChecked { get; set; }
+        public string id { get; set; }
+        public string title { get; set; }
+
+        [JsonProperty(PropertyName = "checked")]
+        public bool isChecked { get; set; } = false;
         public int layer { get; set; }
         public string parentGuid { get; set; }
         public List<SysMenuTree> children { get; set; }
-        public bool open { get; set; } = true;
+        public bool spread { get; set; } = true;
         public int sort { get; set; }
+    }
+
+    /// <summary>
+    /// 根据菜单，获得当前菜单的所有功能权限
+    /// </summary>
+    public class MenuGetParm
+    {
+        public string role { get; set; }
+
+        public string menu { get; set; } = "all";
+    }
+
+    /// <summary>
+    /// 获得菜单的Tree
+    /// </summary>
+    public class MenuTreeParm
+    {
+        public string roleGuid { get; set; }
+    }
+
+    /// <summary>
+    /// 提供角色弹框授权返回客户端菜单列表和当前角色的列表
+    /// 涉及到选中状态
+    /// </summary>
+    public class MenuRoleDto
+    {
+        public List<SysMenuTree> menu { get; set; }
+
+        public List<SysPermissions> permissions { get; set; }
     }
 }

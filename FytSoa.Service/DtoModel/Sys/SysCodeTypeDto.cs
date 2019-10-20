@@ -14,9 +14,9 @@ namespace FytSoa.Service.DtoModel
 
     public class SysCodeTypeTree
     {
-        public string guid { get; set; }
-        public string name { get; set; }
+        public string id { get; set; }
+        public string title { get; set; }
         public List<SysCodeTypeTree> children { get; set; }
-        public bool open { get; set; } = true;
+        public bool spread { get; set; } = true;
     }
 }

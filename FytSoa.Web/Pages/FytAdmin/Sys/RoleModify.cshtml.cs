@@ -13,17 +13,8 @@ namespace FytSoa.Web.Pages.FytAdmin.Sys
     [Authorize]
     public class RoleModifyModel : PageModel
     {
-        private readonly ISysRoleService _roleService;
-        public RoleModifyModel(ISysRoleService roleService)
+        public void OnGet()
         {
-            _roleService = roleService;
-        }
-
-        [BindProperty]
-        public SysRole RoleModel { get; set; }
-        public void OnGet(string guid)
-        {
-            RoleModel = _roleService.GetModelAsync(m=>m.Guid==guid).Result.data;
         }
     }
 }

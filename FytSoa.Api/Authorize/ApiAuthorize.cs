@@ -72,7 +72,7 @@ namespace FytSoa.Api
              var menu = menuSaveType == "Redis" ? RedisHelper.Get<List<SysMenuDto>>(KeyHelper.ADMINMENU + "_" + userGuid) : MemoryCacheService.Default.GetCache<List<SysMenuDto>>(KeyHelper.ADMINMENU + "_"+ userGuid);
             if (menu==null)
             {
-                ContextReturn(context, "登录已过期，请退出重新登录！");
+                ContextReturn(context, "登录已过期，请退出重新登录！",(int)ApiEnum.LoginExpireError);
                 return;
             }
             //如果是超管，不做权限控制处理
@@ -108,8 +108,8 @@ namespace FytSoa.Api
         /// </summary>
         /// <param name="context"></param>
         /// <param name="mes"></param>
-        private static void ContextReturn(ActionExecutingContext context,string mes) {
-            var res = new ApiResult<string>() { statusCode = (int)ApiEnum.Unauthorized, message = "您没有操作权限，请联系系统管理员！" };
+        private static void ContextReturn(ActionExecutingContext context,string mes,int enumValue= (int)ApiEnum.Unauthorized) {
+            var res = new ApiResult<string>() { statusCode = enumValue, message = "您没有操作权限，请联系系统管理员！" };
             context.HttpContext.Response.ContentType = "application/json;charset=utf-8";
             context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(res));
             context.Result = new EmptyResult();

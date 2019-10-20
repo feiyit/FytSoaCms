@@ -73,6 +73,13 @@ namespace FytSoa.Common
         public static string BbsUserKey = "BBSUSERKEY";
         #endregion
 
+        #region 任务调度
+        /// <summary>
+        /// 任务保存到Redis中
+        /// </summary>
+        public static string TaskSchedulerList = "Task:List";
+        #endregion
+
 
     }
 }

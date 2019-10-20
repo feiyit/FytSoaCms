@@ -1,0 +1,155 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Sys.TaskSchedulerModifyModel
+@{
+    ViewData["Title"] = "编辑/添加任务调度";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<div id="app">
+<form class="layui-form form-cus" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">任务组名</label>
+        <div class="layui-input-block">
+            <input type="text" v-model="m.jobGroup" name="jobGroup" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">任务名称</label>
+        <div class="layui-input-block">
+            <input type="text" v-model="m.jobName" name="jobName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">请求地址</label>
+        <div class="layui-input-block">
+            <input type="text" v-model="m.requestUrl" name="requestUrl" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">开始时间</label>
+        <div class="layui-input-block">
+            <input type="text" v-model="m.beginTime" id="beginTime" name="beginTime" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">结束时间</label>
+        <div class="layui-input-block">
+            <input type="text" v-model="m.endTime" id="endTime" name="endTime" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">触发类型</label>
+        <div class="layui-input-block">
+            <select name="triggerType" lay-verify="required">
+                <option value="Cron">Cron</option>
+                <option value="Simple">Simple</option>
+              </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">Cron表达式</label>
+        <div class="layui-input-block">
+            <input type="text" v-model="m.cron" name="cron" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">请求类型</label>
+        <div class="layui-input-block">
+            <input type="radio" name="requestType" value="1" lay-filter="rtype" title="Get">
+            <input type="radio" name="requestType" value="2" lay-filter="rtype" title="Post" checked>
+            <input type="radio" name="requestType" value="4" lay-filter="rtype" title="Put">
+            <input type="radio" name="requestType" value="8" lay-filter="rtype" title="Delete">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">请求头</label>
+        <div class="layui-input-block">
+            <input type="text" name="headers" v-model="m.headers" autocomplete="off" placeholder="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">请求参数</label>
+        <div class="layui-input-block">
+            <textarea name="requestParameters" v-model="m.requestParameters" class="layui-textarea" placeholder="Json字符串"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">任务描述</label>
+        <div class="layui-input-block">
+            <textarea name="description" v-model="m.description" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-cur-submit">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+</form>
+</div> 
+@section Scripts{
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            m: {}
+        }
+    });
+    layui.config({
+        base: '/themes/js/modules/'
+}).use(['layer', 'jquery', 'common', 'form', 'laydate'], function () {
+    var form = layui.form, $ = layui.$, os = layui.common
+        , laydate = layui.laydate;
+        laydate.render({
+            elem: '#beginTime'
+            , type: 'datetime'
+            , trigger: 'click' 
+        });
+    laydate.render({
+        elem: '#endTime'
+        , type: 'datetime'
+        , trigger: 'click' 
+    });
+    var index = parent.layer.getFrameIndex(window.name);
+    form.on('radio(rtype)', function (data) {
+        vm.m.requestType= data.value;
+    });
+    var group = os.getUrlParam('group'), name = os.getUrlParam('name');
+    if (group) {
+        //查询任务
+        os.ajax('api/job/queryjob', { jobGroup: group, jobName: name }, function (res) {
+            console.log(res);
+            if (res.statusCode == 200) {
+                vm.m = res.data;
+            } else {
+                os.error(res.message);
+            }
+        });
+    }
+
+    //监听提交
+    form.on('submit(submit)', function (data) {
+        vm.m.triggerType = data.field.triggerType;
+        vm.m.beginTime = data.field.beginTime;
+        vm.m.endTime = data.field.endTime;
+        
+            $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+            var urls = "api/job/addjob";
+            if (group) {
+                urls = "api/job/modifyjob";
+            }
+            os.ajax(urls, data.field, function (res) {
+                $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                if (res.statusCode === 200) {
+                    parent.layer.close(index);
+                } else {
+                    os.error(res.message);
+                }
+            });
+            return false;
+        });
+        $(".btn-open-close").on('click', function () {
+            parent.layer.close(index);
+        });
+
+    });</script>
+}

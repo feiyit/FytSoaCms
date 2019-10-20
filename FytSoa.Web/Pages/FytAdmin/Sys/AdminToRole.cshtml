@@ -35,72 +35,77 @@
     }
 </style>
 <div class="layui-col-220">
-    <ul id="tree" class="ztree layui-tree-cus"></ul>
+    <div id="tree" class="layui-tree-cus" style="overflow:auto;"></div>
 </div>
 <div class="right-col-body">
-    <div class="list-wall">
+    <div class="list-wall" style="margin-top:15px;">
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
 </div>
-<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
 <script>
     layui.config({
         base: '/themes/js/modules/'
-    }).use(['table', 'layer', 'jquery', 'ztree', 'common'],
+    }).use(['table', 'layer', 'jquery', 'tree', 'common'],
         function () {
             var table = layui.table,
                 layer = layui.layer,
                 $ = layui.jquery,
-                ztree = layui.ztree,
+                tree = layui.tree,
                 os = layui.common,
                 form = layui.form;
+
+            $("#tree").css({ 'height': $(window).height() - 140 });
+
             table.render({
                 elem: '#tablist',
                 headers: os.getToken(),
                 url: '/api/role/torolelist?adminGuid=@Model.adminGuids',
                 cols: [
                     [
-                        { type: 'checkbox', fixed: 'left' },
                         { field: 'name', title: '角色名称', fixed: 'left' },
-                        { field: 'codes', title: '编号' },
-                        { width: 100, title: '操作', templet: '#tool' }
+                        { field: 'sort', title: '排序' },
+                        { width: 150, title: '操作', templet: '#tool' }
                     ]
                 ],
-                page: true,
+                page: false,
+                height: $(window).height() - 30,
+                where: {
+                   limit:1000
+                },
                 id: 'tables'
             });
-            var setting = {
-                async: {
-                    enable: true,
-                    headers: os.getToken(),
-                    url: "/api/organize/gettree"
-                },
-                callback: {
-                    onClick: onClick
-                }
-            };
+
             var guid = '', typeName = '', active = {
+                initTree() {
+                        os.ajax('api/organize/gettree/', {}, function (res) {
+                            tree.render({
+                                elem: '#tree'
+                                , data: res
+                                , onlyIconControl: true
+                                , click: function (obj) {
+                                    guid = obj.data.id;
+                                    active.reload();
+                                }
+                            });
+                        });
+                    },
                 reload: function () {
                     table.reload('tables',
                         {
-                            page: {
-                                curr: 1
-                            },
+                            page: false,
                             where: {
-                                key: guid
+                                key: guid,
+                                limit: 1000
                             }
                         });
                 }
             };
-            $.fn.zTree.init($("#tree"), setting);
+            active.initTree();
             $('.list-search .layui-btn').on('click', function () {
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
-            function onClick(event, treeId, treeNode, clickFlag) {
-                guid = treeNode.guid;
-                active.reload();
-            }
+
             //监听授权操作
             form.on('switch(torole)', function (obj) {
                 var strRole = this.value;
@@ -125,6 +130,8 @@
         });
 </script>
 <script type="text/html" id="tool">
+    {{#  if(d.level === 1){ }}
     <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="取消|授权" lay-filter="torole" {{ d.status ? 'checked' : '' }}>
+    {{#  } }} 
 </script>
 

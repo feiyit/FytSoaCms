@@ -16,7 +16,7 @@ namespace FytSoa.Api.Controllers.Cms
     [Route("api/[controller]")]
     [Produces("application/json")]
     [JwtAuthorize(Roles = "Admin")]
-    public class ColumnController : Controller
+    public class ColumnController : ControllerBase
     {
         private readonly ICmsColumnService _columnService;
         private readonly ICmsTemplateService _tempService;
@@ -29,10 +29,10 @@ namespace FytSoa.Api.Controllers.Cms
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="parm"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public JsonResult GetPages(PageParm parm)
+        public IActionResult GetPages([FromQuery]PageParm parm)
         {
             parm.site = SiteTool.CurrentSite?.Guid;
             var list = _columnService.RecursiveModule(_columnService.GetListAsync(m => m.SiteGuid == parm.site, m => m.Sort, DbOrderEnum.Asc).Result.data);
@@ -40,18 +40,18 @@ namespace FytSoa.Api.Controllers.Cms
             {
                 item.Title = Utils.LevelName(item.Title, item.ClassLayer);
             }
-            return Json(new { code = 0, msg = "success", count = 1, data = list });
+            return Ok(new { code = 0, msg = "success", count = 1, data = list });
         }
 
         /// <summary>
         /// 查询Tree
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="param"></param>
         /// <returns></returns>
         [HttpPost("tree")]
-        public async Task<ApiResult<List<ColumnTree>>> GetTree(int type=1)
+        public async Task<IActionResult> GetTree([FromBody]PageParm param)
         {
-            return await _columnService.TreeAsync(type, SiteTool.CurrentSite?.Guid);
+            return Ok(await _columnService.TreeAsync(param.types, SiteTool.CurrentSite?.Guid));
         }
 
         /// <summary>
@@ -59,10 +59,10 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("add")]
-        public async Task<ApiResult<string>> Add([FromBody]CmsColumn parm)
+        public async Task<IActionResult> Add([FromBody]CmsColumn parm)
         {
             parm.SiteGuid = SiteTool.CurrentSite?.Guid;
-            return await _columnService.AddAsync(parm);
+            return Ok(await _columnService.AddAsync(parm));
         }
 
         /// <summary>
@@ -70,9 +70,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<ApiResult<string>> Delete([FromBody]ParmString obj)
+        public async Task<IActionResult> Delete([FromBody]ParmString obj)
         {
-            return await _columnService.DeleteAsync(obj.parm);
+            return Ok(await _columnService.DeleteAsync(obj.parm));
         }
 
         /// <summary>
@@ -80,10 +80,10 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit")]
-        public async Task<ApiResult<string>> Edit([FromBody]CmsColumn parm)
+        public async Task<IActionResult> Edit([FromBody]CmsColumn parm)
         {
             parm.SiteGuid = SiteTool.CurrentSite?.Guid;
-            return await _columnService.UpdateAsync(parm);
+            return Ok(await _columnService.UpdateAsync(parm));
         }
 
         /// <summary>
@@ -91,9 +91,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("sort")]
-        public async Task<ApiResult<string>> ColStor([FromBody]ParmSort obj)
+        public async Task<IActionResult> ColStor([FromBody]ParmSort obj)
         {
-            return await _columnService.ColSort(obj.p,obj.i,obj.o);
+            return Ok(await _columnService.ColSort(obj.p, obj.i, obj.o));
         }
         #endregion
 
@@ -102,13 +102,13 @@ namespace FytSoa.Api.Controllers.Cms
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="parm"></param>
         /// <returns></returns>
         [HttpGet("template/getpages")]
-        public async Task<JsonResult> GetTemplatePages(PageParm parm)
+        public async Task<IActionResult> GetTemplatePages([FromQuery]PageParm parm)
         {
             var res = await _tempService.GetPagesAsync(parm);
-            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+            return Ok(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
         /// <summary>
@@ -116,9 +116,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("template/add")]
-        public async Task<ApiResult<string>> AddTemplate([FromBody]CmsTemplate parm)
+        public async Task<IActionResult> AddTemplate([FromBody]CmsTemplate parm)
         {
-            return await _tempService.AddAsync(parm);
+            return Ok(await _tempService.AddAsync(parm));
         }
 
         /// <summary>
@@ -126,9 +126,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("template/delete")]
-        public async Task<ApiResult<string>> DeleteTemplate([FromBody]ParmString obj)
+        public async Task<IActionResult> DeleteTemplate([FromBody]ParmString obj)
         {
-            return await _tempService.DeleteAsync(obj.parm);
+            return Ok(await _tempService.DeleteAsync(obj.parm));
         }
 
         /// <summary>
@@ -136,9 +136,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("template/edit")]
-        public async Task<ApiResult<string>> EditTemplate([FromBody]CmsTemplate parm)
+        public async Task<IActionResult> EditTemplate([FromBody]CmsTemplate parm)
         {
-            return await _tempService.UpdateAsync(parm);
+            return Ok(await _tempService.UpdateAsync(parm));
         }
         #endregion
     }

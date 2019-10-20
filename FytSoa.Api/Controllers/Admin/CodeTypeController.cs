@@ -16,7 +16,7 @@ namespace FytSoa.Api.Controllers
     [Produces("application/json")]
     [Route("api/codetype")]
     [JwtAuthorize(Roles = "Admin")]
-    public class CodeTypeController : Controller
+    public class CodeTypeController : ControllerBase
     {
         private readonly ISysCodeTypeService _sysCodeTypeService;
         public CodeTypeController(ISysCodeTypeService sysCodeTypeService)
@@ -29,9 +29,10 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("gettree")]
-        public List<SysCodeTypeTree> GetListPage()
+        public async Task<IActionResult> GetListPage()
         {
-            return _sysCodeTypeService.GetListTreeAsync().Result.data;
+            var res = await _sysCodeTypeService.GetListTreeAsync();
+            return Ok(res.data);
         }
 
         /// <summary>
@@ -39,9 +40,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), ApiAuthorize(Modules = "Key", Methods = "Add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> AddCodeType([FromBody]SysCodeType parm)
+        public async Task<IActionResult> AddCodeType([FromBody]SysCodeType parm)
         {
-            return await _sysCodeTypeService.AddAsync(parm);
+            return Ok(await _sysCodeTypeService.AddAsync(parm));
         }
 
         /// <summary>
@@ -49,9 +50,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete"), ApiAuthorize(Modules = "Key", Methods = "Delete", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> DeleteCode([FromBody]ParmString obj)
+        public async Task<IActionResult> DeleteCode([FromBody]ParmString obj)
         {
-            return await _sysCodeTypeService.DeleteAsync(obj.parm);
+            return Ok(await _sysCodeTypeService.DeleteAsync(obj.parm));
         }
 
         /// <summary>
@@ -59,9 +60,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"), ApiAuthorize(Modules = "Key", Methods = "Update", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> EditCode([FromBody]SysCodeType parm)
+        public async Task<IActionResult> EditCode([FromBody]SysCodeType parm)
         {
-            return await _sysCodeTypeService.ModifyAsync(parm);
+            return Ok(await _sysCodeTypeService.ModifyAsync(parm));
         }
     }
 }

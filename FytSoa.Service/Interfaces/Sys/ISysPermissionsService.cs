@@ -1,6 +1,7 @@
 ﻿using FytSoa.Common;
 using FytSoa.Core.Model.Sys;
 using FytSoa.Service.DtoModel;
+using FytSoa.Service.Implements;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace FytSoa.Service.Interfaces
     /// <summary>
     /// 角色菜单业务接口
     /// </summary>
-    public interface ISysPermissionsService
+    public interface ISysPermissionsService : IBaseService<SysPermissions>
     {
         /// <summary>
         /// 保存角色菜单信息

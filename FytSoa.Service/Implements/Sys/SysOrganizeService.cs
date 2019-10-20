@@ -15,7 +15,7 @@ namespace FytSoa.Service.Implements
     /// <summary>
     /// 部门实现
     /// </summary>
-    public class SysOrganizeService :  BaseServer<SysOrganize>, ISysOrganizeService
+    public class SysOrganizeService : BaseService<SysOrganize>, ISysOrganizeService
     {
         /// <summary>
         /// 添加部门信息
@@ -81,9 +81,9 @@ namespace FytSoa.Service.Implements
                 var children = RecursionOrganize(list,new List<SysOrganizeTree>(),item.Guid);
                 treeList.Add(new SysOrganizeTree()
                 {
-                    guid = item.Guid,
-                    name = item.Name,
-                    open= children.Count>0,
+                    id = item.Guid,
+                    title = item.Name,
+                    spread= children.Count>0,
                     children = children.Count==0?null:children
                 });
             }
@@ -109,9 +109,9 @@ namespace FytSoa.Service.Implements
                 var res = RecursionOrganize(sourceList, new List<SysOrganizeTree>(), row.Guid);
                 list.Add(new SysOrganizeTree()
                 {
-                    guid = row.Guid,
-                    name = row.Name,
-                    open=res.Count>0,
+                    id = row.Guid,
+                    title = row.Name,
+                    spread=res.Count>0,
                     children = res.Count>0?res:null
                 });
             }

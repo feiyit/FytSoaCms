@@ -15,7 +15,7 @@ namespace FytSoa.Api.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [JwtAuthorize(Roles = "Admin")]
-    public class LogController : Controller
+    public class LogController : ControllerBase
     {
         private readonly ISysLogService _logService;
         public LogController(ISysLogService logService)
@@ -26,13 +26,13 @@ namespace FytSoa.Api.Controllers
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="parm"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public async Task<JsonResult> GetPages(PageParm parm)
+        public async Task<IActionResult> GetPages([FromQuery]PageParm parm)
         {
             var res = await _logService.GetPagesAsync(parm);
-            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+            return Ok(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
         /// <summary>
@@ -41,10 +41,10 @@ namespace FytSoa.Api.Controllers
         /// <returns></returns>
         [HttpPost("delete")]
         [ApiAuthorize(Modules = "Log", Methods = "Delete",IsLog =false)]
-        public async Task<ApiResult<string>> DeleteLog([FromBody]ParmString obj)
+        public async Task<IActionResult> DeleteLog([FromBody]ParmString obj)
         {
             var list = Utils.StrToListString(obj.parm);
-            return await _logService.DeleteAsync(m => list.Contains(m.Guid));
+            return Ok(await _logService.DeleteAsync(m => list.Contains(m.Guid)));
         }
     }
 }

@@ -1,0 +1,84 @@
+﻿@page
+@model RoleGroupModel
+@{
+    ViewData["Title"] = "角色组管理";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<div id="app">
+    <form class="layui-form form-cus" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色组名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="Name" v-model="m.name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入角色组" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <div id="slideSort" style="top:17px;"></div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-cur-submit">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            m: {
+                level:0
+            }
+        }
+    });
+    layui.config({
+        base: '/themes/js/modules/'
+    }).use(['layer', 'jquery', 'common', 'form', 'slider'], function () {
+        var form = layui.form, $ = layui.$, os = layui.common
+            , slider = layui.slider;
+        var sliderIndex = slider.render({
+            elem: '#slideSort'
+            , input: true
+            , change: function (value) {
+                vm.m.sort = value;
+            }
+            , theme: '#409eff'
+        });
+        var index = parent.layer.getFrameIndex(window.name);
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+            var urls = "api/role/add";
+            if (vm.m.guid) {
+                urls = "api/role/edit";
+            }
+            os.ajax(urls, vm.m, function (res) {
+                $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                if (res.statusCode === 200) {
+                    parent.layer.close(index);
+                } else {
+                    os.error(res.message);
+                }
+            });
+            return false;
+        });
+        $(".btn-open-close").on('click', function () {
+            parent.layer.close(index);
+        });
+
+        os.ajax('api/role/bymodel/', { parm: os.getUrlParam('guid') }, function (res) {
+            if (res.statusCode == 200) {
+                vm.m = res.data;
+                sliderIndex.setValue(vm.m.sort);
+            } else {
+                os.error(res.message);
+            }
+        });
+    });
+</script>
+}

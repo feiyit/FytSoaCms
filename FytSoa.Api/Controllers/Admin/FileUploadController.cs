@@ -14,14 +14,14 @@ namespace FytSoa.Api.Controllers
     /// </summary>
     [Produces("application/json")]
     [Route("api/upload")]
-    public class FileUploadController : Controller
+    public class FileUploadController : ControllerBase
     {
         /// <summary>
         /// 查询列表
         /// </summary>
         /// <returns></returns>
         [HttpPost("index")]
-        public JsonResult Index(IFormFile file)
+        public IActionResult Index(IFormFile file)
         {
             //原文件名
             var filename = file.FileName;
@@ -41,7 +41,7 @@ namespace FytSoa.Api.Controllers
                 file.CopyTo(stream);
                 stream.Flush();
             }
-            return Json(new {code=200,data=path+ filename });
+            return Ok(new {code=200,data=path+ filename });
         }
     }
 }

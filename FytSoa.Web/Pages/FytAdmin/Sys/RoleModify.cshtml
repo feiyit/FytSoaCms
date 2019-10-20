@@ -26,99 +26,146 @@
             transition: all .5s;
         }
 
-        .organize-tree .ztree li a {
-            height: 22px !important;
-        }
 </style>
-<form class="layui-form form-cus" action="">
-    <div class="layui-form-item">
-        <label class="layui-form-label">所属部门</label>
-        <div class="layui-input-block">
-            <input type="text" name="DepartmentName" id="DepartmentName" value="@Model.RoleModel.DepartmentName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请选择所属部门" class="layui-input">
-            <div class="organize-tree">
-                <ul id="tree" class="ztree layui-tree-cus"></ul>
+<div id="app">
+    <form class="layui-form form-cus" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色组</label>
+            <div class="layui-input-block">
+                <select v-model="m.parentGuid" id="parentGuid" lay-filter="group" lay-verify="">
+                    <option :value="it.guid" v-for="it in list">{{it.name}}</option>
+                 </select>
             </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">角色名称</label>
-        <div class="layui-input-block">
-            <input type="text" name="Name" value="@Model.RoleModel.Name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属部门</label>
+            <div class="layui-input-block">
+                <input type="text" v-model="m.departmentName" name="DepartmentName" id="DepartmentName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请选择所属部门" class="layui-input">
+                <div class="organize-tree">
+                    <div id="tree" class="layui-tree-cus"></div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">角色编号</label>
-        <div class="layui-input-block">
-            <input type="text" name="Codes" value="@Model.RoleModel.Codes" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入角色编号" class="layui-input">
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名称</label>
+            <div class="layui-input-block">
+                <input type="text" v-model="m.name" name="Name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">描述</label>
-        <div class="layui-input-block">
-            <textarea name="Summary" class="layui-textarea">@Html.Raw(Model.RoleModel.Summary)</textarea>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <div id="slideSort" style="top:17px;"></div>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item layui-cur-submit">
-        <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
-            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        <div class="layui-form-item">
+            <label class="layui-form-label">描述</label>
+            <div class="layui-input-block">
+                <textarea v-model="m.summary" name="Summary" class="layui-textarea"></textarea>
+            </div>
         </div>
-    </div>
-    <input type="hidden" name="Guid" id="Guid" value="@Model.RoleModel.Guid" />
-    <input type="hidden" name="AddTime" value="@Model.RoleModel.AddTime" />
-    <input type="hidden" name="DepartmentGuid" id="DepartmentGuid" value="@Model.RoleModel.DepartmentGuid" />
-</form>
-<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
+        <div class="layui-form-item layui-cur-submit">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+            </div>
+        </div>
+    </form>
+</div>
 @section Scripts{
-    <script>
-        layui.config({
-            base: '/themes/js/modules/'
-        }).use(['layer', 'jquery', 'common', 'form','ztree'], function () {
-            var form = layui.form, $ = layui.$, os = layui.common;
-            var index = parent.layer.getFrameIndex(window.name);
-            //监听提交
-            form.on('submit(submit)', function (data) {
-                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
-                var urls = "api/role/add";
-                if ($("#Guid").val()) {
-                    urls = "api/role/edit";
-                }                
-                os.ajax(urls, data.field, function (res) {
-                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
-                    if (res.statusCode === 200) {
-                        parent.layer.close(index);
-                    } else {
-                        os.error(res.message);
-                    }   
-                });
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            m: {},
+            list:[]
+        }
+    });
+    layui.config({
+        base: '/themes/js/modules/'
+    }).use(['layer', 'jquery', 'common', 'form', 'tree', 'slider'], function () {
+        var form = layui.form, $ = layui.$, os = layui.common, tree = layui.tree
+            , slider = layui.slider;
+        var sliderIndex = slider.render({
+            elem: '#slideSort'
+            , input: true
+            , change: function (value) {
+                vm.m.sort = value;
+            }
+            , theme: '#409eff'
+        });
+        form.on('select(group)', function (data) {
+            vm.m.parentGuid = data.value;
+        });    
+        var index = parent.layer.getFrameIndex(window.name);
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            if (!vm.m.parentGuid) {
+                os.error('请选择角色组');
                 return false;
+            }
+            $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+            var urls = "api/role/add";
+            if (vm.m.guid) {
+                urls = "api/role/edit";
+            }
+            os.ajax(urls, vm.m, function (res) {
+                $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                if (res.statusCode === 200) {
+                    parent.layer.close(index);
+                } else {
+                    os.error(res.message);
+                }
             });
-            $(".btn-open-close").on('click', function () {
-                parent.layer.close(index);
+            return false;
+        });
+        $(".btn-open-close").on('click', function () {
+            parent.layer.close(index);
+        });
+        //查询部门
+        os.ajax('api/organize/gettree/', {}, function (res) {
+            console.log(res);
+            tree.render({
+                elem: '#tree'
+                , data: res
+                , onlyIconControl: true
+                , click: function (obj) {
+                    guid = obj.data.id;
+                    vm.m.departmentGuid = obj.data.id;
+                    vm.m.departmentName = obj.data.title;
+                    $(".organize-tree").removeClass('active');
+                }
             });
-
-            var setting = {
-                async: {
-                    enable: true,
-                    headers: os.getToken(),
-                    url: "/api/organize/gettree"
-                },
-                callback: {
-                    onClick: onClick
+        });
+        //查询角色信息
+        os.ajax('api/role/getpages/', { limit: 10000 }, function (res) {
+            for (var i = 0; i < res.data.length; i++) {
+                if (res.data[i].level == 0) {
+                    vm.list.push(res.data[i]);
                 }
             };
-            $("#DepartmentName").click(function () {
-                $(".organize-tree").addClass('active');
+            vm.$nextTick(function () {
+                //查询角色信息
+                os.ajax('api/role/bymodel/', { parm: os.getUrlParam('guid') }, function (res) {
+                    if (res.statusCode == 200) {
+                        vm.m = res.data;
+                        vm.m.level = 1;
+                        sliderIndex.setValue(vm.m.sort);
+                        $('#parentGuid').val(vm.m.parentGuid);
+                        form.render('select');
+                    } else {
+                        os.error(res.message);
+                    }
+                });
             });
-            $(".organize-tree").mouseleave(function () {
-                $(".organize-tree").removeClass('active');
-            });
-            $.fn.zTree.init($("#tree"), setting);
-            function onClick(event, treeId, treeNode, clickFlag) {
-                $("#DepartmentGuid").val(treeNode.guid);
-                $("#DepartmentName").val(treeNode.name);
-                $(".organize-tree").removeClass('active');
-            }
+        }, 'get');
+        
+        
+        $("#DepartmentName").click(function () {
+            $(".organize-tree").addClass('active');
         });
-    </script>
+        $(".organize-tree").mouseleave(function () {
+            $(".organize-tree").removeClass('active');
+        });
+    });</script>
 }

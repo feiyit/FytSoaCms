@@ -18,7 +18,7 @@ namespace FytSoa.Api.Controllers.Wx
     [Route("api/wx/menu")]
     [JwtAuthorize(Roles = "Admin")]
     //[ApiController]
-    public class WxMenuController : Controller
+    public class WxMenuController : ControllerBase
     {
         private readonly IWxSettingService _settingService;
         public WxMenuController(IWxSettingService settingService)
@@ -31,11 +31,11 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"), Log("WxMenu：edit", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> DeleteRole([FromBody]MenuEditDto parm)
+        public async Task<IActionResult> DeleteRole([FromBody]MenuEditDto parm)
         {
             var model = _settingService.GetModelAsync(m => m.Id == parm.id).Result.data;
             model.MenuJson = parm.menu;
-            return await _settingService.UpdateAsync(model);
+            return Ok(await _settingService.UpdateAsync(model));
         }
 
         /// <summary>
@@ -43,9 +43,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("model")]
-        public async Task<ApiResult<WxSetting>> GetModel([FromBody]ParmInt obj)
+        public async Task<IActionResult> GetModel([FromBody]ParmInt obj)
         {
-            return await _settingService.GetModelAsync(m=>m.Id== obj.id);
+            return Ok(await _settingService.GetModelAsync(m => m.Id == obj.id));
         }
 
         /// <summary>
@@ -53,16 +53,16 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("synchro"), Log("WxMenu：synchro", LogType = LogEnum.ASYWX)]
-        public async Task<ApiResult<string>> PushMenu([FromBody]ParmInt obj)
+        public async Task<IActionResult> PushMenu([FromBody]ParmInt obj)
         {
             //MemoryCacheService.Default.RemoveCache("WinXinAccessToken");
             var res = new ApiResult<string>();
             //获得公众号配置
-            var model = _settingService.GetModelAsync(m => m.Id == obj.id).Result.data;
+            var model =await _settingService.GetModelAsync(m => m.Id == obj.id);
             //获得access_taken
-            var token = WxTools.GetAccess(model.AppId,model.AppSecret);
+            var token = WxTools.GetAccess(model.data.AppId,model.data.AppSecret);
 
-            var dbMenu = JsonConvert.DeserializeObject<List<WxButton>>(model.MenuJson);
+            var dbMenu = JsonConvert.DeserializeObject<List<WxButton>>(model.data.MenuJson);
             
             foreach (var item in dbMenu)
             {
@@ -151,7 +151,7 @@ namespace FytSoa.Api.Controllers.Wx
             //var wxres = WxTools.PushMenu(token.access_token,body);
             //res.message = wxres.errmsg;
             //res.statusCode = wxres.errcode == 0 ? 200 : wxres.errcode;
-            return await Task.Run(() => res);
+            return Ok(res);
         }
     }
 }

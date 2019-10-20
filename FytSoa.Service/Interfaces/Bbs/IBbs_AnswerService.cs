@@ -8,7 +8,7 @@ namespace FytSoa.Service.Interfaces
     /*!
     * 文件名称：Bbs_answer服务接口
     */
-	public interface IBbs_AnswerService: IBaseServer<Bbs_Answer>
+	public interface IBbs_AnswerService: IBaseService<Bbs_Answer>
 	{
         /// <summary>
         /// 分页查询问题列表

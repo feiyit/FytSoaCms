@@ -10,4 +10,9 @@
 /FytSoa.Common/obj
 /FytSoa.Api/bin
 /FytSoa.Api/obj
+/FytSoa.Tasks/bin
+/FytSoa.Tasks/obj
 /.vs
+*.DS_Store
+/obj
+/bin

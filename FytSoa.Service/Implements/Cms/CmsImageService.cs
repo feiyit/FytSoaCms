@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FytSoa.Service.Implements
 {
-    public class CmsImageService  : BaseServer<CmsImage>, ICmsImageService
+    public class CmsImageService  : BaseService<CmsImage>, ICmsImageService
     {
         public CloudFile GetList(PageParm parm)
         {

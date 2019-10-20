@@ -2,7 +2,7 @@
 
 namespace FytSoa.Service.Interfaces
 {
-    public interface ICmsSiteService : IBaseServer<CmsSite>
+    public interface ICmsSiteService : IBaseService<CmsSite>
     {
 
     }

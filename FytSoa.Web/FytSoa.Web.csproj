@@ -13,15 +13,12 @@
     <Content Remove="logs\**" />
     <EmbeddedResource Remove="logs\**" />
     <None Remove="logs\**" />
+    <Content Remove="wwwroot\build\admin\css\site.min.css" />
+    <Content Remove="wwwroot\build\admin\css\site.min.css" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Pages\FytAdmin\App\Setting.cshtml" />
     <None Include="Pages\FytAdmin\App\SettingModify.cshtml" />
-    <None Include="wwwroot\cdns\fonts\iconfont.svg" />
-    <None Include="wwwroot\cdns\js\fyt.js" />
-    <None Include="wwwroot\cdns\js\jquery.bxslider.js" />
-    <None Include="wwwroot\cdns\js\swiper.min.js" />
-    <None Include="wwwroot\cdns\js\wow.min.js" />
     <None Include="wwwroot\dist\fonts\iconfont.svg" />
     <None Include="wwwroot\dist\fonts\iconfont.woff2" />
     <None Include="wwwroot\dist\js\mmenu.min.js" />
@@ -60,7 +57,9 @@
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.9.406" />
     <PackageReference Include="CSRedisCore" Version="3.0.60" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0"><PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
+<Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
+</PackageReference>
     <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
@@ -80,13 +79,11 @@
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="nlog.config">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\cdns\files\" />
     <Folder Include="wwwroot\db_back\" />
+    <Folder Include="Pages\FytAdmin\Form\" />
+    <Folder Include="wwwroot\themes\404\" />
   </ItemGroup>
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="http://json.schemastore.org/bower" /></VisualStudio></ProjectExtensions>
 </Project>

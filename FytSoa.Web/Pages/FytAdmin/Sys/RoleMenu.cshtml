@@ -16,7 +16,7 @@
     .layui-form-select dl{max-height:150px;}
 </style>
 <div class="layui-col-220 fyt-wall">
-    <ul id="tree" class="ztree layui-tree-cus"></ul>
+    <div id="tree" class="layui-tree-cus" style="overflow:auto;"></div>
     <div class="fyt-center"><button class="layui-btn" data-type="saveMenu" type="button">保存菜单权限</button></div>
 </div>
 <div class="right-col-body fyt-wall">
@@ -24,17 +24,15 @@
         <table class="layui-hide" id="tablist" lay-filter="tool"></table>
     </div>
 </div>
-<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
 <script>
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['table', 'layer', 'jquery', 'ztree', 'common'],
+        }).use(['table', 'layer', 'jquery', 'tree', 'common'],
             function () {
                 var table = layui.table,
                     layer = layui.layer,
                     $ = layui.jquery,
-                    ztree = layui.ztree,
-                    zcheck = layui.zcheck,
+                    tree = layui.tree,
                     os = layui.common,
                     form = layui.form;
                 table.render({
@@ -51,26 +49,25 @@
                     page: false,
                     id: 'tables'
                 });
-                var setting = {
-                    async: {
-                        enable: true,
-                        headers: os.getToken(),
-                        url: "/api/menu/gettree",
-                        otherParam: {roleGuid:'@Model.roleGuids'}
-                    },
-                    check: {
-                        enable: true,
-                        chkStyle: 'checkbox',
-                        chkboxType:{ "Y": "ps", "N": "ps" }
-                    },
-                    callback: {
-                        onClick: onClick,
-                        onAsyncSuccess: zTreeOnAsyncSuccess
-                    }
-                };
-                $.fn.zTree.init($("#tree"), setting);
+                
 
-                var guid = '', selText = '', layuiIndex='', active = {
+                var guid = '', selText = '', layuiIndex='', selectIds='',active = {
+                    initTree() {
+                        os.ajax('api/menu/menubyrole/', { roleGuid: '@Model.roleGuids' }, function (res) {
+                            console.log(res);
+                            tree.render({
+                                elem: '#tree'
+                                , data: res.menu
+                                , id:"treeId"
+                                , showCheckbox:true
+                                , onlyIconControl: true 
+                                , click: function (obj) {
+                                    guid=obj.data.id;
+                                    active.reload();
+                                }
+                            });
+                        });
+                    },
                     reload: function () {
                         table.reload('tables',
                             {
@@ -81,17 +78,14 @@
                             });
                     },    
                     saveMenu: function () { 
-                        var zTree = $.fn.zTree.getZTreeObj("tree");
-                        var nodes = zTree.getCheckedNodes(true); 
-                        if (nodes.length == 0) {
+                        var checkedData = tree.getChecked('treeId'); 
+                        if (checkedData.length == 0) {
                             os.warning('请选择授权的功能模块~');
                             return;
                         }
-                        var strMenu = ''; 
-                        //console.log(nodes);
-                        $.each(nodes,function (i, item) {
-                            strMenu += item.guid + ",";
-                        });
+                        selectIds = '';
+                        var strMenu = active.serverArray(checkedData);
+                        //console.log(active.serverArray(checkedData)); return;
                         //开始提交信息
                         var index = layer.load(1, {
                             shade: [0.1, '#fff'] 
@@ -104,29 +98,24 @@
                                 os.error(res.message);
                             }
                         });
+                    },
+                    serverArray(arr)
+                    {
+                        for(var item = 0;item < arr.length;item++){
+                            selectIds+=arr[item].id+",";
+                            if(arr[item].children){
+                                active.serverArray(arr[item].children)
+                            }
+                        }
+                        return selectIds
                     }
                 };        
-
+                active.initTree();
                 $('.fyt-wall .layui-btn').on('click', function () {
                     var type = $(this).data('type');
                     active[type] ? active[type].call(this) : '';
                 });
-                function onClick(event, treeId, treeNode, clickFlag) {
-                    console.log(treeNode);
-                    guid = treeNode.guid;
-                    active.reload();
-                }
-                //设置授权项被选中状态
-                function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
-                    var treeObj = $.fn.zTree.getZTreeObj("tree");
-                    var nodes = treeObj.transformToArray(treeObj.getNodes());
-                    $.each(nodes, function (i, item) {                        
-                        if (item.isChecked) {
-                            item.checked  = true;
-                            treeObj.updateNode(item, false);
-                        }
-                    });
-                }
+                
                 //监听授权操作
                 form.on('switch(torole)', function (obj) {
                     var strRole = this.value;

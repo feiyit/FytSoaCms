@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FytSoa.Service.Interfaces
 {
-    public interface ISysAppSettingService : IBaseServer<SysAppSetting>
+    public interface ISysAppSettingService : IBaseService<SysAppSetting>
     {
       
     }

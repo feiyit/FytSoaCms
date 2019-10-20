@@ -31,35 +31,5 @@
     },
     // Optionally generate .map file
     "sourceMap": false
-  },
-  //网站
-  {
-    "outputFileName": "wwwroot/build/web/css/index.min.css",
-    "inputFiles": [
-      "wwwroot/cdns/css/animate.min.css",
-      "wwwroot/cdns/css/style.css"
-    ],
-    // Optionally specify minification options
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    },
-    // Optionally generate .map file
-    "sourceMap": false
-  },
-  {
-    "outputFileName": "wwwroot/build/web/css/fyt.min.css",
-    "inputFiles": [
-      "wwwroot/cdns/css/style.css",
-      "wwwroot/assets/css/animate.min.css",
-      "wwwroot/assets/css/fyt.css"
-    ],
-    // Optionally specify minification options
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    },
-    // Optionally generate .map file
-    "sourceMap": false
   }
 ]

@@ -87,7 +87,7 @@
                 var layer = layui.layer,
                     $ = layui.jquery,
                     os = layui.common;
-                os.ajax('api/column/tree', { type: 1 }, function (res) {
+                os.ajax('api/column/tree', { types: 1 }, function (res) {
                     if (res.statusCode === 200) {
                         vm.treeData = { 'name': '栏目列表', children: res.data };
                     } else {

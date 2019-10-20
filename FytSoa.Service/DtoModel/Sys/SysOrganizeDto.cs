@@ -13,9 +13,9 @@ namespace FytSoa.Service.DtoModel
 
     public class SysOrganizeTree
     {
-        public string guid { get; set; }
-        public string name { get; set; }
+        public string id { get; set; }
+        public string title { get; set; }
         public List<SysOrganizeTree> children { get; set; }
-        public bool open { get; set; } = true;
+        public bool spread { get; set; } = true;
     }
 }

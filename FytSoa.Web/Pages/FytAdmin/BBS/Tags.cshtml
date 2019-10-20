@@ -59,21 +59,21 @@
             <table class="layui-hide" id="tablist" lay-filter="tool"></table>
         </div>
     </div>
-    <script>
-        var active, os, vm = new Vue({
+    <script>var active, os, vm = new Vue({
             el: '#app',
             data: {
-                m: {guid:''}
+                m: { guid: '' }
             }
         });
         layui.config({
             base: '/themes/js/modules/'
-        }).use(['layer', 'jquery', 'common', 'table','form'],
+        }).use(['layer', 'jquery', 'common', 'table', 'form'],
             function () {
                 var layer = layui.layer,
                     table = layui.table,
-                    form=layui.form,
+                    form = layui.form,
                     $ = layui.jquery;
+                form.render();
                 os = layui.common;
                 table.render({
                     elem: '#tablist',
@@ -82,7 +82,7 @@
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'tagName', width: 150, title: '名称', fixed: 'left'},
+                            { field: 'tagName', width: 150, title: '名称', fixed: 'left' },
                             { field: 'enTagName', width: 200, title: '英文名称', fixed: 'left' },
                             { field: 'firstLetter', width: 120, title: '首字母', fixed: 'left' },
                             { field: 'status', width: 150, title: '状态', templet: '#switchTpl' },
@@ -104,7 +104,7 @@
                         };
                     }
                 });
-                
+
                 active = {
                     reload: function () {
                         table.reload('tables',
@@ -113,7 +113,7 @@
                                     curr: 1
                                 },
                                 where: {
-                                    
+
                                 }
                             });
                     },
@@ -190,8 +190,7 @@
                     });
                     return false;
                 });
-            });
-    </script>
+            });</script>
     <script type="text/html" id="tool">
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
     </script>

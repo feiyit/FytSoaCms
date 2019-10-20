@@ -71,7 +71,6 @@ namespace FytSoa.Extensions
                             msg = "未知错误";
                             break;
                     }
-                    Logger.Default.ProcessError(context.Response.StatusCode,msg);
                     await HandleExceptionAsync(context, context.Response.StatusCode, msg);
                 }
             }

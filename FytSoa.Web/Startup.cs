@@ -11,6 +11,7 @@ using FytSoa.Common;
 using FytSoa.Extensions;
 using FytSoa.Service.Implements;
 using FytSoa.Service.Interfaces;
+using FytSoa.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +27,8 @@ using Microsoft.IdentityModel.Tokens;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using Swashbuckle.AspNetCore.Swagger;
+using Quartz.Impl.AdoJobStore;
+using Quartz.Impl.AdoJobStore.Common;
 
 namespace FytSoa.Web
 {
@@ -109,10 +112,11 @@ namespace FytSoa.Web
             RedisHelper.Initialization(new CSRedis.CSRedisClient(Configuration["Cache:Configuration"]));
             #endregion
 
-            services.AddMvc().AddRazorPagesOptions(options =>
-            {
-                //options.Conventions.AddPageRoute("/web/index", "/");
+            services.AddMvc().AddJsonOptions(option => {
+                option.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             });
+
+            services.AddSingleton(GetScheduler());
 
             #region Swagger UI
             services.AddSwaggerGen(options =>
@@ -121,7 +125,7 @@ namespace FytSoa.Web
                 {
                     Version = "v1",
                     Title = "FytSoa API",
-                    Contact = new Contact { Name = "feiyit", Email = "715515390@qq.com", Url = "http://www.feiyit.com" }
+                    Contact = new Contact { Name = "feiyit", Email = "715515390@qq.com", Url = "" }
                 });
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "FytSoa.Web.xml");
@@ -136,7 +140,7 @@ namespace FytSoa.Web
                 options.AddSecurityRequirement(security);
                 options.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
-                    Description = "JWT授权(数据将在请求头中进行传输) 参数结构: \"Authorization: Bearer {token}\"",
+                    Description = "JWT-Test: \"Authorization: Bearer {token}\"",
                     //jwt默认的参数名称
                     Name = "Authorization",
                     //jwt默认存放Authorization信息的位置(请求头中)
@@ -189,6 +193,9 @@ namespace FytSoa.Web
                 app.UseExceptionHandler("/Error");
             }
 
+            //新增
+            app.UseStatusCodePagesWithReExecute("/Error");
+
             #region 解决Ubuntu Nginx 代理不能获取IP问题
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
@@ -196,21 +203,37 @@ namespace FytSoa.Web
             });
             #endregion
 
-            //添加NLog  
-            loggerFactory.AddNLog();
-            //读取Nlog配置文件 
-            env.ConfigureNLog("nlog.config");
-            //Swagger UI
+            #region Nlog记日志
+            //将日志记录到数据库
+            NLog.LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
+            NLog.LogManager.Configuration.Variables["connectionString"] = Configuration["DBConnection:MySqlConnectionString"];
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);  //避免日志中的中文输出乱码
+            #endregion
+
+            #region  初始化七牛云参数
+            QiniuCloud.QnColud.Setting(new QiniuConfig()
+            {
+                AK=Configuration["QiNiu:AccessKey"],
+                SK = Configuration["QiNiu:SecretKey"],
+                Bucket = Configuration["QiNiu:Bucket"],
+                BasePath = Configuration["QiNiu:BasePath"],
+                domain = Configuration["QiNiu:Domain"]
+            });
+            #endregion
+
+            #region Swagger UI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FytSoa API V1");
             });
+            #endregion
+
             //自定义异常处理
-            app.UseMiddleware<ExceptionFilter>();
+            //app.UseMiddleware<ExceptionFilter>();
+
             //认证
             app.UseAuthentication();
-
 
             //性能压缩
             app.UseResponseCompression();
@@ -254,6 +277,35 @@ namespace FytSoa.Web
                     }                    
                 }
             }
+        }
+
+        private SchedulerCenter GetScheduler()
+        {
+            string dbProviderName = Configuration.GetSection("Quartz")["dbProviderName"];
+            string connectionString = Configuration.GetSection("Quartz")["connectionString"];
+            string driverDelegateType = string.Empty;
+            switch (dbProviderName)
+            {
+                case "SQLite-Microsoft":
+                case "SQLite":
+                    driverDelegateType = typeof(SQLiteDelegate).AssemblyQualifiedName; break;
+                case "MySql":
+                    driverDelegateType = typeof(MySQLDelegate).AssemblyQualifiedName; break;
+                case "OracleODPManaged":
+                    driverDelegateType = typeof(OracleDelegate).AssemblyQualifiedName; break;
+                case "SQLServer":
+                case "SQLServerMOT":
+                    driverDelegateType = typeof(SqlServerDelegate).AssemblyQualifiedName; break;
+                case "Npgsql":
+                    driverDelegateType = typeof(PostgreSQLDelegate).AssemblyQualifiedName; break;
+                case "Firebird":
+                    driverDelegateType = typeof(FirebirdDelegate).AssemblyQualifiedName; break;
+                default:
+                    throw new System.Exception("dbProviderName unreasonable");
+            }
+            SchedulerCenter schedulerCenter = SchedulerCenter.Instance;
+            schedulerCenter.Setting(new DbProvider(dbProviderName, connectionString), driverDelegateType);
+            return schedulerCenter;
         }
     }
 }

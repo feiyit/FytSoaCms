@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace FytSoa.Service.Implements
 {
-    public class SysMenuService : BaseServer<SysMenu>, ISysMenuService
+    public class SysMenuService : BaseService<SysMenu>, ISysMenuService
     {
         /// <summary>
         /// 添加部门信息
@@ -84,8 +84,8 @@ namespace FytSoa.Service.Implements
         {
             var list =await Db.Queryable<SysMenu>().Select(m => new SysMenuTree()
             {
-                guid = m.Guid,
-                name = m.Name,
+                id = m.Guid,
+                title = m.Name,
                 layer = m.Layer,
                 parentGuid = m.ParentGuid,
                 sort=m.Sort,
@@ -95,12 +95,12 @@ namespace FytSoa.Service.Implements
             foreach (var item in list.Where(m => m.layer == 1).OrderBy(m => m.sort))
             {
                 //获得子级
-                var children = RecursionOrganize(list, new List<SysMenuTree>(), item.guid);
+                var children = RecursionOrganize(list, new List<SysMenuTree>(), item.id);
                 treeList.Add(new SysMenuTree()
                 {
-                    guid = item.guid,
-                    name = item.name,
-                    open = children.Count > 0,
+                    id = item.id,
+                    title = item.title,
+                    spread = children.Count > 0,
                     isChecked= item.isChecked,
                     children = children.Count == 0 ? null : children
                 });
@@ -124,13 +124,13 @@ namespace FytSoa.Service.Implements
         {
             foreach (var row in sourceList.Where(m => m.parentGuid == guid).OrderBy(m => m.sort))
             {
-                var res = RecursionOrganize(sourceList, new List<SysMenuTree>(), row.guid);
+                var res = RecursionOrganize(sourceList, new List<SysMenuTree>(), row.id);
                 list.Add(new SysMenuTree()
                 {
-                    guid = row.guid,
-                    name = row.name,
-                    isChecked=row.isChecked,
-                    open = res.Count > 0,
+                    id = row.id,
+                    title = row.title,
+                    spread = res.Count > 0,
+                    isChecked =row.isChecked,
                     children = res.Count > 0 ? res : null
                 });
             }
@@ -253,6 +253,7 @@ namespace FytSoa.Service.Implements
                         .Select(m=>new SysMenuDto() {
                             guid=m.Guid,
                             parentGuid=m.ParentGuid,
+                            parentGuidList=m.ParentGuidList,
                             name=m.Name,
                             layer=m.Layer,
                             icon=m.Icon,
