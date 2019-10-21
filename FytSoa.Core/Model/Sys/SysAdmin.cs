@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace FytSoa.Core.Model.Sys
 {
@@ -17,6 +18,20 @@ namespace FytSoa.Core.Model.Sys
         /// 归属角色
         /// </summary>
         public string RoleGuid { get; set; }
+
+        /// <summary>
+        /// 返回角色列表
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public List<AdminToRoleList> RoleList {
+            get {
+                var role = new List<AdminToRoleList>();
+                if (!string.IsNullOrEmpty(RoleGuid))
+                {
+                    role= JsonConvert.DeserializeObject<List<AdminToRoleList>>(RoleGuid);
+                }
+                return role;
+            } }
 
         /// <summary>
         /// 归属部门
@@ -102,5 +117,21 @@ namespace FytSoa.Core.Model.Sys
         /// 登录次数
         /// </summary>
         public int LoginSum { get; set; } = 1;
+
+        /// <summary>
+        /// 是否系统管理员
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public bool IsSystem { get; set; } = false;
+    }
+
+    /// <summary>
+    /// 用户关联角色
+    /// </summary>
+    public class AdminToRoleList
+    {
+        public string name { get; set; }
+
+        public string guid { get; set; }
     }
 }

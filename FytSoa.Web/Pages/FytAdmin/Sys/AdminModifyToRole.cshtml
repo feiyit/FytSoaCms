@@ -1,11 +1,12 @@
 ﻿@page
 @model FytSoa.Web.Pages.FytAdmin.Sys.AdminModifyToRoleModel
 @{
-    ViewData["Title"] = "关联角色";
-    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+ViewData["Title"] = "关联角色";
+Layout = "~/Pages/FytAdmin/_Layout.cshtml";
 }
 <style>
-    .layui-icon-export, .layui-icon-friends {
+    .layui-icon-export,
+    .layui-icon-friends {
         margin-right: 5px;
         color: #aee4fa;
     }
@@ -31,6 +32,7 @@
     .layui-colla-item {
         border-color: transparent;
     }
+
     .role {
 
         height: 350px;
@@ -38,28 +40,35 @@
         border-radius: 4px;
         background: #f4f6f8;
     }
+
     #app {
         overflow: hidden;
         padding: 15px 40px;
     }
+
     h4 {
         line-height: 31px;
         font-size: 16px;
     }
+
     .layui-input-block {
         text-align: center;
         margin: 0px;
     }
+
     .role ul {
         padding: 10px;
     }
+
     .select-item {
         cursor: pointer;
         padding: 10px 5px;
     }
-        .select-item:hover {
-            background-color: #e7eaef;
-        }
+
+    .select-item:hover {
+        background-color: #e7eaef;
+    }
+
     .layui-col-xs2 {
         text-align: right;
     }
@@ -72,7 +81,9 @@
                 <div class="layui-colla-item" v-for="it in list" v-if="it.level==0">
                     <h2 class="layui-colla-title"><i class="layui-icon layui-icon-export"></i>{{it.name}}</h2>
                     <div class="layui-colla-content">
-                        <div class="role-item" :class="active==row.guid?'active':''" v-for="row in list" v-if="row.level==1 && row.parentGuid==it.guid" @@click="loaduser(row)"><i class="layui-icon layui-icon-friends"></i>{{glnode(row.name)}}</div>
+                        <div class="role-item" :class="active==row.guid?'active':''" v-for="row in list"
+                            v-if="row.level==1 && row.parentGuid==it.guid" @@click="loaduser(row)"><i
+                                class="layui-icon layui-icon-friends"></i>{{glnode(row.name)}}</div>
                     </div>
                 </div>
             </div>
@@ -83,14 +94,16 @@
                 <ul>
                     <li class="layui-row select-item" v-for="it in curList">
                         <div class="layui-col-xs10"><i class="layui-icon layui-icon-friends"></i>{{it.name}}</div>
-                        <div class="layui-col-xs2"><i @@click="delCur(it)" class="layui-icon layui-icon-close"></i></div>
+                        <div class="layui-col-xs2"><i @@click="delCur(it)" class="layui-icon layui-icon-close"></i>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="layui-input-block">
-        <button class="layui-btn" @@click="submits"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>确定</button>
+        <button class="layui-btn" @@click="submits"><i
+                class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>确定</button>
         <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
     </div>
 </div>
@@ -100,7 +113,7 @@
         data: {
             list: {},
             active: '',
-            curList:[]
+            curList: []
         },
         methods: {
             glnode(v) {
@@ -126,7 +139,7 @@
                 });
                 if (!iscz) {
                     v.name = this.glnode(v.name);
-                    this.curList.push({guid:v.guid,name:v.name});
+                    this.curList.push({ guid: v.guid, name: v.name });
                 }
             },
             submits() {
@@ -145,8 +158,10 @@
                 $$ = parent.layui.jquery;
             var index = parent.layer.getFrameIndex(window.name);
             var formId = os.getUrlParam('frameid');
+            var role = os.getUrlParam('role');
+            vm.curList = JSON.parse(unescape(role));
             $(".btn-open-close").on('click',
-                function() {
+                function () {
                     parent.layer.close(index);
                 });
             active = {

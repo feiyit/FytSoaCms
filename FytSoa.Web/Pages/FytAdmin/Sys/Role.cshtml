@@ -1,8 +1,8 @@
 ﻿@page
 @model FytSoa.Web.Pages.FytAdmin.Sys.RoleModel
 @{
-    ViewData["Title"] = "角色管理";
-    Layout = AdminLayout.Pjax(HttpContext);
+ViewData["Title"] = "角色管理";
+Layout = AdminLayout.Pjax(HttpContext);
 }
 <div id="container">
     <div class="layui-col-220">
@@ -12,10 +12,14 @@
     <div class="right-col-body">
         <div class="list-wall">
             <div class="layui-form list-search">
-                <button type="button" class="layui-btn layui-btn-sm" data-type="roleGroup"><i class="layui-icon layui-icon-add-circle"></i> 添加角色组</button>
-                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeAdd"><i class="layui-icon layui-icon-add-circle"></i> 添加角色</button>
-                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i> 删除</button>
-                <button type="button" class="layui-btn layui-btn-sm" data-type="toolMenu"><i class="layui-icon layui-icon-template"></i> 角色分配功能模块</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="roleGroup"><i
+                        class="layui-icon layui-icon-add-circle"></i> 添加角色组</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeAdd"><i
+                        class="layui-icon layui-icon-add-circle"></i> 添加角色</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i>
+                    删除</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="toolMenu"><i
+                        class="layui-icon layui-icon-template"></i> 角色分配功能模块</button>
             </div>
             <table class="layui-hide" id="tablist" lay-filter="tool"></table>
         </div>
@@ -48,6 +52,15 @@
                                     }
                                 }
                             },
+                            {
+                                field: 'isSystem', title: '是否系统管理员', templet: function (d) {
+                                    if (d.isSystem) {
+                                        return '<span class="layui-badge-dot layui-bg-blue"></span>';
+                                    } else {
+                                        return '<span class="layui-badge-dot layui-bg-gray"></span>';
+                                    }
+                                }
+                            },
                             { field: 'sort', title: '排序' },
                             { field: 'summary', title: '描述' },
                             { width: 100, title: '操作', templet: '#tool' }
@@ -57,7 +70,7 @@
                     id: 'tables',
                     height: $(window).height() - 150,
                     where: {
-                        limit:1000
+                        limit: 1000
                     }
                 });
 
@@ -99,7 +112,7 @@
                                 strCount++;
                             }
                         });
-                        if (strCount==0) {
+                        if (strCount == 0) {
                             os.warning('请选择要授权模块的角色~');
                             return;
                         }
@@ -130,8 +143,14 @@
                         }
                         var str = '';
                         $.each(data, function (i, item) {
-                            str += item.guid + ",";
+                            if (!item.isSystem) {
+                                str += item.guid + ",";
+                            }
                         });
+                        if (str == '') {
+                            os.error("请选择要删除的项目,超管状态不能删除~");
+                            return;
+                        }
                         layer.confirm('确定要执行批量删除吗？', function (index) {
                             layer.close(index);
                             var loadindex = layer.load(1, {
@@ -166,7 +185,7 @@
                             })
                         }
                         else {
-                            os.Open('修改角色组', '/fytadmin/sys/rolegroup?guid='+data.guid, '520px', '300px', function () {
+                            os.Open('修改角色组', '/fytadmin/sys/rolegroup?guid=' + data.guid, '520px', '300px', function () {
                                 active.reload();
                             });
                         }
@@ -174,6 +193,8 @@
                 });
             });</script>
     <script type="text/html" id="tool">
+        {{#  if(!d.isSystem){ }}
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
+        {{#  } }} 
     </script>
 </div>

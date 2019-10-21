@@ -70,16 +70,15 @@
                 var guid = '', typeName = '', active = {
                     initTree() {
                         os.ajax('api/codetype/gettree/', {}, function (res) {
-                            console.log(res);
                             tree.render({
                                 elem: '#tree'
                                 , data: res
                                 , onlyIconControl: true
                                 , click: function (obj) {
                                     guid = obj.data.id;
+                                    typeName = obj.data.title;
                                     active.reload();
                                     $(".tree-footer").addClass("active");
-                                    typeName = treeNode.name;
                                 }
                             });
                         });
@@ -97,15 +96,15 @@
                     },
                     typeEdit: function () {
                         os.Open('字典修改', '/fytadmin/sys/codesmodify/?guid=' + guid, '500px', '280px', function () {
-                            $.fn.zTree.init($("#code-tree"), setting);
+                            active.initTree();
                         });
                     },
                     typeDel: function () {
-                        layer.confirm('确定要删除 ' + typeName + ' 吗？', function (index) {
+                        layer.confirm('确定要删除【' + typeName + '】吗？', function (index) {
                             layer.close(index);
                             os.ajax('api/codetype/delete/', { parm: guid }, function (res) {
                                 if (res.statusCode === 200) {
-                                    $.fn.zTree.init($("#code-tree"), setting);
+                                    active.initTree();
                                     os.success('删除成功！');
                                 } else {
                                     os.error(res.message);
@@ -157,7 +156,7 @@
                 $('#code-class-add').on('click',
                     function () {
                         os.Open('字典栏目', '/fytadmin/sys/codesmodify/', '500px', '280px', function () {
-                            $.fn.zTree.init($("#code-tree"), setting);
+                            active.initTree();
                         });
                     });
 

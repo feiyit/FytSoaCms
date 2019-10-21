@@ -1,8 +1,8 @@
 ﻿@page
 @model FytSoa.Web.Pages.FytAdmin.Sys.AdminToRoleModel
 @{
-    ViewData["Title"] = "为用户分配角色";
-    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+ViewData["Title"] = "为用户分配角色";
+Layout = "~/Pages/FytAdmin/_Layout.cshtml";
 }
 <style>
     .layui-table-view {
@@ -31,7 +31,7 @@
     }
 
     .layui-layer-loading {
-        box-shadow: 0 0px 0px rgba(0,0,0,.3) !important;
+        box-shadow: 0 0px 0px rgba(0, 0, 0, .3) !important;
     }
 </style>
 <div class="layui-col-220">
@@ -62,7 +62,15 @@
                 url: '/api/role/torolelist?adminGuid=@Model.adminGuids',
                 cols: [
                     [
-                        { field: 'name', title: '角色名称', fixed: 'left' },
+                        {
+                            field: 'name', title: '角色名称', sort: true, fixed: 'left', templet: function (d) {
+                                if (d.level == 0) {
+                                    return d.name + '<span class="layui-badge layui-bg-cyan">组</span>';
+                                } else {
+                                    return d.name;
+                                }
+                            }
+                        },
                         { field: 'sort', title: '排序' },
                         { width: 150, title: '操作', templet: '#tool' }
                     ]
@@ -70,25 +78,25 @@
                 page: false,
                 height: $(window).height() - 30,
                 where: {
-                   limit:1000
+                    limit: 1000
                 },
                 id: 'tables'
             });
 
             var guid = '', typeName = '', active = {
                 initTree() {
-                        os.ajax('api/organize/gettree/', {}, function (res) {
-                            tree.render({
-                                elem: '#tree'
-                                , data: res
-                                , onlyIconControl: true
-                                , click: function (obj) {
-                                    guid = obj.data.id;
-                                    active.reload();
-                                }
-                            });
+                    os.ajax('api/organize/gettree/', {}, function (res) {
+                        tree.render({
+                            elem: '#tree'
+                            , data: res
+                            , onlyIconControl: true
+                            , click: function (obj) {
+                                guid = obj.data.id;
+                                active.reload();
+                            }
                         });
-                    },
+                    });
+                },
                 reload: function () {
                     table.reload('tables',
                         {
@@ -122,9 +130,9 @@
                         else {
                             os.success('取消授权~');
                         }
-                     } else {
-                         os.error(res.message);
-                     }
+                    } else {
+                        os.error(res.message);
+                    }
                 });
             });
         });
@@ -134,4 +142,3 @@
     <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="取消|授权" lay-filter="torole" {{ d.status ? 'checked' : '' }}>
     {{#  } }} 
 </script>
-

@@ -63,12 +63,10 @@ namespace FytSoa.Api.Controllers
         [HttpPost("menubyrole")]
         public async Task<IActionResult> GetMenuByRole([FromBody]MenuTreeParm param)
         {
-            var permissionList =await _sysPermissionsService.GetListAsync(param.roleGuid);
             var menu = await _sysMenuService.GetListTreeAsync(param.roleGuid);
             var res = new MenuRoleDto()
             {
-                menu=menu.data,
-                permissions= permissionList.data
+                menu=menu.data
             };
             return Ok(res);
         }

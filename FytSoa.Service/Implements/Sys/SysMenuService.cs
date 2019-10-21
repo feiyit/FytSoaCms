@@ -89,19 +89,22 @@ namespace FytSoa.Service.Implements
                 layer = m.Layer,
                 parentGuid = m.ParentGuid,
                 sort=m.Sort,
-                isChecked= SqlFunc.Subqueryable<SysPermissions>().Where(g => g.RoleGuid == roleGuid && g.MenuGuid==m.Guid && g.Types == 1).Any()
+                isChecked= false
             }).ToListAsync();
+            //根据角色查询授权的菜单
+            var menuListByRole = await Db.Queryable<SysPermissions>().Where(m => m.RoleGuid == roleGuid && m.Types == 1).Select(m => m.MenuGuid).ToListAsync();
+
             var treeList = new List<SysMenuTree>();
             foreach (var item in list.Where(m => m.layer == 1).OrderBy(m => m.sort))
             {
                 //获得子级
-                var children = RecursionOrganize(list, new List<SysMenuTree>(), item.id);
+                var children = RecursionOrganize(list, new List<SysMenuTree>(), item.id,menuListByRole);
                 treeList.Add(new SysMenuTree()
                 {
                     id = item.id,
                     title = item.title,
                     spread = children.Count > 0,
-                    isChecked= item.isChecked,
+                    isChecked=false, //menuListByRole.Any(m=>m==item.id),
                     children = children.Count == 0 ? null : children
                 });
             }
@@ -120,17 +123,17 @@ namespace FytSoa.Service.Implements
         /// <param name="list">新集合</param>
         /// <param name="guid">父节点</param>
         /// <returns></returns>
-        List<SysMenuTree> RecursionOrganize(List<SysMenuTree> sourceList, List<SysMenuTree> list, string guid)
+        List<SysMenuTree> RecursionOrganize(List<SysMenuTree> sourceList, List<SysMenuTree> list, string guid,List<string> authority)
         {
             foreach (var row in sourceList.Where(m => m.parentGuid == guid).OrderBy(m => m.sort))
             {
-                var res = RecursionOrganize(sourceList, new List<SysMenuTree>(), row.id);
+                var res = RecursionOrganize(sourceList, new List<SysMenuTree>(), row.id, authority);
                 list.Add(new SysMenuTree()
                 {
                     id = row.id,
                     title = row.title,
                     spread = res.Count > 0,
-                    isChecked =row.isChecked,
+                    isChecked = row.layer == 3 && authority.Any(m => m == row.id),
                     children = res.Count > 0 ? res : null
                 });
             }

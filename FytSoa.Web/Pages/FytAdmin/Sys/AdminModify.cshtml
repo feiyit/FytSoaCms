@@ -1,8 +1,8 @@
 ﻿@page
 @model FytSoa.Web.Pages.FytAdmin.Sys.AdminModifyModel
 @{
-    ViewData["Title"] = "编辑/添加用户";
-    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+ViewData["Title"] = "编辑/添加用户";
+Layout = "~/Pages/FytAdmin/_Layout.cshtml";
 }
 <style>
     .organize-tree {
@@ -10,7 +10,7 @@
         background-color: #fff;
         padding: 5px 25px;
         z-index: 1000;
-        box-shadow: 0 0 24px rgba(0,0,0,.18);
+        box-shadow: 0 0 24px rgba(0, 0, 0, .18);
         opacity: 0;
         height: 0;
         display: none;
@@ -24,18 +24,20 @@
         overflow: auto;
         transition: all .5s;
     }
+
     .form-cus {
         width: 70%;
-        float:right;
+        float: right;
     }
+
     .cur-image {
         width: 24%;
         position: absolute;
         left: 25px;
         top: 0px;
-        margin-bottom:0px;
+        margin-bottom: 0px;
     }
-    
+
 
     .cur-image .add-photo.default {
         height: 170px;
@@ -48,6 +50,7 @@
     .cur-image .add-photo img {
         height: 170px;
     }
+
     .widget-footer {
         border: 1px solid #f6f9fd !important;
         background-color: #f6f9fd;
@@ -55,11 +58,12 @@
         color: rgb(163, 175, 183);
     }
 
-        .widget-footer span {
-            display: block;
-            line-height: 25px;
-            color: #333;
-        }
+    .widget-footer span {
+        display: block;
+        line-height: 25px;
+        color: #333;
+    }
+
     .input-tags {
         border-radius: 3px !important;
         height: 24px;
@@ -67,6 +71,7 @@
         cursor: pointer;
         padding: 7px 10px;
     }
+
     .tags {
         padding: 3px 10px;
         background-color: #f0f2f5;
@@ -78,15 +83,18 @@
     <ul class="addpic-list cur-image clearfix">
         <li>
             <div class="add-photo default">
-                <div class="select-newimg fyt-cloud " :class="m.headPic?'layui-hide':''" data-text="headPic" data-img="imgShow" data-type="form">
+                <div class="select-newimg fyt-cloud " :class="m.headPic?'layui-hide':''" data-text="headPic"
+                    data-img="imgShow" data-type="form">
                     <i class="icon-addphote"></i>
                     <span>选择组图片</span>
                 </div>
                 <div class="add-photo-wall" :class="!m.headPic?'layui-hide':''">
                     <img id="imgShow" :src="m.headPic">
                     <div class="phote-edit">
-                        <a class="photo-tool fyt-cloud" data-text="headPic" data-img="imgShow" data-type="form" href="javascript:void(0)"><i class="layui-icon layui-icon-edit"></i>更换</a>
-                        <a class="photo-tool last" href="javascript:void(0)" onclick="oc.deleteFile()"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                        <a class="photo-tool fyt-cloud" data-text="headPic" data-img="imgShow" data-type="form"
+                            href="javascript:void(0)"><i class="layui-icon layui-icon-edit"></i>更换</a>
+                        <a class="photo-tool last" href="javascript:void(0)" onclick="oc.deleteFile()"><i
+                                class="layui-icon layui-icon-delete"></i>删除</a>
                     </div>
                     <div class="cover">组图片</div>
                 </div>
@@ -103,7 +111,9 @@
         <div class="layui-form-item">
             <label class="layui-form-label">所属部门</label>
             <div class="layui-input-block">
-                <input type="text" v-model="m.departmentName" name="DepartmentName" id="DepartmentName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请选择所属部门" class="layui-input">
+                <input type="text" v-model="m.departmentName" name="DepartmentName" id="DepartmentName"
+                    lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请选择所属部门"
+                    class="layui-input">
                 <div class="organize-tree">
                     <div id="tree" class="layui-tree-cus"></div>
                 </div>
@@ -112,20 +122,23 @@
         <div class="layui-form-item">
             <label class="layui-form-label">关联角色</label>
             <div class="layui-input-block">
-                <div class="input-tags"><span class="layui-badge layui-bg-gray tags" v-for="it in rolelist">{{it.name}}</span></div>
+                <div class="input-tags"><span class="layui-badge layui-bg-gray tags"
+                        v-for="it in m.roleList">{{it.name}}</span></div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">登录账号</label>
                 <div class="layui-input-inline">
-                    <input type="text" v-model="m.loginName" name="LoginName" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    <input type="text" v-model="m.loginName" name="LoginName" maxlength="20" lay-verify="required"
+                        lay-verType="tips" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">登录密码</label>
                 <div class="layui-input-inline">
-                    <input type="password" v-model="m.loginPwd" name="LoginPwd" maxlength="20" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    <input type="password" v-model="m.loginPwd" name="LoginPwd" maxlength="20" lay-verify="required"
+                        lay-verType="tips" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
@@ -133,13 +146,15 @@
             <div class="layui-inline">
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-inline">
-                    <input type="text" v-model="m.trueName" name="TrueName" maxlength="10" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    <input type="text" v-model="m.trueName" name="TrueName" maxlength="10" lay-verify="required"
+                        lay-verType="tips" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" v-model="m.number" name="Number" maxlength="6" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    <input type="text" v-model="m.number" name="Number" maxlength="6" lay-verify="required"
+                        lay-verType="tips" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
@@ -174,127 +189,124 @@
         </div>
         <div class="layui-form-item layui-cur-submit">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i
+                        class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
                 <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
             </div>
         </div>
     </form>
 </div>
 @section Scripts{
-    <script>
-        var oc,
-            vm = new Vue({
-                el: '#app',
-                data: {
-                    m: {},
-                    rolelist:[]
-                }
-            });
-        layui.config({
-            base: '/themes/js/modules/'
-        }).use(['layer', 'jquery', 'common', 'form', 'tree'],
-            function() {
-                var form = layui.form, $ = layui.$, os = layui.common, tree = layui.tree;
-                var index = parent.layer.getFrameIndex(window.name);
-                form.on('radio(sex)',
-                    function(data) {
-                        vm.m.sex = data.value;
-                    });
-                form.on('switch(status)',
-                    function(data) {
-                        vm.m.status = data.elem.checked;
-                    });
-                os.cloudFile();
-                oc = {
-                    init() {
-                        //查询角色信息
-                        os.ajax('api/admin/bymodel/',
-                            { parm: os.getUrlParam('guid') },
-                            function(res) {
-                                if (res.statusCode == 200) {
-                                    vm.m = res.data;
-                                    vm.$nextTick(function() {
-                                        form.val('forms',
-                                            {
-                                                'sex': vm.m.sex,
-                                                'status': vm.m.status
-                                            });
-                                    });
-                                } else {
-                                    os.error(res.message);
-                                }
-                            });
-                        $('.input-tags').click(function () {
-                            var frameId = window.frameElement && window.frameElement.id || '';
-                            os.Open('关联角色', '/fytadmin/sys/adminmodifytorole?frameid=' + frameId, '600px', '500px');
-                        });
-                    },
-                    fileSave(v) {
-                        $(".select-newimg").addClass('layui-hide');
-                        $(".add-photo-wall").removeClass('layui-hide');
-                        vm.m.headPic = v;
-                        $('#imgShow').attr('src', v);
-                    },
-                    deleteFile() {
-                        $(".select-newimg").removeClass('layui-hide');
-                        $(".add-photo-wall").addClass('layui-hide');
-                        $('#imgShow').attr('src', v);
-                    },
-                    saveRole(list) {
-                        vm.rolelist = JSON.parse(list);
-                        vm.m.roleGuid = list;
-                        console.log(vm.rolelist);
-                    }
-                };
-                oc.init();
-                //监听提交
-                form.on('submit(submit)',
-                    function(data) {
-                        os.log(vm.m);
-                        $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
-                        var urls = "api/admin/add";
-                        if (vm.m.guid) {
-                            urls = "api/admin/edit";
-                        }
-                        os.ajax(urls,
-                            vm.m,
-                            function(res) {
-                                $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
-                                if (res.statusCode == 200) {
-                                    parent.layer.close(index);
-                                } else {
-                                    os.error(res.message);
-                                }
-                            });
-                        return false;
-                    });
-                $(".btn-open-close").on('click',
-                    function() {
-                        parent.layer.close(index);
-                    });
-
-                os.ajax('api/organize/gettree/',
-                    {},
-                    function(res) {
-                        tree.render({
-                            elem: '#tree',
-                            data: res,
-                            onlyIconControl: true,
-                            click: function(obj) {
-                                guid = obj.data.id;
-                                vm.m.departmentGuid = obj.data.id;
-                                vm.m.departmentName = obj.data.title;
-                                $(".organize-tree").removeClass('active');
+<script>
+    var oc,
+        vm = new Vue({
+            el: '#app',
+            data: {
+                m: {}
+            }
+        });
+    layui.config({
+        base: '/themes/js/modules/'
+    }).use(['layer', 'jquery', 'common', 'form', 'tree'],
+        function () {
+            var form = layui.form, $ = layui.$, os = layui.common, tree = layui.tree;
+            var index = parent.layer.getFrameIndex(window.name);
+            form.on('radio(sex)',
+                function (data) {
+                    vm.m.sex = data.value;
+                });
+            form.on('switch(status)',
+                function (data) {
+                    vm.m.status = data.elem.checked;
+                });
+            os.cloudFile();
+            oc = {
+                init() {
+                    //查询角色信息
+                    os.ajax('api/admin/bymodel/',
+                        { parm: os.getUrlParam('guid') },
+                        function (res) {
+                            if (res.statusCode == 200) {
+                                vm.m = res.data;
+                                vm.$nextTick(function () {
+                                    form.val('forms',
+                                        {
+                                            'sex': vm.m.sex,
+                                            'status': vm.m.status
+                                        });
+                                });
+                            } else {
+                                os.error(res.message);
                             }
                         });
+                    $('.input-tags').click(function () {
+                        var frameId = window.frameElement && window.frameElement.id || '';
+                        os.Open('关联角色', '/fytadmin/sys/adminmodifytorole?frameid=' + frameId + '&role=' + escape(JSON.stringify(vm.m.roleList)), '600px', '500px');
                     });
-                $("#DepartmentName").click(function() {
-                    $(".organize-tree").addClass('active');
+                },
+                fileSave(v) {
+                    $(".select-newimg").addClass('layui-hide');
+                    $(".add-photo-wall").removeClass('layui-hide');
+                    vm.m.headPic = v;
+                    $('#imgShow').attr('src', v);
+                },
+                deleteFile() {
+                    $(".select-newimg").removeClass('layui-hide');
+                    $(".add-photo-wall").addClass('layui-hide');
+                    $('#imgShow').attr('src', v);
+                },
+                saveRole(list) {
+                    vm.m.roleGuid = list;
+                    vm.m.roleList = JSON.parse(list);
+                }
+            };
+            oc.init();
+            //监听提交
+            form.on('submit(submit)',
+                function (data) {
+                    $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                    var urls = "api/admin/add";
+                    if (vm.m.guid) {
+                        urls = "api/admin/edit";
+                    }
+                    os.ajax(urls,
+                        vm.m,
+                        function (res) {
+                            $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                            if (res.statusCode == 200) {
+                                parent.layer.close(index);
+                            } else {
+                                os.error(res.message);
+                            }
+                        });
+                    return false;
                 });
-                $(".organize-tree").mouseleave(function() {
-                    $(".organize-tree").removeClass('active');
+            $(".btn-open-close").on('click',
+                function () {
+                    parent.layer.close(index);
                 });
-            });
-    </script>
-}
 
+            os.ajax('api/organize/gettree/',
+                {},
+                function (res) {
+                    tree.render({
+                        elem: '#tree',
+                        data: res,
+                        onlyIconControl: true,
+                        click: function (obj) {
+                            guid = obj.data.id;
+                            vm.m.departmentGuid = obj.data.id;
+                            vm.m.departmentName = obj.data.title;
+                            $(".organize-tree").removeClass('active');
+                        }
+                    });
+                });
+            $("#DepartmentName").click(function () {
+                $(".organize-tree").addClass('active');
+            });
+            $(".organize-tree").mouseleave(function () {
+                $(".organize-tree").removeClass('active');
+            });
+        });
+</script>
+}

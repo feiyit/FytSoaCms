@@ -1,8 +1,8 @@
 ﻿@page
 @model FytSoa.Web.Pages.FytAdmin.Sys.RoleModifyModel
 @{
-    ViewData["Title"] = "角色修改/添加";
-    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+ViewData["Title"] = "角色修改/添加";
+Layout = "~/Pages/FytAdmin/_Layout.cshtml";
 }
 <style>
     .organize-tree {
@@ -10,37 +10,38 @@
         background-color: #fff;
         padding: 5px 15px;
         z-index: 1000;
-        box-shadow: 0 2px 4px rgba(0,0,0,.3);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
         border-radius: 4px;
         opacity: 0;
         height: 0;
         display: none;
     }
 
-        .organize-tree.active {
-            display: block;
-            opacity: 1;
-            height: auto;
-            max-height: 500px;
-            overflow: auto;
-            transition: all .5s;
-        }
-
+    .organize-tree.active {
+        display: block;
+        opacity: 1;
+        height: auto;
+        max-height: 500px;
+        overflow: auto;
+        transition: all .5s;
+    }
 </style>
 <div id="app">
-    <form class="layui-form form-cus" action="">
+    <form class="layui-form form-cus" action="" lay-filter="forms">
         <div class="layui-form-item">
             <label class="layui-form-label">角色组</label>
             <div class="layui-input-block">
-                <select v-model="m.parentGuid" id="parentGuid" lay-filter="group" lay-verify="">
+                <select v-model="m.parentGuid" id="parentGuid" name="parentGuid" lay-filter="group" lay-verify="">
                     <option :value="it.guid" v-for="it in list">{{it.name}}</option>
-                 </select>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">所属部门</label>
             <div class="layui-input-block">
-                <input type="text" v-model="m.departmentName" name="DepartmentName" id="DepartmentName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请选择所属部门" class="layui-input">
+                <input type="text" v-model="m.departmentName" name="DepartmentName" id="DepartmentName"
+                    lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请选择所属部门"
+                    class="layui-input">
                 <div class="organize-tree">
                     <div id="tree" class="layui-tree-cus"></div>
                 </div>
@@ -49,8 +50,16 @@
         <div class="layui-form-item">
             <label class="layui-form-label">角色名称</label>
             <div class="layui-input-block">
-                <input type="text" v-model="m.name" name="Name" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
+                <input type="text" v-model="m.name" name="Name" lay-verify="required" lay-verType="tips"
+                    autocomplete="off" placeholder="请输入角色名称" class="layui-input">
             </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否超管</label>
+            <div class="layui-input-inline" style="width:80px;">
+                <input type="checkbox" name="isSystem" lay-text="是|否" lay-skin="switch" lay-filter="switch">
+            </div>
+            <div class="layui-form-mid layui-word-aux">如果是超管，则不允许删除</div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">排序</label>
@@ -61,12 +70,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">描述</label>
             <div class="layui-input-block">
-                <textarea v-model="m.summary" name="Summary" class="layui-textarea"></textarea>
+                <textarea v-model="m.summary" style="min-height: 60px;" name="Summary"
+                    class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item layui-cur-submit">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i
+                        class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
                 <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
             </div>
         </div>
@@ -78,7 +89,7 @@
         el: '#app',
         data: {
             m: {},
-            list:[]
+            list: []
         }
     });
     layui.config({
@@ -96,7 +107,10 @@
         });
         form.on('select(group)', function (data) {
             vm.m.parentGuid = data.value;
-        });    
+        });
+        form.on('switch(switch)', function (data) {
+            vm.m.isSystem = data.elem.checked;
+        });
         var index = parent.layer.getFrameIndex(window.name);
         //监听提交
         form.on('submit(submit)', function (data) {
@@ -124,7 +138,6 @@
         });
         //查询部门
         os.ajax('api/organize/gettree/', {}, function (res) {
-            console.log(res);
             tree.render({
                 elem: '#tree'
                 , data: res
@@ -152,15 +165,18 @@
                         vm.m.level = 1;
                         sliderIndex.setValue(vm.m.sort);
                         $('#parentGuid').val(vm.m.parentGuid);
-                        form.render('select');
+                        form.val("forms", {
+                            "parentGuid": vm.m.parentGuid
+                            , "isSystem": vm.m.isSystem
+                        });
                     } else {
                         os.error(res.message);
                     }
                 });
             });
         }, 'get');
-        
-        
+
+
         $("#DepartmentName").click(function () {
             $(".organize-tree").addClass('active');
         });
