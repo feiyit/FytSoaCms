@@ -21,7 +21,9 @@
 
   <ItemGroup>
     <PackageReference Include="CSRedisCore" Version="3.0.60" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0"><PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
+<Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
+</PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
   </ItemGroup>
@@ -31,6 +33,9 @@
     <ProjectReference Include="..\FytSoa.Core\FytSoa.Core.csproj" />
     <ProjectReference Include="..\FytSoa.Extensions\FytSoa.Extensions.csproj" />
     <ProjectReference Include="..\FytSoa.Service\FytSoa.Service.csproj" />
+    <ProjectReference Include="..\FytSoa.Tasks\FytSoa.Tasks.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -39,4 +44,8 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Form\" />
+    <Folder Include="Controllers\Tasks\" />
+  </ItemGroup>
 </Project>

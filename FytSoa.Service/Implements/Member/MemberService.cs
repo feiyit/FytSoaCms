@@ -13,7 +13,7 @@ namespace FytSoa.Service.Implements
     /*!
     * 文件名称：Bbs_user服务接口实现
     */
-    public class MemberService : BaseServer<Member>, IMemberService
+    public class MemberService : BaseService<Member>, IMemberService
     {
         /// <summary>
         /// 添加操作

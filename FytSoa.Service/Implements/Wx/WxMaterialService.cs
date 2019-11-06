@@ -14,7 +14,7 @@ namespace FytSoa.Service.Implements
     /*!
     * 文件名称：Wx_material服务接口实现
     */
-    public class WxMaterialService : BaseServer<WxMaterial>, IWxMaterialService
+    public class WxMaterialService : BaseService<WxMaterial>, IWxMaterialService
     {
         /// <summary>
         /// 添加一条公众号素材信息

@@ -4,7 +4,7 @@ namespace FytSoa.Service.Interfaces
     /*!
     * 文件名称：Wx_setting服务接口
     */
-	public interface IWxSettingService: IBaseServer<WxSetting>
+	public interface IWxSettingService: IBaseService<WxSetting>
 	{
 	}
 }

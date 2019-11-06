@@ -14,7 +14,7 @@ namespace FytSoa.Service.Implements
     /*!
     * 文件名称：Bbs_questions服务接口实现
     */
-    public class Bbs_QuestionsService : BaseServer<Bbs_Questions>, IBbs_QuestionsService
+    public class Bbs_QuestionsService : BaseService<Bbs_Questions>, IBbs_QuestionsService
     {
         /// <summary>
         /// 分页查询问题列表
@@ -126,7 +126,7 @@ namespace FytSoa.Service.Implements
                     Guid = Guid.NewGuid().ToString(),
                     UserGuid = userGuid,
                     Title=param[0].value,
-                    EnTitle= Utils.UniqueData.Gener(),
+                    EnTitle= Utils.ConvertToTimeStamp(DateTime.Now).ToString(),
                     Types= param[1].value,
                     Tags=t.TrimEnd(new[]{','}),
                     Contents= param[2].value,

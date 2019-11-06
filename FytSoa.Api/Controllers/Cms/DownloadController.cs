@@ -16,7 +16,7 @@ namespace FytSoa.Api.Controllers.Cms
     [Route("api/[controller]")]
     [Produces("application/json")]
     [JwtAuthorize(Roles = "Admin")]
-    public class DownloadController : Controller
+    public class DownloadController : ControllerBase
     {
         private readonly ICmsDownloadService _downloadService;
         public DownloadController(ICmsDownloadService downloadService)
@@ -28,14 +28,14 @@ namespace FytSoa.Api.Controllers.Cms
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="parm"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public JsonResult GetPages(PageParm parm)
+        public IActionResult GetPages([FromQuery]PageParm parm)
         {
             parm.site = SiteTool.CurrentSite?.Guid;
             var res = _downloadService.GetList(parm);
-            return Json(new { code = 0, msg = "success", count = res.TotalItems, data = res.Items });
+            return Ok(new { code = 0, msg = "success", count = res.TotalItems, data = res.Items });
         }
 
 
@@ -44,12 +44,12 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("add")]
-        public async Task<ApiResult<string>> Add(CmsDownload parm)
+        public async Task<IActionResult> Add([FromBody]CmsDownload parm)
         {
             parm.SiteGuid = SiteTool.CurrentSite?.Guid;
             //处理文件类型
             parm.FileType= FileHelper.GetFileExt(parm.FileUrl);
-            return await _downloadService.AddAsync(parm);
+            return Ok(await _downloadService.AddAsync(parm));
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<ApiResult<string>> Delete(string parm)
+        public async Task<IActionResult> Delete([FromBody]ParmString param)
         {
-            return await _downloadService.DeleteAsync(parm);
+            return Ok(await _downloadService.DeleteAsync(param.parm));
         }
 
         /// <summary>
@@ -67,12 +67,12 @@ namespace FytSoa.Api.Controllers.Cms
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit")]
-        public async Task<ApiResult<string>> Edit(CmsDownload parm)
+        public async Task<IActionResult> Edit([FromBody]CmsDownload parm)
         {
             parm.SiteGuid = SiteTool.CurrentSite?.Guid;
             //处理文件类型
             parm.FileType = FileHelper.GetFileExt(parm.FileUrl);
-            return await _downloadService.UpdateAsync(parm);
+            return Ok(await _downloadService.UpdateAsync(parm));
         }
         #endregion
     }

@@ -1,0 +1,100 @@
+﻿@page
+@model TableModel
+@{
+    ViewData["Title"] = "万用表单管理";
+    Layout = AdminLayout.Pjax(HttpContext);
+}
+<div id="container">
+    <div class="list-wall">
+        <div class="layui-form list-search">
+            <button type="button" class="layui-btn layui-btn-sm" data-type="toolAdd"><i class="layui-icon"></i> 新增</button>
+        </div>
+        <table class="layui-hide" id="tablist" lay-filter="tool"></table>
+    </div>
+    <script type="text/html" id="switchTpl">
+        <input type="checkbox" name="status" value="{{d.guid}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{ d.isDel?'checked':''}}>
+    </script>
+    <script>layui.config({
+            base: '/themes/js/modules/'
+        }).use(['table', 'layer', 'jquery', 'common', 'form'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    form = layui.form,
+                    os = layui.common;
+                table.render({
+                    elem: '#tablist',
+                    headers: os.getToken(),
+                    url: '/api/form/',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            { field: 'name', title: '表单名称（中文）', fixed: 'left' },
+                            { field: 'enName', title: '表单名称英文' },
+                            { field: 'isDel', width: 120, title: '状态', templet: '#switchTpl' },
+                            { field: 'addDate', title: '创建时间' },
+                            { field: 'updateDate', title: '修改时间' },
+                            { width: 200, title: '操作', templet: '#tool' }
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables'
+                    , response: {
+                        statusCode: 200
+                    }
+                    , parseData: function (res) {
+                        return {
+                            "code": res.statusCode,
+                            "msg": res.message,
+                            "count": res.totalPages,
+                            "data": res.data.items
+                        };
+                    }
+                });
+
+                var active = {
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                }
+                            });
+                    },
+                    toolAdd: function () {
+                        os.Open('万能表单-新建表', '/fytadmin/form/tablemodify', '1100px', '550px', function () {
+                            active.reload();
+                        });
+                    }
+                };
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+                form.on('switch(status)', function (data) {
+                    os.load();
+                    os.ajax('api/form/status', { types: data.elem.checked ? 1 : 0, guid: data.value }, function (res) {
+                        os.loadClose();
+                        if (res.statusCode === 200) {
+                            os.success('状态更改成功~');
+                            active.reload();
+                        } else {
+                            os.error(res.message);
+                        }
+                    });
+                });
+                //监听工具条
+                table.on('tool(tool)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'edit') {
+                        os.Open('万能表单-修改表', '/fytadmin/form/tablemodify/?guid=' + data.guid, '1100px', '500px', function () {
+                            active.reload();
+                        })
+                    }
+                });
+            });</script>
+    <script type="text/html" id="tool">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
+    </script>
+</div>

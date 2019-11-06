@@ -11,7 +11,7 @@ namespace FytSoa.Service.Interfaces
     /// <summary>
     /// 系统菜单业务接口
     /// </summary>
-    public interface ISysMenuService : IBaseServer<SysMenu>
+    public interface ISysMenuService : IBaseService<SysMenu>
     {
         /// <summary>
         /// 获得菜单列表，提供给权限管理，根据角色查询所有菜单

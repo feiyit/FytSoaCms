@@ -20,7 +20,7 @@ namespace FytSoa.Api.Controllers
     [Produces("application/json")]
     [Route("api/Admin")]
     [JwtAuthorize(Roles = "Admin")]
-    public class AdminController : Controller
+    public class AdminController : ControllerBase
     {
         private readonly ISysAdminService _adminService;
         private readonly ISysLogService _logService;
@@ -38,13 +38,29 @@ namespace FytSoa.Api.Controllers
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="parm"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public async Task<JsonResult> GetPages(PageParm parm)
+        public async Task<IActionResult> GetPages([FromQuery]PageParm parm)
         {
             var res = await _adminService.GetPagesAsync(parm);
-            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+            return Ok(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+        }
+
+        /// <summary>
+        /// 根据编号，查询用户信息
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        [HttpPost("bymodel")]
+        public async Task<IActionResult> GetModelByGuid([FromBody]ParmString parm)
+        {
+            var res = await _adminService.GetModelAsync(m => m.Guid == parm.parm);
+            if (!string.IsNullOrEmpty(res.data.Guid))
+            {
+                res.data.LoginPwd= DES3Encrypt.DecryptString(res.data.LoginPwd);
+            }
+            return Ok(res);
         }
 
         /// <summary>
@@ -52,9 +68,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), ApiAuthorize(Modules = "Admin", Methods = "Add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> AddAdmin([FromBody]SysAdmin parm)
+        public async Task<IActionResult> AddAdmin([FromBody]SysAdmin parm)
         {
-            return await _adminService.AddAsync(parm);
+            return Ok(await _adminService.AddAsync(parm));
         }
 
         /// <summary>
@@ -62,9 +78,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete"), ApiAuthorize(Modules = "Admin", Methods = "Delete", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> DeleteAdmin([FromBody]ParmString obj)
+        public async Task<IActionResult> DeleteAdmin([FromBody]ParmString obj)
         {
-            return await _adminService.DeleteAsync(obj.parm);
+            return Ok(await _adminService.DeleteAsync(obj.parm));
         }
 
         /// <summary>
@@ -72,9 +88,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"), ApiAuthorize(Modules = "Admin", Methods = "Update", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> EditAdmin([FromBody]SysAdmin parm)
+        public async Task<IActionResult> EditAdmin([FromBody]SysAdmin parm)
         {
-            return await _adminService.ModifyAsync(parm);
+            return Ok(await _adminService.ModifyAsync(parm));
         }
 
         /// <summary>
@@ -83,7 +99,7 @@ namespace FytSoa.Api.Controllers
         /// <returns></returns>
         [HttpPost("login")]
         [AllowAnonymous]
-        public ApiResult<string> Login([FromBody]SysAdminLogin parm)
+        public async Task<IActionResult> Login([FromBody]SysAdminLogin parm)
         {
             var apiRes = new ApiResult<string>() { statusCode = (int)ApiEnum.HttpRequestError };
             var token = "";
@@ -94,7 +110,7 @@ namespace FytSoa.Api.Controllers
                 if (rsaKey == null)
                 {
                     apiRes.message = "登录失败，请刷新浏览器再次登录";
-                    return apiRes;
+                    return Ok(apiRes);
                 }
                 //Ras解密密码
                 var ras = new RSACrypt(rsaKey[0], rsaKey[1]);
@@ -110,7 +126,7 @@ namespace FytSoa.Api.Controllers
                     if (DateTime.Now <= loginConfig.DelayMinute)
                     {
                         apiRes.message = "您的登录以超过设定次数，请稍后再次登录~";
-                        return apiRes;
+                        return Ok(apiRes);
                     }
                     else
                     {
@@ -120,7 +136,7 @@ namespace FytSoa.Api.Controllers
                     }
                 }
                 //查询登录结果
-                var dbres = _adminService.LoginAsync(parm).Result;
+                var dbres =await _adminService.LoginAsync(parm);
                 if (dbres.statusCode != 200)
                 {
                     //增加登录次数
@@ -132,13 +148,13 @@ namespace FytSoa.Api.Controllers
                         //记录过期时间
                         loginConfig.DelayMinute = DateTime.Now.AddMinutes(configDelayMinute);
                         apiRes.message = "登录次数超过" + configLoginCount + "次，请" + configDelayMinute + "分钟后再次登录";
-                        return apiRes;
+                        return Ok(apiRes);
                     }
                     //记录登录次数，保存到session
                     MemoryCacheService.Default.SetCache(KeyHelper.LOGINCOUNT, loginConfig);
                     //提示用户错误和登录次数信息
                     apiRes.message = dbres.message + "　　您还剩余" + (configLoginCount - loginConfig.Count) + "登录次数";
-                    return apiRes;
+                    return Ok(apiRes);
                 }
 
                 var user = dbres.data.admin;
@@ -156,7 +172,7 @@ namespace FytSoa.Api.Controllers
                 //如果保存用户类型是Session，则默认设置cookie退出浏览器 清空
                 if (ConfigExtensions.Configuration[KeyHelper.LOGINSAVEUSER] == "Session")
                 {
-                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, new AuthenticationProperties
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, new AuthenticationProperties
                     {
                         AllowRefresh = false
                     });
@@ -165,7 +181,7 @@ namespace FytSoa.Api.Controllers
                 {
                     //根据配置保存浏览器用户信息，小时单位
                     var hours = int.Parse(ConfigExtensions.Configuration[KeyHelper.LOGINCOOKIEEXPIRES]);
-                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, new AuthenticationProperties
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, identity, new AuthenticationProperties
                     {
                         ExpiresUtc = DateTime.UtcNow.AddHours(hours),
                         IsPersistent = true,
@@ -173,17 +189,17 @@ namespace FytSoa.Api.Controllers
                     });
                 }
                 //获得第一条站点，并保存到session中
-                var site = _siteService.GetListAsync(m => !m.IsDel, m => m.AddTime, DbOrderEnum.Asc).Result.data.FirstOrDefault();
+                var site =await _siteService.GetListAsync(m => !m.IsDel, m => m.AddTime, DbOrderEnum.Asc);
                 //把权限存到缓存里
                 var menuSaveType = ConfigExtensions.Configuration[KeyHelper.LOGINAUTHORIZE];
                 if (menuSaveType == "Redis")
                 {
                     RedisHelper.Set(KeyHelper.ADMINMENU + "_" + dbres.data.admin.Guid, dbres.data.menu);
-                    RedisHelper.Set(KeyHelper.NOWSITE, site);
+                    RedisHelper.Set(KeyHelper.NOWSITE, site.data.FirstOrDefault());
                 }
                 else
                 {
-                    MemoryCacheService.Default.SetCache(KeyHelper.NOWSITE, site);
+                    MemoryCacheService.Default.SetCache(KeyHelper.NOWSITE, site.data.FirstOrDefault());
                     MemoryCacheService.Default.SetCache(KeyHelper.ADMINMENU + "_" + dbres.data.admin.Guid, dbres.data.menu, 600);
                 }
                 token = JwtHelper.IssueJWT(new TokenModel()
@@ -204,13 +220,13 @@ namespace FytSoa.Api.Controllers
                     Logged = DateTime.Now,
                     Logger = LogEnum.LOGIN.GetEnumText(),
                     Level = "Info",
-                    Message = "登录",
+                    Message = "登录："+parm.loginname,
                     Callsite = "/fytadmin/login",
                     IP = Utils.GetIp(),
                     User = parm.loginname,
                     Browser = agent.ToString()
                 };
-                _logService.AddAsync(log);
+                await _logService.AddAsync(log);
                 #endregion
             }
             catch (Exception ex)
@@ -233,12 +249,12 @@ namespace FytSoa.Api.Controllers
                     User = parm.loginname,
                     Browser = agent.ToString()
                 };
-                _logService.AddAsync(log);
+                await _logService.AddAsync(log);
                 #endregion
             }
             apiRes.statusCode = (int)ApiEnum.Status;
             apiRes.data = token;
-            return apiRes;
+            return Ok(apiRes);
         }
 
         /// <summary>
@@ -266,10 +282,10 @@ namespace FytSoa.Api.Controllers
         /// <returns></returns>
         [HttpPost("logout"), Log("Admin：LogOut", LogType = LogEnum.LOGOUT)]
         [AllowAnonymous]
-        public ApiResult<string> LogOut()
+        public async Task<IActionResult> LogOut()
         {
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return new ApiResult<string>() { data = "/fytadmin/login/" };
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Ok(new ApiResult<string>() { data = "/fytadmin/login/" });
         }
     }
 }

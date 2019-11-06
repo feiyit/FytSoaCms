@@ -11,7 +11,7 @@ namespace FytSoa.Service.Interfaces
     /// <summary>
     /// 部门管理接口
     /// </summary>
-    public interface ISysOrganizeService : IBaseServer<SysOrganize>
+    public interface ISysOrganizeService : IBaseService<SysOrganize>
     {
         /// <summary>
         /// 获得列表

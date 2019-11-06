@@ -1,160 +1,282 @@
 ﻿@page
 @model FytSoa.Web.Pages.FytAdmin.Sys.AdminModel
 @{
-    ViewData["Title"] = "管理员管理";
-    Layout = AdminLayout.Pjax(HttpContext);
+ViewData["Title"] = "管理员管理";
+Layout = AdminLayout.Pjax(HttpContext);
 }
 <div id="container">
-    <div class="layui-col-220">
-        <div class="layui-nav-title">用户管理</div>
-        <ul id="tree" class="ztree layui-tree-cus"></ul>
+    <style>
+        .layui-col-220 .layui-nav-title {
+            line-height: 25px;
+            height: auto;
+            padding: 20px 0 20px 20px;
+            text-indent: 0px;
+            width: auto;
+        }
+
+        .layui-btn-group .layui-btn {
+            background: #e7eaef !important;
+            border-color: #e7eaef !important;
+            color: #333;
+        }
+
+        .layui-btn-group .layui-btn.active {
+            background-color: #409eff !important;
+            border-color: #409eff !important;
+            color: #fff;
+        }
+
+        .layui-icon-export,
+        .layui-icon-friends {
+            margin-right: 5px;
+            color: #aee4fa;
+        }
+
+        .role-item {
+            padding: 6px 0px 6px 50px;
+            cursor: pointer
+        }
+
+        .role-item.active {
+            background-color: #dbedf5;
+        }
+
+        .layui-colla-content {
+            padding: 0px;
+            border-color: transparent;
+        }
+
+        .layui-colla-title {
+            background-color: transparent
+        }
+
+        .layui-colla-item {
+            border-color: transparent;
+        }
+    </style>
+    <div class="layui-col-220" id="app">
+        <div class="layui-nav-title">
+            <div class="layui-btn-group">
+                <button type="button" class="layui-btn active">组织架构</button>
+                <button type="button" class="layui-btn">　角色　</button>
+            </div>
+        </div>
+        <div class="role-tab">
+            <div id="tree" class="layui-tree-cus" style="overflow:auto;"></div>
+            <div id="role" class="layui-collapse" style="overflow:auto; display:none">
+                <div class="layui-colla-item" v-for="it in list" v-if="it.level==0">
+                    <h2 class="layui-colla-title"><i class="layui-icon layui-icon-export"></i>{{it.name}}</h2>
+                    <div class="layui-colla-content layui-show">
+                        <div class="role-item" :class="active==row.guid?'active':''" v-for="row in list"
+                            v-if="row.level==1 && row.parentGuid==it.guid" @@click="loaduser(row)"><i
+                                class="layui-icon layui-icon-friends"></i>{{glnode(row.name)}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="right-col-body">
         <div class="list-wall">
             <div class="layui-form list-search">
-                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeAdd"><i class="layui-icon"></i> 新增</button>
-                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i> 删除</button>
-                <button type="button" class="layui-btn layui-btn-sm" data-type="toolToRole"><i class="layui-icon layui-icon-template"></i> 用户分配角色</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeAdd"><i class="layui-icon"></i>
+                    新增</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i>
+                    删除</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="toolToRole"><i
+                        class="layui-icon layui-icon-template"></i> 用户分配角色</button>
             </div>
             <table class="layui-hide" id="tablist" lay-filter="tool"></table>
         </div>
     </div>
-    <link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
-        <script>
-            layui.config({
-                base: '/themes/js/modules/'
-            }).use(['table', 'layer', 'jquery', 'ztree', 'common'],
-                function () {
-                    var table = layui.table,
-                        layer = layui.layer,
-                        $ = layui.jquery,
-                        ztree = layui.ztree,
-                        os = layui.common,
-                        form = layui.form;
-                    table.render({
-                        elem: '#tablist',
-                        headers: os.getToken(),
-                        url: '/api/admin/getpages',
-                        cols: [
-                            [
-                                { type: 'checkbox', fixed: 'left' },
-                                { field: 'loginName', title: '登录账号', sort: true, fixed: 'left' },
-                                { field: 'trueName', title: '真是姓名' },
-                                { field: 'departmentName', title: '所属部门' },
-                                { field: 'sex', title: '性别' },
-                                { field: 'loginDate', title: '最后登录时间' },
-                                { width: 100, title: '操作', templet: '#tool' }
-                            ]
-                        ],
-                        page: true,
-                        id: 'tables'
-                    });
-                    var setting = {
-                        async: {
-                            enable: true,
-                            headers: os.getToken(),
-                            url: "/api/organize/gettree"
-                        },
-                        callback: {
-                            onClick: onClick
-                        }
-                    };
-                    var guid = '', typeName = '', active = {
-                        reload: function () {
-                            table.reload('tables',
-                                {
-                                    page: {
-                                        curr: 1
-                                    },
-                                    where: {
-                                        key: guid
-                                    }
-                                });
-                        },
-                        //为用户分配角色
-                        toolToRole: function () { 
-                            var checkStatus = table.checkStatus('tables')
-                                , data = checkStatus.data;
-                            if (data.length === 0) {
-                                os.error("请选择要分配的用户~");
-                                return;
-                            }
-                            var str = '', strCount = 0,adminName='';
-                            $.each(data, function (i, item) {
-                                str = item.guid;
-                                adminName = item.loginName;
-                                strCount++;
-                            });
-                            if (strCount > 1) {
-                                os.warning('每次只能选择一个用户~');
-                                return;
-                            }
-                            os.Open('为用户' + adminName+'分配角色', '/fytadmin/sys/admintorole?roid='+str, '750px', '450px');
-                        },
-                        organizeAdd: function () {
-                            os.Open('添加用户', '/fytadmin/sys/adminmodify', '750px', '430px', function () {
-                                active.reload();
-                                var tree = $.fn.zTree.getZTreeObj("tree");
-                                tree.reAsyncChildNodes(null, "refresh");
-                            });
-                        },
-                        organizeDel: function () {
-                            var checkStatus = table.checkStatus('tables')
-                                , data = checkStatus.data;
-                            if (data.length === 0) {
-                                os.error("请选择要删除的项目~");
-                                return;
-                            }
-                            var str = '';
-                            $.each(data, function (i, item) {
-                                str += item.guid + ",";
-                            });
-                            layer.confirm('确定要执行批量删除吗？', function (index) {
-                                layer.close(index);
-                                var loadindex = layer.load(1, {
-                                    shade: [0.1, '#000']
-                                });
-                                os.ajax('api/admin/delete/', { parm: str }, function (res) {
-                                    layer.close(loadindex);
-                                    if (res.statusCode === 200) {
-                                        active.reload();
-                                        var tree = $.fn.zTree.getZTreeObj("tree");
-                                        tree.reAsyncChildNodes(null, "refresh");
-                                        os.success('删除成功！');
+    <script>
+        var active, vm = new Vue({
+            el: '#app',
+            data: {
+                list: {},
+                active: ''
+            },
+            methods: {
+                glnode(v) {
+                    return v.replace('　|--', '');
+                },
+                loaduser(v) {
+                    this.active = v.guid;
+                    active.reload();
+                }
+            }
+        });
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['element', 'table', 'layer', 'jquery', 'tree', 'common'],
+            function () {
+                var element = layui.element, table = layui.table,
+                    layer = layui.layer,
+                    $ = layui.jquery,
+                    tree = layui.tree,
+                    os = layui.common,
+                    form = layui.form;
+                $("#tree,#role").css({ 'height': $(window).height() - 140 });
+                table.render({
+                    elem: '#tablist',
+                    headers: os.getToken(),
+                    url: '/api/admin/getpages',
+                    cols: [
+                        [
+                            { type: 'checkbox', fixed: 'left' },
+                            { field: 'loginName', title: '登录账号', sort: true, fixed: 'left' },
+                            {
+                                field: 'isSystem', title: '是否系统管理员', templet: function (d) {
+                                    if (d.isSystem) {
+                                        return '<span class="layui-badge-dot layui-bg-blue"></span>';
                                     } else {
-                                        os.error(res.message);
+                                        return '<span class="layui-badge-dot layui-bg-gray"></span>';
                                     }
-                                });
-                            });
-
-                        }
-                    };
-                    $.fn.zTree.init($("#tree"), setting);
-                    $('.list-search .layui-btn').on('click', function () {
-                        var type = $(this).data('type');
-                        active[type] ? active[type].call(this) : '';
-                    });
-                    function onClick(event, treeId, treeNode, clickFlag) {
-                        guid = treeNode.guid;
-                        active.reload();
-                    }
-                    //监听工具条
-                    table.on('tool(tool)', function (obj) {
-                        var data = obj.data;
-                        if (obj.event === 'edit') {
-                            os.Open('编辑用户', '/fytadmin/sys/adminmodify/?guid=' + data.guid, '750px', '430px', function () {
-                                var tree = $.fn.zTree.getZTreeObj("tree");
-                                tree.reAsyncChildNodes(null, "refresh");
-                                active.reload();
-                            })
-                        }
-                    });
+                                }
+                            },
+                            { field: 'trueName', title: '真是姓名' },
+                            { field: 'departmentName', title: '所属部门' },
+                            { field: 'sex', width: 60, title: '性别' },
+                            { field: 'loginDate', width: 180, title: '最后登录时间' },
+                            { width: 100, title: '操作', templet: '#tool' }
+                        ]
+                    ],
+                    page: true,
+                    id: 'tables'
                 });
-        </script>
-        <script type="text/html" id="tool">
-            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
-        </script>
-    
+
+                //按钮切换状态
+                $('.layui-btn-group .layui-btn').click(function () {
+                    $('.layui-btn-group .layui-btn').removeClass('active');
+                    $(this).addClass('active');
+                    var tabIndex = $(this).index();
+                    if (tabIndex == 0) {
+                        $("#tree").show();
+                        $("#role").hide();
+                        vm.active = '';
+                    } else {
+                        $("#tree").hide();
+                        $("#role").show();
+                    }
+                });
+
+                var guid = '', typeName = '';
+                active = {
+                    initTree() {
+                        os.ajax('api/organize/gettree/', {}, function (res) {
+                            tree.render({
+                                elem: '#tree'
+                                , data: res
+                                , onlyIconControl: true
+                                , click: function (obj) {
+                                    guid = obj.data.id;
+                                    vm.active = '';
+                                    active.reload();
+                                }
+                            });
+                        });
+                        os.ajax('api/role/getpages/', { limit: 1000 }, function (res) {
+                            vm.list = res.data;
+                            vm.$nextTick(function () {
+                                element.render();
+                            });
+                        }, 'get');
+                    },
+                    reload: function () {
+                        table.reload('tables',
+                            {
+                                page: {
+                                    curr: 1
+                                },
+                                where: {
+                                    key: guid,
+                                    guid: vm.active
+                                }
+                            });
+                    },
+                    //为用户分配角色
+                    toolToRole: function () {
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要分配的用户~");
+                            return;
+                        }
+                        var str = '', strCount = 0, adminName = '';
+                        $.each(data, function (i, item) {
+                            str = item.guid;
+                            adminName = item.loginName;
+                            strCount++;
+                        });
+                        if (strCount > 1) {
+                            os.warning('每次只能选择一个用户~');
+                            return;
+                        }
+                        os.Open('为用户' + adminName + '分配角色', '/fytadmin/sys/admintorole?roid=' + str, '1000px', '600px');
+                    },
+                    organizeAdd: function () {
+                        os.Open('添加用户', '/fytadmin/sys/adminmodify', '1000px', '500px', function () {
+                            active.reload();
+                        });
+                    },
+                    organizeDel: function () {
+                        var checkStatus = table.checkStatus('tables')
+                            , data = checkStatus.data;
+                        if (data.length === 0) {
+                            os.error("请选择要删除的项目~");
+                            return;
+                        }
+                        var str = '';
+                        $.each(data, function (i, item) {
+                            if (!item.isSystem) {
+                                str += item.guid + ",";
+                            }
+                        });
+                        if (str == '') {
+                            os.error("请选择要删除的项目,超管状态不能删除~");
+                            return;
+                        }
+                        layer.confirm('确定要执行批量删除吗？', function (index) {
+                            layer.close(index);
+                            var loadindex = layer.load(1, {
+                                shade: [0.1, '#000']
+                            });
+                            os.ajax('api/admin/delete/', { parm: str }, function (res) {
+                                layer.close(loadindex);
+                                if (res.statusCode === 200) {
+                                    active.reload();
+                                    var tree = $.fn.zTree.getZTreeObj("tree");
+                                    tree.reAsyncChildNodes(null, "refresh");
+                                    os.success('删除成功！');
+                                } else {
+                                    os.error(res.message);
+                                }
+                            });
+                        });
+
+                    }
+                };
+
+                active.initTree();
+
+                $('.list-search .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+
+                //监听工具条
+                table.on('tool(tool)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'edit') {
+                        os.Open('编辑用户', '/fytadmin/sys/adminmodify/?guid=' + data.guid, '1000px', '500px', function () {
+                            active.reload();
+                        })
+                    }
+                });
+            });</script>
+    <script type="text/html" id="tool">
+        {{#  if(!d.isSystem){ }}
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
+        {{#  } }} 
+    </script>
+
 </div>
-
-

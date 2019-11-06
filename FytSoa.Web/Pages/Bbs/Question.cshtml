@@ -23,7 +23,7 @@
     <!-- END SELECT-CATEGORY -->
     <div id="question_content" class="row question-main-content question-item" data-id="78">
         <!-- Vote section -->
-        <div class="col-md-2 col-xs-2 vote-block">
+        <div class="col-md-1 col-xs-12 vote-block">
             <!-- vote group -->
             <ul>
                 <!-- vote up -->
@@ -49,7 +49,7 @@
             <!--// vote group -->
         </div>
         <!--// Vote section -->
-        <div class="col-md-9 col-xs-9 q-right-content">
+        <div class="col-md-11 col-xs-12 q-right-content">
 
             <!-- admin control -->
             <ul class="post-controls">
@@ -95,7 +95,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-8 col-xs-8 question-cat">
+                <div class="col-md-6 col-xs-12 question-cat">
                     <a href="/bbs/user/@Model.Ask.UserGuid">
                         <span>
                             <span class="author-avatar">
@@ -109,12 +109,22 @@
                         @Utils.DateDiff(Model.Ask.AddTime, DateTime.Now)
                     </span>
                 </div>
-                <div class="col-md-4 col-xs-4 question-control">
+                <div class="col-md-6 col-xs-12 question-control">
                     <ul>
-                        <li>
-                            <a class="share-social" href="javascript:void(0)">
-                                分享<i class="fa fa-share"></i>
-                            </a>
+                        <li style="vertical-align:middle;position:relative; top:-2px;">
+                            @*<a class="share-social" href="javascript:void(0)">
+            分享<i class="fa fa-share"></i>
+        </a>*@
+                            <!-- Baidu Share BEGIN -->
+                            <div class="bdsharebuttonbox">
+                                <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+                                <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                                <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                                <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+                                <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                            </div>
+                            <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": { "bdSize": 16 } }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+                            <!-- Baidu Share END -->
                         </li>
                         <li>
                             <a href="#container_78" class="show-comments active">
@@ -213,12 +223,12 @@
                     </div>
                     <!-- END REPLY-ITEM -->
                 </div>
-                                    }
-                                }
+            }
+        }
         else
         {
             <div style="text-align: center; font-size: 15px; margin-top: 50px;">
-                <img src="/dist_bbs/images/nodata.png" style="margin-bottom: 20px; width: 80px;"/>
+                <img src="/dist_bbs/images/nodata.png" style="margin-bottom: 20px; width: 80px;" />
                 <p>暂无答案，快来添加答案吧</p>
             </div>
         }
@@ -251,6 +261,9 @@
 <!-- main end -->
 <script src="/themes/tinymce/tinymce.min.js"></script>
 <script src="/themes/tinymce/langs/zh_CN.js"></script>
-@section Scripts{ 
+@section Scripts{
     <script src="/dist_bbs/js/answer.js"></script>
+    <script src="/dist_bbs/highlight/highlight.pack.js"></script>
+    <script src="/dist_bbs/highlight/highlightjs-line-numbers.js"></script>
+    <script>hljs.initHighlightingOnLoad(); /*hljs.initLineNumbersOnLoad();*/</script>
 }

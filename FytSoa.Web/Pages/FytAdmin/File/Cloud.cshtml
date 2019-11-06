@@ -16,7 +16,7 @@
             </div>
             <div class="fyt-bran-top fyt-tree">
                 <div class="layui-collapse" lay-accordion="" style="height:390px; overflow:auto;">
-                    <div class="layui-colla-item" v-for="(it,index) in typeMenu" v-if="it.level==0">
+                    <div class="layui-colla-item" v-for="(it,index) in typeMenu" v-if="it.level==0" v-cloak>
                         <h2 class="layui-colla-title">{{it.name}}</h2>
                         <div class="layui-colla-content layui-show">
                             <p v-for="(m,index) in typeMenu" v-if="m.level==1 && m.parentGuid==it.guid" :class="{'active': menuActive == m.enName}" @@click="goTypeList(it,m)">
@@ -52,7 +52,7 @@
                     <i class="layui-icon layui-icon-face-smile-fine"></i><span>没有内容...</span>
                 </p>
                 <ul>
-                    <li v-for="(it,index) in list" @@click="selectImg(it)" :class="{'active': isSelect(it.name)}">
+                    <li v-for="(it,index) in list" @@click="selectImg(it)" v-cloak :class="{'active': isSelect(it.name)}">
                         <i class="sels"></i>
                         <div class="file-wrapper">
                             <img v-if="isImage(it.name)" :src="it.name+'?imageView2/1/w/350/h/350/q/75|imageslim'">

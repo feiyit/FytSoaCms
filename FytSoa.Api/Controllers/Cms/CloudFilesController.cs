@@ -15,7 +15,7 @@ namespace FytSoa.Api.Controllers.Cms
 {
     [Route("api/[controller]")]
     [Produces("application/json")]
-    public class CloudFilesController : Controller
+    public class CloudFilesController : ControllerBase
     {
         private readonly ICmsImgTypeService _imgTypeService;
         public CloudFilesController(ICmsImgTypeService imgTypeService)
@@ -37,7 +37,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// <summary>
         /// 获得云端图片列表
         /// </summary>
-        /// <param name="parm"></param>
+        /// <param name="obj"></param>
         /// <returns></returns>
         [HttpPost("list")]
         public CloudFile FileList([FromBody]QiniuListParmDto obj)
@@ -48,7 +48,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// <summary>
         /// 删除云端图片列表
         /// </summary>
-        /// <param name="filename">文件名称</param>
+        /// <param name="obj">文件名称</param>
         /// <returns></returns>
         [HttpPost("delete")]
         public CloudFile DeleteList([FromBody]QiniuDelParmDto obj)
@@ -59,12 +59,12 @@ namespace FytSoa.Api.Controllers.Cms
         /// <summary>
         /// 删除云端图片列表
         /// </summary>
-        /// <param name="filename">文件名称</param>
+        /// <param name="obj">文件名称</param>
         /// <returns></returns>
         [HttpPost("upload")]
-        public CloudFile UpLoadFile([FromBody]QiniuDelByPathParmDto obj)
+        public IActionResult UpLoadFile([FromBody]QiniuDelByPathParmDto obj)
         {
-            return QiniuCloud.UploadFile(obj.prefix, obj.filepath);
+            return Ok(QiniuCloud.UploadFile(obj.prefix, obj.filepath));
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="model">CmsImgType</param>
         /// <returns></returns>
         [HttpPost("type/add")]
-        public async Task<ApiResult<string>> AddImageType([FromBody]CmsImgType model)
+        public async Task<IActionResult> AddImageType([FromBody]CmsImgType model)
         {
             if (string.IsNullOrEmpty(model.Guid))
             {
@@ -81,18 +81,18 @@ namespace FytSoa.Api.Controllers.Cms
                 model.AddDate = DateTime.Now;
                 model.Level = string.IsNullOrEmpty(model.ParentGuid) ? 0 : 1;
             }
-            return await _imgTypeService.AddAsync(model);
+            return Ok(await _imgTypeService.AddAsync(model));
         }
 
         /// <summary>
         /// 删除图片类型
         /// </summary>
-        /// <param name="parm">string parm</param>
+        /// <param name="obj">string parm</param>
         /// <returns></returns>
         [HttpPost("type/del")]
-        public async Task<ApiResult<string>> DelImageType([FromBody]ParmString obj)
+        public async Task<IActionResult> DelImageType([FromBody]ParmString obj)
         {
-            return await _imgTypeService.DeleteAsync(obj.parm);
+            return Ok(await _imgTypeService.DeleteAsync(obj.parm));
         }
 
         /// <summary>
@@ -101,9 +101,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="model">CmsImgType</param>
         /// <returns></returns>
         [HttpPost("type/modify")]
-        public async Task<ApiResult<string>> EditImageType([FromBody]CmsImgType model)
+        public async Task<IActionResult> EditImageType([FromBody]CmsImgType model)
         {
-            return await _imgTypeService.UpdateAsync(model);
+            return Ok(await _imgTypeService.UpdateAsync(model));
         }
 
         /// <summary>
@@ -112,9 +112,9 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="parm">PageParm parm</param>
         /// <returns></returns>
         [HttpPost("type/list")]
-        public async Task<ApiResult<List<CmsImgType>>> ListImageType([FromBody]PageParm parm)
+        public async Task<IActionResult> ListImageType([FromBody]PageParm parm)
         {
-            return await _imgTypeService.GetListAsync(m=>m.Type==parm.types,m=>m.AddDate,DbOrderEnum.Asc);
+            return Ok(await _imgTypeService.GetListAsync(m => m.Type == parm.types, m => m.AddDate, DbOrderEnum.Asc));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// <returns></returns>
         [HttpPost("localupload")]
         //[Consumes("application/json", "text/html")]
-        public ApiResult<string> LocalUpload()
+        public IActionResult LocalUpload()
         {
             var res = new ApiResult<string>();
             try
@@ -135,7 +135,7 @@ namespace FytSoa.Api.Controllers.Cms
             {
                 res.message = ex.Message;
             }
-            return res;
+            return Ok(res);
         }
     }
 }

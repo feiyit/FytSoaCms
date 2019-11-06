@@ -8,7 +8,7 @@ namespace FytSoa.Service.Interfaces
     /// <summary>
     /// 管理员接口
     /// </summary>
-    public interface ISysAdminService : IBaseServer<SysAdmin>
+    public interface ISysAdminService : IBaseService<SysAdmin>
     {
         /// <summary>
         /// 登录

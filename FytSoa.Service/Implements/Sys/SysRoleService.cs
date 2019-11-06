@@ -15,7 +15,7 @@ namespace FytSoa.Service.Implements
     /// <summary>
     /// 角色功能实现
     /// </summary>
-    public class SysRoleService : BaseServer<SysRole>, ISysRoleService
+    public class SysRoleService : BaseService<SysRole>, ISysRoleService
     {
         /// <summary>
         /// 添加部门信息
@@ -27,14 +27,15 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<string>() { data = "1", statusCode = 200 };
             try
             {
-                //根据部门ID查询部门组
-                var organizeModel = SysOrganizeDb.GetById(parm.DepartmentGuid);
-                parm.DepartmentGroup = organizeModel.ParentGuidList;
-
                 parm.Guid = Guid.NewGuid().ToString();
                 parm.EditTime = DateTime.Now;
                 parm.AddTime = DateTime.Now;
-                parm.IsSystem = true;
+                if (parm.Level==1)
+                {
+                    //根据部门ID查询部门
+                    var organizeModel = SysOrganizeDb.GetById(parm.DepartmentGuid);
+                    parm.DepartmentGroup = organizeModel.ParentGuidList;
+                }
                 await Db.Insertable(parm).ExecuteCommandAsync();
             }
             catch (Exception ex)
@@ -55,9 +56,35 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<SysRole>>();
             try
             {
-                res.data =await Db.Queryable<SysRole>()
-                        .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.DepartmentGroup.Contains(parm.key))
-                        .OrderBy(m => m.AddTime).ToPageAsync(parm.page, parm.limit);
+                var list=await Db.Queryable<SysRole>()
+                        //.WhereIF(!string.IsNullOrEmpty(parm.key), m => m.DepartmentGroup.Contains(parm.key))
+                        .OrderBy(m => m.Sort,OrderByType.Desc)
+                        .OrderBy(m => m.AddTime, OrderByType.Desc)
+                        .ToPageAsync(parm.page, parm.limit);
+
+                var tree = list.Items;
+                var newList = new List<SysRole>();
+                foreach (var item in tree.Where(m=>m.Level==0).ToList())
+                {
+                    //查询角色
+                    var tempRole = tree.Where(m => m.ParentGuid == item.Guid && m.Level == 1).ToList();
+                    if (!string.IsNullOrEmpty(parm.key))
+                    {
+                        tempRole = tempRole.Where(m=>m.DepartmentGroup.Contains(parm.key)).ToList();
+                    }
+                    if (tempRole.Count>0)
+                    {
+                        newList.Add(item);
+                    }
+                    foreach (var row in tempRole)
+                    {
+                        row.Name = "　|--" + row.Name;
+                        newList.Add(row);
+                    }
+                }
+                //赋值新的数组
+                list.Items = newList;
+                res.data = list;
             }
             catch (Exception ex)
             {
@@ -77,13 +104,18 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<SysRoleDto>>();
             try
             {
-                res.data =await Db.Queryable<SysRole>()
-                        .WhereIF(!string.IsNullOrEmpty(key), m => m.DepartmentGroup.Contains(key))
-                        .OrderBy(m => m.AddTime)
+                var reslist =await Db.Queryable<SysRole>()
+                        //.WhereIF(!string.IsNullOrEmpty(key), m => m.DepartmentGroup.Contains(key))
+                        .OrderBy(m => m.Sort, OrderByType.Desc)
+                        .OrderBy(m => m.AddTime, OrderByType.Desc)
                         .Select(it => new SysRoleDto()
                         {
                             guid = it.Guid,
                             name = it.Name,
+                            DepartmentGroup=it.DepartmentGroup,
+                            ParentGuid=it.ParentGuid,
+                            sort=it.Sort,
+                            level=it.Level,
                             codes = it.Codes,
                             //status = SqlFunc.Subqueryable<SysPermissions>().Where(g => g.RoleGuid == it.Guid && g.AdminGuid == adminGuid && g.Types == 2).Any()
                         })
@@ -101,7 +133,31 @@ namespace FytSoa.Service.Implements
                                 it.status = false;
                             }
                         })
-                        .ToPageAsync(1, 100);
+                        .ToPageAsync(1, 10000);
+
+                var tree = reslist.Items;
+                var newList = new List<SysRoleDto>();
+                foreach (var item in tree.Where(m => m.level == 0).ToList())
+                {
+                    //查询角色
+                    var tempRole = tree.Where(m => m.ParentGuid == item.guid && m.level == 1).ToList();
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        tempRole = tempRole.Where(m => m.DepartmentGroup.Contains(key)).ToList();
+                    }
+                    if (tempRole.Count > 0)
+                    {
+                        newList.Add(item);
+                    }
+                    foreach (var row in tempRole)
+                    {
+                        row.name = "　|--" + row.name;
+                        newList.Add(row);
+                    }
+                }
+                //赋值新的数组
+                reslist.Items = newList;
+                res.data = reslist;
             }
             catch (Exception ex)
             {
@@ -119,18 +175,17 @@ namespace FytSoa.Service.Implements
         /// <returns></returns>
         public async Task<ApiResult<string>> ModifyAsync(SysRole parm)
         {                    
-            var res = new ApiResult<string>() { data = "1", statusCode = 200 };
+            var res = new ApiResult<string>() { statusCode = 200 };
             try
             {
-                //根据部门ID查询部门组
-                var organizeModel = SysOrganizeDb.GetById(parm.DepartmentGuid);
-                parm.DepartmentGroup = organizeModel.ParentGuidList;
-
-                parm.IsSystem = true;
                 parm.EditTime = DateTime.Now;
-
-                var dbres =await Db.Updateable(parm).ExecuteCommandAsync();
-                res.data= dbres>0 ? "1" : "0";
+                if (parm.Level==1)
+                {
+                    //根据部门ID查询部门组
+                    var organizeModel = SysOrganizeDb.GetById(parm.DepartmentGuid);
+                    parm.DepartmentGroup = organizeModel.ParentGuidList;
+                }
+                await Db.Updateable(parm).ExecuteCommandAsync();
             }
             catch (Exception ex)
             {

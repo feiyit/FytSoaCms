@@ -12,7 +12,7 @@ namespace FytSoa.Service.Implements
     /*!
     * 文件名称：Bbs_answer服务接口实现
     */
-    public class Bbs_AnswerService : BaseServer<Bbs_Answer>, IBbs_AnswerService
+    public class Bbs_AnswerService : BaseService<Bbs_Answer>, IBbs_AnswerService
     {
         public async Task<ApiResult<Page<Bbs_Answer>>> GetPageUser(PageParm param)
         {

@@ -9,7 +9,7 @@ namespace FytSoa.Service.Interfaces
     /*!
     * 文件名称：Bbs_user服务接口
     */
-	public interface IMemberService : IBaseServer<Member>
+	public interface IMemberService : IBaseService<Member>
 	{
         /// <summary>
         /// 查询用户信息-增加组

@@ -31,7 +31,7 @@
         <div class="layui-input-block">
             <input type="text" name="ParentName" id="ParentName" value="@Model.OrganizeModel.ParentName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请选择所属部门" class="layui-input">
             <div class="organize-tree">
-                <ul id="tree" class="ztree layui-tree-cus"></ul>
+                <div id="tree" class="layui-tree-cus"></div>
             </div>
         </div>
     </div>
@@ -62,58 +62,54 @@
     <input type="hidden" name="Guid" id="Guid" value="@Model.OrganizeModel.Guid" />
     <input type="hidden" name="ParentGuid" id="ParentGuid" value="@Model.OrganizeModel.ParentGuid" />
 </form>
-<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
 @section Scripts{
-    <script>
-        layui.config({
-            base: '/themes/js/modules/'
-        }).use(['layer', 'jquery', 'common', 'form','ztree'], function () {
-            var form = layui.form, $ = layui.$, os = layui.common;
-            var index = parent.layer.getFrameIndex(window.name);
-            //监听提交
-            form.on('submit(submit)', function (data) {
-                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
-                var urls = "api/organize/add";
-                if ($("#Guid").val()) {
-                    urls = "api/organize/edit";
-                }                
-                os.ajax(urls, data.field, function (res) {
-                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
-                    if (res.statusCode === 200) {
-                        parent.layer.close(index);
-                    } else {
-                        os.error(res.message);
-                    }   
-                });
-                return false;
-            });
-            $(".btn-open-close").on('click', function () {
-                parent.layer.close(index);
-            });
-
-            var setting = {
-                async: {
-                    enable: true,
-                    headers: os.getToken(),
-                    url: "/api/organize/gettree"
-                },
-                callback: {
-                    onClick: onClick
-                }
-            };
-            $("#ParentName").click(function () { 
-                $(".organize-tree").addClass('active');
-            });
-            $(".organize-tree").mouseleave(function () {
-                $(".organize-tree").removeClass('active');
-            });
-            $.fn.zTree.init($("#tree"), setting);
-            function onClick(event, treeId, treeNode, clickFlag) {
-                $("#ParentGuid").val(treeNode.guid);
-                $("#ParentName").val(treeNode.name);
-                $(".organize-tree").removeClass('active');
+<script>layui.config({
+        base: '/themes/js/modules/'
+    }).use(['layer', 'jquery', 'common', 'form', 'tree'], function () {
+        var form = layui.form, $ = layui.$, os = layui.common,tree = layui.tree;
+        var index = parent.layer.getFrameIndex(window.name);
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+            var urls = "api/organize/add";
+            if ($("#Guid").val()) {
+                urls = "api/organize/edit";
             }
+            os.ajax(urls, data.field, function (res) {
+                $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                if (res.statusCode === 200) {
+                    parent.layer.close(index);
+                } else {
+                    os.error(res.message);
+                }
+            });
+            return false;
         });
-    </script>
+        $(".btn-open-close").on('click', function () {
+            parent.layer.close(index);
+        });
+
+        os.ajax('api/organize/gettree/', {}, function (res) {
+            console.log(res);
+            tree.render({
+                elem: '#tree'
+                , data: res
+                , onlyIconControl: true
+                , click: function (obj) {
+                    guid = obj.data.id;
+                    $("#ParentGuid").val(obj.data.id);
+                    $("#ParentName").val(obj.data.title);
+                    $(".organize-tree").removeClass('active');
+                }
+            });
+        });
+        $("#ParentName").click(function () {
+            $(".organize-tree").addClass('active');
+        });
+        $(".organize-tree").mouseleave(function () {
+            $(".organize-tree").removeClass('active');
+        });
+
+    });</script>
 }
 

@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace FytSoa.Service.Implements
 {
-    public class SysAdminService : BaseServer<SysAdmin>, ISysAdminService
+    public class SysAdminService : BaseService<SysAdmin>, ISysAdminService
     {
         #region  用户登录和授权菜单查询
         /// <summary>
@@ -54,6 +54,7 @@ namespace FytSoa.Service.Implements
                 //修改登录时间
                 model.LoginDate = DateTime.Now;
                 model.UpLoginDate = model.LoginDate;
+                model.LoginSum = model.LoginSum + 1;
                 SysAdminDb.Update(model);
 
                 
@@ -161,8 +162,23 @@ namespace FytSoa.Service.Implements
                     var model = SysOrganizeDb.GetById(parm.DepartmentGuid);
                     parm.DepartmentGuidList = model.ParentGuidList;
                 }
-                res.statusCode = (int)ApiEnum.Status;
                 SysAdminDb.Insert(parm);
+                //查询授权表，type=2 更新新的权限值
+                //添加新的
+                var authorityList = new List<SysPermissions>();
+                foreach (var item in parm.RoleList)
+                {
+                    authorityList.Add(new SysPermissions()
+                    {
+                        RoleGuid = item.guid,
+                        AdminGuid = parm.Guid,
+                        Types = 2
+                    });
+                }
+                await Db.Insertable(authorityList).ExecuteCommandAsync();
+
+                res.statusCode = (int)ApiEnum.Status;
+
             }
             catch (Exception ex)
             {
@@ -205,9 +221,27 @@ namespace FytSoa.Service.Implements
             var res = new ApiResult<Page<SysAdmin>>();
             try
             {
+                var adminGuidList = new List<string>();
+                //判断是否根据角色查询用户信息
+                if (!string.IsNullOrEmpty(parm.guid))
+                {
+                    adminGuidList = await Db.Queryable<SysPermissions>()
+                        .Where(m => m.RoleGuid == parm.guid && m.Types == 2)
+                        .Select(m => m.AdminGuid).ToListAsync();
+                }
+                //查询角色
+                var roleList = await Db.Queryable<SysRole>().Where(m => m.IsSystem).Select(m=>m.Guid).ToListAsync();
                 res.data =await Db.Queryable<SysAdmin>()
                         .WhereIF(!string.IsNullOrEmpty(parm.key), m => m.DepartmentGuidList.Contains(parm.key))
+                        .WhereIF(!string.IsNullOrEmpty(parm.guid), m => adminGuidList.Contains(m.Guid))
                         .OrderBy(m => m.AddDate).ToPageAsync(parm.page, parm.limit);
+                foreach (var item in res.data.Items)
+                {
+                    foreach (var row in item.RoleList)
+                    {
+                        item.IsSystem |= roleList.Contains(row.guid);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -247,10 +281,26 @@ namespace FytSoa.Service.Implements
                     var model = SysOrganizeDb.GetById(parm.DepartmentGuid);
                     parm.DepartmentGuidList = model.ParentGuidList;
                 }
+                //查询授权表，type=2 更新新的权限值
+                //删除
+                var authority = await Db.Deleteable<SysPermissions>().Where(m=>m.AdminGuid==parm.Guid && m.Types==2).ExecuteCommandAsync();
+                //添加新的
+                var authorityList = new List<SysPermissions>();
+                foreach (var item in parm.RoleList)
+                {
+                    authorityList.Add(new SysPermissions() {
+                        RoleGuid=item.guid,
+                        AdminGuid=parm.Guid,
+                        Types=2
+                    });
+                }
+                await Db.Insertable(authorityList).ExecuteCommandAsync();
+
                 var dbres =await Db.Updateable<SysAdmin>().SetColumns(m => new SysAdmin()
                 {
                     LoginName = parm.LoginName,
                     LoginPwd = parm.LoginPwd,
+                    RoleGuid=parm.RoleGuid,
                     DepartmentName = parm.DepartmentName,
                     DepartmentGuid=parm.DepartmentGuid,
                     DepartmentGuidList=parm.DepartmentGuidList,

@@ -8,6 +8,7 @@ using FytSoa.Extensions;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using FytSoa.Common;
 
 namespace FytSoa.Api.Controllers
 {
@@ -15,6 +16,12 @@ namespace FytSoa.Api.Controllers
     [ApiController]
     public class TokenController : Controller
     {
+        [HttpGet("testtask")]
+        public void TestTask()
+        {
+            Logger.Default.Process("Task","Task","自动任务测试");
+        }
+
         #region Token
         /// <summary>
         /// 模拟登录，获取JWT

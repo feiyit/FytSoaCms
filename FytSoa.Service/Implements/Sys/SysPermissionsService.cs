@@ -17,7 +17,7 @@ namespace FytSoa.Service.Implements
     /// <summary>
     /// 角色关联菜单的实现
     /// </summary>
-    public class SysPermissionsService : DbContext, ISysPermissionsService
+    public class SysPermissionsService : BaseService<SysPermissions>, ISysPermissionsService
     {
         /// <summary>
         /// 用户授权角色
@@ -33,10 +33,32 @@ namespace FytSoa.Service.Implements
             };
             try
             {
+                //处理用户授权
+                var adminModel = new SysAdmin();
+                if (parm.Types==2)
+                {
+                    //处理用户授权
+                    adminModel = await Db.Queryable<SysAdmin>().FirstAsync(m=>m.Guid==parm.AdminGuid);
+                }
                 if (status)
                 {
+                    if (parm.Types==2)
+                    {
+                        var roleModel = await Db.Queryable<SysRole>().FirstAsync(m=>m.Guid==parm.RoleGuid);
+                        var adminRoleList = adminModel.RoleList;
+                        adminRoleList.Add(new AdminToRoleList() {
+                            guid=parm.RoleGuid,
+                            name=roleModel.Name
+                        });
+                        var adminRole = JsonConvert.SerializeObject(adminRoleList);
+                        //更新用户信息
+                        await Db.Updateable<SysAdmin>().SetColumns(m => new SysAdmin()
+                        {
+                            RoleGuid =adminRole
+                        }).Where(m => m.Guid == parm.AdminGuid).ExecuteCommandAsync();
+                    }
                     //授权
-                    var dbres =await Db.Insertable<SysPermissions>(new SysPermissions()
+                    var dbres =await Db.Insertable(new SysPermissions()
                     {
                         RoleGuid = parm.RoleGuid,
                         AdminGuid = parm.AdminGuid,
@@ -56,6 +78,22 @@ namespace FytSoa.Service.Implements
                     //取消授权
                     if (parm.Types==2)
                     {
+                        var adminRoleList = adminModel.RoleList;
+                        //删除用户授权的角色
+                        for (int i = 0; i < adminRoleList.Count; i++)
+                        {
+                            if (adminRoleList[i].guid==parm.RoleGuid)
+                            {
+                                adminRoleList.Remove(adminRoleList[i]);
+                            }
+                        }
+                        //更新新的用户角色
+                        var adminRole = JsonConvert.SerializeObject(adminRoleList);
+                        await Db.Updateable<SysAdmin>().SetColumns(m => new SysAdmin()
+                        {
+                            RoleGuid = adminRole
+                        }).Where(m => m.Guid == parm.AdminGuid).ExecuteCommandAsync();
+                        //删除
                         await Db.Deleteable<SysPermissions>().Where(m => m.AdminGuid == parm.AdminGuid && m.RoleGuid == parm.RoleGuid && m.Types == 2).ExecuteCommandAsync();
                     }
                     if (parm.Types==3)

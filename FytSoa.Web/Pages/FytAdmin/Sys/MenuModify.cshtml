@@ -39,7 +39,7 @@
         <div class="layui-input-block">
             <input type="text" name="ParentName" id="ParentName" value="@Model.MenuModel.ParentName" lay-verify="required" lay-verType="tips" autocomplete="off" placeholder="请选择所属父级" class="layui-input">
             <div class="organize-tree">
-                <ul id="tree" class="ztree layui-tree-cus"></ul>
+                <div id="tree" class="layui-tree-cus"></div>
             </div>
         </div>
     </div>
@@ -98,7 +98,6 @@
     <input type="hidden" name="Icon" id="Icon" value="@Model.MenuModel.Icon" />
     <input type="hidden" name="Layer" value="@Model.MenuModel.Layer" />
 </form>
-<link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
 @section Scripts{
 <script>
         var vm = new Vue({
@@ -128,8 +127,8 @@
             base: '/themes/js/modules/'
         }).extend({
             iconPicker: 'iconPicker'
-        }).use(['layer', 'jquery', 'common', 'iconPicker', 'form', 'ztree'], function () {
-            var form = layui.form, $ = layui.$, os = layui.common, iconPicker = layui.iconPicker;
+        }).use(['layer', 'jquery', 'common', 'iconPicker', 'form', 'tree'], function () {
+            var form = layui.form, $ = layui.$, os = layui.common, iconPicker = layui.iconPicker,tree = layui.tree;
             iconPicker.render({
                 elem: '#iconPicker',
                 type: 'fontClass',
@@ -175,33 +174,35 @@
                 parent.layer.close(index);
             });
 
-            var setting = {
-                async: {
-                    enable: true,
-                    headers: os.getToken(),
-                    url: "/api/menu/gettree"
-                },
-                callback: {
-                    onClick: onClick
-                }
-            };
+            os.ajax('api/menu/gettree/', {}, function (res) {
+                            tree.render({
+                                elem: '#tree'
+                                , data: res
+                                , onlyIconControl: true 
+                                , click: function (obj) {
+                                    guid=obj.data.id;
+                                    $("#ParentGuid").val(obj.data.id);
+                                    $("#ParentName").val(obj.data.title);
+                                    $(".organize-tree").removeClass('active');
+                                }
+                            });
+                        });
             $("#ParentName").click(function () {
                 $(".organize-tree").addClass('active');
             });
             $(".organize-tree").mouseleave(function () {
                 $(".organize-tree").removeClass('active');
             });
-            $.fn.zTree.init($("#tree"), setting);
-            function onClick(event, treeId, treeNode, clickFlag) {
-                $("#ParentGuid").val(treeNode.guid);
-                $("#ParentName").val(treeNode.name);
-                $(".organize-tree").removeClass('active');
-            }
             form.on('checkbox(cbk)', function (data) {
                 if (data.elem.checked) {
                     vm.selectCbk.push(data.value);
                 } else {
-                   vm.selectCbk.splice(data.value,1);
+                    var index = vm.selectCbk.findIndex(item =>{
+        　　　　　　　　　　if(item==data.value){
+        　　　　　　　　　　　　return true
+        　　　　　　　　　　}
+        　　　　　　　 })
+                   vm.selectCbk.splice(index,1);
                 }
             });
 

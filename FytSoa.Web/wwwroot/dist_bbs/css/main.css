@@ -4773,3 +4773,7 @@ body.admin-bar .q-filter-waypoints {
     color: #ffffff;
     background: #00adef
 }
+pre {
+    background-color: #f6f8fa;
+    border: none;
+}

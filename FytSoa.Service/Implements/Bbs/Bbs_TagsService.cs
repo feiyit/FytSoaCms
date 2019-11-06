@@ -12,13 +12,13 @@ namespace FytSoa.Service.Implements
     /*!
     * 文件名称：Bbs_tags服务接口实现
     */
-    public class Bbs_TagsService : BaseServer<Bbs_Tags>, IBbs_TagsService
+    public class Bbs_TagsService : BaseService<Bbs_Tags>, IBbs_TagsService
     {
         /// <summary>
         /// 查询所有标签，带数量
         /// </summary>
         /// <returns></returns>
-        public async Task<ApiResult<List<TagsDto>>> GetListTagCounts()
+        public async Task<ApiResult<List<TagsDto>>> GetListTagCounts(int page = 8)
         {
             var res = new ApiResult<List<TagsDto>>() { statusCode = (int)ApiEnum.Error };
             try
@@ -31,8 +31,10 @@ namespace FytSoa.Service.Implements
                         EnTagName=s.EnTagName,
                         FirstLetter = s.FirstLetter,
                         TagCount = SqlFunc.Subqueryable<Bbs_Questions>().Where(g => g.Tags.Contains(s.TagName)).Count()
-                    }).OrderBy(g => g.TagCount, OrderByType.Desc)
-                    .Take(8).ToListAsync();
+                    })
+                    .OrderBy(g => g.TagCount, OrderByType.Desc)
+                    .OrderBy(g=>g.EnTagName)
+                    .Take(page).ToListAsync();
                 res.statusCode = (int)ApiEnum.Status;
             }
             catch (Exception ex)

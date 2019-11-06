@@ -1,36 +1,41 @@
 ﻿@page
 @model FytSoa.Web.Pages.FytAdmin.Sys.RoleModel
 @{
-    ViewData["Title"] = "角色管理";
-    Layout = AdminLayout.Pjax(HttpContext);
+ViewData["Title"] = "角色管理";
+Layout = AdminLayout.Pjax(HttpContext);
 }
 <div id="container">
     <div class="layui-col-220">
-        <div class="layui-nav-title">角色管理</div>
-        <ul id="tree" class="ztree layui-tree-cus"></ul>
+        <div class="layui-nav-title">组织机构</div>
+        <div id="tree" class="layui-tree-cus" style="overflow:auto;"></div>
     </div>
     <div class="right-col-body">
         <div class="list-wall">
             <div class="layui-form list-search">
-                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeAdd"><i class="layui-icon"></i> 新增</button>
-                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i> 删除</button>
-                <button type="button" class="layui-btn layui-btn-sm" data-type="toolMenu"><i class="layui-icon layui-icon-template"></i> 角色分配功能模块</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="roleGroup"><i
+                        class="layui-icon layui-icon-add-circle"></i> 添加角色组</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeAdd"><i
+                        class="layui-icon layui-icon-add-circle"></i> 添加角色</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i>
+                    删除</button>
+                <button type="button" class="layui-btn layui-btn-sm" data-type="toolMenu"><i
+                        class="layui-icon layui-icon-template"></i> 角色分配功能模块</button>
             </div>
             <table class="layui-hide" id="tablist" lay-filter="tool"></table>
         </div>
     </div>
-    <link rel="stylesheet" href="~/themes/ztree/css/metroStyle/metroStyle.css" type="text/css">
-    <script>
-        layui.config({
+    <script>layui.config({
             base: '/themes/js/modules/'
-        }).use(['table', 'layer', 'jquery', 'ztree', 'common'],
+        }).use(['table', 'layer', 'jquery', 'tree', 'common'],
             function () {
                 var table = layui.table,
                     layer = layui.layer,
                     $ = layui.jquery,
                     ztree = layui.ztree,
                     os = layui.common,
-                    form = layui.form;
+                    form = layui.form,
+                    tree = layui.tree;
+                $("#tree").css({ 'height': $(window).height() - 140 });
                 table.render({
                     elem: '#tablist',
                     headers: os.getToken(),
@@ -38,34 +43,58 @@
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left' },
-                            { field: 'name', title: '角色名称', sort: true, fixed: 'left' },
-                            { field: 'codes', title: '编号' },
+                            {
+                                field: 'name', title: '角色名称', sort: true, fixed: 'left', templet: function (d) {
+                                    if (d.level == 0) {
+                                        return d.name + '<span class="layui-badge layui-bg-cyan">组</span>';
+                                    } else {
+                                        return d.name;
+                                    }
+                                }
+                            },
+                            {
+                                field: 'isSystem', title: '是否系统管理员', templet: function (d) {
+                                    if (d.isSystem) {
+                                        return '<span class="layui-badge-dot layui-bg-blue"></span>';
+                                    } else {
+                                        return '<span class="layui-badge-dot layui-bg-gray"></span>';
+                                    }
+                                }
+                            },
+                            { field: 'sort', title: '排序' },
                             { field: 'summary', title: '描述' },
                             { width: 100, title: '操作', templet: '#tool' }
                         ]
                     ],
-                    page: true,
-                    id: 'tables'
-                });
-                var setting = {
-                    async: {
-                        enable: true,
-                        headers: os.getToken(),
-                        url: "/api/organize/gettree"
-                    },
-                    callback: {
-                        onClick: onClick
+                    page: false,
+                    id: 'tables',
+                    height: $(window).height() - 150,
+                    where: {
+                        limit: 1000
                     }
-                };
-                var guid = '', typeName = '', active = {
+                });
+
+                var guid = '', active = {
+                    initTree() {
+                        os.ajax('api/organize/gettree/', {}, function (res) {
+                            tree.render({
+                                elem: '#tree'
+                                , data: res
+                                , onlyIconControl: true
+                                , click: function (obj) {
+                                    guid = obj.data.id;
+                                    active.reload();
+                                }
+                            });
+                        });
+                    },
                     reload: function () {
                         table.reload('tables',
                             {
-                                page: {
-                                    curr: 1
-                                },
+                                page: false,
                                 where: {
-                                    key: guid
+                                    key: guid,
+                                    limit: 1000
                                 }
                             });
                     },
@@ -76,24 +105,33 @@
                             os.error("请选择要授权的角色~");
                             return;
                         }
-                        var str = '',strCount=0;
+                        var str = '', strCount = 0;
                         $.each(data, function (i, item) {
-                            str = item.guid;
-                            strCount++;
+                            if (item.level == 1) {
+                                str = item.guid;
+                                strCount++;
+                            }
                         });
+                        if (strCount == 0) {
+                            os.warning('请选择要授权模块的角色~');
+                            return;
+                        }
                         if (strCount > 1) {
                             os.warning('每次只能授权一个角色~');
                             return;
                         }
-                        os.Open('角色分配功能模块', '/fytadmin/sys/rolemenu?roid='+str, '1000px', '650px', function () {
+                        os.Open('角色分配功能模块', '/fytadmin/sys/rolemenu?roid=' + str, '1000px', '650px', function () {
                             //os.success("分配成功~");
                         });
                     },
-                    organizeAdd: function () {
-                        os.Open('添加角色', '/fytadmin/sys/rolemodify', '620px', '430px', function () {
+                    roleGroup: function () {
+                        os.Open('添加角色组', '/fytadmin/sys/rolegroup', '520px', '300px', function () {
                             active.reload();
-                            var tree = $.fn.zTree.getZTreeObj("tree");
-                            tree.reAsyncChildNodes(null, "refresh");
+                        });
+                    },
+                    organizeAdd: function () {
+                        os.Open('添加角色', '/fytadmin/sys/rolemodify', '650px', '480px', function () {
+                            active.reload();
                         });
                     },
                     organizeDel: function () {
@@ -105,8 +143,14 @@
                         }
                         var str = '';
                         $.each(data, function (i, item) {
-                            str += item.guid + ",";
+                            if (!item.isSystem) {
+                                str += item.guid + ",";
+                            }
                         });
+                        if (str == '') {
+                            os.error("请选择要删除的项目,超管状态不能删除~");
+                            return;
+                        }
                         layer.confirm('确定要执行批量删除吗？', function (index) {
                             layer.close(index);
                             var loadindex = layer.load(1, {
@@ -116,8 +160,6 @@
                                 layer.close(loadindex);
                                 if (res.statusCode === 200) {
                                     active.reload();
-                                    var tree = $.fn.zTree.getZTreeObj("tree");
-                                    tree.reAsyncChildNodes(null, "refresh");
                                     os.success('删除成功！');
                                 } else {
                                     os.error(res.message);
@@ -127,29 +169,32 @@
 
                     }
                 };
-                $.fn.zTree.init($("#tree"), setting);
+                active.initTree();
                 $('.list-search .layui-btn').on('click', function () {
                     var type = $(this).data('type');
                     active[type] ? active[type].call(this) : '';
                 });
-                function onClick(event, treeId, treeNode, clickFlag) {
-                    guid = treeNode.guid;
-                    active.reload();
-                }
+
                 //监听工具条
                 table.on('tool(tool)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'edit') {
-                        os.Open('编辑角色', '/fytadmin/sys/rolemodify/?guid=' + data.guid, '620px', '430px', function () {
-                            var tree = $.fn.zTree.getZTreeObj("tree");
-                            tree.reAsyncChildNodes(null, "refresh");
-                            active.reload();
-                        })
+                        if (data.level == 1) {
+                            os.Open('编辑角色', '/fytadmin/sys/rolemodify/?guid=' + data.guid, '650px', '480px', function () {
+                                active.reload();
+                            })
+                        }
+                        else {
+                            os.Open('修改角色组', '/fytadmin/sys/rolegroup?guid=' + data.guid, '520px', '300px', function () {
+                                active.reload();
+                            });
+                        }
                     }
                 });
-            });
-    </script>
+            });</script>
     <script type="text/html" id="tool">
+        {{#  if(!d.isSystem){ }}
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon"></i> 修改</a>
+        {{#  } }} 
     </script>
 </div>

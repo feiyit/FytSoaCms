@@ -10,7 +10,7 @@ namespace FytSoa.Service.Interfaces
     /*!
     * 文件名称：Wx_material服务接口
     */
-	public interface IWxMaterialService : IBaseServer<WxMaterial>
+	public interface IWxMaterialService : IBaseService<WxMaterial>
 	{
         /// <summary>
         /// 添加一条公众号素材信息

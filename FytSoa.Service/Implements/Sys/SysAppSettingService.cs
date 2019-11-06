@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FytSoa.Service.Implements
 {
-    public class SysAppSettingService : BaseServer<SysAppSetting>, ISysAppSettingService
+    public class SysAppSettingService : BaseService<SysAppSetting>, ISysAppSettingService
     {
        
     }

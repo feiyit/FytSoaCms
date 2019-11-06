@@ -16,7 +16,7 @@ namespace FytSoa.Api.Controllers.Cms
 {
     [Produces("application/json")]
     [Route("api/localfiles")]
-    public class LocalFilesController : Controller
+    public class LocalFilesController : ControllerBase
     {
         private readonly ICmsImageService _imageService;
         public LocalFilesController(ICmsImageService imageService)
@@ -30,7 +30,7 @@ namespace FytSoa.Api.Controllers.Cms
         /// <returns></returns>
         [HttpPost("upload")]
         [JwtAuthorize(Roles = "Admin")]
-        public ApiResult<string> LocalUpload(IFormFile file,string path)
+        public IActionResult LocalUpload(IFormFile file,string path)
         {
             var res = new ApiResult<string>() { statusCode=(int)ApiEnum.Error};
             try
@@ -39,7 +39,7 @@ namespace FytSoa.Api.Controllers.Cms
                 if (path == "/")
                 {
                     res.message = "请选择分类";
-                    return res;
+                    return Ok(res);
                 }
                 //原文件名
                 var filename = file.FileName;
@@ -67,7 +67,7 @@ namespace FytSoa.Api.Controllers.Cms
             {
                 res.message = ex.Message;
             }
-            return res;
+            return Ok(res);
         }
 
         /// <summary>
@@ -76,19 +76,19 @@ namespace FytSoa.Api.Controllers.Cms
         /// <param name="parm">分页参数</param>
         /// <returns></returns>
         [HttpPost("list")]
-        public CloudFile LocalList([FromBody]PageParm parm) {
-            return _imageService.GetList(parm);
+        public IActionResult LocalList([FromBody]PageParm parm) {
+            return Ok(_imageService.GetList(parm));
         }
 
         /// <summary>
         /// 删除本地图片列表
         /// </summary>
-        /// <param name="filename">文件名称</param>
+        /// <param name="obj">文件名称</param>
         /// <returns></returns>
         [HttpPost("delete")]
-        public Task<ApiResult<string>> DeleteList([FromBody]ParmFileName obj)
+        public async Task<IActionResult> DeleteList([FromBody]ParmFileName obj)
         {
-            return _imageService.DeleteAsync(m => m.ImgBig == obj.filename);
+            return Ok(await _imageService.DeleteAsync(m => m.ImgBig == obj.filename));
         }
 
         public class ParmFileName

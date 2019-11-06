@@ -16,7 +16,7 @@ namespace FytSoa.Api.Controllers.Wx
     [Route("api/wx/setting")]
     [JwtAuthorize(Roles = "Admin")]
     //[ApiController]
-    public class WxSettingController : Controller
+    public class WxSettingController : ControllerBase
     {
         private readonly IWxSettingService _settingService;
         public WxSettingController(IWxSettingService settingService)
@@ -27,13 +27,13 @@ namespace FytSoa.Api.Controllers.Wx
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="parm"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public async Task<JsonResult> GetPages(PageParm parm)
+        public async Task<IActionResult> GetPages([FromQuery]PageParm parm)
         {
             var res = await _settingService.GetPagesAsync(parm, m => true, m => m.AddDate, DbOrderEnum.Desc);
-            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+            return Ok(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
         /// <summary>
@@ -41,9 +41,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), Log("WxSetting：add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> AddSetting([FromBody]WxSetting parm)
+        public async Task<IActionResult> AddSetting([FromBody]WxSetting parm)
         {
-            return await _settingService.AddAsync(parm);
+            return Ok(await _settingService.AddAsync(parm));
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"), Log("WxSetting：edit", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> EditSetting([FromBody]WxSetting parm)
+        public async Task<IActionResult> EditSetting([FromBody]WxSetting parm)
         {
-            return await _settingService.UpdateAsync(parm);
+            return Ok(await _settingService.UpdateAsync(parm));
         }
 
 
@@ -62,9 +62,9 @@ namespace FytSoa.Api.Controllers.Wx
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete"), Log("WxSetting：delete", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> DeleteRole([FromBody]ParmString obj)
+        public async Task<IActionResult> DeleteRole([FromBody]ParmString obj)
         {
-            return await _settingService.DeleteAsync(obj.parm);
+            return Ok(await _settingService.DeleteAsync(obj.parm));
         }
     }
 }

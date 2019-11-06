@@ -14,19 +14,9 @@ namespace FytSoa.Web.Pages.FytAdmin.Sys
     [Authorize]
     public class AdminModifyModel : PageModel
     {
-        private readonly ISysAdminService _adminService;
-        public AdminModifyModel(ISysAdminService adminService)
+        public void OnGet()
         {
-            _adminService = adminService;
-        }
 
-        [BindProperty]
-        public SysAdmin adminModel { get; set; }
-        public void OnGet(string guid)
-        {
-            adminModel = _adminService.GetModelAsync(m=>m.Guid== guid).Result.data;
-            //密码解密
-            adminModel.LoginPwd = DES3Encrypt.DecryptString(adminModel.LoginPwd);
         }
     }
 }

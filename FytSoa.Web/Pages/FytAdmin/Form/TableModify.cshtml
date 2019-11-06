@@ -1,0 +1,150 @@
+﻿@page
+@model TableModifyModel
+@{
+    ViewData["Title"] = "万能表单-创建表";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml";
+}
+<style>
+    .fyt-select .layui-form-select dl dd:last-child {
+        text-align: center;
+        color: #0094ff;
+    }
+    .list-wall {padding:0px 0px 10px 110px;  }
+    .fyt-table thead th{ padding: 5px 0; border-top: none; border-left: none;border-width: 1px; border-style: solid;border-color: #e6e6e6;}
+    .fyt-table thead th span{display:inline-block;height: 28px;line-height: 28px; padding: 0 15px; position: relative;font-weight:normal;}
+    .fyt-table td{padding:0px;}
+    .fyt-table td .layui-input{border-color:#ffffff;}
+    .fyt-table td:last-child{text-align:center;}
+    .fyt-table td:last-child i,.addAttr i{font-size:24px; cursor:pointer; }
+    .addAttr i{vertical-align:middle; position:relative; top:-2px; margin-right:5px; color:#666;}
+    .fyt-table .layui-form-select{display:none;}
+    .fyt-table select{display:block; border:1px solid #e6e6e6; width:100%; border-radius:4px; height:38px; line-height:38px; padding:0 5px;
+                      border:1px solid #fff;
+    }
+    .fyt-table select:focus, .fyt-table select:active{border:1px solid #0094ff;}
+    .fyt-table samp{color:#ff0000;}
+    .addAttr {
+        cursor: pointer;
+    }
+</style>
+<form class="layui-form form-cus" action="" id="app">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">表名（中文）</label>
+            <div class="layui-input-inline">
+                <input type="text" v-model="m.name" maxlength="50" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">表名（英文）</label>
+            <div class="layui-input-inline">
+                <input type="text" v-model="m.enName" maxlength="50" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="list-wall" style="padding-left:30px;">
+        <table class="layui-table fyt-table">
+            <thead>
+                <tr>
+                    <th width="60"><span>序号</span></th>
+                    <th width="120"><span>字段名称</span></th>
+                    <th><span>字典类型</span></th>
+                    <th width="80"><span>长度</span></th>
+                    <th width="100"><span>保留小数点</span></th>
+                    <th width="100"><span>是否为空</span></th>
+                    <th width="100"><span>是否为主键</span></th>
+                    <th><span>备注</span></th>
+                    <th width="60"><span>操作</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="it,index in m.tableJson">
+                    <td align="center">{{index+1}}</td>
+                    <td><input type="text" v-model="it.name" class="layui-input" /></td>
+                    <td>
+                        <select v-model="it.types">
+                            <option value="int">int</option>
+                            <option value="varchar">varchar</option>
+                        </select>
+                    </td>
+                    <td><input type="number" v-model="it.length" class="layui-input" /></td>
+                    <td><input type="number" v-model="it.decimals" class="layui-input" /></td>
+                    <td style="padding-left:40px;"><input type="checkbox" v-model="it.isNull" lay-ignore style="display:block;" /></td>
+                    <td style="padding-left:40px;"><input type="checkbox" v-model="it.isKey" lay-ignore style="display:block;" /></td>
+                    <td><input type="text" v-model="it.comment" class="layui-input" /></td>
+                    <td><i @@click="addTableRow()" class="layui-icon layui-icon-add-circle-fine"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form-item layui-cur-submit">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+            <button type="button" class="layui-btn layui-btn-primary btn-open-close">取消</button>
+        </div>
+    </div>
+</form>
+@section Scripts{
+<script>var vm = new Vue({
+        el: '#app',
+        data: {
+            m: {
+                tableJson:[]
+            }
+        },
+        methods: {
+            addTableRow: function () {
+                this.m.tableJson.push({
+                    'name': '', 'types': '', 'length': 0, 'decimals': 0, 'isNull': false, 'isKey': false, 'comment': ''
+                });
+            },
+        }
+    });
+    layui.config({
+        base: '/themes/js/modules/'
+    }).use(['layer', 'jquery', 'common', 'form'], function () {
+        var form = layui.form, $ = layui.$, os = layui.common;
+        var index = parent.layer.getFrameIndex(window.name);
+        //监听提交
+        vm.m.guid = os.getUrlParam('guid');
+        var oc = {
+            init() {
+                console.log(vm.m.guid);
+                os.ajax('api/form/model', { parm: vm.m.guid }, function (res) {
+                    console.log(res);
+                    if (res.statusCode === 200) {
+                        vm.m = res.data;
+                        if (!vm.m.guid) {
+                            vm.addTableRow();
+                        }
+                    } else {
+                        os.error(res.message);
+                    }
+                });
+            }
+        };
+        oc.init();
+        form.on('submit(submit)', function (data) {
+            //console.log(vm.m);return false;
+            $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+            var urls = "api/form/add";
+            if (vm.m.guid) {
+                urls = "api/form/update";
+            }
+            os.ajax(urls, vm.m, function (res) {
+                $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                if (res.statusCode == 200) {
+                    parent.layer.close(index);
+                }
+                else {
+                    os.error(res.message);
+                }
+            });
+            return false;
+        });
+        $(".btn-open-close").on('click', function () {
+            parent.layer.close(index);
+        });
+
+    });</script>
+}

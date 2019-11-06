@@ -11,7 +11,7 @@ namespace FytSoa.Service.Interfaces
     /// <summary>
     /// 角色业务接口
     /// </summary>
-    public interface ISysRoleService:IBaseServer<SysRole>
+    public interface ISysRoleService: IBaseService<SysRole>
     {
         /// <summary>
         /// 获得列表

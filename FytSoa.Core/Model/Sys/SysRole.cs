@@ -24,6 +24,20 @@ namespace FytSoa.Core.Model.Sys
         public string Guid { get; set; }
 
         /// <summary>
+        /// Desc: 角色父级，角色组
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string ParentGuid { get; set; }
+
+        /// <summary>
+        /// Desc: 层级  0=角色组  1=角色值
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public int Level { get; set; } = 0;
+
+        /// <summary>
         /// Desc:部门Guid
         /// Default:
         /// Nullable:False
@@ -60,6 +74,13 @@ namespace FytSoa.Core.Model.Sys
         /// Nullable:False
         /// </summary>           
         public bool IsSystem { get; set; }
+
+        /// <summary>
+        /// Desc: 排序
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public int Sort { get; set; } = 1;
 
         /// <summary>
         /// Desc:部门描述

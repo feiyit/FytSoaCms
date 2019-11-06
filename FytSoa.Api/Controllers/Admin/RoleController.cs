@@ -16,7 +16,7 @@ namespace FytSoa.Api.Controllers
     [Produces("application/json")]
     [Route("api/Role")]
     [JwtAuthorize(Roles = "Admin")]
-    public class RoleController : Controller
+    public class RoleController : ControllerBase
     {
         private readonly ISysRoleService _roleService;
         public RoleController(ISysRoleService roleService)
@@ -27,25 +27,25 @@ namespace FytSoa.Api.Controllers
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="parm"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public async Task<JsonResult> GetPages(PageParm parm)
+        public async Task<IActionResult> GetPages([FromQuery]PageParm parm)
         {
             var res = await _roleService.GetPagesAsync(parm);
-            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+            return Ok(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
         /// <summary>
         /// 查询授权列表
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="param"></param>
         /// <returns></returns>
         [HttpGet("torolelist")]
-        public async Task<JsonResult> GetToRolePages(string key,string adminGuid)
+        public async Task<IActionResult> GetToRolePages([FromQuery]RoleByAdminParam param)
         {
-            var res = await _roleService.GetPagesToRoleAsync(key,adminGuid);
-            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+            var res = await _roleService.GetPagesToRoleAsync(param.key, param.adminGuid);
+            return Ok(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
         /// <summary>
@@ -53,9 +53,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), ApiAuthorize(Modules = "Role", Methods = "Add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> AddRole([FromBody]SysRole parm)
+        public async Task<IActionResult> AddRole([FromBody]SysRole parm)
         {
-            return await _roleService.AddAsync(parm);
+            return Ok(await _roleService.AddAsync(parm));
         }
 
         /// <summary>
@@ -63,9 +63,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete"), ApiAuthorize(Modules = "Role", Methods = "Delete", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> DeleteRole([FromBody]ParmString obj)
+        public async Task<IActionResult> DeleteRole([FromBody]ParmString obj)
         {
-            return await _roleService.DeleteAsync(obj.parm);
+            return Ok(await _roleService.DeleteAsync(obj.parm));
         }
 
         /// <summary>
@@ -73,9 +73,19 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"), ApiAuthorize(Modules = "Role", Methods = "Update", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> EditRole([FromBody]SysRole parm)
+        public async Task<IActionResult> EditRole([FromBody]SysRole parm)
         {
-            return await _roleService.ModifyAsync(parm);
+            return Ok(await _roleService.ModifyAsync(parm));
+        }
+
+        /// <summary>
+        /// 根据编号查询角色信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("bymodel")]
+        public async Task<IActionResult> GetModelByGuid([FromBody]ParmString parm)
+        {
+            return Ok(await _roleService.GetModelAsync(m=>m.Guid==parm.parm));
         }
     }
 }

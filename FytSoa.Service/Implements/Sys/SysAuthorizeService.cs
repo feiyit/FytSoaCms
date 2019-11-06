@@ -87,19 +87,36 @@ namespace FytSoa.Service.Implements
             {
                 //获得角色权限Guid-List
                 var menuModel = SysMenuDb.GetSingle(m=>m.Guid==menu);
+                if (menuModel == null)
+                {
+                    return new ApiResult<List<SysCodeDto>>();
+                }
                 //查询授权菜单里面的按钮功能
                 var btnFunModel = SysPermissionsDb.GetSingle(m=>m.RoleGuid==role && m.MenuGuid==menu && m.Types==1);
-                var codeList = new List<SysCodeDto>();
-                if (!string.IsNullOrEmpty(menuModel.BtnFunJson))
+                if (btnFunModel==null)
                 {
-                    var list = JsonConvert.DeserializeObject<List<string>>(menuModel.BtnFunJson);
-                    codeList =Db.Queryable<SysCode>().Where(m=>list.Contains(m.Guid)).Select(m=>new SysCodeDto() {
-                        guid=m.Guid,
-                        name=m.Name,
-                        codeType=m.CodeType,
-                        status=string.IsNullOrEmpty(btnFunModel.BtnFunJson)?false:btnFunModel.BtnFunJson.Contains(m.Guid)?true:false
-                    }).ToList();
+                    return new ApiResult<List<SysCodeDto>>();
                 }
+                var list = JsonConvert.DeserializeObject<List<string>>(menuModel.BtnFunJson);
+                var codeList = Db.Queryable<SysCode>().Where(m => list.Contains(m.Guid)).Select(m => new SysCodeDto()
+                {
+                    guid = m.Guid,
+                    name = m.Name,
+                    codeType = m.CodeType,
+                    status =false
+                }).ToList();
+
+                if (btnFunModel!=null && !string.IsNullOrEmpty(btnFunModel.BtnFunJson) && btnFunModel.BtnFunJson!="[]")
+                {
+                    foreach (var item in codeList)
+                    {
+                        if (btnFunModel.BtnFunJson.Contains(item.guid))
+                        {
+                            item.status = true;
+                        }
+                    }
+                }
+                
                 res.statusCode = (int)ApiEnum.Status;
                 res.data = codeList;
             }

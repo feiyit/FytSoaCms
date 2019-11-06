@@ -3,7 +3,7 @@ using FytSoa.Service.Interfaces;
 
 namespace FytSoa.Service.Implements
 {
-    public class CmsSiteService : BaseServer<CmsSite>, ICmsSiteService
+    public class CmsSiteService : BaseService<CmsSite>, ICmsSiteService
     {
         
     }

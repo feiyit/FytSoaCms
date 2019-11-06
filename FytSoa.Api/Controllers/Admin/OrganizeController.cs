@@ -16,7 +16,7 @@ namespace FytSoa.Api.Controllers
     [Produces("application/json")]
     [Route("api/Organize")]
     [JwtAuthorize(Roles = "Admin")]
-    public class OrganizeController : Controller
+    public class OrganizeController : ControllerBase
     {
         private readonly ISysOrganizeService _sysOrganizeService;
         public OrganizeController(ISysOrganizeService sysOrganizeService)
@@ -37,13 +37,13 @@ namespace FytSoa.Api.Controllers
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="parm"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public async Task<JsonResult> GetPages(PageParm parm)
+        public async Task<IActionResult> GetPages([FromQuery]PageParm parm)
         {
             var res = await _sysOrganizeService.GetPagesAsync(parm);
-            return Json(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
+            return Ok(new { code = 0, msg = "success", count = res.data.TotalItems, data = res.data.Items });
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), ApiAuthorize(Modules = "Department", Methods = "Add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> AddOrganize([FromBody]SysOrganize parm)
+        public async Task<IActionResult> AddOrganize([FromBody]SysOrganize parm)
         {
-            return await _sysOrganizeService.AddAsync(parm);
+            return Ok(await _sysOrganizeService.AddAsync(parm));
         }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete"), ApiAuthorize(Modules = "Department", Methods = "Delete", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> DeleteOrganize([FromBody]ParmString parm)
+        public async Task<IActionResult> DeleteOrganize([FromBody]ParmString parm)
         {
-            return await _sysOrganizeService.DeleteAsync(parm.parm);
+            return Ok(await _sysOrganizeService.DeleteAsync(parm.parm));
         }
 
         /// <summary>
@@ -71,9 +71,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"),ApiAuthorize(Modules = "Department", Methods = "Update", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> EditOrganize([FromBody]SysOrganize parm)
+        public async Task<IActionResult> EditOrganize([FromBody]SysOrganize parm)
         {
-            return await _sysOrganizeService.ModifyAsync(parm);
+            return Ok(await _sysOrganizeService.ModifyAsync(parm));
         }
     }
 }

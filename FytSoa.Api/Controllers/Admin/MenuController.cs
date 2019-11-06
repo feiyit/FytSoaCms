@@ -19,17 +19,19 @@ namespace FytSoa.Api.Controllers
     [Produces("application/json")]
     [Route("api/Menu")]
     [JwtAuthorize(Roles = "Admin")]
-    public class MenuController : Controller
+    public class MenuController : ControllerBase
     {
         private readonly ISysMenuService _sysMenuService;
         private readonly ISysAuthorizeService _authorizeService;
         private readonly ICacheService _cacheService;
+        private readonly ISysPermissionsService _sysPermissionsService;
         public MenuController(ISysMenuService sysMenuService, ISysAuthorizeService authorizeService
-            , ICacheService cacheService)
+            , ICacheService cacheService, ISysPermissionsService sysPermissionsService)
         {
             _sysMenuService = sysMenuService;
             _authorizeService = authorizeService;
             _cacheService = cacheService;
+            _sysPermissionsService = sysPermissionsService;
         }
 
         /// <summary>
@@ -37,10 +39,10 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("bycode")]
-        public JsonResult GetCodeByMenu(string role,string menu="all")
+        public IActionResult GetCodeByMenu([FromQuery]MenuGetParm param)
         {
-            var res = _authorizeService.GetCodeByMenu(role,menu);
-            return Json(new { code = 0, msg = "success", count = 1,res.data });
+            var res = _authorizeService.GetCodeByMenu(param.role,param.menu);
+            return Ok(new { code = 0, msg = "success", count = 1,res.data });
         }
 
         /// <summary>
@@ -48,18 +50,34 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("gettree")]
-        public List<SysMenuTree> GetListPage(string roleGuid)
+        public async Task<IActionResult> GetListPage([FromBody]MenuTreeParm param)
         {
-            return _sysMenuService.GetListTreeAsync(roleGuid).Result.data;
+            var res = await _sysMenuService.GetListTreeAsync(param.roleGuid);
+            return Ok(res.data);
+        }
+
+        /// <summary>
+        /// 提供角色弹框授权返回客户端菜单列表和当前角色的列表
+        /// 涉及到选中状态
+        /// </summary>
+        [HttpPost("menubyrole")]
+        public async Task<IActionResult> GetMenuByRole([FromBody]MenuTreeParm param)
+        {
+            var menu = await _sysMenuService.GetListTreeAsync(param.roleGuid);
+            var res = new MenuRoleDto()
+            {
+                menu=menu.data
+            };
+            return Ok(res);
         }
 
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="parm"></param>
         /// <returns></returns>
         [HttpGet("getpages")]
-        public async Task<JsonResult> GetPages(PageParm parm)
+        public async Task<IActionResult> GetPages([FromQuery]PageParm parm)
         {
             var res = await _sysMenuService.GetPagesAsync(parm);
             if (res.data?.Items?.Count > 0)
@@ -69,16 +87,15 @@ namespace FytSoa.Api.Controllers
                     item.Name = Utils.LevelName(item.Name, item.Layer);
                 }
             }
-            return Json(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
+            return Ok(new { code = 0, msg = "success", count = res.data?.TotalItems, data = res.data?.Items });
         }
 
         /// <summary>
         /// 提供权限查询
         /// </summary>
-        /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("authmenu")]        
-        public async Task<ApiResult<List<SysMenuDto>>> GetAuthMenuAsync()
+        public async Task<IActionResult> GetAuthMenuAsync()
         {
             var res = new ApiResult<List<SysMenuDto>>();
             var auth = await HttpContext.AuthenticateAsync();
@@ -98,7 +115,7 @@ namespace FytSoa.Api.Controllers
                 res.statusCode = (int)ApiEnum.URLExpireError;
                 res.message = "Session已过期，请重新登录";
             }
-            return res;
+            return Ok(res);
         }
 
         /// <summary>
@@ -106,9 +123,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("add"), ApiAuthorize(Modules = "Menu", Methods = "Add", LogType = LogEnum.ADD)]
-        public async Task<ApiResult<string>> AddMenu([FromBody]SysMenu model)
+        public async Task<IActionResult> AddMenu([FromBody]SysMenu model)
         {
-            return await _sysMenuService.AddAsync(model, model.cbks);
+            return Ok(await _sysMenuService.AddAsync(model, model.cbks));
         }
 
         /// <summary>
@@ -116,10 +133,10 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("delete"), ApiAuthorize(Modules = "Menu", Methods = "Delete", LogType = LogEnum.DELETE)]
-        public async Task<ApiResult<string>> DeleteMenu([FromBody]ParmString obj)
+        public async Task<IActionResult> DeleteMenu([FromBody]ParmString obj)
         {
             var list = Utils.StrToListString(obj.parm);
-            return await _sysMenuService.DeleteAsync(m => list.Contains(m.Guid));
+            return Ok(await _sysMenuService.DeleteAsync(m => list.Contains(m.Guid)));
         }
 
         /// <summary>
@@ -127,9 +144,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("edit"), ApiAuthorize(Modules = "Menu", Methods = "Update", LogType = LogEnum.UPDATE)]
-        public async Task<ApiResult<string>> EditMenu([FromBody]SysMenu model)
+        public async Task<IActionResult> EditMenu([FromBody]SysMenu model)
         {
-            return await _sysMenuService.ModifyAsync(model, model.cbks);
+            return Ok(await _sysMenuService.ModifyAsync(model, model.cbks));
         }
 
         /// <summary>
@@ -137,9 +154,9 @@ namespace FytSoa.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("sort")]
-        public async Task<ApiResult<string>> ColStor([FromBody]ParmStringSort obj)
+        public async Task<IActionResult> ColStor([FromBody]ParmStringSort obj)
         {
-            return await _sysMenuService.ColSort(obj.p, obj.i, obj.o);
+            return Ok(await _sysMenuService.ColSort(obj.p, obj.i, obj.o));
         }
 
         /// <summary>
@@ -148,9 +165,9 @@ namespace FytSoa.Api.Controllers
         /// <returns></returns>
         [HttpPost("authorizaion")]
         [ApiAuthorize(Modules = "Menu", Methods = "Update", LogType = LogEnum.STATUS)]
-        public async Task<ApiResult<List<SysMenuDto>>> GetAuthorizaionMenu([FromBody]ParmString obj)
+        public async Task<IActionResult> GetAuthorizaionMenu([FromBody]ParmString obj)
         {
-            return await _sysMenuService.GetMenuByRole(obj.parm);
+            return Ok(await _sysMenuService.GetMenuByRole(obj.parm));
         }
     }
 }

@@ -9,12 +9,12 @@ namespace FytSoa.Service.Interfaces
     /*!
     * 文件名称：Bbs_tags服务接口
     */
-	public interface IBbs_TagsService: IBaseServer<Bbs_Tags>
+	public interface IBbs_TagsService: IBaseService<Bbs_Tags>
     {
         /// <summary>
         /// 查询所有标签，带数量
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<List<TagsDto>>> GetListTagCounts();
+        Task<ApiResult<List<TagsDto>>> GetListTagCounts(int page=8);
     }
 }

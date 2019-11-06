@@ -15,7 +15,7 @@ namespace FytSoa.Service.Implements
     /// <summary>
     /// 字典分类
     /// </summary>
-    public class SysCodeTypeService : BaseServer<SysCodeType>, ISysCodeTypeService
+    public class SysCodeTypeService : BaseService<SysCodeType>, ISysCodeTypeService
     {
         /// <summary>
         /// 添加一条数据
@@ -79,14 +79,14 @@ namespace FytSoa.Service.Implements
                 {
                     children.Add(new SysCodeTypeTree()
                     {
-                        guid = row.Guid,
-                        name = row.Name,
+                        id = row.Guid,
+                        title = row.Name,
                         children = null
                     });
                 }
                 treeList.Add(new SysCodeTypeTree() {
-                    guid=item.Guid,
-                    name=item.Name,
+                    id=item.Guid,
+                    title=item.Name,
                     children= children
                 });
             }
