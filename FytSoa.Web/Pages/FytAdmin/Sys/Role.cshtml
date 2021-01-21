@@ -18,8 +18,6 @@ Layout = AdminLayout.Pjax(HttpContext);
                         class="layui-icon layui-icon-add-circle"></i> 添加角色</button>
                 <button type="button" class="layui-btn layui-btn-sm" data-type="organizeDel"><i class="layui-icon"></i>
                     删除</button>
-                <button type="button" class="layui-btn layui-btn-sm" data-type="toolMenu"><i
-                        class="layui-icon layui-icon-template"></i> 角色分配功能模块</button>
             </div>
             <table class="layui-hide" id="tablist" lay-filter="tool"></table>
         </div>
@@ -97,32 +95,6 @@ Layout = AdminLayout.Pjax(HttpContext);
                                     limit: 1000
                                 }
                             });
-                    },
-                    toolMenu: function () {
-                        var checkStatus = table.checkStatus('tables')
-                            , data = checkStatus.data;
-                        if (data.length === 0) {
-                            os.error("请选择要授权的角色~");
-                            return;
-                        }
-                        var str = '', strCount = 0;
-                        $.each(data, function (i, item) {
-                            if (item.level == 1) {
-                                str = item.guid;
-                                strCount++;
-                            }
-                        });
-                        if (strCount == 0) {
-                            os.warning('请选择要授权模块的角色~');
-                            return;
-                        }
-                        if (strCount > 1) {
-                            os.warning('每次只能授权一个角色~');
-                            return;
-                        }
-                        os.Open('角色分配功能模块', '/fytadmin/sys/rolemenu?roid=' + str, '1000px', '650px', function () {
-                            //os.success("分配成功~");
-                        });
                     },
                     roleGroup: function () {
                         os.Open('添加角色组', '/fytadmin/sys/rolegroup', '520px', '300px', function () {

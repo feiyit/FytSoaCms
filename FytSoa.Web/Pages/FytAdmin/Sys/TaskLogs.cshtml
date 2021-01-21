@@ -1,0 +1,53 @@
+﻿@page
+@model TaskLogsModel
+@{
+
+}
+<style>
+    body{
+        background:#171717;
+        color:#2cc730;
+    }
+    #app{
+        display: flex;
+        flex-flow: column-reverse;
+        align-items: baseline;
+    }
+</style>
+<div id="app" style="padding:15px;">
+    <div v-for="it in m" v-html="it"></div>
+</div>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            m: {}
+        }
+    });
+    layui.config({
+        base: '/themes/js/modules/'
+    }).use(['layer', 'jquery', 'common'], function () {
+        var $ = layui.$, os = layui.common;
+        var group = os.getUrlParam('group'), name = os.getUrlParam('name');
+        var oc = {
+            init() {
+                os.ajax('api/job/getjoblogs', { group: group, name: name }, function (res) {
+                    if (res.statusCode == 200) {
+                        console.log(res.data);
+                        vm.m = res.data;
+                        vm.$nextTick(function () {
+                            $(document).scrollTop($(document).height());
+                        });
+                    } else {
+                        os.error('没有日志');
+                    }
+                });
+
+            }
+        };
+        oc.init();
+        setInterval(function () {
+            oc.init();
+        }, 5000);
+    })
+</script>

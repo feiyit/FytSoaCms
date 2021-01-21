@@ -28,11 +28,13 @@
                 <div class="cell"><span class="icon-user"></span><input type="text" name="loginname" id="loginname" lay-verify="required" lay-verType="tips" placeholder="登录账号" autocomplete="off"></div>
                 <div class="cell"><span class="icon-pwd"></span><input type="password" name="password" id="password" lay-verify="required" lay-verType="tips" placeholder="登录密码" autocomplete="off"></div>
                 <div class="login-tip"><span></span></div>
+                <div style="font-size:12px; color:#777;">测试账号密码都是：demo888</div>
                 <div class="login-btn">
                     <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="loginsub">登录</button>
                     <button type="button" class="layui-btn layui-btn-danger">重置</button>
                 </div>
                 <input type="hidden" name="privateKey" value="@Html.Raw(Model.RsaKey[0])" />
+                <input type="hidden" name="number" value="@(Model.Number)" />
             </form>
         </div>
         <div class="layui-clear"></div>

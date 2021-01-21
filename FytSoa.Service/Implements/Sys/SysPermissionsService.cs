@@ -137,6 +137,42 @@ namespace FytSoa.Service.Implements
         }
 
         /// <summary>
+        /// 2021-01-20
+        /// 保存角色菜单信息
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ApiResult<string>> SaveAsync(AuthorityMenuParam parm)
+        {
+            var result = new ApiResult<string>() { statusCode=(int)ApiEnum.Error };
+            try
+            {
+                await Db.Deleteable<SysPermissions>().Where(m=>m.RoleGuid==parm.RoleId && m.Types==3).ExecuteCommandAsync();
+                var list = new List<SysPermissions>();
+                foreach (var item in parm.Menus)
+                {
+                    var btns =new string[] { };
+                    if (item.BtnFun.Count>0)
+                    {
+                        btns = item.BtnFun.Select(m => m.Guid).ToArray();
+                    }
+                    list.Add(new SysPermissions() {
+                        RoleGuid=parm.RoleId,
+                        Types=3,
+                        MenuGuid=item.MenuId,
+                        BtnFunJson=JsonConvert.SerializeObject(btns)
+                    });
+                }
+                await Db.Insertable(list).ExecuteCommandAsync() ;
+                result.statusCode = (int)ApiEnum.Status;
+            }
+            catch (Exception ex)
+            {
+                result.message = ex.Message;
+            }
+            return result;
+        }
+
+        /// <summary>
         /// 保存授权菜单
         /// </summary>
         /// <param name="parm"></param>

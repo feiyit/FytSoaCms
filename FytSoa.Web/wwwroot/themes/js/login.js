@@ -18,7 +18,8 @@ layui.use(['jquery', 'form', 'common'], function () {
         data.field.password = enc;
         var btns = $(".layui-btn-normal");
         btns.html('<i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>');
-        btns.attr('disabled', 'disabled');  
+        btns.attr('disabled', 'disabled');
+        //console.log(data.field);
         os.ajax('api/admin/login', data.field, function (res) {
             if (res.statusCode === 200) {
                 os.SetSession('FYTADMIN_ACCESS_TOKEN', res.data);

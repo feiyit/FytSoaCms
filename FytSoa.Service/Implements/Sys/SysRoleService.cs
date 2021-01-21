@@ -72,10 +72,10 @@ namespace FytSoa.Service.Implements
                     {
                         tempRole = tempRole.Where(m=>m.DepartmentGroup.Contains(parm.key)).ToList();
                     }
-                    if (tempRole.Count>0)
-                    {
+                    //if (tempRole.Count>0)
+                    //{
                         newList.Add(item);
-                    }
+                    //}
                     foreach (var row in tempRole)
                     {
                         row.Name = "　|--" + row.Name;

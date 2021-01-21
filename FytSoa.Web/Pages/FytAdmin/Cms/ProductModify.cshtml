@@ -1,0 +1,345 @@
+﻿@page
+@model FytSoa.Web.Pages.FytAdmin.Cms.ProductModifyModel
+@{ ViewData["Title"] = "产品管理";
+    Layout = "~/Pages/FytAdmin/_Layout.cshtml"; }
+<div id="container">
+    <style>
+        .product-img-wall {
+            display: flex;
+            flex-wrap:wrap;
+        }
+        .product-img-wall li {
+            width: 100px;
+            height: 100px;
+            border:1px solid #e6e7e8;
+            padding:3px;
+            border-radius:4px;
+            overflow:hidden;
+            margin-right:10px;
+            position:relative;
+            margin-bottom:5px;
+        }
+        .product-img-wall li i.pimg-del{
+            position:absolute;
+            right:3px;
+            top:0px;
+            cursor:pointer;
+            color:#FF5722;
+            font-size:18px;
+        }
+        .product-img-wall li img{
+            width:100px;
+            height:100px;
+        }
+        .product-img-wall li.add-product-img{
+            background:#f5f7fa;
+            text-align:center;
+            padding-top:24px;
+            height:80px;
+            cursor:pointer;
+        }
+        .product-img-wall li.add-product-img span{
+            display:block;
+            color:#acb4bf;
+        }
+        .ptab-add {
+            position:absolute;
+            right:10px;
+            top:5px;
+            z-index:100;
+            display: inline-block;
+            margin-left: 15px;
+            vertical-align: middle;
+            padding-top: 3px;
+            background: #f2f2f2 !important;
+        }
+        .ptab-add i{
+            width:25px;
+            height:25px;
+            cursor:pointer;
+        }
+        .layui-tab-title li:first-child i{
+            display:none;
+        }
+        .layui-tab{
+            position:relative;
+        }
+    </style>
+    <form class="layui-form form-cus form-back" action="" id="app">
+        <div class="panel-body">
+            <div class="panel-addpic">
+                <div class="text">基本属性</div>
+                <div class="form-cur-wall">
+                    <label style="line-height:inherit;">属性：</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="IsTop" @(Model.Product.IsTop ? "checked=''" : "") lay-skin="primary" title="是否推荐">
+                    </div>
+                </div>
+                <div class="form-cur-wall">
+                    <label>添加时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="AddTime" name="AddTime" value="@Model.Product.AddTime" maxlength="100" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="text else">产品封面</div>
+                <div class="alert alert-info">封面图建议大小：宽度：450像素、高度380像素</div>
+                <ul class="addpic-list clearfix">
+                    <li>
+                        <div class="add-photo default">
+                            <input class="imgv" id="Cover" name="Cover" type="hidden" value="@Model.Product.Cover">
+                            <div class="select-newimg fyt-cloud @(!string.IsNullOrEmpty(Model.Product.Cover)?"layui-hide":"")" data-text="Cover" data-img="imgShow" data-type="form">
+                                <i class="icon-addphote"></i>
+                                <span>文件图片</span>
+                            </div>
+                            <div class="add-photo-wall @(!string.IsNullOrEmpty(Model.Product.Cover)?"":"layui-hide")">
+                                <img id="imgShow" src="@Model.Product.Cover">
+                                <div class="phote-edit">
+                                    <a class="photo-tool fyt-cloud" data-text="Cover" data-img="imgShow" data-type="form" href="javascript:void(0)"><i class="layui-icon layui-icon-edit"></i>更换</a>
+                                    <a class="photo-tool last" href="javascript:void(0)" onclick="oc.deleteFile()"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                                </div>
+                                <div class="cover">封面</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div style="height:50px;"></div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">型号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Models" value="@Model.Product.Models" maxlength="50" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">产品名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Title" value="@Model.Product.Title" maxlength="50" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">产品副标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="SubTitle" value="@Model.Product.SubTitle" maxlength="100" lay-verify="required" lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">产品详情图</label>
+                    <div class="layui-input-block fyt-upfile">
+                        <div class="alert alert-info" style="margin-bottom:0px;">封面图建议大小：宽度：450像素、高度450像素</div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <ul class="product-img-wall">
+                            <li v-for="(it,index) in pImgs">
+                                <i class="layui-icon layui-icon-delete pimg-del" @@click="pimgDel(index)"></i>
+                                <a :href="it" target="_blank"><img :src="it" /></a>
+                            </li>
+                            <li class="add-product-img fyt-cloud" data-type="multiple">
+                                <i class="icon-addphote"></i>
+                                <span>添加图片</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-row">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">内容</label>
+                    <div class="layui-input-block">
+                        <div class="layui-tab layui-tab-card" lay-filter="profilter" lay-allowclose="true">
+                            <div class="ptab-add"><i class="icon-addphote"></i></div>
+                            <ul class="layui-tab-title">
+                                <li v-for="(it,index) in ptext" :class="it.id==1?'layui-this':''" :lay-id="it.id">{{it.name}}<i class="layui-icon layui-unselect layui-tab-close" @@click="tabClose(index)">ဆ</i></li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item" v-for="it in ptext" :class="it.id==1?'layui-show':''">
+                                    <textarea v-html="it.context" :id="'Context'+it.id" name="Context" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="submit" id="submit"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-hide"></i>立即提交</button>
+                    <button type="button" class="layui-btn layui-btn-primary btn-open-close">返回列表</button>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="Id" id="Id" value="@Model.Product.Id" />
+        <input type="hidden" name="ParentId" value="@Model.Product.ParentId" />
+    </form>
+    <script src="/themes/tinymce/tinymce.min.js"></script>
+    <script src="/themes/tinymce/langs/zh_CN.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pImgs: [],
+                ptext: [{ id: 1, name: '产品介绍', context: '' }],
+                ptextIndex:0
+            },
+            methods: {
+                pimgDel: function (index) {
+                    this.pImgs.splice(index,1);
+                },
+                tabClose: function (index) {
+                    this.ptext.splice(index, 1);
+                    oc.tabCurrent();
+                }
+            }
+        });
+        var oc,addIndex=1;
+        var plugins = 'print preview code searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help filemanager',
+            toolbar ='formatselect styleselect | bold italic forecolor backcolor | link filemanager | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat';
+
+        layui.config({
+            base: '/themes/js/modules/'
+        }).use(['layer', 'jquery', 'common', 'form', 'laydate', 'slider'], function () {
+            var form = layui.form, $ = layui.jquery, os = layui.common, laydate = layui.laydate;
+            laydate.render({
+                elem: '#AddTime'
+                , theme: '#393D49'
+                , type: 'datetime'
+            });
+
+            $('.ptab-add').click(function () {
+                layer.prompt({ title: '请输入名称' }, function (text, index) {
+                    layer.close(index);
+                    addIndex += 1;
+                    vm.ptext.push({ id: addIndex, name: text, context:''});
+                    vm.$nextTick(() => {
+                        tinymce.init({
+                            convert_urls: false,
+                            selector: '#Context' + addIndex,
+                            height: 300,
+                            plugins: plugins,
+                            toolbar: toolbar
+                        });
+                        oc.tabClick();
+                    });
+                });
+            });
+            form.render();
+            $('.panel-addpic').css({ 'min-height': $(window).height() - 95 });
+            os.cloudFile();
+            oc = {
+                init() {
+                    if ($("#Id").val() !== '0') {
+                        var imgs = '@Html.Raw(Model.Product.ImgList)';
+                        vm.pImgs = JSON.parse(imgs);
+                        var pcontext = JSON.stringify(@Html.Raw(Model.Product.Context));
+                        vm.ptext = JSON.parse(pcontext);
+                        vm.$nextTick(() => {
+                            oc.tabClick();
+                            vm.ptext.forEach((item) => {
+                                tinymce.init({
+                                    convert_urls: false,
+                                    selector: '#Context' + item.id,
+                                    height: 300,
+                                    plugins: plugins,
+                                    toolbar: toolbar
+                                });
+                            })
+                        });
+                    } else {
+                        vm.$nextTick(() => {
+                            tinymce.init({
+                                convert_urls: false,
+                                selector: '#Context1',
+                                height: 300,
+                                plugins: plugins,
+                                toolbar: toolbar
+                            });
+                        });
+                    }
+                },
+                setContent(v) {
+                    for (var i = 0; i < v.length; i++) {
+                        var item = v[i];
+                        var imgIndex = v.lastIndexOf('/');
+                        var str = item.name.substring(imgIndex + 1, item.name.length);
+                        if (os.isExtImage(item.name)) {
+                            tinyMCE.editors[vm.ptextIndex].execCommand('mceInsertContent', false, '<p><img src="' + item.name + '" alt="' + str + '"/></p>')
+                        } else {
+                            tinyMCE.editors[vm.ptextIndex].execCommand('mceInsertContent', false, '<p style="padding:12px 20px;background-color: #edf3f5;"><a href="' + item.name + '" target="_blank" title="' + str + '">' + str + '</a></p>')
+                        }
+                    }
+                },
+                multipleSave(v) {
+                    vm.pImgs.push(v);
+                },
+                fileSave(v) {
+                    $(".select-newimg").addClass('layui-hide');
+                    $(".add-photo-wall").removeClass('layui-hide');
+                    $('#Cover').val(v);
+                    $('#imgShow').attr('src', v);
+                },
+                deleteFile() {
+                    $(".select-newimg").removeClass('layui-hide');
+                    $(".add-photo-wall").addClass('layui-hide');
+                    $('#Cover').val('');
+                    $('#imgShow').attr('src', '');
+                },
+                tabClick() {
+                    $('.layui-tab-title li').click(function () {
+                        vm.ptextIndex = $(this).index();
+                        $('.layui-tab-title li').removeClass('layui-this');
+                        $('.layui-tab-content .layui-tab-item').removeClass('layui-show');
+                        $('.layui-tab-title li').eq(vm.ptextIndex).addClass('layui-this');
+                        $('.layui-tab-content .layui-tab-item').eq(vm.ptextIndex).addClass('layui-show')
+                    })
+                },
+                tabCurrent() {
+                    vm.$nextTick(() => {
+                        $('.layui-tab-title li').removeClass('layui-this');
+                        $('.layui-tab-content .layui-tab-item').removeClass('layui-show');
+                        $('.layui-tab-title li').eq(0).addClass('layui-this');
+                        $('.layui-tab-content .layui-tab-item').eq(0).addClass('layui-show');
+                        vm.ptextIndex = 0;
+                    });
+
+                }
+            };
+            oc.init();
+            oc.tabClick();
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                $('#submit').attr('disabled', true).find('i').removeClass('layui-hide');
+                var urls = "api/product/add";
+                if ($("#Id").val() !== '0') {
+                    urls = "api/product/edit";
+                }
+                data.field.IsTop = data.field.IsTop === 'on' ? true : false;
+                vm.ptext.forEach((item, index) => {
+                    item.context = tinyMCE.editors[index].getContent();
+                })
+                data.field.Context = JSON.stringify(vm.ptext);
+                data.field.ImgList = JSON.stringify(vm.pImgs);
+                //os.log(data.field); return false;
+                os.ajax(urls, data.field, function (res) {
+                    $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
+                    if (res.statusCode === 200) {
+                        var $$ = parent.layui.jquery;
+                        $$("#isSave").val('1');
+                        parent.active.closeCloumnModify();
+                    }
+                    else {
+                        os.error(res.message);
+                    }
+                });
+                return false;
+            });
+            $(".btn-open-close").on('click', function () {
+                parent.active.closeCloumnModify();
+            });
+        });
+    </script>
+</div>

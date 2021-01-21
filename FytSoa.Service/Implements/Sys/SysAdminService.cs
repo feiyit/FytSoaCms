@@ -84,9 +84,9 @@ namespace FytSoa.Service.Implements
                 var roleList = SysPermissionsDb.GetList(m => m.AdminGuid == admin && m.Types == 2).Select(m => m.RoleGuid).ToList();
                 //根据角色查询菜单，并查询到菜单涉及的功能
                 var query = Db.Queryable<SysMenu, SysPermissions>((sm, sp) => new object[]{
-                    JoinType.Left,sm.Guid==sp.MenuGuid
+                    JoinType.Inner,sm.Guid==sp.MenuGuid
                 })
-                .Where((sm, sp) => roleList.Contains(sp.RoleGuid) && sp.Types == 1 && sm.Status)
+                .Where((sm, sp) => roleList.Contains(sp.RoleGuid) && sp.Types == 3 && sm.Status)
                 .OrderBy((sm, sp) => sm.Sort)
                 .Select((sm, sp) => new SysMenuDto()
                 {
@@ -119,7 +119,8 @@ namespace FytSoa.Service.Implements
                         it.btnFun = codeList.Where(m => it.btnJson.Contains(m.guid)).ToList();
                     }
                 });
-                res = query.ToList();
+                var result= query.ToList();
+                res = result.CurDistinct(m => m.guid).ToList();
             }
             catch
             {

@@ -9,8 +9,6 @@ using System.Text.Unicode;
 using System.Threading.Tasks;
 using FytSoa.Common;
 using FytSoa.Extensions;
-using FytSoa.Service.Implements;
-using FytSoa.Service.Interfaces;
 using FytSoa.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,11 +22,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.IdentityModel.Tokens;
-using NLog.Extensions.Logging;
-using NLog.Web;
 using Swashbuckle.AspNetCore.Swagger;
-using Quartz.Impl.AdoJobStore;
-using Quartz.Impl.AdoJobStore.Common;
 
 namespace FytSoa.Web
 {
@@ -48,21 +42,19 @@ namespace FytSoa.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //自定注册
             AddAssembly(services, "FytSoa.Service");
 
-            //解决视图输出内容中文编码问题
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<ITaskSchedulingService, TaskSchedulingService>();
 
-            #region 认证
+            #region 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
             {
                 o.LoginPath = new PathString("/fytadmin/login");
             })
-            //新增一个新的方案
             .AddCookie(BbsUserAuthorizeAttribute.BbsUserAuthenticationScheme, o =>
             {
                 o.LoginPath = new PathString("/bbs/nologin");
@@ -72,21 +64,20 @@ namespace FytSoa.Web
                 var jwtConfig = new JwtAuthConfigModel();
                 o.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,//是否验证Issuer
-                    ValidateAudience = true,//是否验证Audience
-                    ValidateIssuerSigningKey = true,//是否验证SecurityKey
-                    ValidateLifetime = true,//是否验证超时  当设置exp和nbf时有效 同时启用ClockSkew 
-                    ClockSkew = TimeSpan.FromSeconds(30),//注意这是缓冲过期时间，总的有效时间等于这个时间加上jwt的过期时间，如果不配置，默认是5分钟
-                    ValidAudience = jwtConfig.Audience,//Audience
-                    ValidIssuer = jwtConfig.Issuer,//Issuer，这两项和前面签发jwt的设置一致
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromSeconds(30),
+                    ValidAudience = jwtConfig.Audience,
+                    ValidIssuer = jwtConfig.Issuer,
                     RequireExpirationTime = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtAuth:SecurityKey"]))//拿到SecurityKey
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtAuth:SecurityKey"]))
                 };
                 o.Events = new JwtBearerEvents
                 {
                     OnAuthenticationFailed = context =>
                     {
-                        // 如果过期，则把<是否过期>添加到，返回头信息中
                         if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                         {
                             context.Response.Headers.Add("Token-Expired", "true");
@@ -97,7 +88,7 @@ namespace FytSoa.Web
             });
             #endregion
 
-            #region 授权
+            #region 
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("App", policy => policy.RequireRole("App").Build());
@@ -106,7 +97,7 @@ namespace FytSoa.Web
             });
             #endregion
 
-            #region 缓存配置
+            #region 
             services.AddMemoryCache();
             services.AddSingleton<ICacheService, MemoryCacheService>();
             RedisHelper.Initialization(new CSRedis.CSRedisClient(Configuration["Cache:Configuration"]));
@@ -115,8 +106,6 @@ namespace FytSoa.Web
             services.AddMvc().AddJsonOptions(option => {
                 option.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             });
-
-            services.AddSingleton(GetScheduler());
 
             #region Swagger UI
             services.AddSwaggerGen(options =>
@@ -132,18 +121,14 @@ namespace FytSoa.Web
                 var entityXmlPath = Path.Combine(basePath, "FytSoa.Core.xml");
                 options.IncludeXmlComments(xmlPath, true);
                 options.IncludeXmlComments(entityXmlPath);
-                //添加header验证信息
                 //c.OperationFilter<SwaggerHeader>();
 
                 var security = new Dictionary<string, IEnumerable<string>> { { "Bearer", new string[] { } }, };
-                //添加一个必须的全局安全信息，和AddSecurityDefinition方法指定的方案名称要一致，这里是Bearer。
                 options.AddSecurityRequirement(security);
                 options.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
                     Description = "JWT-Test: \"Authorization: Bearer {token}\"",
-                    //jwt默认的参数名称
                     Name = "Authorization",
-                    //jwt默认存放Authorization信息的位置(请求头中)
                     In = "header",
                     Type = "apiKey"
                 });
@@ -173,12 +158,10 @@ namespace FytSoa.Web
             });
             #endregion
 
-            #region 性能 压缩
+            #region 
             services.AddResponseCompression();
             #endregion
 
-            //NLog 数据库配置
-            //NLog.LogManager.Configuration.FindTargetByName<NLog.Targets.DatabaseTarget>("db").ConnectionString = Configuration.GetConnectionString("LogConnectionString");
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -193,32 +176,31 @@ namespace FytSoa.Web
                 app.UseExceptionHandler("/Error");
             }
 
-            //新增
             app.UseStatusCodePagesWithReExecute("/Error");
 
-            #region 解决Ubuntu Nginx 代理不能获取IP问题
+            #region 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
             #endregion
 
-            #region Nlog记日志
-            //将日志记录到数据库
+            #region Nlog
             NLog.LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
             NLog.LogManager.Configuration.Variables["connectionString"] = Configuration["DBConnection:MySqlConnectionString"];
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);  //避免日志中的中文输出乱码
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);  
             #endregion
 
-            #region  初始化七牛云参数
-            QiniuCloud.QnColud.Setting(new QiniuConfig()
-            {
-                AK=Configuration["QiNiu:AccessKey"],
-                SK = Configuration["QiNiu:SecretKey"],
-                Bucket = Configuration["QiNiu:Bucket"],
-                BasePath = Configuration["QiNiu:BasePath"],
-                domain = Configuration["QiNiu:Domain"]
-            });
+            #region 
+            QiniuCloud.GetInstance().Setting(
+                new QiniuConfig()
+                {
+                    AK = Configuration["QiNiu:AccessKey"],
+                    SK = Configuration["QiNiu:SecretKey"],
+                    Bucket = Configuration["QiNiu:Bucket"],
+                    BasePath = Configuration["QiNiu:BasePath"],
+                    domain = Configuration["QiNiu:Domain"]
+                });
             #endregion
 
             #region Swagger UI
@@ -229,13 +211,13 @@ namespace FytSoa.Web
             });
             #endregion
 
-            //自定义异常处理
             //app.UseMiddleware<ExceptionFilter>();
 
-            //认证
+            //TaskScheduling
+            TaskSchedulingService.Instance.InitStart();
+
             app.UseAuthentication();
 
-            //性能压缩
             app.UseResponseCompression();
 
             app.UseStaticFiles(new StaticFileOptions
@@ -245,19 +227,19 @@ namespace FytSoa.Web
                 //{
                 //  { ".apk","application/vnd.android.package-archive"},
                 //  { ".nupkg","application/zip"}
-                //})  //支持特殊文件下载处理
+                //})  
             });
             app.UseCookiePolicy();
             app.UseCors("Any");
             app.UseMvc();
         }
 
-      
+
         /// <summary>  
-        /// 自动注册服务——获取程序集中的实现类对应的多个接口
+        /// Ioc
         /// </summary>
-        /// <param name="services">服务集合</param>  
-        /// <param name="assemblyName">程序集名称</param>
+        /// <param name="services">services</param>  
+        /// <param name="assemblyName">assemblyName</param>
         public void AddAssembly(IServiceCollection services,string assemblyName)
         {
             if (!String.IsNullOrEmpty(assemblyName))
@@ -279,33 +261,5 @@ namespace FytSoa.Web
             }
         }
 
-        private SchedulerCenter GetScheduler()
-        {
-            string dbProviderName = Configuration.GetSection("Quartz")["dbProviderName"];
-            string connectionString = Configuration.GetSection("Quartz")["connectionString"];
-            string driverDelegateType = string.Empty;
-            switch (dbProviderName)
-            {
-                case "SQLite-Microsoft":
-                case "SQLite":
-                    driverDelegateType = typeof(SQLiteDelegate).AssemblyQualifiedName; break;
-                case "MySql":
-                    driverDelegateType = typeof(MySQLDelegate).AssemblyQualifiedName; break;
-                case "OracleODPManaged":
-                    driverDelegateType = typeof(OracleDelegate).AssemblyQualifiedName; break;
-                case "SQLServer":
-                case "SQLServerMOT":
-                    driverDelegateType = typeof(SqlServerDelegate).AssemblyQualifiedName; break;
-                case "Npgsql":
-                    driverDelegateType = typeof(PostgreSQLDelegate).AssemblyQualifiedName; break;
-                case "Firebird":
-                    driverDelegateType = typeof(FirebirdDelegate).AssemblyQualifiedName; break;
-                default:
-                    throw new System.Exception("dbProviderName unreasonable");
-            }
-            SchedulerCenter schedulerCenter = SchedulerCenter.Instance;
-            schedulerCenter.Setting(new DbProvider(dbProviderName, connectionString), driverDelegateType);
-            return schedulerCenter;
-        }
     }
 }

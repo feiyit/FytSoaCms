@@ -8,6 +8,7 @@ using FytSoa.Core.Model.Sys;
 using FytSoa.Extensions;
 using FytSoa.Service.DtoModel;
 using FytSoa.Service.Interfaces;
+using LinqKit;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,20 +19,95 @@ namespace FytSoa.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/Menu")]
-    [JwtAuthorize(Roles = "Admin")]
+    //[JwtAuthorize(Roles = "Admin")]
     public class MenuController : ControllerBase
     {
         private readonly ISysMenuService _sysMenuService;
         private readonly ISysAuthorizeService _authorizeService;
-        private readonly ICacheService _cacheService;
+        private readonly ISysCodeService _codeService;
         private readonly ISysPermissionsService _sysPermissionsService;
         public MenuController(ISysMenuService sysMenuService, ISysAuthorizeService authorizeService
-            , ICacheService cacheService, ISysPermissionsService sysPermissionsService)
+            , ISysCodeService codeService, ISysPermissionsService sysPermissionsService)
         {
             _sysMenuService = sysMenuService;
             _authorizeService = authorizeService;
-            _cacheService = cacheService;
+            _codeService = codeService;
             _sysPermissionsService = sysPermissionsService;
+        }
+
+        /// <summary>
+        /// 2021-01-20 查询所有菜单
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("list")]
+        public async Task<IActionResult> GetList()
+        {
+            var codeList = await _codeService.GetListAsync(m=>m.ParentGuid== "a88fa4d3-3658-4449-8f4a-7f438964d716", m=>m.Sort,DbOrderEnum.Asc);
+            var list = await _sysMenuService.GetListAsync(m => m.Status, m => m.Sort, DbOrderEnum.Asc);
+            foreach (var item in list.data)
+            {
+                if (string.IsNullOrEmpty(item.BtnFunJson))
+                {
+                    continue;
+                }
+                var btns = JsonConvert.DeserializeObject<List<string>>(item.BtnFunJson);
+                if (btns.Count>0)
+                {
+                    foreach (var row in btns)
+                    {
+                        var code = codeList.data.FirstOrDefault(m => m.Guid == row);
+                        item.btnFun.Add(new SysBtnFun()
+                        {
+                            Guid=code.Guid,
+                            Name=code.Name
+                        });
+                    }
+                }
+            }
+            return Ok(list);
+        }
+
+        /// <summary>
+        /// 2021-01-20 根据角色返回授权的信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("role/authorizat")]
+        public async Task<IActionResult> GetByRoleAuthorizat(string roleId)
+        {
+            var codeList = await _codeService.GetListAsync(m => m.ParentGuid == "a88fa4d3-3658-4449-8f4a-7f438964d716", m => m.Sort, DbOrderEnum.Asc);
+            var list = await _sysPermissionsService.GetListAsync(m => m.RoleGuid == roleId && m.Types == 3, m => m.Types, DbOrderEnum.Asc);
+            foreach (var item in list.data)
+            {
+                if (string.IsNullOrEmpty(item.BtnFunJson))
+                {
+                    continue;
+                }
+                var btns = JsonConvert.DeserializeObject<List<string>>(item.BtnFunJson);
+                if (btns.Count > 0)
+                {
+                    foreach (var row in btns)
+                    {
+                        var code = codeList.data.FirstOrDefault(m => m.Guid == row);
+                        item.btnFun.Add(new SysBtnFun()
+                        {
+                            Guid = code.Guid,
+                            Name = code.Name,
+                            Status=true
+                        });
+                    }
+                }
+            }
+            return Ok(list);
+        }
+
+        /// <summary>
+        /// 2021-01-20 保存授权的角色信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("save/authorizat")]
+        public async Task<IActionResult> SaveRoleAuthorizat([FromBody]AuthorityMenuParam param)
+        {
+            return Ok(await _sysPermissionsService.SaveAsync(param));
         }
 
         /// <summary>

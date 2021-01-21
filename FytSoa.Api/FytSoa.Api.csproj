@@ -26,6 +26,7 @@
 </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="LinqKit.Core" Version="1.1.22" />
   </ItemGroup>
 
   <ItemGroup>

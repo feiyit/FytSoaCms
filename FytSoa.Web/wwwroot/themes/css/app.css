@@ -690,6 +690,49 @@ i.file-preview.file-type-mp4, i.file-preview.file-type-swf, i.file-preview.file-
         animation: after 2s infinite;
     }
 .mce-flow-layout-item.mce-last{display:none;}
+
+.theme-case {
+    text-align: center;
+    line-height: 33px;
+}
+
+    .theme-case h3 {
+        padding: 10px 25px;
+        text-align: left;
+        font-size: 15px;
+    }
+
+    .theme-case span {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+
+    .theme-case .default {
+        background-image: linear-gradient(#1dabeb, #334256);
+    }
+
+    .theme-case .bright {
+        background-image: linear-gradient(#dbd3f8, #7658fa);
+    }
+
+    .theme-case .dark {
+        background-image: linear-gradient(#475381, #171b38);
+    }
+
+    .theme-case .theme-item {
+        width: 70px;
+        border: 1px solid #fff;
+        border-radius: 8px;
+        padding: 3px 10px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+        .theme-case .theme-item:hover, .theme-case .theme-item.active {
+            border: 1px solid #d9dee4;
+        }
 @keyframes before {
     0% {
         width: 0.5em;

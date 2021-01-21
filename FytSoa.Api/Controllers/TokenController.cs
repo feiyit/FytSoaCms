@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FytSoa.Common;
+using FytSoa.Tasks;
 
 namespace FytSoa.Api.Controllers
 {
@@ -16,10 +17,16 @@ namespace FytSoa.Api.Controllers
     [ApiController]
     public class TokenController : Controller
     {
-        [HttpGet("testtask")]
-        public void TestTask()
+        private ITaskSchedulingService _taskService;
+        public TokenController(ITaskSchedulingService taskService)
         {
-            Logger.Default.Process("Task","Task","自动任务测试");
+            _taskService = taskService;
+        }
+
+        [HttpGet("testtask")]
+        public async Task<IActionResult> TestTask()
+        {
+            return Ok(await _taskService.GetList());
         }
 
         #region Token

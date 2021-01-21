@@ -14,12 +14,23 @@ namespace FytSoa.Extensions
 {
     public class QiniuCloud
     {
-        public static readonly QiniuCloud QnColud;
+        #region 单例——饿汉式写法，现成安全
+        private static QiniuCloud instance = new QiniuCloud();
 
-        static QiniuCloud()
+        private QiniuCloud() { }
+        public static QiniuCloud GetInstance()
         {
-            QnColud = new QiniuCloud();
+            return instance;
         }
+        #endregion
+
+        #region 单例——懒汉式写法，线程不安全
+        //public static readonly QiniuCloud QnColud;
+        //static QiniuCloud()
+        //{
+        //    QnColud = new QiniuCloud();
+        //}
+        #endregion
 
         private static string Ak = "";
         private static string Sk = "";

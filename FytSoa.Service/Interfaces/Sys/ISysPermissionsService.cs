@@ -15,6 +15,13 @@ namespace FytSoa.Service.Interfaces
     public interface ISysPermissionsService : IBaseService<SysPermissions>
     {
         /// <summary>
+        /// 2021-01-20
+        /// 保存角色菜单信息
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResult<string>> SaveAsync(AuthorityMenuParam parm);
+
+        /// <summary>
         /// 保存角色菜单信息
         /// </summary>
         /// <returns></returns>

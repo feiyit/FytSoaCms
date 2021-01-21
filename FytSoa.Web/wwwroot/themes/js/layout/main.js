@@ -5,6 +5,8 @@
         messList: [],
         messCount: 0,
         isDown: false,
+        isThemeShow: false,
+        themeName: 'default',
         siteList:[]
     },
     created: function () {
@@ -15,6 +17,11 @@
             } else {
                 that.isDown = false;
             }
+            if (e.target.id === 'themedown' || e.target.id === 'themeicon') {
+                that.isThemeShow = true;
+            } else {
+                that.isThemeShow = false;
+            }
         });
     },
     methods: {
@@ -23,6 +30,9 @@
         },
         godown: function () {
             this.isDown = this.isDown ? false : true;
+        },
+        selectTheme: function () {
+            this.isThemeShow = this.isThemeShow ? false : true;
         },
         logout: function () {
             os.load();
@@ -107,6 +117,15 @@ layui.config({
             show: 'fade'
         }
     );
+    main_vm.themeName = os.GetSession("FYTADMIN_THEME") ?? 'default';
+    $(".theme-item").click(function () {
+        var color = $(this).data('css');
+        $(".theme-color").attr('href', '/themes/css/theme/' + color + '.css');
+        main_vm.isThemeShow = false;
+        main_vm.themeName = color;
+        os.SetSession('FYTADMIN_THEME', color);
+        os.ajax('api/admin/theme', { parm: color }, function (res) { });
+    });
     $(document).on('pjax:start', function () { NProgress.start(); $(".load8").show(); });
     $(document).on('pjax:end', function () { NProgress.done(); $(".load8").fadeOut(200); });
 });

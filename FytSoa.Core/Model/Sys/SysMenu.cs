@@ -125,6 +125,17 @@ namespace FytSoa.Core.Model.Sys
         [SugarColumn(IsIgnore = true)]
         public List<string> cbks { get; set; }
 
+        /// <summary>
+        /// 菜单授权组
+        /// 默认=1
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public List<SysBtnFun> btnFun { get; set; } = new List<SysBtnFun>();
 
+        /// <summary>
+        /// 默认不选择
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public bool isChecked { get; set; } = false;
     }
 }

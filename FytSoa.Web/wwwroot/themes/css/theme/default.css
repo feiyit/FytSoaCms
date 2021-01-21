@@ -1,0 +1,82 @@
+﻿.logtype li a {
+    display: block;
+    padding: 15px 20px;
+}
+
+.logtype li.active a {
+    background-color: #f3f7f9;
+    color: #409eff;
+}
+
+
+.layui-btn-group .layui-btn.active {
+    background-color: #409eff !important;
+    border-color: #409eff !important;
+    color: #fff;
+}
+
+.role li.active a {
+    background-color: #f3f7f9;
+    color: #409eff;
+}
+
+.layui-nav-tree .layui-nav-child dd.layui-this,
+.layui-nav-tree .layui-nav-child dd.layui-this a,
+.layui-nav-tree .layui-this,
+.layui-nav-tree .layui-this>a,
+.layui-nav-tree .layui-this>a:hover {
+    background-color: #495869 !important;
+}
+
+.layui-layout-admin .layui-logo {
+    line-height: 18px;
+}
+
+.layui-layout-admin .layui-logo span {
+    display: inline-block;
+    padding-top: 13px;
+    letter-spacing: 8px;
+}
+
+.layui-layout-admin .layui-logo p {
+    font-size: 12px;
+    letter-spacing: .8px;
+    font-family: 'Georgia';
+}
+
+.layui-elem-quote {
+    border-left: 5px solid #242e3c;
+    background-color: #f2f2f2;
+}
+
+.layui-upload-drag .layui-icon {
+    font-size: 50px;
+    color: #242e3c;
+}
+
+.layui-form-select dl dd.layui-this {
+    background-color: #242e3c;
+}
+
+.layui-btn.layui-btn-success {
+    background-color: #46be8a;
+    border-color: #46be8a;
+    padding: 0 10px;
+}
+
+.layui-btn.layui-btn-back {
+    background-color: #f96868;
+    border-color: #f96868;
+    padding: 0 10px;
+}
+
+.layui-btn.layui-btn-info {
+    background-color: #f2a654;
+    border-color: #f2a654;
+    padding: 0 10px;
+}
+
+.layui-form-radio>i:hover,
+.layui-form-radioed>i {
+    color: #35dcc1;
+}

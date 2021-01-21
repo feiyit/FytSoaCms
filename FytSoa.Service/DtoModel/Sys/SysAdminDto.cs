@@ -29,10 +29,16 @@ namespace FytSoa.Service.DtoModel
         /// 登录账号
         /// </summary>
         public string loginname { get; set; }
+
         /// <summary>
         /// 登录密码
         /// </summary>
         public string password { get; set; }
+
+        /// <summary>
+        /// 随机数
+        /// </summary>
+        public string number { get; set; }
     }
 
     /// <summary>

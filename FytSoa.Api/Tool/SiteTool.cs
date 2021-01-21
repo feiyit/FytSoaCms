@@ -31,5 +31,10 @@ namespace FytSoa.Api
                 return _site;
             }
         }
+
+        /// <summary>
+        /// 获得皮肤信息
+        /// </summary>
+        public static string Theme => RedisHelper.Get<string>(KeyHelper.ADMINTHEME) ?? "default";
     }
 }

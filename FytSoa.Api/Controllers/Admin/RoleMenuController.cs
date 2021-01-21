@@ -58,9 +58,9 @@ namespace FytSoa.Api.Controllers
 
         /// <summary>
         /// 用户授权角色
-        /// </summary>
+        /// </summary>ApiAuthorize(Modules = "Admin", Methods = "Authorize", LogType = LogEnum.AUTHORIZE)
         /// <returns></returns>
-        [HttpPost("torole"), ApiAuthorize(Modules = "Admin", Methods = "Authorize", LogType = LogEnum.AUTHORIZE)]
+        [HttpPost("torole")]
         public async Task<IActionResult> AdminToRole([FromBody]SysPermissions parm)
         {
             return Ok(await _roleMenu.ToRoleAsync(parm, parm.status));

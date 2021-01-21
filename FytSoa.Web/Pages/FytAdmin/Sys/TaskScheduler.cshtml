@@ -52,7 +52,7 @@
             </div>
         </div>
         <div v-show="list.length==0">
-            <p style="padding:40px; text-align:center;">无任务</p>
+            <p style="padding:40px; text-align:center;">{{logingText}}</p>
         </div>
 
     </div>
@@ -60,7 +60,8 @@
         var vm = new Vue({
             el: '#app',
             data: {
-                list: []
+                list: [],
+                logingText:'加载中...'
             }
         });
         layui.config({
@@ -78,24 +79,29 @@
                 var guid = '',
                     active = {
                         init() {
+                            os.load();
                             os.ajax('api/job/GetAllJob',
                                 {},
                                 function (res) {
+                                    os.loadClose();
                                     if (res.statusCode == 200) {
                                         vm.list = res.data;
+                                        if (vm.list.length == 0) {
+                                            vm.logingText = '无任务';
+                                        }
                                         console.log(vm.list);
                                         vm.$nextTick(function () {
                                             element.render('collapse');
                                             for (var i = 0; i < res.data.length; i++) {
-                                                for (var j = 0; j < res.data[i].jobInfoList.length; j++) {
-                                                    res.data[i].jobInfoList[j].group = res.data[i].groupName;
+                                                for (var j = 0; j < res.data[i].jobList.length; j++) {
+                                                    res.data[i].jobList[j].group = res.data[i].groupName;
                                                 }
                                                 var id = '#table' + i;
                                                 table.render({
                                                     elem: id,
                                                     cols: [
                                                         [
-                                                            { field: 'name', width: 120, title: '任务名称', fixed: 'left' },
+                                                            { field: 'jobName', width: 120, title: '任务名称', fixed: 'left' },
                                                             {
                                                                 field: 'displayState',
                                                                 title: '状态',
@@ -110,14 +116,13 @@
                                                                 }
                                                             },
                                                             { field: 'requestUrl', width: 120, title: 'Url' },
-                                                            { field: 'lastErrMsg', title: '异常信息' },
                                                             { field: 'beginTime', width: 150, title: '开始时间' },
                                                             { field: 'previousFireTime', title: '上次执行时间' },
                                                             { field: 'nextFireTime', title: '下次执行时间' },
-                                                            { field: 'interval', title: '执行计划' },
+                                                            { field: 'cron', title: '执行计划' },
                                                             { field: 'description', width: 100, title: '描述' },
                                                             {
-                                                                width: 260,
+                                                                width: 300,
                                                                 title: '操作',
                                                                 templet: function (d) {
                                                                     var str = '<a class="layui-btn layui-btn-primary layui-btn-xs bg-cyan" lay-event="execute">执行</a>';
@@ -129,13 +134,15 @@
                                                                         '<a class="layui-btn layui-btn-primary layui-btn-xs bg-resume" lay-event="resume">恢复</a>';
                                                                     str +=
                                                                         '<a class="layui-btn layui-btn-primary layui-btn-xs bg-red" lay-event="del">删除</a>';
+                                                                    str +=
+                                                                        '<a class="layui-btn layui-btn-primary layui-btn-xs bg-lan" lay-event="logs">日志</a>';
                                                                     return str;
                                                                 }
                                                             }
                                                         ]
                                                     ],
                                                     page: false,
-                                                    data: res.data[i].jobInfoList
+                                                    data: res.data[i].jobList
                                                 });
                                             }
                                         });
@@ -155,8 +162,8 @@
                         toolAdd: function () {
                             os.Open('添加任务调度',
                                 '/fytadmin/sys/taskschedulermodify',
-                                '650px',
-                                '660px',
+                                '1000px',
+                                '550px',
                                 function () {
                                     active.init();
                                 });
@@ -174,13 +181,21 @@
                     function (obj) {
                         var data = obj.data;
                         if (obj.event === 'edit') {
+                            console.log(data);
                             os.Open('修改任务调度信息',
-                                '/fytadmin/sys/taskschedulermodify/?group=' + escape(data.group) + '&name=' +escape(data.name),
-                                '650px',
-                                '660px',
+                                '/fytadmin/sys/taskschedulermodify/?group=' + escape(data.jobGroup) + '&name=' + escape(data.jobName),
+                                '1000px',
+                                '550px',
                                 function () {
                                     active.reload();
                                 });
+                            return;
+                        }
+                        if (obj.event === 'logs') {
+                            os.Open('任务日志-定时刷新',
+                                '/fytadmin/sys/tasklogs/?group=' + escape(data.jobGroup) + '&name=' + escape(data.jobName),
+                                '1100px',
+                                '560px');
                             return;
                         }
                         var tips = '',action='';
@@ -204,7 +219,6 @@
                             tips = '删除';
                             action = 'removejob';
                         }
-                        console.log(data);
                         layer.confirm('确定要执行'+tips+'吗？',
                             function (index) {
                                 layer.close(index);
@@ -213,7 +227,7 @@
                                         shade: [0.1, '#000']
                                     });
                                 os.ajax('api/job/' + action + '/',
-                                    data,
+                                    { group: data.jobGroup, name: data.jobName },
                                     function (res) {
                                         layer.close(loadindex);
                                         if (res.statusCode === 200) {

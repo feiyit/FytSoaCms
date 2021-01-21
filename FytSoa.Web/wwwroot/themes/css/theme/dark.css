@@ -1,0 +1,285 @@
+﻿.layui-layout-admin .layui-header,
+.layui-layout-admin .layui-logo,
+.layui-bg-black .layui-nav,
+.layui-nav-itemed>.layui-nav-child,
+.layui-layout-admin .layui-bg-black,
+.layui-nav-tree .layui-this,
+.layui-nav-item.show-down .layui-downcard {
+    background: #151837 !important;
+    color: #ffffff;
+}
+
+.layui-layout-admin .layui-logo {
+    line-height: 18px;
+}
+
+.layui-layout-admin .layui-logo span {
+    display: inline-block;
+    padding-top: 13px;
+    letter-spacing: 8px;
+}
+
+.layui-layout-admin .layui-logo p {
+    font-size: 12px;
+    letter-spacing: .8px;
+    font-family: 'Georgia';
+}
+
+.theme-case .theme-item {
+    border: 1px solid #151837;
+}
+
+.theme-case .theme-item:hover,
+.theme-case .theme-item.active {
+    border: 1px solid #34DEC4;
+}
+
+.layui-layout-admin .layui-curselect,
+.layui-layout-admin .layui-curselect a:hover {
+    background: #1E243C;
+    color: #ffffff;
+}
+
+.layui-layout-admin .layui-curselect a {
+    color: #949DBA;
+    background: #1E243C;
+}
+
+
+.layui-nav-itemed>a,
+.layui-nav-tree .layui-nav-title a,
+.layui-nav-tree .layui-nav-title a:hover {
+    color: #ffffff !important;
+}
+
+.layui-nav-tree .layui-nav-item>a:hover,
+.layui-nav-tree .layui-nav-item.layui-nav-itemed>a,
+.layui-nav-tree .layui-this>a {
+    background-color: #2B324E;
+    color: #ffffff !important;
+}
+
+.layui-nav-bar {
+    background-color: #2B324E;
+}
+
+.layui-nav-tree .layui-nav-bar {
+    background-color: #2B324E;
+}
+
+.layui-nav-tree .layui-nav-item a,
+.layui-header .layui-nav .layui-nav-item>a {
+    color: #949DBA;
+}
+
+.fyt-nav-tree .layui-nav-child dd.layui-this,
+.fyt-nav-tree .layui-nav-child dd.layui-this a {
+    background-color: transparent;
+    color: #ffffff !important;
+}
+
+.layui-nav-tree .layui-nav-child,
+.layui-nav-tree .layui-nav-child a:hover {
+    background: 0 0;
+    color: #ffffff;
+}
+
+.layui-first-nav .layui-this a {
+    color: #949DBA !important;
+}
+
+.layui-first-nav .layui-this:after {
+    background-color: #949DBA;
+}
+
+.layui-btn {
+    background-color: #35dcc1;
+    border-color: #35dcc1;
+}
+
+.layui-btn:hover {
+    color: #fff;
+    border-color: #40ddc4;
+    background-color: #40ddc4;
+}
+
+.layui-elem-quote {
+    border-left: 5px solid #151936;
+    background-color: #f2f2f2;
+}
+
+.layui-upload-drag .layui-icon {
+    font-size: 50px;
+    color: #151936;
+}
+
+.layui-form-select dl dd.layui-this {
+    background-color: #242e3c;
+}
+
+.col-aside-title {
+    padding: 10px 20px;
+    margin: 20px 0 10px;
+    font-weight: 700;
+    color: #526069;
+    cursor: default;
+    font-family: Roboto, sans-serif;
+}
+
+.list-group {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.list-group::after {
+    position: relative;
+    display: block;
+    margin: 15px 22px;
+    content: "";
+    border-bottom: 1px solid #e4eaec;
+}
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: .75rem 1.25rem;
+    margin-bottom: -1px;
+    border: 1px solid transparent;
+}
+
+.list-group-item:hover,
+.list-group-item.active {
+    background: #ffffff;
+}
+
+a.list-group-item {
+    color: #76838f;
+}
+
+button.layui-btn {
+    box-shadow: 1px 2px 10px 0 rgba(53, 220, 193, .5);
+}
+
+.layui-btn.layui-btn-success {
+    background-color: #46be8a;
+    border-color: #46be8a;
+    padding: 0 10px;
+}
+
+.layui-btn.layui-btn-back {
+    background-color: #f96868;
+    border-color: #f96868;
+    padding: 0 10px;
+}
+
+.layui-btn.layui-btn-info {
+    background-color: #f2a654;
+    border-color: #f2a654;
+    padding: 0 10px;
+}
+
+.list-search {
+    background: #F5F7FB;
+}
+
+.layui-col-220 {
+    background: #F5F7FB;
+    border-left: 1px solid #EDEDF1;
+}
+
+.layui-col-220 .layui-nav-title {
+    background: #ecf2f9;
+}
+
+.logtype li a {
+    display: block;
+    padding: 15px 20px;
+}
+
+.logtype li.active a,
+.role li.active a {
+    background-color: #f3f7f9;
+    color: #734DFD;
+}
+
+.layui-btn-group .layui-btn.active,
+.layui-laypage .layui-laypage-curr .layui-laypage-em,
+.layui-form-checked[lay-skin=primary] i {
+    background-color: #35dcc1 !important;
+    border-color: #35dcc1 !important;
+    color: #fff;
+}
+
+.layui-table tbody tr:hover,
+.layui-table thead tr,
+.layui-table-click,
+.layui-table-header,
+.layui-table-hover,
+.layui-table-mend,
+.layui-table-patch,
+.layui-table-tool,
+.layui-table-total,
+.layui-table-total tr,
+.layui-table[lay-even] tr:nth-child(even) {
+    background-color: #F6F8FC;
+}
+
+.soa-cur input[type="checkbox"],
+.soa-cur input[type="radio"] {
+    border: 1px solid #734DFD;
+}
+
+.soa-cur input[type="checkbox"]:checked,
+.soa-cur input[type="radio"]:checked {
+    background: #734DFD;
+}
+
+
+.layui-layer-title {
+    background: #151837 !important;
+    color: #949DBA !important;
+}
+
+.layui-layer-setwin .layui-layer-close1 {
+    background-position: -156px -38px !important;
+}
+
+.layui-form-radio>i:hover,
+.layui-form-radioed>i {
+    color: #35dcc1;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #f5f5f5;
+    border-left: 1px solid #d2d2d2;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #cccccc;
+}
+
+::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    min-height: 28px;
+    background-color: #cccccc;
+    background-image: initial;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    border: 1px solid #636363;
+    background-color: #929292;
+}

@@ -106,7 +106,7 @@ namespace FytSoa.Api.Controllers
             try
             {
                 //获得公钥私钥，解密
-                var rsaKey = MemoryCacheService.Default.GetCache<List<string>>("LOGINKEY");
+                var rsaKey = MemoryCacheService.Default.GetCache<List<string>>("LOGINKEY_"+parm.number);
                 if (rsaKey == null)
                 {
                     apiRes.message = "登录失败，请刷新浏览器再次登录";
@@ -209,7 +209,7 @@ namespace FytSoa.Api.Controllers
                     Role = "Admin",
                     TokenType = "Web"
                 });
-                MemoryCacheService.Default.RemoveCache("LOGINKEY");
+                MemoryCacheService.Default.RemoveCache("LOGINKEY_" + parm.number);
                 MemoryCacheService.Default.RemoveCache(KeyHelper.LOGINCOUNT);
 
                 #region 保存日志
@@ -286,6 +286,16 @@ namespace FytSoa.Api.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Ok(new ApiResult<string>() { data = "/fytadmin/login/" });
+        }
+
+        /// <summary>
+        /// 设置皮肤信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("theme"), Log("Admin：Theme", LogType = LogEnum.LOGOUT)]
+        public void SettingTheme([FromBody] ParmString param)
+        {
+            RedisHelper.Set(KeyHelper.ADMINTHEME, param.parm);
         }
     }
 }

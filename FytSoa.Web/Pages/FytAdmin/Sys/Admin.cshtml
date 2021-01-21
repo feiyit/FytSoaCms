@@ -244,8 +244,6 @@ Layout = AdminLayout.Pjax(HttpContext);
                                 layer.close(loadindex);
                                 if (res.statusCode === 200) {
                                     active.reload();
-                                    var tree = $.fn.zTree.getZTreeObj("tree");
-                                    tree.reAsyncChildNodes(null, "refresh");
                                     os.success('删除成功！');
                                 } else {
                                     os.error(res.message);

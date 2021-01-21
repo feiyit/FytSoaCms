@@ -15,6 +15,11 @@ namespace FytSoa.Common
         public static string NOWSITE = "NOWSITE";
 
         /// <summary>
+        /// 后台管理皮肤
+        /// </summary>
+        public static string ADMINTHEME = "ADMINTHEME";
+
+        /// <summary>
         /// 管理菜单
         /// </summary>
         public static string ADMINMENU = "ADMINMENU";

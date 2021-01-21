@@ -4,12 +4,34 @@ using Quartz;
 
 namespace FytSoa.Tasks
 {
+    public class JobListEntity
+    {
+        /// <summary>
+        /// 任务组名
+        /// </summary>
+        public string GroupName { get; set; }
+
+        /// <summary>
+        /// 任务信息
+        /// </summary>
+        public List<ScheduleEntity> jobList { get; set; } = new List<ScheduleEntity>();
+    }
+
+    /// <summary>
+    /// 任务的详细信息
+    /// </summary>
     public class ScheduleEntity
     {
         /// <summary>
         /// 任务名称
         /// </summary>
         public string JobName { get; set; }
+
+        /// <summary>
+        /// 任务唯一编号
+        /// </summary>
+        public string JobId { get; set; }
+
         /// <summary>
         /// 任务分组
         /// </summary>
@@ -51,6 +73,7 @@ namespace FytSoa.Tasks
         /// 格式：{"Authorization":"userpassword.."}
         /// </summary>
         public string Headers { get; set; }
+
         /// <summary>
         /// 请求类型
         /// </summary>
@@ -70,5 +93,57 @@ namespace FytSoa.Tasks
         /// 邮件信息
         /// </summary>
         public MailMessageEnum MailMessage { get; set; }
+
+        /// <summary>
+        /// 显示状态
+        /// </summary>
+        public string DisplayState
+        {
+            get
+            {
+                var state = string.Empty;
+                switch (TriggerState)
+                {
+                    case TriggerState.Normal:
+                        state = "正常";
+                        break;
+                    case TriggerState.Paused:
+                        state = "暂停";
+                        break;
+                    case TriggerState.Complete:
+                        state = "完成";
+                        break;
+                    case TriggerState.Error:
+                        state = "异常";
+                        break;
+                    case TriggerState.Blocked:
+                        state = "阻塞";
+                        break;
+                    case TriggerState.None:
+                        state = "不存在";
+                        break;
+                    default:
+                        state = "未知";
+                        break;
+                }
+                return state;
+            }
+        }
+
+        /// <summary>
+        /// 上次执行异常信息
+        /// </summary>
+        public string LastErrMsg { get; set; }
+
+        /// <summary>
+        /// 上次执行时间
+        /// </summary>
+        public DateTime? PreviousFireTime { get; set; }
+
+        /// <summary>
+        /// 下次执行时间
+        /// </summary>
+        public DateTime? NextFireTime { get; set; }
+
     }
 }

@@ -98,6 +98,11 @@
                 var formframes = $$("#" + frameid)[0].contentWindow;
                 formframes.oc.fileSave(this.active[0].name);
             }
+            //弹出表单-产品-多选
+            if (type === 'multiple') {
+                var formframes = $$("#" + frameid)[0].contentWindow;
+                formframes.oc.multipleSave(this.active[0].name);
+            }
             //编辑器选择文件
             if (type === 'edit') {
                 //window.parent.oc.setContent(this.active);
@@ -274,7 +279,8 @@ layui.config({
                 vm.upStatus = 'layui-hide';
             }
         }
-        , exts: 'jpg|png|gif|bmp|jpeg|zip|rar|7z|doc|docx|ppt|pptx|xls|xlsx|txt|mp3|mp4|flv'
+        , accept:'file'
+        //, exts: 'jpg|png|gif|bmp|jpeg|zip|rar|7z|doc|docx|ppt|pptx|xls|xlsx|txt|mp3|mp4|flv|pdf'
         , url: '/api/localfiles/upload' //上传接口
         , data: {
             path: function () { return $('#localpath').val() }

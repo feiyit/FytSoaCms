@@ -9,7 +9,10 @@
 }
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header" id="mainapp">
-        <div class="layui-logo">FytSoa内容管理平台</div>
+        <div class="layui-logo">
+            <span style="letter-spacing: 2px;">FytSoa内容管理平台</span>
+            <p style="letter-spacing: .4px;">fytsoa content management platform</p>
+        </div>
         <ul class="layui-nav layui-layout-left layui-first-nav" lay-filter="topmenu">
             <li class="layui-nav-item layui-this" v-for="(it,index) in menulist" v-cloak v-if="it.layer===1 && index===0"><a href="javascript:void(0)" :data-index="index"><i :class="'layui-icon '+it.icon"></i>{{it.name}}</a></li>
             <li class="layui-nav-item" v-for="(it,index) in menulist" v-cloak v-if="it.layer===1 && index!=0"><a href="javascript:void(0)" :data-index="index"><i :class="'layui-icon '+it.icon"></i>{{it.name}}</a></li>
@@ -29,11 +32,41 @@
                     </div>
                 </div>
             </li>
+            <li :class="'layui-nav-item '+[isThemeShow?'show-down':'']" @@click="selectTheme">
+                <a href="javascript:void(0)" id="themedown">
+                    <i id="themeicon"
+                       class="layui-icon layui-icon-theme"></i>
+                </a>
+                <div class="layui-downcard down-amimation theme-case">
+                    <h3>配色方案</h3>
+                    <div class="layui-row">
+                        <div class="layui-col-md4">
+                            <div class="theme-item" :class="themeName=='default'?'active':''"
+                                 data-css="default">
+                                <p>默认</p>
+                                <span class="default"></span>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="theme-item" :class="themeName=='bright'?'active':''" data-css="bright">
+                                <p>亮色系</p>
+                                <span class="bright"></span>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="theme-item" :class="themeName=='dark'?'active':''" data-css="dark">
+                                <p>暗色系</p>
+                                <span class="dark"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
             <li class="layui-nav-item">
                 <a href="javascript:void(0)" @@click="clearCache"><i class="layui-icon"></i>清除缓存</a>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:void(0)"><i class="layui-icon layui-icon-website"></i>@(FytSoa.Api.SiteTool.CurrentSite?.SiteName) <i class="layui-icon layui-icon-triangle-d"></i></a>
+                <a href="javascript:void(0)"><i class="layui-icon layui-icon-website"></i>@(FytSoa.Api.SiteTool.CurrentSite?.SiteName) </a>
                 <dl class="layui-nav-child">
                     <dd><a><i class="layui-icon layui-icon-fonts-code"></i>站点切换</a></dd>
                     <hr />

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Quartz" Version="3.0.7" />
+    <PackageReference Include="CSRedisCore" Version="3.0.60" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FytSoa.Common\FytSoa.Common.csproj" />
