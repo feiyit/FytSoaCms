@@ -203,17 +203,17 @@ namespace FytSoa.Service.Implements
                 //查询前端提供的，数据库没有的，说明概要增加菜单权限
                 var AddMenuList = list.Where(m => !publicMenu.Exists(t => t.MenuGuid == m.MenuGuid)).ToList();
 
-                var result = Db.Ado.UseTran(async () =>
+                var result =await Db.Ado.UseTranAsync(() =>
                 {
                     //删除差异的
                     if (delMenuList.Count>0)
                     {
-                        await Db.Deleteable<SysPermissions>().Where(m => m.RoleGuid == parm.RoleGuid && delMenuList.Contains(m.MenuGuid) && m.Types == 1).ExecuteCommandAsync();
+                        Db.Deleteable<SysPermissions>().Where(m => m.RoleGuid == parm.RoleGuid && delMenuList.Contains(m.MenuGuid) && m.Types == 1).ExecuteCommand();
                     }
                     //添加新的授权菜单
                     if (AddMenuList.Count>0)
                     {
-                        await Db.Insertable(AddMenuList).ExecuteCommandAsync();
+                        Db.Insertable(AddMenuList).ExecuteCommand();
                     }
                 });
                 if (!result.IsSuccess)
@@ -342,12 +342,12 @@ namespace FytSoa.Service.Implements
                     });
                 }
                 
-                var result = Db.Ado.UseTran(async () =>
+                var result = Db.Ado.UseTran(() =>
                 {
                     //根据角色删除已有的，添加新的
-                    await Db.Deleteable<SysPermissions>().Where(m=>m.RoleGuid==roleGuid && m.Types==1).ExecuteCommandAsync();
+                    Db.Deleteable<SysPermissions>().Where(m=>m.RoleGuid==roleGuid && m.Types==1).ExecuteCommand();
                     //增加新的
-                    await Db.Insertable(dbList).ExecuteCommandAsync();
+                    Db.Insertable(dbList).ExecuteCommand();
                 });
                 if (!result.IsSuccess)
                 {

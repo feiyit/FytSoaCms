@@ -49,42 +49,35 @@ namespace FytSoa.Service.Implements
                 {
                     parm.Sort = 1;
                 }
-                try
+
+                var result = await Db.Ado.UseTranAsync(() =>
                 {
-                    var result = Db.Ado.UseTran(async () =>
+                    var addId = Db.Insertable(parm).ExecuteReturnIdentity();
+                    if (parm.ParentId > 0)
                     {
-                        var addId = Db.Insertable(parm).ExecuteReturnIdentity();
-                        if (parm.ParentId > 0)
+                        //说明有父级  根据父级，查询对应的模型
+                        var parModel = Db.Queryable<CmsColumn>().Single(m => m.Id == parm.ParentId);
+                        if (parModel != null)
                         {
-                            //说明有父级  根据父级，查询对应的模型
-                            var parModel = Db.Queryable<CmsColumn>().Single(m => m.Id == parm.ParentId);
-                            if (parModel != null)
-                            {
-                                parm.ClassList = parModel.ClassList + addId + ",";
-                                parm.ClassLayer = parModel.ClassLayer + 1;
-                                parm.Id = addId;
-                            }
+                            parm.ClassList = parModel.ClassList + addId + ",";
+                            parm.ClassLayer = parModel.ClassLayer + 1;
+                            parm.Id = addId;
                         }
-                        else
-                        {
-                            //没有父级
-                            parm.ClassList = "," + addId + ",";
-                        }
-                        await Db.Updateable(parm).ExecuteCommandAsync();
-                    });
-                    if (result.IsSuccess)
-                    {
-                        res.statusCode = (int)ApiEnum.Status;
                     }
                     else
                     {
-                        res.message = result.ErrorMessage;
+                        //没有父级
+                        parm.ClassList = "," + addId + ",";
                     }
-
-                }
-                catch (Exception ex)
+                    Db.Updateable(parm).ExecuteCommand();
+                });
+                if (result.IsSuccess)
                 {
-                    res.message = ex.Message;
+                    res.statusCode = (int)ApiEnum.Status;
+                }
+                else
+                {
+                    res.message = result.ErrorMessage;
                 }
             }
             catch (Exception ex)
