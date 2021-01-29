@@ -150,7 +150,7 @@
             if (group) {
                 urls = "api/job/modifyjob";
             }
-            os.ajax(urls, data.field, function (res) {
+            os.ajax(urls, vm.m, function (res) {
                 $('#submit').attr('disabled', false).find('i').addClass('layui-hide');
                 if (res.statusCode === 200) {
                     parent.layer.close(index);

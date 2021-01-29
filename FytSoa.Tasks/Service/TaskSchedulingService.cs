@@ -278,6 +278,9 @@ namespace FytSoa.Tasks
                 var task = redisTask.Where(m => m.JobId == model.JobId).FirstOrDefault();
                 if (task != null)
                 {
+                    var job = new JobKey(model.JobName) { Group = model.JobGroup, Name = model.JobName };
+                    //删除运行中的任务
+                    await Scheduler.DeleteJob(job);
                     //删除已存在
                     redisTask.Remove(task);
                     //保存到Redis中
