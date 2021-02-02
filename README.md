@@ -21,6 +21,10 @@
 ```
   
   
+#### **Linxu部署方式可以参考我下面写的三篇文章:**  
+1、<a href=https://www.cnblogs.com/fuyu-blog/p/14359510.html target=_blank>Centos7部署FytSoa项目至Docker——第一步：安装Docker</a>  
+2、<a href=https://www.cnblogs.com/fuyu-blog/p/14359534.html target=_blank>Centos7部署FytSoa项目至Docker——第二步：安装Mysql、Redis</a>    
+3、<a href=https://www.cnblogs.com/fuyu-blog/p/14360679.html target=_blank>Centos7部署FytSoa项目至Docker——第三步：部署程序</a>    
   
 
 #### **简介:**  
