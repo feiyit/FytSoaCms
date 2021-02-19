@@ -7,7 +7,7 @@
         isDown: false,
         isThemeShow: false,
         themeName: 'default',
-        siteList:[]
+        siteList: []
     },
     created: function () {
         var that = this;
@@ -64,6 +64,25 @@ var os, rm_vm = new Vue({
         list: []
     }
 });
+var appTag = new Vue({
+    el: '#app_tag',
+    data: {
+        active:"1",
+        tagArr: [{ id: "1", name: "控制台", href:"/fytadmin/default"}]
+    }
+})
+Array.prototype.indexOf = function (val) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] == val) return i;
+    }
+    return -1;
+};
+Array.prototype.remove = function (val) {
+    var index = this.indexOf(val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
+};
 layui.config({
     base: '/themes/js/modules/'
 }).use(['element', 'layer', 'jquery', 'common', 'pjax'], function () {
@@ -128,4 +147,54 @@ layui.config({
     });
     $(document).on('pjax:start', function () { NProgress.start(); $(".load8").show(); });
     $(document).on('pjax:end', function () { NProgress.done(); $(".load8").fadeOut(200); });
+    // add tag
+    if ($.support.pjax) {
+        $(document).on('click', 'a[data-pjax]', function (event) {
+            var t = $(this).context;
+            var _id = $(t).attr("id"),isArr=false;
+            for (var i = 0; i < appTag.tagArr.length; i++) {
+                if (_id == appTag.tagArr[i].id) {
+                    isArr = true
+                    break;
+                }
+            }
+            if (!isArr) {
+                appTag.tagArr.push({ id: _id, name: $(t).attr("title"), href: $(t).attr("href") });
+                appTag.active = _id;
+            }
+            appTag.$nextTick(() => {
+                element.render('tab');
+            })
+            
+        })
+    }
+    element.on('tab(tab-filter)', function (data) {
+        appTag.active = $(this).attr("lay-id");
+        var _model = null;
+        for (var i = 0; i < appTag.tagArr.length; i++) {
+            if (appTag.active == appTag.tagArr[i].id) {
+                _model = appTag.tagArr[i];
+                break;
+            }
+        }
+        if (_model) {
+            $.pjax({
+                url: _model.href,
+                container: '#main-container',
+                fragment: '#container'
+            });
+        }
+    });
+    element.on('tabDelete(tab-filter)', function (data) {
+        var id = $(this).parent().attr("lay-id");
+        var index = appTag.tagArr.findIndex(item => {
+            if (item.id == id) {
+                return true
+            }
+        })
+        appTag.tagArr.splice(index, 1)
+        appTag.$nextTick(() => {
+            element.render('tab');
+        })
+    });
 });
